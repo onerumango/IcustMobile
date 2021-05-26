@@ -1,0 +1,133 @@
+.box {
+    border-width: thin;
+    // border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+    // box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+    // box-shadow: 0px 15px 10px -15px #D3D3D3;
+    width: 95%;
+    height: 55px;
+    
+    background-color: #f9fafb;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+  }
+    .box1 {
+        border-width: thin;
+       // border-style: thin;
+        border-radius: 10px;
+        
+        width: 95%;
+        height: 100px;
+        box-shadow: 0 5pt 9pt -2pt #D3D3D3;
+        
+        background-color: #f9fafb;
+        // border-top-style: hidden;
+        // border-right-style: hidden;
+        // border-left-style: hidden;
+        // border-bottom-style: hidden;
+        }
+    div {
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+        overflow-y: scroll; /* Add vertical scrollbar */
+      }
+      
+    
+    .inputCard{
+    padding-top: 7%;
+    padding-left: 5%;
+    
+    }
+    .inputRemarks{
+        padding-top: 7%;
+        padding-left: 5%;
+        
+        }
+
+    .inputCard1{
+        padding-top: 7%;
+        padding-left: 5%;
+        border-radius: 10px !important;
+        // padding-right: 40px;
+        // font-size: 0.9em;
+        // border: 1px solid gray !important;
+        
+        background-color:rgb(244,247,248);
+       
+        }
+        .inputCard1   ion-label{
+            font-size: large;
+            color:black;
+       
+        }
+        .inputCard1 .input{
+            font-weight: bold;
+        }
+    .labelCard{
+    color: gray;
+    font-size: 20px;
+    
+    }
+    .searchbar{
+    border-radius:10%
+    }
+    .underline {
+    text-decoration: underline;
+    font-size: 20px;
+    }
+    ion-input {
+    color:black !important;
+    font-size: 16pt;
+    
+    --placeholder-color: black !important;
+    // --placeholder-opacity: 100%;
+    border: 1px solid #f1f1f1 !important;
+    }
+    ion-label{
+    color:gray;
+    font-size: 20px;
+    }
+    ion-back-button{
+    color: blue;
+    
+    }
+    .inputCard ion-item ion-label{
+        color:  gray;
+    }
+    .inputCard ion-item{
+        margin-left: 0px;
+       
+    }
+    ion-textarea{
+        height:500px;
+    }
+    ion-icon{
+        font-size: xx-large;
+        color:rgb(70,111,254);
+        display: inline-block;
+        vertical-align: middle;
+     
+    }
+    .text{
+       
+        margin-left: 2%;
+      display: inline-block;
+      vertical-align: middle;
+      color:rgb(70,111,254);
+      font-size: x-large;
+    }
+    ion-button{
+        width: 95%;
+        padding-left: 5%;
+        height: 50px;
+       
+        
+    }
+    .ion-padding-top{
+        padding-top: 10%;
+        }
+        ion-toolbar{
+            margin-top: 5%;
+           box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+        }

@@ -1,0 +1,72 @@
+
+  <ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+      <span class="text">Loan Payment</span>
+    </ion-toolbar>
+  </ion-header>
+  
+  <div>
+  <form>
+  <div class="inputCard">
+  <ion-label>Loan Account</ion-label>
+  <ion-select [compareWith]="compareWith" class="box">
+    <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
+  </ion-select>
+
+  </div>
+  <div class="inputCard">
+    <ion-label position="stacked" class="labelCard">Account Balance : $12,09,89</ion-label>   
+    </div>
+    <ion-card>
+  <div class="inputCard1" >
+       <ion-label position="stacked">Current Arears</ion-label>
+       <br>
+       <br>
+       <ion-label position='stacked' class="input">$12,09,89</ion-label>
+       <br>
+       <br>
+       <ion-label position="stacked">Current Due</ion-label>
+       <br>
+       <br>
+       <ion-label position='stacked' class="input">$12,09,89</ion-label>
+       <br>
+       <br>
+       <ion-label position="stacked">Principal Outstanding</ion-label>
+       <br>
+       <br>
+       <ion-label position="stacked" class="input">$12,09,89</ion-label>
+       <br>
+       <br>
+
+  </div>
+</ion-card>
+  
+  <div class="inputCard">
+  <ion-label>Pay From Account</ion-label>
+  <ion-input class="box"></ion-input>
+  
+  </div>
+
+  <div class="inputCard">
+    <ion-label>Repayment Amount</ion-label>
+    <ion-input class="box"></ion-input>
+    
+    </div>
+  
+    <div style="margin-top:20px;">
+  <div >
+  <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+  (click)="goToFAQ()">Pay</ion-button>
+  </div>
+  
+  <div >
+  <ion-button expand="block" shape="round" [disabled]="true" style="width: 95%;padding-left: 7%;"
+  (click)="goToFAQ()">Back</ion-button>
+  </div>
+</div>
+  
+  </form>
+  </div>
+  </ion-content>

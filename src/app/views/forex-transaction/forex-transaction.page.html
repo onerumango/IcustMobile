@@ -1,0 +1,162 @@
+
+  <ion-content *ngIf=flag>
+    <ion-header>
+      <ion-toolbar>
+        <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+        <span class="text">Forex Transaction</span>
+      </ion-toolbar>
+    </ion-header>
+    <div>
+    <form>
+    <div class="inputCard">
+    <ion-label>Account Number</ion-label>
+    <!-- <ion-input class="box"></ion-input> -->
+    <ion-select [compareWith]="compareWith" class="box">
+      <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
+    </ion-select>
+    </div>
+    <div class="inputCard">
+      <ion-label position="stacked" class="labelCard">Account Balance : $12,09,89</ion-label>   
+      </div>
+ 
+
+      <div class="inputCard">
+        <ion-label>Transaction Type</ion-label>
+        <ion-radio-group>
+          <ion-row>
+            <ion-col>
+                 <ion-item lines="none">
+                    <ion-label position="start">Buy</ion-label>
+                    <ion-radio mode="md" item-left value="buy"></ion-radio>
+               </ion-item>
+             </ion-col>
+        
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label>Sell</ion-label>
+                    <ion-radio mode="md" item-left value="sell"></ion-radio>
+               </ion-item>
+            </ion-col>
+        
+           
+        
+        </ion-row>
+        </ion-radio-group>
+</div>
+
+    <div class="inputCard">
+    <ion-label>Transaction Currency</ion-label>
+    <ion-input class="box"></ion-input>
+    
+    </div>
+  
+    <div class="inputCard">
+      <ion-label>Fx Amount</ion-label>
+      <ion-input class="box"></ion-input> 
+      </div>
+    
+  <div  class="ion-padding-top">
+    <div >
+    <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+    (click)="next()">Next</ion-button>
+    </div>
+    
+    <div >
+    <ion-button expand="block" shape="round" [disabled]="true" style="width: 95%;padding-left: 7%;"
+    (click)="previous()">Back</ion-button>
+    </div>
+    </div>
+    
+    </form>
+    </div>
+ 
+    </ion-content>
+  
+
+
+
+
+
+
+
+
+
+
+    <ion-content *ngIf=!flag>
+      <ion-header>
+        <ion-toolbar>  
+          <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+          <span class="text">Forex Transaction</span>
+        </ion-toolbar>
+      </ion-header>
+      <div>
+      <form>
+      <div class="inputCard">
+      <ion-label>Negotiated Rate</ion-label>
+      <ion-select [compareWith]="compareWith" class="box">
+        <ion-select-option *ngFor="let user of negotiated" [value]="user">{{user}}</ion-select-option>
+      </ion-select>
+      </div>
+      <div class="inputCard">
+        <ion-label position="stacked" class="labelCard">Exchange Rate : $12,09,89</ion-label>   
+        </div>
+   
+  
+        <div style="margin-left: 19px;margin-top: 19px;">
+          <ion-label >Do you wish to perform this transaction </ion-label>
+          <ion-label>in your branch?</ion-label>
+          <ion-radio-group>
+            <ion-row>
+              <ion-col>
+                   <ion-item lines="none">
+                      <ion-label position="start">Yes</ion-label>
+                      <ion-radio mode="md" item-left value="yes"></ion-radio>
+                 </ion-item>
+               </ion-col>
+          
+              <ion-col>
+                  <ion-item lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio mode="md" item-left value="no"></ion-radio>
+                 </ion-item>
+              </ion-col>
+          
+             
+          
+          </ion-row>
+          </ion-radio-group>
+  </div>
+
+  <div class="inputCard">
+    <ion-router-link href="#" class="underline">Click here to find nearest branch</ion-router-link>
+    </div>
+  
+      <div class="inputCard">
+      <ion-label>Charges</ion-label>
+      <ion-input class="box"></ion-input>
+      
+      </div>
+    
+      <div class="inputCard">
+        <ion-label>Remarks</ion-label>
+        
+          <ion-textarea class="box1"></ion-textarea>
+      
+        </div>
+      
+    <div  class="ion-padding-top">
+      <div >
+      <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+     >Save</ion-button>
+      </div>
+      
+      <div >
+      <ion-button expand="block" shape="round"  style="width: 95%;padding-left: 7%;"  (click)="previous()">Back</ion-button>
+      </div>
+      </div>
+      
+      </form>
+      </div>
+   
+      </ion-content>
+    

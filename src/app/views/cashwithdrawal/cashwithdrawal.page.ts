@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cashwithdrawal.page.scss'],
 })
 export class CashwithdrawalPage implements OnInit {
-
+  cashWithdrawal : any = 'Cash Withdrawal';
   constructor() { }
 
   ngOnInit() {

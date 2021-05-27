@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'operation',
     loadChildren: () => import('./views/operation/operation.module').then( m => m.OperationPageModule)
   },
+  {
+    path: 'cashdeposit',
+    loadChildren: () => import('./views/cashdeposit/cashdeposit.module').then( m => m.CashdepositPageModule)
+  },
 
 
 ];

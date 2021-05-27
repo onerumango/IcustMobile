@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 class countries {
@@ -15,6 +15,7 @@ class countries {
 export class OperationPage implements OnInit {
   // @ViewChild('upForm') upForm: NgForm;
   slideOneForm: FormGroup;
+  @Input() title : any;
   constructor(private router:Router,private fb: FormBuilder) {}
   transactionAmount="10,000";
   accountBranch="Loita street";
@@ -74,6 +75,9 @@ export class OperationPage implements OnInit {
     this.flag=false;
     console.log(this.slideOneForm.value);
     //this.router.navigate(['cashwithdrawal2']);
+  }
+  goToBackPage(){
+    this.flag=true;
   }
   goToPreviousPage(){
     this.flag=true;

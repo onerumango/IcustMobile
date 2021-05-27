@@ -1,7 +1,7 @@
 <ion-header *ngIf=flag>
   <ion-toolbar  style="padding-top: 5%;">
     <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToLogin()"></ion-icon>
-    <span class="text">Cash Withdrawal</span>
+    <span class="text">{{title}}</span>
   </ion-toolbar>
 </ion-header><br>
 
@@ -39,8 +39,8 @@
           <ion-button  expand="block" shape="round"(click)="goToNextPage()">Next</ion-button>
       </div>
 
-      <div class="canclecard" >
-          <ion-text (click)="goToLogin()">Cancle</ion-text>
+      <div class="cancelcard" >
+          <ion-text (click)="goToLogin()">Cancel</ion-text>
       </div>
     </form>
   </div>
@@ -49,7 +49,7 @@
 <ion-header *ngIf=!flag>
   <ion-toolbar>
     <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToPreviousPage()"></ion-icon>
-    <span class="text">Cash Withdrawal</span>
+    <span class="text">{{title}}</span>
   </ion-toolbar>
 </ion-header><br>
 
@@ -121,9 +121,12 @@
      </ion-card>
      </div> 
 
-    <div class="ion-padding-top" >
+    <div class="ion-padding-top2" >
       <ion-button  expand="block" shape="round" (click)="goToNextScreen()">Next</ion-button>
     </div>
+    <div class="backcard" >
+      <ion-text (click)="goToBackPage()">Back</ion-text>
+  </div>
   </form>
 </div>
 

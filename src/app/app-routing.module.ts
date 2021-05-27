@@ -18,10 +18,19 @@ const routes: Routes = [
   {
     path: 'forex-transaction',
     loadChildren: () => import('./views/forex-transaction/forex-transaction.module').then( m => m.ForexTransactionPageModule)
-  },  {
+  },
+  {
     path: 'login',
     loadChildren: () => import('./views/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'cashwithdrawal',
+    loadChildren: () => import('./views/cashwithdrawal/cashwithdrawal.module').then( m => m.CashwithdrawalPageModule)
+  },  {
+    path: 'operation',
+    loadChildren: () => import('./views/operation/operation.module').then( m => m.OperationPageModule)
+  },
+
 
 ];
 

@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'forex-transaction',
     loadChildren: () => import('./views/forex-transaction/forex-transaction.module').then( m => m.ForexTransactionPageModule)
+  },  {
+    path: 'login',
+    loadChildren: () => import('./views/login/login.module').then( m => m.LoginPageModule)
   },
+
 ];
 
 @NgModule({

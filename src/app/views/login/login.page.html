@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" >
+  <div class="top-right-quarter-circle"></div>
+ 
+    <form [formGroup]="loginForm">
+      <div class="login-logo">
+        <img src="assets\images\BL1.png" alt="Ionic logo">
+      </div>
+    <div style="padding-top: -50%;">
+
+    
+      <div class="titleCard">
+        <ion-text>
+          <h1 style="color:black">Sign In</h1>
+          <h4 style="color: gray;">Enter your details to get started</h4>
+        </ion-text>
+      </div>
+    
+    
+      <div class="inputCard">
+       <ion-label position="floating">Phone number</ion-label>
+        <ion-input class="box" formControlName="phoneNo"></ion-input>
+    </div>
+    
+    <div class="inputCard">
+      <ion-label position="floating">OTP</ion-label>
+       <ion-input class="box" formControlName="otp"></ion-input>
+    </div>
+    
+    <div class="inputCard">
+      <ion-button  expand="block" shape="round" 
+      (click)="goToCashWithdrawal()">LogIn</ion-button>
+    
+    </div>
+    
+    <div class="ion-padding-top">
+      <p style="padding-left: 25%;">Didn't Received your OTP? Resend</p>
+    </div>
+  </div>
+    </form> <div class="top-left-quarter-circle"></div>
+  </ion-content>

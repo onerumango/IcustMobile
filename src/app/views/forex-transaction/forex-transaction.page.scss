@@ -1,3 +1,8 @@
+
+// * {
+//     font-family: Georgia, 'Times New Roman', Times, serif; 
+//     /* Add !important to overwrite all elements */
+//   }
 .box {
     border-width: thin;
     // border-style: solid;
@@ -28,10 +33,10 @@
         // border-left-style: hidden;
         // border-bottom-style: hidden;
         }
-    div {
-        overflow-x: hidden; /* Hide horizontal scrollbar */
-        overflow-y: scroll; /* Add vertical scrollbar */
-      }
+    // div {
+    //     overflow-x: hidden; /* Hide horizontal scrollbar */
+    //     overflow-y: scroll; /* Add vertical scrollbar */
+    //   }
       
     
     .inputCard{
@@ -131,3 +136,39 @@
             margin-top: 5%;
            box-shadow: 0 5pt 5pt -2pt #D3D3D3;
         }
+.boxDrop{
+    display: inline-block;
+    width: 95%;
+    height: 55px;
+    background-color: #f9fafb;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-width: thin;
+    //: ;
+    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0 5pt 5pt -2pt #d3d3d3;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    
+    
+}
+
+
+        ngx-flag-picker{
+            display: inline-block;
+            font-size: x-large;
+            padding-top: 14px;
+            padding-left: 20px;
+            padding-top: 4%;
+            align-content: center;
+
+          }
+
+          .box7{
+            padding-top: 7%;
+            padding-left: 5%; 
+          }

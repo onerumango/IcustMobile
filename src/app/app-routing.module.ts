@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  // },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'cashwithdrawal',
     loadChildren: () => import('./views/cashwithdrawal/cashwithdrawal.module').then( m => m.CashwithdrawalPageModule)
-  },  {
+  },
+  {
     path: 'operation',
     loadChildren: () => import('./views/operation/operation.module').then( m => m.OperationPageModule)
   },

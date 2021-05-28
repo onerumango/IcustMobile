@@ -14,16 +14,37 @@
           <ion-label position="stacked" class="labelCard">Account Balance : $12,09,89</ion-label>
       </div>
 
-      <div class="inputCard1">
+      <!-- <div class="inputCard1">
           <ion-label>Transaction Currency</ion-label>
           <ion-select [compareWith]="compareWith" class="box">
           <ion-select-option *ngFor="let user of countries" [value]="user">
-          
+            {{user.code + ' ' + user.flag}}
           </ion-select-option>
           </ion-select>
           
        
-      </div>
+      </div> -->
+      <div class="inputCard2">
+        <ion-card class="box">
+          <ion-row>
+            <ion-col style="width: 10%;">
+                <ngx-flag-picker
+                [selectedCountryCode]="selectedCountryCode"
+                [showFlags]="isShow"
+                [showLabels]="!isShow"
+                [showArrow]="!isShow">
+              </ngx-flag-picker>
+             </ion-col>
+            <ion-col style="padding-right: 40%; width: 20%;">
+                <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
+                  <ion-select-option *ngFor="let user of countries" [value]="user" >
+                 {{user.currency + ' : ' + user.countryName}}
+                  </ion-select-option>
+                  </ion-select>
+            </ion-col>
+           </ion-row>
+         </ion-card>
+        </div>
 
       <div class="inputCard1">
           <ion-label position="stacked">Transaction Amount</ion-label>

@@ -8,6 +8,7 @@ import { CashdepositPageRoutingModule } from './cashdeposit-routing.module';
 
 import { CashdepositPage } from './cashdeposit.page';
 import { OperationPage } from '../operation/operation.page';
+import { NgxFlagPickerModule } from 'ngx-flag-picker';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { OperationPage } from '../operation/operation.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    CashdepositPageRoutingModule
+    CashdepositPageRoutingModule,
+    NgxFlagPickerModule
   ],
   declarations: [CashdepositPage,OperationPage]
 })

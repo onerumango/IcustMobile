@@ -1,8 +1,8 @@
 
-// * {
-//     font-family: Georgia, 'Times New Roman', Times, serif; 
-//     /* Add !important to overwrite all elements */
-//   }
+* {
+     font-family: 'Montserrat-SemiBold' !important;
+    /* Add !important to overwrite all elements */
+  }
 .box {
     border-width: thin;
     // border-style: solid;
@@ -71,7 +71,7 @@
         }
     .labelCard{
     color: gray;
-    font-size: 20px;
+    font-size: 13pt;
     
     }
     .searchbar{
@@ -88,10 +88,13 @@
     --placeholder-color: black !important;
     // --placeholder-opacity: 100%;
     border: 1px solid #f1f1f1 !important;
+    font-family: 'Montserrat' !important;
     }
     ion-label{
     color:gray;
-    font-size: 20px;
+    font-size: 13pt;
+    font-family: 'Montserrat' !important;
+
     }
     ion-back-button{
     color: blue;
@@ -121,11 +124,13 @@
       vertical-align: middle;
       color:rgb(70,111,254);
       font-size: x-large;
+      font-family: 'Montserrat' !important;
     }
     ion-button{
         width: 95%;
         padding-left: 5%;
         height: 50px;
+        font-family: 'Montserrat' !important;
        
         
     }
@@ -169,6 +174,12 @@
           }
 
           .box7{
-            padding-top: 7%;
-            padding-left: 5%; 
+            padding-top: 0%;
+            padding-left: 0%;
+            margin-left: 10px; 
+            margin-right: 10px; 
+          }
+          .inputCard5{
+            padding-top: 5%;
+            padding-left: 5%;
           }

@@ -1,0 +1,78 @@
+
+  <ion-content>
+    <ion-header>
+      <ion-toolbar>
+        <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+        <span class="text">Deposit Top Up</span>
+      </ion-toolbar>
+    </ion-header>
+    
+    <div>
+    <form  [formGroup]="loanForm">
+    <div class="inputCard">
+    <ion-label>Deposit Account</ion-label>
+    <ion-select [compareWith]="compareWith" class="box" formControlName="depositAccount" ngDefaultControl>
+      <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
+    </ion-select>
+  
+    </div>
+    <div class="inputCard">
+      <ion-label position="stacked" class="labelCard" formControlName="accountBalance" ngDefaultControl>Account Balance : $12,09,89</ion-label>   
+      </div>
+
+      
+      <div class="inputCard">
+        <ion-label>Top Up Amount</ion-label>
+        <ion-input class="box" formControlName="topUpAmount" ngDefaultControl></ion-input>
+        
+        </div>
+
+        <div class="inputCard">
+          <ion-label>Pay From Account</ion-label>
+          <ion-input class="box" formControlName="payFromAccount" ngDefaultControl></ion-input>
+          
+          </div>
+     
+      <ion-card >
+
+    <div class="inputCard1" >
+         <ion-label position="stacked">Revised Principal Amount</ion-label>
+         <br>
+         <br>
+         <ion-label position='stacked' class="input" formControlName="revisedPrincipalAmount" ngDefaultControl>$12,09,89</ion-label>
+         <br>
+         <br>
+         <ion-label position="stacked">Revised Maturity Amount</ion-label>
+         <br>
+         <br>
+         <ion-label position="stacked" class="input" formControlName="revisedMaturityAmount" ngDefaultControl>$12,09,89</ion-label>
+         
+  
+    </div>
+  
+  </ion-card>
+    
+   
+  
+    <!-- <div class="inputCard">
+      <ion-label>Repayment Amount</ion-label>
+      <ion-input class="box" formControlName="repaymentAmount" ngDefaultControl></ion-input>
+      
+      </div>
+     -->
+      <div style="margin-top:20px;">
+    <div >
+    <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+    (click)="save(loanForm.value)">Top Up</ion-button>
+    </div>
+    
+    <div >
+    <ion-button expand="block" shape="round" [disabled]="true" style="width: 95%;padding-left: 7%;"
+    (click)="goToFAQ()">Cancel</ion-button>
+    </div>
+  </div>
+    
+    </form>
+    </div>
+    </ion-content>
+  

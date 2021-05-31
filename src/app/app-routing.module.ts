@@ -60,7 +60,12 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./views/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
-  },
+  },  {
+    path: 'token-generation',
+    loadChildren: () => import('./views/token-generation/token-generation.module').then( m => m.TokenGenerationPageModule)
+  }
+
+
 
 
 

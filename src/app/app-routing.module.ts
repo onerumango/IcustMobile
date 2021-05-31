@@ -34,7 +34,15 @@ const routes: Routes = [
   {
     path: 'cashdeposit',
     loadChildren: () => import('./views/cashdeposit/cashdeposit.module').then( m => m.CashdepositPageModule)
+  },  {
+    path: 'chequewithdrawal',
+    loadChildren: () => import('./views/chequewithdrawal/chequewithdrawal.module').then( m => m.ChequewithdrawalPageModule)
   },
+  {
+    path: 'chequedeposit',
+    loadChildren: () => import('./views/chequedeposit/chequedeposit.module').then( m => m.ChequedepositPageModule)
+  },
+
 
 
 ];

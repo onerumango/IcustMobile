@@ -1,0 +1,106 @@
+.rect{
+margin-top:70pt;
+// min-width: 327pt;
+//min-height: 470pt;
+background-color:#456EFE;
+margin-left: 24pt;
+margin-right: 24pt;
+margin-bottom: 53pt;
+border-radius: 20px;
+border-bottom-style: hidden;
+}
+ion-header{
+  bottom: none;
+}
+ion-content{
+    --ion-background-color:#111D12;
+  }
+  .new-background-color{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    --background:white;
+    height:130pt;
+     padding-top: 30px;
+    // margin-left: 2%;
+    display: inline-block;
+    vertical-align: middle;
+    color:#3477C6;
+    font-size:13pt;
+    padding-top:24pt;
+    padding-left:24pt;
+    padding-bottom: 48pt;
+    font-family: 'Montserrat' !important;
+    box-shadow: none;
+    
+}
+.text1{
+  display: block;
+  // padding-left:60pt;
+  text-align: center;
+  // margin-top:66pt;
+  padding-top:10pt;
+  color:#102245;
+  opacity: 27%;
+  size:10pt;
+  padding-bottom: 56pt;
+  font-family: 'Montserrat,SemiBold' !important;
+  justify-content: center;
+}
+.text2{
+  display: block;
+  // padding-left:60pt;
+  text-align: center;
+  // margin-top:66pt;
+  padding-top:10pt;
+  color:#102245;
+  opacity: 100%;
+  font-size:27pt;
+  // font-weight: bolder;
+  padding-bottom: 56pt;
+  font-family: 'Montserrat' !important;
+  justify-content: center;
+
+}
+
+.innerRect {
+  position: relative;
+}
+.circle {
+  position: absolute;
+  left: 45%;
+  top: -18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: white;
+}
+.head{
+  box-shadow: none;
+}
+.inputCard:not(.display){
+ 
+  padding-left: 32pt;
+  padding-top: 42pt;
+  font-family: 'Montserrat' !important;
+  color:#FFFFFF;
+  // opacity: 51%;
+  size:14pt;
+  }
+  .display{
+    display: block;
+    font-size: 17pt;
+    color:#FFFFFF;
+    padding-top:10pt;
+     padding-bottom:20pt;
+    // opacity: 100%;
+  }
+  img{
+     padding-top:10pt;
+min-height: 96pt;
+width: 96pt;
+margin-left: 32pt;
+  // padding-bottom: 18pt;
+  }
+  .header-ios ion-toolbar:last-of-type {
+    --border-width: 0;
+}

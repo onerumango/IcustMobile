@@ -35,6 +35,20 @@ const routes: Routes = [
     path: 'cashdeposit',
     loadChildren: () => import('./views/cashdeposit/cashdeposit.module').then( m => m.CashdepositPageModule)
   },
+  {
+    path: 'utility-payment',
+    loadChildren: () => import('./views/utility-payment/utility-payment.module').then( m => m.UtilityPaymentPageModule)
+  },
+  {
+    path: 'deposit-topup',
+    loadChildren: () => import('./views/deposit-topup/deposit-topup.module').then( m => m.DepositTopupPageModule)
+  },
+
+  {
+    path: 'change-password',
+    loadChildren: () => import('./views/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+
 
 
 ];

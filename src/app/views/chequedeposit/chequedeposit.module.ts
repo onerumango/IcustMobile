@@ -4,11 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CashwithdrawalPageRoutingModule } from './cashwithdrawal-routing.module';
+import { ChequedepositPageRoutingModule } from './chequedeposit-routing.module';
 
-import { CashwithdrawalPage } from './cashwithdrawal.page';
-
-
+import { ChequedepositPage } from './chequedeposit.page';
 import { OperationPage } from '../operation/operation.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 
@@ -16,12 +14,11 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
-    CashwithdrawalPageRoutingModule,
-    NgxFlagPickerModule
+    ReactiveFormsModule,
+    NgxFlagPickerModule,
+    ChequedepositPageRoutingModule
   ],
-  declarations: [CashwithdrawalPage,OperationPage],
-  
+  declarations: [ChequedepositPage,OperationPage]
 })
-export class CashwithdrawalPageModule {}
+export class ChequedepositPageModule {}

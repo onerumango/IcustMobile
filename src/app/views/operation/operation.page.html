@@ -36,11 +36,12 @@
               </ngx-flag-picker>
              </ion-col>
             <ion-col style="padding-right: 40%; width: 20%;">
-                <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
+                <!-- <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
                   <ion-select-option *ngFor="let user of countries" [value]="user" >
                  {{user.currency + ' : ' + user.countryName}}
                   </ion-select-option>
-                  </ion-select>
+                  </ion-select> -->
+           
             </ion-col>
            </ion-row>
          </ion-card>
@@ -75,7 +76,7 @@
 </ion-header><br>
 
 <ion-content *ngIf=!flag>
-  <div>
+  <div class="ioncontent">
     <form [formGroup]="slideOneForm">
         <div class="textCard">
           <ion-text>
@@ -108,10 +109,11 @@
        </div><br>
   
        <div class="inputCard2">
-
+        <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
          <ion-card class="box" >
+          
           <ion-item lines="none">
-          <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
+          
               <ion-searchbar mode="ios"></ion-searchbar>
             </ion-item> 
           </ion-card>
@@ -142,12 +144,26 @@
      </ion-card>
      </div> 
 
-    <div class="ion-padding-top2" >
+     <div class="inputCard2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'">
+      <ion-label position="stacked">Remark</ion-label>
+      <ion-input class="chequeCard" formControlName="accountNo" ></ion-input>
+     </div>
+
+
+
+    <div class="ion-padding-top2" *ngIf="title =='Cash Withdrawal' || title =='Cash Deposit'" >
       <ion-button  expand="block" shape="round" (click)="goToNextScreen()">Next</ion-button>
     </div>
-    <div class="backcard" >
-      <ion-text (click)="goToBackPage()">Back</ion-text>
-  </div>
+
+    <div class="ion-padding-top2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'" >
+      <ion-button  expand="block" shape="round">Save</ion-button>
+    </div>
+   
+      <div class="backcard">
+        <ion-text (click)="goToBackPage()">Back</ion-text>
+    </div>
+    
+   
   </form>
 </div>
 

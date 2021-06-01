@@ -1,0 +1,85 @@
+ion-item{
+    font-size: xx-large;
+    color: #000000;
+    padding-top: 10%;
+    border-bottom: 0px !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #000 !important;
+    opacity: 1 !important;
+    
+}
+.slider1 {
+    height: 145px;
+    width: 70%;
+    background: #00c6ff;
+    background:  -webkit-linear-gradient(
+    to bottom,
+    #FF0303
+    #D000E2
+  );
+    background: linear-gradient(
+    to bottom,
+    #FF0303
+    #D000E2
+  );
+    border-radius: 15px 15px 15px 15px;
+}
+
+.slider2 {
+    height: 145px;
+    width: 70%;
+    background: #fdc831;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.slider3 {
+    height: 140px;
+    width: 70%;
+    background: #fdc831;
+    border-radius: 15px 15px 15px 15px;        
+}
+
+
+
+.swiper-slide {
+    -webkit-align-items: normal !important;
+    align-items: normal !important;
+}
+
+.icon {
+    margin-top: 20%;
+    font-size: 120px;
+    color: #fff;
+}
+ion-slides{
+    --bullet-background-active: rgb(214, 18, 18);
+    --bullet-background: rgb(216, 90, 90);
+}
+.textCard{
+    margin-left: 5%;
+    margin-top: 5%;
+}
+.transactionCards{
+    height: 70pt;width: 80pt;
+    box-shadow: 1pt 1pt 5pt;
+    border-radius: 15px 15px 15px 15px;
+    display: inline-block;
+    margin-left: 17px;
+    
+}
+.transactionCards2{
+    height: 70pt;width: 80pt;
+    box-shadow: 1pt 1pt 5pt;
+    border-radius: 15px 15px 15px 15px;
+   // display: inline-block;
+    
+
+}
+.footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+    background-image: none !important;
+    
+    
+}
+

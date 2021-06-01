@@ -43,35 +43,24 @@ const routes: Routes = [
     path: 'chequedeposit',
     loadChildren: () => import('./views/chequedeposit/chequedeposit.module').then( m => m.ChequedepositPageModule)
   },
-
   {
-    path: 'cashdeposit',
-    loadChildren: () => import('./views/cashdeposit/cashdeposit.module').then( m => m.CashdepositPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./views/tabs/tabs.module').then( m => m.TabsPageModule)
   },
-  {
-    path: 'utility-payment',
-    loadChildren: () => import('./views/utility-payment/utility-payment.module').then( m => m.UtilityPaymentPageModule)
-  },
-  {
-    path: 'deposit-topup',
-    loadChildren: () => import('./views/deposit-topup/deposit-topup.module').then( m => m.DepositTopupPageModule)
-  },
+  // {
+  //   path: 'transaction',
+  //   loadChildren: () => import('./views/transaction/transaction.module').then( m => m.TransactionPageModule)
+  // },
+  // {
+  //   path: 'profile',
+  //   loadChildren: () => import('./views/profile/profile.module').then( m => m.ProfilePageModule)
+  // },
 
-  {
-    path: 'change-password',
-    loadChildren: () => import('./views/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
-  },  {
-    path: 'token-generation',
-    loadChildren: () => import('./views/token-generation/token-generation.module').then( m => m.TokenGenerationPageModule)
-  }
-
-
-
-
-
-
-
-
+  
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule)
+  // },
 
 
 ];

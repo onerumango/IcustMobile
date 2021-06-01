@@ -1,5 +1,7 @@
 {
   "name": "IcustMobile",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

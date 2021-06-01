@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-utility-payment',
   templateUrl: './utility-payment.page.html',
@@ -7,7 +8,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms'
 })
 export class UtilityPaymentPage implements OnInit {
   utilityForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private router:Router) { }
   billNames=['1090000 88987 87123','1090000 88987 87122','1090000 88987 87128']
   account=['xxxxxxxx101','xxxxxx201']
   ngOnInit() {
@@ -28,5 +29,6 @@ export class UtilityPaymentPage implements OnInit {
 next()
 {
   console.log(this.utilityForm.value);
+  this.router.navigate(['forex-transaction']);
 }
 }

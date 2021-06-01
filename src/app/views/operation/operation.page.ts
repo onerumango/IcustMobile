@@ -312,6 +312,16 @@ export class OperationPage implements OnInit {
   goToNextPage(fb){
     this.flag=false;
     console.log(this.slideOneForm.value);
+    this.router.navigate(['utility-payment']);
+    console.log(this.title);
+    if(this.title=="Cheque Withdrawal")
+    this.router.navigate(['cashdeposit']);
+    if(this.title=="Cash Deposit")
+    this.router.navigate(['chequedeposit']);
+    if(this.title=="Cheque Deposit")
+    this.router.navigate(['tabs'])
+
+
     //this.router.navigate(['cashwithdrawal2']);
   }
   goToPreviousPage(){

@@ -62,7 +62,23 @@ const routes: Routes = [
   //   loadChildren: () => import('./views/home/home.module').then( m => m.HomePageModule)
   // },
 
+  {
+    path: 'utility-payment',
+    loadChildren: () => import('./views/utility-payment/utility-payment.module').then( m => m.UtilityPaymentPageModule)
+  },
+  {
+    path: 'deposit-topup',
+    loadChildren: () => import('./views/deposit-topup/deposit-topup.module').then( m => m.DepositTopupPageModule)
+  },
 
+  {
+    path: 'change-password',
+    loadChildren: () => import('./views/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'token-generation',
+    loadChildren: () => import('./views/token-generation/token-generation.module').then( m => m.TokenGenerationPageModule)
+  }
 ];
 
 @NgModule({

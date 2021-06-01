@@ -320,6 +320,7 @@ export class OperationPage implements OnInit {
   goToNextScreen(){
     this.router.navigate(['cashdeposit']);
   }
+  
 
 }
 

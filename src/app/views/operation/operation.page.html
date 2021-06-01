@@ -36,11 +36,11 @@
               </ngx-flag-picker>
              </ion-col>
             <ion-col style="padding-right: 40%; width: 20%;">
-                <!-- <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
+               <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
                   <ion-select-option *ngFor="let user of countries" [value]="user" >
                  {{user.currency + ' : ' + user.countryName}}
                   </ion-select-option>
-                  </ion-select> -->
+                  </ion-select> 
            
             </ion-col>
            </ion-row>
@@ -160,7 +160,7 @@
     </div>
    
       <div class="backcard">
-        <ion-text (click)="goToBackPage()">Back</ion-text>
+        <ion-text (click)="goToPreviousPage()">Back</ion-text>
     </div>
     
    

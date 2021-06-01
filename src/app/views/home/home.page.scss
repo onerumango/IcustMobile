@@ -12,33 +12,28 @@ ion-item{
 }
 .slider1 {
     height: 145px;
-    width: 70%;
-    background: #00c6ff;
-    background:  -webkit-linear-gradient(
-    to bottom,
-    #FF0303
-    #D000E2
-  );
-    background: linear-gradient(
-    to bottom,
-    #FF0303
-    #D000E2
-  );
+    width: 100%;
+   
+    background-image: linear-gradient(#AF1084,#D000E2);
     border-radius: 15px 15px 15px 15px;
+   
 }
 
 .slider2 {
     height: 145px;
-    width: 70%;
-    background: #fdc831;
+    width: 100%;
+   
     border-radius: 15px 15px 15px 15px;
+    background-image: linear-gradient(#FF0303, #D000E2);
+  
 }
 
 .slider3 {
     height: 140px;
-    width: 70%;
-    background: #fdc831;
-    border-radius: 15px 15px 15px 15px;        
+    width: 100%;
+    
+    border-radius: 15px 15px 15px 15px;  
+    background-image: linear-gradient(#032AFF,#D000E2);
 }
 
 
@@ -79,7 +74,28 @@ ion-slides{
 }
 .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
     background-image: none !important;
+}
+.settingicon{
+    color: white;
+    font-size:x-large;
+     margin-bottom: 5%;
+   
+}
+.labelaccount{
+    color: #FFFFFF;
+    font-size: 10pt;
+    margin-left: 50%;
+    opacity: 67%;
+}
+.savingaccount{
+    color: #FFFFFF;
+    font-size: 10pt;
+    margin-top: -13%;
+margin-left: -50%;
+opacity: 67%;
     
-    
+}
+.cashdepositcard{
+    margin-top: 5px;font-size: smaller;margin-left: 18px;
 }
 

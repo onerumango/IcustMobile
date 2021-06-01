@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ForexTransactionPage implements OnInit {
   // changeSelectedCountryCode(value: string): void {
   //   this.selectedCountryCode = value;
   // }
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private router:Router) {}
 
   ngOnInit() {
     this.forexForm = this.fb.group({
@@ -332,6 +333,8 @@ export class ForexTransactionPage implements OnInit {
   save(fb)
   {
    console.log(fb)
+   this.router.navigate(['loan-payment']);
+   
   }
 }
 interface CountryType {

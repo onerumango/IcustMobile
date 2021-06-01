@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 })
 export class ChangePasswordPage implements OnInit {
   changePasswordForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private router:Router) { }
 
   ngOnInit() {
     this.changePasswordForm = this.fb.group({
@@ -21,5 +22,6 @@ export class ChangePasswordPage implements OnInit {
   }
 save(){
   console.log(this.changePasswordForm.value);
+  this.router.navigate(['chequewithdrawal']);
 }
 }

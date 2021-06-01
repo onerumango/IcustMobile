@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deposit-topup',
@@ -13,7 +14,7 @@ export class DepositTopupPage implements OnInit {
   b='hjhjhj';
   c='678788';
   loanForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private router:Router) { }
 
   ngOnInit() {
     this.loanForm = this.fb.group({
@@ -31,6 +32,7 @@ export class DepositTopupPage implements OnInit {
   {
     console.log("inside loan")
      console.log(fb);
+     this.router.navigate(['token-generation']);
   }
   }
 

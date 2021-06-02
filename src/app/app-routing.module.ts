@@ -51,10 +51,10 @@ const routes: Routes = [
   //   path: 'transaction',
   //   loadChildren: () => import('./views/transaction/transaction.module').then( m => m.TransactionPageModule)
   // },
-  // {
-  //   path: 'profile',
-  //   loadChildren: () => import('./views/profile/profile.module').then( m => m.ProfilePageModule)
-  // },
+  {
+    path: 'profile',
+    loadChildren: () => import('./views/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 
   
   // {

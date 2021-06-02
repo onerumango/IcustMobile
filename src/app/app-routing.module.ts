@@ -78,7 +78,21 @@ const routes: Routes = [
   {
     path: 'token-generation',
     loadChildren: () => import('./views/token-generation/token-generation.module').then( m => m.TokenGenerationPageModule)
+  },
+ 
+  {
+    path: 'loginactivity',
+    loadChildren: () => import('./views/loginactivity/loginactivity.module').then( m => m.LoginactivityPageModule)
+  },  {
+    path: 'help',
+    loadChildren: () => import('./views/help/help.module').then( m => m.HelpPageModule)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('./views/faq/faq.module').then( m => m.FaqPageModule)
   }
+
+
 ];
 
 @NgModule({

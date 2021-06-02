@@ -1,0 +1,143 @@
+<ion-header *ngIf="flag">
+  <ion-toolbar style="padding-top: 7%;" class="new-background-color">
+    <ion-icon class="backIcon" name="chevron-back-outline"></ion-icon>
+    <span class="text">{{title}}</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="flag">
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard" ></ion-icon>&nbsp;&nbsp;&nbsp;
+      <ion-label class="labelCard">
+      What's New
+      </ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" class="iconCard" (click)="goToWhatsNew()"></ion-icon>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>&nbsp;&nbsp;&nbsp;
+      <ion-label class="labelCard">
+      What Can I Do
+       
+      </ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" class="iconCard" (click)="goToWhatCanIDo()"></ion-icon>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>&nbsp;&nbsp;&nbsp;
+      <ion-label class="labelCard">
+      Security Tips
+      </ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" class="iconCard" (click)="goToSecurityTip()"></ion-icon>
+    </ion-item>
+  </div>
+</ion-content>
+
+<ion-header *ngIf="isWhatsNew">
+  <ion-toolbar style="padding-top: 7%;" class="new-background-color">
+    <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToHelp()"></ion-icon>
+    <span class="text">What's New</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="isWhatsNew">
+  <div>
+    <h3 style="color: #456EFE;margin-left: 10%;">View Balance</h3>
+  </div>
+  <div>
+    <div>
+      <ion-radio-group>
+      <ion-item class="item">
+        <ion-radio slot="start" value="griff" style="margin-bottom: 20%;"></ion-radio>
+        <ion-text class="newCard">You can tap on "View Balance" to see balances of your operative ( Savings, Current & Overdraft ) accounts.</ion-text>
+      </ion-item>
+      </ion-radio-group>
+    </div>
+    <div>
+      <ion-radio-group>
+      <ion-item class="item">
+        <ion-radio slot="start" value="griff" style="margin-bottom: 20%;"></ion-radio>
+        <ion-text class="newCard">You can use either Biometric or User ID & password to authenticate.</ion-text>
+      </ion-item>
+    </ion-radio-group>
+    </div>
+  </div>
+</ion-content>
+
+
+<ion-header *ngIf="isWhatCanIDo">
+  <ion-toolbar style="padding-top: 7%;" class="new-background-color">
+    <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToHelp()"></ion-icon>
+    <span class="text">What's Can I Do</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="isWhatCanIDo">
+  <div>
+    <ion-item class="item">
+      <ion-text class="newCard">Hi, I am a Chatbot, your personal digital assistant</ion-text> 
+      <ion-icon slot="end" name="chevron-forward-outline" class="iconCard"></ion-icon>
+    </ion-item>
+  </div>
+</ion-content>
+
+<ion-header *ngIf="isSecurityTip">
+  <ion-toolbar style="padding-top: 7%;" class="new-background-color">
+    <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToHelp()"></ion-icon>
+    <span class="text">What's Can I Do</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="isSecurityTip">
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Change your password frequently.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Avoid public computers and networks.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Preserve your personal confidentiality.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Lookout for attempted phishing attacks .</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Do not click on login links on email.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Audit and check your account frequently.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">View the last logged in details.</ion-text>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item class="item">
+      <ion-icon name="albums-outline" style="color: #456EFE;" class="iconCard"></ion-icon>
+      <ion-text class="newCard">Always logout.</ion-text>
+    </ion-item>
+  </div>
+</ion-content>

@@ -1,0 +1,125 @@
+.pix {
+   //background-color:#456EFE ;
+  background-image:linear-gradient(#456EFE,#456EFE,#CEFFF8);
+  height: 120pt;
+  cursor: pointer;
+  position: relative;
+}
+
+.img {
+  width: 99pt;
+  height: 100pt;
+  border-radius: 100%;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  bottom: -60px;
+  transform: translateX(-50%);
+  margin:0px;
+  border:6px solid white;
+}
+.text{
+  display: block;
+  margin-top: 60px;
+  text-align: center;
+  color:#102245;
+  font-size: 16pt;
+  font-family: 'Montserrat' !important;
+  font-weight: bold;
+}
+.text1{
+  text-align: center;
+  display: block;
+  font-family: 'Montserrat' !important;
+  color: #102245;
+  font-size: 12pt;
+}
+.box {
+  display: flex;
+  padding: 10px;
+  border-width: 1pt;
+  // border-radius: 10px;
+  // box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+  border-style: solid;
+  // width: 95%;
+  // height: 77pt;
+  border-radius: 20px;
+  box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+  
+  background-color:white;
+  //border-color:#456EFE;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  margin: 16pt 16pt 0 16pt;
+
+  
+}
+div .inputCard{
+  display: flex;
+padding-top: 7%;
+padding-left: 5%;
+
+font-family: 'Montserrat' !important;
+}
+.icon{
+  // margin-left: 16pt;
+  // margin-top:16pt;
+  // margin-bottom: 13pt;
+}
+.name{
+  // text-align: center;
+  flex-grow: 1;
+  font-size: 15pt;
+  font-family: 'Montserrat' !important;
+  align-self: center;
+  // font-weight: normal;
+  // margin-inline-start: 8px;
+  // margin-top: 20px;
+
+}
+  // margin-left:0pt;
+
+.name1{
+  display: block;
+  font-size: 9pt;
+  font-family: 'Montserrat' !important;
+  font-weight:100;
+  opacity: 50%;
+  // margin-left: 10pt;
+
+  // margin-top:8pt;
+  // margin-bottom: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.button{
+  display:flex;
+  height: fit-content;
+  align-self: center;
+
+}
+ion-tab-bar {
+  padding-left: 20px;
+  padding-bottom: 25px;
+  box-shadow: 0pt 3pt 5pt;
+  border-radius: 30pt 30pt 0pt 0pt;
+  width: 95%;
+  background-color: #FFFFFF;
+ opacity: 100%;
+}
+ion-tab-button {
+  --color: var(--ion-color-medium);
+ // --color-selected: var(--ion-color-primary);
+font-size: large;
+padding-top: 1%;
+
+}
+.ioncontent{
+  height: 500%;
+}

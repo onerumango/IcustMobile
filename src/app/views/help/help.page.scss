@@ -17,7 +17,7 @@
   display: inline-block;
   vertical-align: middle;
   color: #102245;
-  font-size: large;
+  font-size: 15pt;
   opacity: 70%;
 }
 .labelCard{
@@ -25,6 +25,7 @@
     opacity: 75%;
     font-size: 13pt;
     margin-bottom: 10%;
+    margin-left: 5%;
 }
 .iconCard{
     margin-bottom: 8%;
@@ -42,4 +43,15 @@
     font-size: large;
     margin-bottom: 10%;
     margin-left: 3%;
+}
+.icon{
+    margin-left: 25%;
+    margin-top: 10%;
+    font-family: 'Montserrat';
+}
+.icon2{
+    margin-left: 5%;
+    width: 10%;
+    margin-bottom: 8%;
+
 }

@@ -57,10 +57,10 @@ ion-slides{
     margin-top: 5%;
 }
 .transactionCards{
-    height: 70pt;width: 80pt;
+   // height: 70pt;width: 80pt;
     box-shadow: 1pt 1pt 5pt;
     border-radius: 15px 15px 15px 15px;
-    display: inline-block;
+    //display: inline-block;
     margin-left: 17px;
     
 }
@@ -99,10 +99,11 @@ opacity: 67%;
     margin-top: 5px;font-size: smaller;margin-left: 18px;
 }
 .cashwithdrawalcard{
-    margin-top: 5px;font-size: smaller;margin-left: 6%;
+    margin-top: 5px;margin-left: 4%;     font-size: smaller;
+   
 }
 .chequedepositcard{
-    margin-top: 5px;font-size: smaller;margin-left: 7%;
+    margin-top: 5px;font-size: smaller;margin-left: 5%;
 }
 .firstrow{
     display: inline-block !important;
@@ -112,3 +113,46 @@ opacity: 67%;
     margin-top: 10%;
     font-family: 'Montserrat';
 }
+.image1{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+}
+.image2{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 55%;
+}
+.image3{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 73%;
+}
+@media screen and (min-width: 760px) {
+    .chequedepositcard {
+      font-size: 20px;
+      margin-left: 20%;
+    }
+    .cashdepositcard {
+        font-size: 20px;
+        margin-left: 20%;
+      }
+      .cashwithdrawalcard {
+        font-size: 20px;
+        margin-left: 20%;
+      }
+     .image1{
+         width: 50%;
+     }
+     .image2{
+         width: 41%;
+     }
+     .image3{
+         width: 53%;
+     }
+
+}
+

@@ -11,7 +11,8 @@
 
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
+@import 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+// window.actionSheetController = actionSheetController;
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
@@ -25,7 +26,6 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
 ion-searchbar ion-icon {
     right: 16px !important;
     left: auto !important;
@@ -38,3 +38,34 @@ ion-searchbar ion-icon {
     src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
     src: url('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf');
   }  
+//   .my-alert {
+//     --background: rgb(179, 179, 223);
+//     --background-selected: rgb(179, 179, 223);
+// }
+// .action-sheet-group {
+//   background: #e5e5e5;
+// }
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+// .my-custom-class .action-sheet-group {
+//   background: #e5e5e5;
+// }
+// .my-custom-class {
+//   --background: #e5e5e5;
+// }
+my-custom-class buttons{
+  --color: black;
+}
+.action-sheet-button.sc-ion-action-sheet-ios {
+  padding-left: unset;
+  padding-right: unset;
+  -webkit-padding-start: 18px;
+  padding-inline-start: 18px;
+  -webkit-padding-end: 18px;
+  padding-inline-end: 18px;
+  color: black;
+  background-color: white;
+  font-size: 16pt;
+  font-weight: bold;
+  font-family: 'Montserrat' !important;
+}

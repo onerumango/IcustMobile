@@ -1,0 +1,89 @@
+.new-background-color{
+    --background:#ECF3F2;
+    height:88.5pt;
+     padding-top: 30px;
+    // margin-left: 2%;
+    display: inline-block;
+    vertical-align: middle;
+    color:black;
+    font-size: x-large;
+    font-family: 'Montserrat' !important;
+    
+}
+ion-icon{
+    font-size: xx-large;
+    color:black;
+    display: inline-block;
+    vertical-align: middle;
+ 
+}
+.box {
+    // border-width: 1pt;
+    // border-radius: 10px;
+    // box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+     border-style: ridge;
+    width: 95%;
+    height: 16pt;
+    
+    background-color:white;
+    // border-color:#456EFE;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    // margin-left:10px;
+  }
+  .box1 {
+    // border-width: 1pt;
+    // border-radius: 10px;
+    // box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+     border-style: solid;
+    width: 95%;
+    height: 55px;
+    
+    background-color:white;
+     border-color:#456EFE;
+    // border-top-style: hidden;
+    // border-right-style: hidden;
+    // border-left-style: hidden;
+    // margin-left:10px;
+  }
+.inputCard{
+padding-top: 7%;
+padding-left: 5%;
+
+font-family: 'Montserrat' !important;
+}
+
+ion-label{
+    color:#102245;
+    font-size: 16pt;
+    font-family: 'Montserrat' !important;
+    margin-bottom: 13pt;
+    }
+
+    ion-input {
+        color:black !important;
+        font-size: 16pt;
+        
+        --placeholder-color: black !important;
+        // --placeholder-opacity: 100%;
+      
+        font-family: 'Montserrat' !important;
+        margin-top: 13pt;
+        }
+        ion-footer{
+            margin-bottom: 0px;
+        }
+        ion-button{
+            font-size: 16pt;
+            font-family: 'Montserrat' !important;
+            text-transform: capitalize;
+        }
+        .name{
+            flex-grow: 1;
+            display: flex;
+            padding: 22px;
+        }
+//         ion-item-divider{
+// margin:20px;
+//         }

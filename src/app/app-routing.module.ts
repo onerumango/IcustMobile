@@ -91,7 +91,15 @@ const routes: Routes = [
   {
     path: 'faq',
     loadChildren: () => import('./views/faq/faq.module').then( m => m.FaqPageModule)
+  },  {
+    path: 'account-edit',
+    loadChildren: () => import('./views/account-edit/account-edit.module').then( m => m.AccountEditPageModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./views/account/account.module').then( m => m.AccountPageModule)
   }
+
 
 
 ];

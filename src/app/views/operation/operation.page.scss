@@ -32,12 +32,12 @@
   
 
  .inputCard1{
-     padding-top: 10%;
+     padding-top: 8%;
      padding-left: 5%;
  }
  .inputCard2{
   padding-top: 3%;
-  padding-left: 5%;
+  padding-left: 3%;
 }
 
  .textCard{
@@ -60,42 +60,31 @@
   }
   .ion-padding-top2{
     padding-top: 8%;
-    padding-left: 3%;
+    padding-left: 5%;
   }
   .cancelcard{
-padding-top: 10%;
+padding-top: 8%;
 padding-left: 44%;
-font-size: larger;
+font-size: 16px;
   }
   .backcard{
     padding-top: 8%;
-    padding-left: 45%;
-    font-size: larger;
+    padding-left: 47%;
+    font-size: 16px;
       }
   .icondate{
 display: inline-block;
 
   }
-  // ion-searchbar {
-  // height: 150%
-  //   }
+ 
    ion-searchbar {
-   transform: scaleY(1.5);
-      width: 100%;
-    border: 10% !important;
-    box-shadow: none !important;
+    transform: scaleY(1.5);
+    margin-left: 1%;
+    max-width: 100% !important;
+    
     
  }
-//  ion-searchbar {
-//   .searchbar-input-container {
-//     .searchbar-input {
-//       box-shadow: none;
-//     }
-//   }
-// }
-searchbar-border-color{
-  background-color: blue;
-  }
+
 .sc-ion-searchbar-md{
   border: none !important;
   box-shadow: none !important
@@ -115,8 +104,8 @@ ion-text{
 
  ion-button{
      width: 95%;
-     padding-left: 5%;
-     height: 50px;
+     padding-left: 3%;
+     height: 55px;
  }
  ion-input {
     color:black !important;
@@ -158,13 +147,14 @@ font-family: 'Montserrat-SemiBold' !important;
    
   }
   .ioncontent{
-    height: 500%;
+    height: 110%;
+    margin-top: -9%;
+  }
+  .ioncontent1{
+    height: 115%;
   }
   
-  .radioCard{
-    padding-right: 50%;
-   
-  }
+  
   .text{
      
       margin-left: 2%;

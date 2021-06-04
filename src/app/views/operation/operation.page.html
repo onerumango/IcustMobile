@@ -27,7 +27,7 @@
       <div class="inputCard2">
         <ion-card class="box">
           <ion-row>
-            <ion-col style="width: 10%;">
+            <ion-col style="width: 10%; margin-left: -10%; margin-top: 3%;">
                 <ngx-flag-picker
                 [selectedCountryCode]="selectedCountryCode"
                 [showFlags]="isShow"
@@ -35,8 +35,8 @@
                 [showArrow]="!isShow">
               </ngx-flag-picker>
              </ion-col>
-            <ion-col style="padding-right: 40%; width: 20%;">
-               <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)">
+            <ion-col style="padding-right: 3%; width: 60%;">
+               <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)" style="margin-left: -40%;margin-top: 5%;">
                   <ion-select-option *ngFor="let user of countries" [value]="user" >
                  {{user.currency + ' : ' + user.countryName}}
                   </ion-select-option>
@@ -76,7 +76,7 @@
 </ion-header><br>
 
 <ion-content *ngIf=!flag>
-  <div class="ioncontent">
+  <div class="ioncontent1">
     <form [formGroup]="slideOneForm">
         <div class="textCard">
           <ion-text>
@@ -94,7 +94,7 @@
                </ion-item>
               </ion-col>
   
-             <ion-col class="radioCard">
+             <ion-col>
                <ion-item lines="none">
                <ion-radio mode="md" value="sell"></ion-radio>
                <ion-label style="padding-left: 10px;">No</ion-label>
@@ -110,13 +110,13 @@
   
        <div class="inputCard2">
         <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
-         <ion-card class="box" >
+         <!-- <ion-card class="box" > -->
           
-          <ion-item lines="none">
+          <!-- <ion-item lines="none"> -->
           
               <ion-searchbar mode="ios"></ion-searchbar>
-            </ion-item> 
-          </ion-card>
+            <!-- </ion-item>  -->
+          <!-- </ion-card> -->
               
        </div>
 

@@ -87,11 +87,14 @@ const routes: Routes = [
   {
     path: 'help',
     loadChildren: () => import('./views/help/help.module').then( m => m.HelpPageModule)
-  },
-  {
+  },  {
     path: 'faq',
     loadChildren: () => import('./views/faq/faq.module').then( m => m.FaqPageModule)
   }
+
+
+ 
+
 
 
 ];

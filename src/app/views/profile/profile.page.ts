@@ -84,5 +84,11 @@ export class ProfilePage implements OnInit {
     });
     await actionSheet.present();
   }
+  goToHelp(){
+    this.router.navigate(['help']);
+  }
+  goToFaq(){
+    this.router.navigate(['faq']);
+  }
 
 }

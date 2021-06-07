@@ -55,7 +55,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToCashWithdrawal()">
           <div>
             <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
             <p class="cashwithdrawalcard" >Cash Withdrawal</p>
@@ -64,13 +64,36 @@
         </ion-card>
       </ion-col>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToCashDeposit()">
             <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
             <p class="cashdepositcard">Cash Deposit</p>
          </ion-card>
       </ion-col>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToChequeDeposit()">
+            <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
+            <p class="chequedepositcard">Cheque Deposit</p>
+         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card class="transactionCards" (click)="goToChequeWithdrawal()">
+          <div>
+            <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
+            <p class="chequewithdrawalcard" >Cheque Withdrawal</p>
+            <!-- <h5>Cash Withdrawal</h5> -->
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col col-xl-3>
+        <ion-card class="transactionCards" (click)="goToForexTransaction()">
+            <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
+            <p class="cards">Forex Transaction</p>
+         </ion-card>
+      </ion-col>
+      <ion-col col-xl-3>
+        <ion-card class="transactionCards" (click)="goToChequeDeposit()">
             <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
             <p class="chequedepositcard">Cheque Deposit</p>
          </ion-card>
@@ -78,47 +101,24 @@
     </ion-row>
     <ion-row>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToLoanPayment()">
           <div>
             <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
-            <p class="cashwithdrawalcard" >Cash Withdrawal</p>
+            <p class="cashwithdrawalcard" >Loan Payment</p>
             <!-- <h5>Cash Withdrawal</h5> -->
           </div>
         </ion-card>
       </ion-col>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToUtilityPayment()">
             <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
-            <p class="cashdepositcard">Cash Deposit</p>
+            <p class="cards">Utility Bill Payment</p>
          </ion-card>
       </ion-col>
       <ion-col col-xl-3>
-        <ion-card class="transactionCards">
+        <ion-card class="transactionCards" (click)="goToDepositTopUp()">
             <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
-            <p class="chequedepositcard">Cheque Deposit</p>
-         </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards">
-          <div>
-            <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
-            <p class="cashwithdrawalcard" >Cash Withdrawal</p>
-            <!-- <h5>Cash Withdrawal</h5> -->
-          </div>
-        </ion-card>
-      </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards">
-            <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
-            <p class="cashdepositcard">Cash Deposit</p>
-         </ion-card>
-      </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards">
-            <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
-            <p class="chequedepositcard">Cheque Deposit</p>
+            <p class="cards">Deposit Top Up</p>
          </ion-card>
       </ion-col>
     </ion-row>

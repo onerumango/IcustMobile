@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-help',
@@ -11,7 +12,7 @@ export class HelpPage implements OnInit {
   isWhatCanIDo:boolean=false;
   isSecurityTip:boolean=false;
   flag:boolean=true;
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,9 @@ export class HelpPage implements OnInit {
     this.isWhatCanIDo=false;
     this.isSecurityTip=true;
 
+  }
+  goToHome(){
+    this.router.navigate(['/tabs/profile']);
   }
 
 }

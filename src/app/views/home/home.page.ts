@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,32 @@ export class HomePage implements OnInit {
     centeredSlides: true
 };
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
-
+  goToCashWithdrawal(){
+    this.router.navigate(['cashwithdrawal']);
+  }
+  goToCashDeposit(){
+    this.router.navigate(['cashdeposit']);
+  }
+  goToChequeDeposit(){
+    this.router.navigate(['chequedeposit']);
+  }
+  goToChequeWithdrawal(){
+    this.router.navigate(['chequewithdrawal']);
+  }
+  goToForexTransaction(){
+    this.router.navigate(['forex-transaction']);
+  }
+  goToLoanPayment(){
+    this.router.navigate(['loan-payment']);
+  }
+  goToUtilityPayment(){
+    this.router.navigate(['utility-payment']);
+  }
+  goToDepositTopUp(){
+    this.router.navigate(['deposit-topup']);
+  }
 }

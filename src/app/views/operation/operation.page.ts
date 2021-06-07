@@ -306,20 +306,21 @@ export class OperationPage implements OnInit {
    // this.selectedCountryCode = value;
   }
 
-  goToLogin(){
-    this.router.navigate(['login']);
+  goToHomepage(){
+    this.router.navigate(['/tabs/home']);
   }
   goToNextPage(fb){
     this.flag=false;
-    console.log(this.slideOneForm.value);
-    this.router.navigate(['utility-payment']);
-    console.log(this.title);
-    if(this.title=="Cheque Withdrawal")
-    this.router.navigate(['cashdeposit']);
-    if(this.title=="Cash Deposit")
-    this.router.navigate(['chequedeposit']);
-    if(this.title=="Cheque Deposit")
-    this.router.navigate(['tabs'])
+    
+    // console.log(this.slideOneForm.value);
+    // this.router.navigate(['utility-payment']);
+    // console.log(this.title);
+    // if(this.title=="Cheque Withdrawal")
+    // this.router.navigate(['cashdeposit']);
+    // if(this.title=="Cash Deposit")
+    // this.router.navigate(['chequedeposit']);
+    // if(this.title=="Cheque Deposit")
+    // this.router.navigate(['tabs'])
 
 
     //this.router.navigate(['cashwithdrawal2']);
@@ -328,10 +329,8 @@ export class OperationPage implements OnInit {
     this.flag=true;
   }
   goToNextScreen(){
-    this.router.navigate(['cashdeposit']);
+    this.router.navigate(['token-generation']);
   }
-  
-
 }
 
 interface CountryType {

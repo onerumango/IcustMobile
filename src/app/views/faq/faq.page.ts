@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-faq',
@@ -10,7 +11,7 @@ forwardarrow:boolean=true;
 downarrow:boolean=false;
 faqDesc: string;
 slno:number = 0;
-  constructor() { }
+  constructor(private router:Router) { }
 List:List[]=[
   {
     sno:1,
@@ -45,6 +46,9 @@ rotatedownarrow(item: any){
   this.slno = item.sno;
   this.forwardarrow=true;
   this.downarrow=false;
+}
+goToHome(){
+  this.router.navigate(['/tabs/profile']);
 }
 }
 

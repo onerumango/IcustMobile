@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar style="padding-top: 7%;" class="new-background-color">
+    <ion-icon class="backIcon" name="chevron-back-outline"></ion-icon>
+    <span class="text">{{title}}</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+
+  <div>
+    <ion-item class="item">
+      <ion-text class="newCard">Hi, I am a Chatbot, your personal digital assistant</ion-text> 
+      <ion-icon slot="end"  name="chevron-forward-outline" class="iconCard" (click)="showDescription()"></ion-icon>
+     
+      <!-- <p *ngIf="isClick" class="newCard">Hi, I am a Chatbot, your personal digital assistant</p>  -->
+
+    </ion-item>
+  </div>
+  
+</ion-content>

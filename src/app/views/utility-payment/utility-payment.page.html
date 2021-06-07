@@ -1,0 +1,173 @@
+
+  <ion-content>
+    <ion-header>
+      <ion-toolbar>
+        <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+        <span class="text">Utility Bill Payment</span>
+      </ion-toolbar>
+    </ion-header>
+    <div>
+    <form  [formGroup]="utilityForm">
+    <div class="inputCard">
+    <ion-label>Biller Name</ion-label>
+    <!-- <ion-input class="box"></ion-input> -->
+    <ion-select [compareWith]="compareWith" class="box" formControlName="billerName" ngDefaultControl>
+      <ion-select-option *ngFor="let user of billNames" [value]="user">{{user}}</ion-select-option>
+    </ion-select>
+    </div>
+    <div class="inputCard">
+      <ion-label position="stacked" class="labelCard" formControlName="accountBalance" ngDefaultControl style="font-size: 13pt;">Account Balance : $12,09,89</ion-label>   
+      </div>
+      
+    <div class="inputCard">
+      <ion-label>Amount</ion-label>
+      <ion-input class="box" formControlName="amount" ngDefaultControl></ion-input> 
+      </div>
+      <div class="inputCard">
+        <ion-label>PayFromAccount</ion-label>
+        <!-- <ion-input class="box"></ion-input> -->
+        <ion-select [compareWith]="compareWith" class="box" formControlName="payFromAccount" ngDefaultControl>
+          <ion-select-option *ngFor="let user of account" [value]="user">{{user}}</ion-select-option>
+        </ion-select>
+        </div>
+
+
+
+
+
+    <!-- <div class="inputCard">
+      <ion-label>Amount</ion-label>
+      <ion-input type="Number" class="box" formControlName="fxAmount" ngDefaultControl></ion-input> 
+      </div> -->
+
+      
+      <div class="inputCard1">
+
+        <ion-label style="padding-left: 5%;">Bill Date</ion-label>
+      <ion-card class="box">
+        <ion-item lines="none">
+            <ion-datetime displayFormat="DDD. MMM DD, YY" placeholder="Select date" formControlName="billDate" ngDefaultControl>
+            </ion-datetime>
+       <ion-icon name="calendar" slot="end"></ion-icon>
+
+       </ion-item> 
+      </ion-card>
+      </div>
+      
+    <div class="inputCard">
+      <ion-label>Bill Number</ion-label>
+      <ion-input class="box" formControlName="billNumber" ngDefaultControl></ion-input> 
+      </div>
+      
+      <div class="inputCard">
+        <ion-label>Remarks</ion-label>
+        
+          <ion-textarea class="box1" formControlName="remark" ngDefaultControl></ion-textarea>
+      
+        </div>
+    
+  <div  class="ion-padding-top">
+    <div >
+    <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+    (click)="next()">Next</ion-button>
+    </div>
+    
+    <div >
+    <ion-button expand="block" shape="round" [disabled]="true" style="width: 95%;padding-left: 7%;"
+    (click)="previous()">Back</ion-button>
+    </div>
+    </div>
+    
+    </form>
+    </div>
+ 
+    </ion-content>
+  
+
+
+
+
+
+
+
+
+
+
+    <!-- <ion-content *ngIf=!flag>
+      <ion-header>
+        <ion-toolbar>  
+          <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+          <span class="text">Forex Transaction</span>
+        </ion-toolbar>
+      </ion-header>
+      <div>
+      <form [formGroup]="forexForm">
+      <div class="inputCard">
+      <ion-label>Negotiated Rate</ion-label>
+      <ion-select [compareWith]="compareWith" class="box" formControlName="negotiatedRate" ngDefaultControl>
+        <ion-select-option *ngFor="let user of negotiated" [value]="user">{{user}}</ion-select-option>
+      </ion-select>
+      </div>
+      <div class="inputCard">
+        <ion-label position="stacked" class="labelCard" formControlName="exchangeRate" ngDefaultControl>Exchange Rate : $12,09,89</ion-label>   
+        </div>
+   
+  
+        <div style="margin-left: 19px;margin-top: 19px;">
+          <ion-label >Do you wish to perform this transaction </ion-label>
+          <ion-label>in your branch?</ion-label>
+          <ion-radio-group formControlName="trasactionBranchFlag" ngDefaultControl>
+            <ion-row >
+              <ion-col>
+                   <ion-item lines="none">
+                      <ion-label position="start">Yes</ion-label>
+                      <ion-radio mode="md" item-left value="yes"></ion-radio>
+                 </ion-item>
+               </ion-col>
+          
+              <ion-col>
+                  <ion-item lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio mode="md" item-left value="no"></ion-radio>
+                 </ion-item>
+              </ion-col>
+          
+             
+          
+          </ion-row>
+          </ion-radio-group>
+  </div>
+
+  <div class="inputCard">
+    <ion-router-link href="#" class="underline">Click here to find nearest branch</ion-router-link>
+    </div>
+  
+      <div class="inputCard">
+      <ion-label>Charges</ion-label>
+      <ion-input class="box" formControlName="charges" ngDefaultControl></ion-input>
+      
+      </div>
+    
+      <div class="inputCard">
+        <ion-label>Remarks</ion-label>
+        
+          <ion-textarea class="box1" formControlName="remark" ngDefaultControl></ion-textarea>
+      
+        </div>
+      
+    <div  class="ion-padding-top">
+      <div >
+      <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;" (click)="save(forexForm.value)"
+     >Save</ion-button>
+      </div>
+      
+      <div >
+      <ion-button expand="block" shape="round"  style="width: 95%;padding-left: 7%;"  (click)="previous()">Back</ion-button>
+      </div>
+      </div>
+      
+      </form>
+      </div>
+   
+      </ion-content>
+     -->

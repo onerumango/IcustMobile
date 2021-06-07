@@ -1,0 +1,158 @@
+ion-item{
+    font-size: xx-large;
+    color: #000000;
+    padding-top: 10%;
+    border-bottom: 0px !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #000 !important;
+    opacity: 1 !important;
+    
+}
+.slider1 {
+    height: 145px;
+    width: 100%;
+   
+    background-image: linear-gradient(#AF1084,#D000E2);
+    border-radius: 15px 15px 15px 15px;
+   
+}
+
+.slider2 {
+    height: 145px;
+    width: 100%;
+   
+    border-radius: 15px 15px 15px 15px;
+    background-image: linear-gradient(#FF0303, #D000E2);
+  
+}
+
+.slider3 {
+    height: 140px;
+    width: 100%;
+    
+    border-radius: 15px 15px 15px 15px;  
+    background-image: linear-gradient(#032AFF,#D000E2);
+}
+
+
+
+.swiper-slide {
+    -webkit-align-items: normal !important;
+    align-items: normal !important;
+}
+
+.icon {
+    margin-top: 20%;
+    font-size: 120px;
+    color: #fff;
+}
+ion-slides{
+    --bullet-background-active: rgb(214, 18, 18);
+    --bullet-background: rgb(216, 90, 90);
+}
+.textCard{
+    margin-left: 5%;
+    margin-top: 5%;
+}
+.transactionCards{
+   // height: 70pt;width: 80pt;
+    box-shadow: 1pt 1pt 5pt;
+    border-radius: 15px 15px 15px 15px;
+    //display: inline-block;
+    margin-left: 17px;
+    
+}
+.transactionCards2{
+    height: 70pt;width: 80pt;
+    box-shadow: 1pt 1pt 5pt;
+    border-radius: 15px 15px 15px 15px;
+   // display: inline-block;
+    
+
+}
+.footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+    background-image: none !important;
+}
+.settingicon{
+    color: white;
+    font-size:x-large;
+     margin-bottom: 5%;
+   
+}
+.labelaccount{
+    color: #FFFFFF;
+    font-size: 10pt;
+    margin-left: 50%;
+    opacity: 67%;
+}
+.savingaccount{
+    color: #FFFFFF;
+    font-size: 10pt;
+    margin-top: -13%;
+margin-left: -50%;
+opacity: 67%;
+    
+}
+.cashdepositcard{
+    margin-top: 5px;font-size: smaller;margin-left: 18px;
+}
+.cashwithdrawalcard{
+    margin-top: 5px;margin-left: 4%;     font-size: smaller;
+   
+}
+.chequedepositcard{
+    margin-top: 5px;font-size: smaller;margin-left: 5%;
+}
+.firstrow{
+    display: inline-block !important;
+}
+.icon{
+    margin-left: 25%;
+    margin-top: 10%;
+    font-family: 'Montserrat';
+}
+.image1{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+}
+.image2{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 55%;
+}
+.image3{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 73%;
+}
+@media screen and (min-width: 760px) {
+    .chequedepositcard {
+      font-size: 20px;
+      margin-left: 20%;
+    }
+    .cashdepositcard {
+        font-size: 20px;
+        margin-left: 20%;
+      }
+      .cashwithdrawalcard {
+        font-size: 20px;
+        margin-left: 20%;
+      }
+     .image1{
+         width: 50%;
+     }
+     .image2{
+         width: 41%;
+     }
+     .image3{
+         width: 53%;
+     }
+
+}
+

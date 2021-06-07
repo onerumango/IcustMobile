@@ -1,0 +1,40 @@
+.backIcon{
+    font-size: x-large;
+   
+    margin-bottom: 4%;
+    color:#102245;
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 100%;
+}
+.text{
+    margin-left: 2%;
+    margin-bottom: 4%;
+  display: inline-block;
+  vertical-align: middle;
+  color: #102245;
+  font-size: large;
+  opacity: 70%;
+}
+
+.new-background-color{
+    --background: #ECF3F2;
+    
+}
+.labelcard{
+    font-family: 'Montserrat' !important;
+    opacity: 75%;
+    font-size: 13pt;
+    margin-bottom: 7%;
+
+}
+.item{
+   max-width: 95% !important;
+   list-style: none;
+    display:list-item;
+    
+}
+// ion-text{
+//    margin-top: 20%;
+   
+// }

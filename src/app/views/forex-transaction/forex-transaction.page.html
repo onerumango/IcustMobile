@@ -7,27 +7,27 @@
       </ion-toolbar>
     </ion-header>
     <div>
-    <form>
+    <form  [formGroup]="forexForm">
     <div class="inputCard">
     <ion-label>Account Number</ion-label>
     <!-- <ion-input class="box"></ion-input> -->
-    <ion-select [compareWith]="compareWith" class="box">
+    <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" ngDefaultControl>
       <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
     </ion-select>
     </div>
     <div class="inputCard">
-      <ion-label position="stacked" class="labelCard">Account Balance : $12,09,89</ion-label>   
+      <ion-label position="stacked" class="labelCard" formControlName="accountBalance" ngDefaultControl style="font-size: 13pt;">Account Balance : $12,09,89</ion-label>   
       </div>
  
 
       <div class="inputCard">
         <ion-label>Transaction Type</ion-label>
-        <ion-radio-group>
-          <ion-row>
+        <ion-radio-group formControlName="transactionType" ngDefaultControl>
+          <ion-row >
             <ion-col>
                  <ion-item lines="none">
                     <ion-label position="start">Buy</ion-label>
-                    <ion-radio mode="md" item-left value="buy"></ion-radio>
+                    <ion-radio mode="md" item-left value="buy" ></ion-radio>
                </ion-item>
              </ion-col>
         
@@ -43,16 +43,63 @@
         </ion-row>
         </ion-radio-group>
 </div>
+<div class="inputCard">
+<ion-label>Transaction Currency</ion-label>
+</div>
+<div class="box7">
+  
+  <ion-card class="box">
+    <ion-row>
+      <ion-col style="width: 10%;margin-left: -10%; margin-top: 3%;">
+          <ngx-flag-picker
+          [selectedCountryCode]="selectedCountryCode"
+          [showFlags]="isShow"
+          [showLabels]="!isShow"
+          [showArrow]="!isShow">
+        </ngx-flag-picker>
+       </ion-col>
+      <ion-col style="padding-right: 40%; width: 20%;">
+          <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;margin-top: 5%;">
+            <ion-select-option *ngFor="let user of countries" [value]="user" >
+           {{user.currency + ' : ' + user.countryName}}
+            </ion-select-option>
+            </ion-select>
+      </ion-col>
+     </ion-row>
+   </ion-card>
+  </div>
+    <!-- <div class="inputCard">
+    <ion-label>Transaction Currency</ion-label>
+    <ion-input class="box">
+    <ngx-flag-picker
+    [selectedCountryCode]="selectedCountryCode"
+    showFlags="isShow"
+    showArrow="!isShow"
+    [countryCodes]="countryCodes"
+    (changedCountryCode)="changeSelectedCountryCode($event)">
+  </ngx-flag-picker>
+</ion-input>
+    </div> -->
+<!--     
+    <div class="inputCard">
+      <ion-label>Transaction Currency</ion-label>
+      <!-- <ion-select [compareWith]="compareWith" class="box">
+      <ion-select-option *ngFor="let user of countries" [value]="user">
+      
+      </ion-select-option>
+      </ion-select> -->
+      <!-- <ngx-flag-picker  -->
+      <!-- [selectedCountryCode]="selectedCountryCode"
+      [countryCodes]="countryCodes"
+    
+      (changedCountryCode)="changeSelectedCountryCode($event)"> -->
+    <!-- </ngx-flag-picker>
+   
+  </div> -->
 
     <div class="inputCard">
-    <ion-label>Transaction Currency</ion-label>
-    <ion-input class="box"></ion-input>
-    
-    </div>
-  
-    <div class="inputCard">
       <ion-label>Fx Amount</ion-label>
-      <ion-input class="box"></ion-input> 
+      <ion-input class="box" formControlName="fxAmount" ngDefaultControl></ion-input> 
       </div>
     
   <div  class="ion-padding-top">
@@ -90,23 +137,23 @@
         </ion-toolbar>
       </ion-header>
       <div>
-      <form>
+      <form [formGroup]="forexForm">
       <div class="inputCard">
       <ion-label>Negotiated Rate</ion-label>
-      <ion-select [compareWith]="compareWith" class="box">
+      <ion-select [compareWith]="compareWith" class="box" formControlName="negotiatedRate" ngDefaultControl>
         <ion-select-option *ngFor="let user of negotiated" [value]="user">{{user}}</ion-select-option>
       </ion-select>
       </div>
       <div class="inputCard">
-        <ion-label position="stacked" class="labelCard">Exchange Rate : $12,09,89</ion-label>   
+        <ion-label position="stacked" class="labelCard" formControlName="exchangeRate" ngDefaultControl>Exchange Rate : $12,09,89</ion-label>   
         </div>
    
   
         <div style="margin-left: 19px;margin-top: 19px;">
           <ion-label >Do you wish to perform this transaction </ion-label>
           <ion-label>in your branch?</ion-label>
-          <ion-radio-group>
-            <ion-row>
+          <ion-radio-group formControlName="trasactionBranchFlag" ngDefaultControl>
+            <ion-row >
               <ion-col>
                    <ion-item lines="none">
                       <ion-label position="start">Yes</ion-label>
@@ -133,20 +180,20 @@
   
       <div class="inputCard">
       <ion-label>Charges</ion-label>
-      <ion-input class="box"></ion-input>
+      <ion-input class="box" formControlName="charges" ngDefaultControl></ion-input>
       
       </div>
     
       <div class="inputCard">
         <ion-label>Remarks</ion-label>
         
-          <ion-textarea class="box1"></ion-textarea>
+          <ion-textarea class="box1" formControlName="remark" ngDefaultControl></ion-textarea>
       
         </div>
       
     <div  class="ion-padding-top">
       <div >
-      <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+      <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;" (click)="save(forexForm.value)"
      >Save</ion-button>
       </div>
       

@@ -29,6 +29,10 @@ export class UtilityPaymentPage implements OnInit {
 next()
 {
   console.log(this.utilityForm.value);
-  this.router.navigate(['forex-transaction']);
+  // this.router.navigate(['forex-transaction']);
+}
+previous1()
+{
+  this.router.navigate(['tabs']);
 }
 }

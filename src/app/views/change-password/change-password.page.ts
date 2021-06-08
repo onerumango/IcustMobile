@@ -12,13 +12,13 @@ export class ChangePasswordPage implements OnInit {
   constructor(private fb: FormBuilder,private router:Router) { }
 
   ngOnInit() {
-    // this.changePasswordForm = this.fb.group({
-    //   currentPassword:['', [Validators.required]],
-    //   newPassword:['', [Validators.required]],
-    //   newPasswordConfirmation:['', [Validators.required]],
+    this.changePasswordForm = this.fb.group({
+      currentPassword:['', [Validators.required]],
+      newPassword:['', [Validators.required]],
+      newPasswordConfirmation:['', [Validators.required]],
     
-    // })
-    //  console.log(this.changePasswordForm.value);
+    })
+     console.log(this.changePasswordForm.value);
   }
 save(){
   console.log(this.changePasswordForm.value);

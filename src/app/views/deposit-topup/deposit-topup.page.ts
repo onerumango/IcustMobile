@@ -34,6 +34,10 @@ export class DepositTopupPage implements OnInit {
      console.log(fb);
      this.router.navigate(['token-generation']);
   }
+  previous1()
+  {
+    this.router.navigate(['tabs']);
+  }
   }
 
 

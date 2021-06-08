@@ -1,11 +1,11 @@
-
+<ion-header *ngIf=flag>
+  <ion-toolbar>
+    <ion-icon name="chevron-back-outline" (click)="previous1()"></ion-icon>
+    <span class="text">Forex Transaction</span>
+  </ion-toolbar>
+</ion-header>
   <ion-content *ngIf=flag>
-    <ion-header>
-      <ion-toolbar>
-        <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
-        <span class="text">Forex Transaction</span>
-      </ion-toolbar>
-    </ion-header>
+   
     <div>
     <form  [formGroup]="forexForm">
     <div class="inputCard">
@@ -16,7 +16,7 @@
     </ion-select>
     </div>
     <div class="inputCard">
-      <ion-label position="stacked" class="labelCard" formControlName="accountBalance" ngDefaultControl style="font-size: 13pt;">Account Balance : $12,09,89</ion-label>   
+      <ion-label position="stacked" class="labelCard" formControlName="accountBalance" ngDefaultControl style="font-size: 14px;">Account Balance : $12,09,89</ion-label>   
       </div>
  
 
@@ -50,7 +50,7 @@
   
   <ion-card class="box">
     <ion-row>
-      <ion-col style="width: 10%;margin-left: -10%; margin-top: 3%;">
+      <ion-col style="width: 10%;">
           <ngx-flag-picker
           [selectedCountryCode]="selectedCountryCode"
           [showFlags]="isShow"
@@ -58,8 +58,8 @@
           [showArrow]="!isShow">
         </ngx-flag-picker>
        </ion-col>
-      <ion-col style="padding-right: 40%; width: 20%;">
-          <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;margin-top: 5%;">
+      <ion-col style="width: 20%;">
+          <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
             <ion-select-option *ngFor="let user of countries" [value]="user" >
            {{user.currency + ' : ' + user.countryName}}
             </ion-select-option>
@@ -104,13 +104,13 @@
     
   <div  class="ion-padding-top">
     <div >
-    <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;"
+    <ion-button expand="block" shape="round" style="width: 95%;"
     (click)="next()">Next</ion-button>
     </div>
     
     <div >
-    <ion-button expand="block" shape="round" [disabled]="true" style="width: 95%;padding-left: 7%;"
-    (click)="previous()">Back</ion-button>
+    <ion-button expand="block" shape="round" fill="clear" style="width: 95%;color:black"
+    (click)="previous1()">Cancel</ion-button>
     </div>
     </div>
     
@@ -128,15 +128,14 @@
 
 
 
-
+    <ion-header *ngIf=!flag>
+      <ion-toolbar>  
+        <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+        <span class="text">Forex Transaction</span>
+      </ion-toolbar>
+    </ion-header>
     <ion-content *ngIf=!flag>
-      <ion-header>
-        <ion-toolbar>  
-          <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
-          <span class="text">Forex Transaction</span>
-        </ion-toolbar>
-      </ion-header>
-      <div>
+     <div>
       <form [formGroup]="forexForm">
       <div class="inputCard">
       <ion-label>Negotiated Rate</ion-label>
@@ -149,9 +148,9 @@
         </div>
    
   
-        <div style="margin-left: 19px;margin-top: 19px;">
-          <ion-label >Do you wish to perform this transaction </ion-label>
-          <ion-label>in your branch?</ion-label>
+        <div style="margin-left: 19px;margin-top: 19px;margin-right: 19px">
+          <ion-label>Do you wish to perform this transaction in your branch?</ion-label>
+          <!-- <ion-label></ion-label> -->
           <ion-radio-group formControlName="trasactionBranchFlag" ngDefaultControl>
             <ion-row >
               <ion-col>
@@ -193,12 +192,12 @@
       
     <div  class="ion-padding-top">
       <div >
-      <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;" (click)="save(forexForm.value)"
+      <ion-button expand="block" shape="round" style="width: 95%;" (click)="save(forexForm.value)"
      >Save</ion-button>
       </div>
       
       <div >
-      <ion-button expand="block" shape="round"  style="width: 95%;padding-left: 7%;"  (click)="previous()">Back</ion-button>
+      <ion-button shape="round"  fill="clear"  style="width: 95%;"  (click)="previous()" style="color: black;">Back</ion-button>
       </div>
       </div>
       

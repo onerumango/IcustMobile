@@ -1,12 +1,17 @@
 
     .box {
         border-width: thin;
-        border-radius: 10px;
-        box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+        // border-radius: 10px;
+        // box-shadow: 0 5pt 5pt -2pt #D3D3D3;
         width: 95%;
         height: 55px;
-        
-        background-color: #f9fafb;
+        // background-image: linear-gradient(#FFFFFF, #F8FAFE);
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(248, 250, 254, 0.5));
+        box-shadow: 0 3pt 6pt #00000029;
+        // opacity: 50%;
+        border-radius: 13px;
+        // background-color: #f9fafb;
+        margin-top: 10px;
         border-top-style: hidden;
         border-right-style: hidden;
         border-left-style: hidden;
@@ -21,15 +26,20 @@
     .inputCard1{
         padding-top: 7%;
         padding-left: 5%;
-        border-radius: 10px !important;
+        border-radius: 13px !important;
         font-family: 'Montserrat' !important;
-        background-color: #ECF3F2;
+        background-color:rgba(236, 243, 242,0.6);
+       
+        
+        box-shadow: 0 3pt 6pt #00000029;
+        border-bottom-style: hidden;
        
         }
         .inputCard1   ion-label{
-            font-size: large;
+            font-size: 14px;
             color:black;
             font-family: 'Montserrat' !important;
+           
 
        
         }
@@ -39,7 +49,7 @@
         }
     .labelCard{
     color: gray;
-    font-size: 13pt;
+    font-size: 14px;
     font-family: 'Montserrat' !important;
     
     }
@@ -48,11 +58,11 @@
     }
     .underline {
     text-decoration: underline;
-    font-size: 20px;
+    font-size: 14px;
     }
     ion-input {
     color:black !important;
-    font-size: 16pt;
+    font-size: 14px;
     
     --placeholder-color: black !important;
     // --placeholder-opacity: 100%;
@@ -61,7 +71,7 @@
     }
     ion-label{
     color:gray;
-    font-size: 13pt;
+    font-size: 14px;
     font-family: 'Montserrat' !important;
     }
     ion-back-button{
@@ -74,7 +84,7 @@
       display: inline-block;
       vertical-align: middle;
       color:rgb(70,111,254);
-      font-size: x-large;
+      font-size: 20px;
       font-family: 'Montserrat' !important;
     }
     ion-button{
@@ -103,5 +113,6 @@
             margin-left: 20px;
             border-radius: 10px;
             flex:1;
+           
            
         }

@@ -31,7 +31,11 @@ export class LoanPaymentPage implements OnInit {
   {
     console.log("inside loan")
      console.log(fb);
-     this.router.navigate(['deposit-topup']);
+    //  this.router.navigate(['deposit-topup']);
+  }
+  previous1()
+  {
+    this.router.navigate(['tabs']);
   }
   }
 

@@ -1,33 +1,39 @@
 
 * {
-     font-family: 'Montserrat-SemiBold' !important;
+     font-family: 'Montserrat' !important;
     /* Add !important to overwrite all elements */
   }
 .box {
     border-width: thin;
     // border-style: solid;
-    border-radius: 10px;
-    box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+ 
+    // Blur:6pt;
     // box-shadow: 0 0 5pt 0.5pt #D3D3D3;
     // box-shadow: 0px 15px 10px -15px #D3D3D3;
     width: 95%;
     height: 55px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(248, 250, 254, 0.5));
+    box-shadow: 0 3pt 6pt #00000029;
+    // opacity: 50%;
+    border-radius: 13px;
+    margin-top: 10px;
     
-    background-color: #f9fafb;
+    // background-color: #f9fafb;
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
   }
     .box1 {
+        margin-top: 10px;
         border-width: thin;
        // border-style: thin;
-        border-radius: 10px;
+        border-radius: 20px;
         
         width: 95%;
         height: 100px;
-        box-shadow: 0 5pt 9pt -2pt #D3D3D3;
-        
-        background-color: #f9fafb;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(248, 250, 254, 0.5));
+    box-shadow: 0 3pt 6pt #00000029;
+    // opacity: 50%;
         // border-top-style: hidden;
         // border-right-style: hidden;
         // border-left-style: hidden;
@@ -42,6 +48,7 @@
     .inputCard{
     padding-top: 7%;
     padding-left: 5%;
+    // opacity: 50%;
     
     }
     .inputRemarks{
@@ -62,16 +69,18 @@
        
         }
         .inputCard1   ion-label{
-            font-size: large;
+            font-size: 14px;
             color:black;
+            opacity: 75%;
        
         }
         .inputCard1 .input{
             font-weight: bold;
+            opacity: 100%;
         }
     .labelCard{
     color: gray;
-    font-size: 13pt;
+    font-size: 14px;
     
     }
     .searchbar{
@@ -79,11 +88,11 @@
     }
     .underline {
     text-decoration: underline;
-    font-size: 20px;
+    font-size: 14px;
     }
     ion-input {
     color:black !important;
-    font-size: 16pt;
+    font-size: 14pt;
     
     --placeholder-color: black !important;
     // --placeholder-opacity: 100%;
@@ -91,9 +100,10 @@
     font-family: 'Montserrat' !important;
     }
     ion-label{
-    color:gray;
-    font-size: 13pt;
+   color:#102245;
+    font-size: 14px;
     font-family: 'Montserrat' !important;
+     opacity: 75%;
 
     }
     ion-back-button{
@@ -123,7 +133,7 @@
       display: inline-block;
       vertical-align: middle;
       color:rgb(70,111,254);
-      font-size: x-large;
+      font-size: 20px;
       font-family: 'Montserrat' !important;
     }
     ion-button{
@@ -134,11 +144,28 @@
        
         
     }
-    .ion-padding-top{
-        padding-top: 10%;
+    .cancelcard{
+        padding-top: 8%;
+        padding-left: 44%;
+        font-size: 14px;
+          }
+    .ion-padding-top2{
+        padding-top: 8%;
+        padding-left: 5%;
+      }
+    .backcard{
+        padding-top: 8%;
+        padding-left: 47%;
+        font-size: 14px;
+          }
+    
+        .ion-padding-top{
+            padding-top: 10%;
+            // padding-left: 3%;
+        
         }
         ion-toolbar{
-            margin-top: 5%;
+            margin-top:5%;
            box-shadow: 0 5pt 5pt -2pt #D3D3D3;
         }
 .boxDrop{
@@ -183,3 +210,7 @@
             padding-top: 5%;
             padding-left: 5%;
           }
+
+         form::-webkit-scrollbar {
+            display: none;
+        }

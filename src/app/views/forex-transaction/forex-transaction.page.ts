@@ -333,8 +333,12 @@ export class ForexTransactionPage implements OnInit {
   save(fb)
   {
    console.log(fb)
-   this.router.navigate(['loan-payment']);
+  //  this.router.navigate(['loan-payment']);
    
+  }
+  previous1()
+  {
+    this.router.navigate(['tabs']);
   }
 }
 interface CountryType {

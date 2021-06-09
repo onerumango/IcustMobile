@@ -12,13 +12,13 @@
 
   <div>
     <ion-toolbar>
-      <ion-searchbar showCancelButton="never" color="#FFFFFF"></ion-searchbar>
+      <ion-searchbar appearence="none"></ion-searchbar>
     </ion-toolbar>
   </div>
 
   <div>
-    <ion-slides pager [options]="slideOpts">
-      <ion-slide >
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide  >
         <div class="slider1">
          
         </div>
@@ -30,7 +30,7 @@
           <img src="assets\images\BL2.png" style="width: 48pt;height: 32pt; margin-top: 6%;margin-right: 50%;">
           <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
           <ion-label class="labelaccount">Account Balance</ion-label>
-          <p style="color: #FFFFFF;margin-left: 50%;">$12,09,98</p>
+          <p class="balAmt">$12,09,98</p>
 
           <p class="savingaccount">Saving account</p>
         </div>
@@ -54,7 +54,7 @@
   </div>
   <ion-grid>
     <ion-row>
-      <ion-col col-xl-3>
+      <ion-col>
         <ion-card class="transactionCards" (click)="goToCashWithdrawal()">
           <div>
             <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
@@ -63,13 +63,13 @@
           </div>
         </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
+      <ion-col>
         <ion-card class="transactionCards" (click)="goToCashDeposit()">
             <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
             <p class="cashdepositcard">Cash Deposit</p>
          </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
+      <ion-col>
         <ion-card class="transactionCards" (click)="goToChequeDeposit()">
             <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
             <p class="chequedepositcard">Cheque Deposit</p>
@@ -78,7 +78,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card class="transactionCards" (click)="goToChequeWithdrawal()">
+        <ion-card class="transactionCards2" (click)="goToChequeWithdrawal()">
           <div>
             <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
             <p class="chequewithdrawalcard" >Cheque Withdrawal</p>
@@ -86,22 +86,22 @@
           </div>
         </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards" (click)="goToForexTransaction()">
+      <ion-col>
+        <ion-card class="transactionCards2" (click)="goToForexTransaction()">
             <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
             <p class="cards">Forex Transaction</p>
          </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards" (click)="goToChequeDeposit()">
+      <ion-col>
+        <ion-card class="transactionCards2" (click)="goToChequeDeposit()">
             <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
             <p class="chequedepositcard">Cheque Deposit</p>
          </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards" (click)="goToLoanPayment()">
+      <ion-col>
+        <ion-card class="transactionCards2" (click)="goToLoanPayment()">
           <div>
             <img class="image1" src="assets\icon\cashw.PNG"  alt="Ionic logo">
             <p class="cashwithdrawalcard" >Loan Payment</p>
@@ -109,14 +109,14 @@
           </div>
         </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards" (click)="goToUtilityPayment()">
+      <ion-col>
+        <ion-card class="transactionCards2" (click)="goToUtilityPayment()">
             <img class="image2" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
             <p class="cards">Utility Bill Payment</p>
          </ion-card>
       </ion-col>
-      <ion-col col-xl-3>
-        <ion-card class="transactionCards" (click)="goToDepositTopUp()">
+      <ion-col>
+        <ion-card class="transactionCards2" (click)="goToDepositTopUp()">
             <img class="image3" src="assets\icon\chequedeposit.PNG" alt="Ionic logo">
             <p class="cards">Deposit Top Up</p>
          </ion-card>

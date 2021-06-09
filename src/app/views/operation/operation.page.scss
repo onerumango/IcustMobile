@@ -95,21 +95,22 @@ display: inline-block;
   }
  
    ion-searchbar {
-    transform: scaleY(1.5);
-    margin-left: 1%;
-    max-width: 100% !important;
-    
+  //  transform: scaleY(1.5);
+  //  margin-left: 1%;
+  //  max-width: 100% !important;
+  background-color: #f9fafb;
+ 
     
  }
 
-.sc-ion-searchbar-md{
-  border: none !important;
-  box-shadow: none !important
-}
- .searchbar-input {
-  border: 0 !important;
-  box-shadow: none !important;
-}
+// .sc-ion-searchbar-md{
+//   border: none !important;
+//   box-shadow: none !important
+// }
+//  .searchbar-input {
+//   border: 0 !important;
+//   box-shadow: none !important;
+// }
 ion-select{
   font-family: 'Montserrat-SemiBold' !important;
   font-size: 14pt;
@@ -189,10 +190,10 @@ ion-text{
   }
   @media screen and (max-width: 320px) {
     .ioncontent{
-      height: 118%;
+      height: 130%;
       margin-top: -3%;
     }
     .ioncontent1{
-      height: 135%;
+      height: 165%;
     }
   }

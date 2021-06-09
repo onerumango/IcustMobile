@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController, PopoverController } from '@ionic/angular';
 
 @Component({
@@ -9,7 +10,7 @@ import { ActionSheetController, PopoverController } from '@ionic/angular';
 export class AccountPage implements OnInit {
   flag: boolean;
 
-  constructor(public popoverCtrl: PopoverController,public actionSheetController: ActionSheetController) { }
+  constructor(public popoverCtrl: PopoverController,public router:Router,public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
   }
@@ -55,5 +56,14 @@ export class AccountPage implements OnInit {
   edit()
   {
     this.flag=true;
+  }
+  previous()
+  {
+    this.router.navigate(['/tabs/profile']);
+  }
+  previous1()
+  {
+    // this.router.navigate(['account']);
+    this.flag=false;
   }
 }

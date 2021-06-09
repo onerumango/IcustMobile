@@ -1,12 +1,12 @@
 .new-background-color{
     --background:#ECF3F2;
-    height:88.5pt;
+    height:88.5px;
      padding-top: 30px;
     // margin-left: 2%;
     display: inline-block;
     vertical-align: middle;
     color:black;
-    font-size: x-large;
+    font-size:20px;
     font-family: 'Montserrat' !important;
     
 }
@@ -15,6 +15,7 @@ ion-icon{
     color:black;
     display: inline-block;
     vertical-align: middle;
+    
  
 }
 .box {
@@ -41,7 +42,7 @@ ion-icon{
     height: 55px;
     
     background-color:white;
-    //  border-color:#456EFE;
+    //  border-color:;
     // border-top-style: hidden;
     // border-right-style: hidden;
     // border-left-style: hidden;
@@ -78,6 +79,9 @@ ion-label{
             font-size: 16pt;
             font-family: 'Montserrat' !important;
             text-transform: capitalize;
+        }
+        .button{
+            opacity: 100%;
         }
         .name{
             flex-grow: 1;

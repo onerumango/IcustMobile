@@ -333,6 +333,7 @@ export class ForexTransactionPage implements OnInit {
   save(fb)
   {
    console.log(fb)
+   this.router.navigate(['token-generation']);
   //  this.router.navigate(['loan-payment']);
    
   }

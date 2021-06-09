@@ -1,18 +1,19 @@
+<ion-header *ngIf="!flag">
+  <ion-toolbar  class="new-background-color">
+    <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
+    <span class="text" style="margin-left: 2%;">Account Settings</span>
+    <ion-buttons slot="end">
+      <ion-button   (click)="openActionSheet()">
+        <!-- <ion-icon slot="icon-only" md="ellipsis-vertical"></ion-icon>
+        <ion-icon name="more"></ion-icon> -->
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content *ngIf="!flag">
-  <ion-header>
-    <ion-toolbar  class="new-background-color">
-      <ion-icon name="chevron-back-outline" (click)="previous()"></ion-icon>
-      <span class="text">Account Settings</span>
-      <ion-buttons slot="end">
-        <ion-button   (click)="openActionSheet()">
-          <!-- <ion-icon slot="icon-only" md="ellipsis-vertical"></ion-icon>
-          <ion-icon name="more"></ion-icon> -->
-          <ion-icon name="ellipsis-vertical"></ion-icon>
-        
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+ 
 
   <ion-item-divider>
    
@@ -109,21 +110,21 @@
 
 
 
-
-  <ion-content *ngIf="flag">
-    <ion-header>
-      <ion-toolbar  class="new-background-color">
-        <ion-icon name="chevron-back-outline" (click)="previous1()"></ion-icon>
-        <span class="text">Account Settings</span>
-        <!-- <ion-buttons slot="end">
-          <ion-button   (click)="openActionSheet()">
-            <ion-icon name="ellipsis-vertical"></ion-icon>
+  <ion-header *ngIf="flag">
+    <ion-toolbar  class="new-background-color">
+      <ion-icon name="chevron-back-outline" (click)="previous1()"></ion-icon>
+      <span class="text" style="margin-left: 2%;">Account Settings</span>
+      <!-- <ion-buttons slot="end">
+        <ion-button   (click)="openActionSheet()">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+      
         
-          
-          </ion-button>
-        </ion-buttons> -->
-      </ion-toolbar>
-    </ion-header>
+        </ion-button>
+      </ion-buttons> -->
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="flag">
+   
   
     <!-- <ion-item-divider> -->
      

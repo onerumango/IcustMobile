@@ -30,6 +30,7 @@ next()
 {
   console.log(this.utilityForm.value);
   // this.router.navigate(['forex-transaction']);
+  this.router.navigate(['token-generation']);
 }
 previous1()
 {

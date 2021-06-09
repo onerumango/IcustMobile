@@ -31,6 +31,7 @@ export class LoanPaymentPage implements OnInit {
   {
     console.log("inside loan")
      console.log(fb);
+     this.router.navigate(['token-generation']);
     //  this.router.navigate(['deposit-topup']);
   }
   previous1()

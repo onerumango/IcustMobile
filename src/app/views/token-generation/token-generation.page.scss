@@ -42,7 +42,7 @@
     color:#102245;
     opacity: 27%;
     size:10pt;
-    font-family: 'Montserrat,SemiBold' !important;
+    font-family: 'Montserrat' !important;
     justify-content: center;
   }
   .text2{
@@ -70,7 +70,7 @@
   }
   .circle {
     position: absolute;
-    left: 45%;
+    left: 48%;
     top: -18px;
     width: 36px;
     height: 36px;
@@ -117,4 +117,16 @@
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
     background-repeat: repeat-x;
     content: "";
+}
+.close{
+  // margin-bottom:140px;
+  color: lightgrey;
+  height: 18pt;
+  width: 18pt;
+  position:absolute;
+  // justify-content: right;
+  right: 10px;
+    top: -5px;
+  // padding-bottom: 130px;
+  // padding-right:10px;
 }

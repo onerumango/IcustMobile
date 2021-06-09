@@ -2,8 +2,11 @@
 <ion-content>
   <div class="rect">
     <ion-header class="head">
+      
       <ion-toolbar  class="new-background-color" style="--border-width: 0;">
+        <ion-icon name="close" class="close" slot="end" (click)="next()"></ion-icon>
         <div class="text" style="margin-left:24px;">Appointment Summary</div>
+      
         <span class="text1">Token Number <br> <span class="text2" style="opacity:100%;">10989</span></span>
   
   
@@ -44,7 +47,7 @@
               </div>
               <img src="assets\images\qr.jpg" alt="Ionic logo">  
              
-              <ion-label class="inputCard" style="display:block;opacity: 70%;font-size: 16pt;" (click)="next()">Add to wallet</ion-label> 
+              <ion-label class="inputCard" style="display:block;opacity: 70%;font-size: 16pt;">Add to wallet</ion-label> 
             
     </div>
    

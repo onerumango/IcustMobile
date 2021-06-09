@@ -14,6 +14,6 @@ export class TokenGenerationPage implements OnInit {
   }
 next()
 {
-  this.router.navigate(['change-password']);
+  this.router.navigate(['tabs']);
 }
 }

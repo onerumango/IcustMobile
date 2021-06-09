@@ -4,16 +4,13 @@ ion-item{
     padding-top: 10%;
     border-bottom: 0px !important;
 }
-
-.swiper-pagination-bullet-active {
-    background: #000 !important;
-    opacity: 1 !important;
+.slider-pager {
+    background: #000;
     
-}
+  }
 .slider1 {
     height: 145px;
     width: 100%;
-   
     background-image: linear-gradient(#AF1084,#D000E2);
     border-radius: 15px 15px 15px 15px;
    
@@ -38,10 +35,10 @@ ion-item{
 
 
 
-.swiper-slide {
-    -webkit-align-items: normal !important;
-    align-items: normal !important;
-}
+// .swiper-slide {
+//     -webkit-align-items: normal !important;
+//     align-items: normal !important;
+// }
 
 .icon {
     margin-top: 20%;
@@ -57,21 +54,21 @@ ion-slides{
     margin-top: 5%;
 }
 .transactionCards{
-   // height: 70pt;width: 80pt;
     box-shadow: 1pt 1pt 5pt;
     border-radius: 15px 15px 15px 15px;
-    //display: inline-block;
-    margin-left: 17px;
-    
+ text-align: center;
+    width: 95%;
+    height: 85%;
+    margin-left: 1%;
 }
 .transactionCards2{
-    height: 70pt;width: 80pt;
+   height: 80%;width: 95%;
     box-shadow: 1pt 1pt 5pt;
     border-radius: 15px 15px 15px 15px;
-   // display: inline-block;
-    
-
+   text-align: center;
+   margin-left: 1%;
 }
+
 .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
     background-image: none !important;
 }
@@ -95,23 +92,27 @@ margin-left: -50%;
 opacity: 67%;
     
 }
+.balAmt{
+    color: #FFFFFF;margin-left: 50%;font-size: 14px;
+}
 .cashdepositcard{
-    margin-top: 5px;font-size: smaller;margin-left: 18px;
+    margin-top: 5px;font-size: 14px;
 }
 .cashwithdrawalcard{
-    margin-top: 5px;margin-left: 4%;     font-size: smaller;
+    margin-top: 5px;     font-size: 14px;
    
 }
 .cards{
-    margin-top: 5px;margin-left: 4%;     font-size: 11px;
+    margin-top: 5px;    font-size: 14px;
+    
    
 }
 .chequewithdrawalcard{
-    margin-top: 5px;margin-left: 4%;     font-size: 10px;
+    margin-top: 5px;   font-size: 14px;
    
 }
 .chequedepositcard{
-    margin-top: 5px;font-size: smaller;margin-left: 5%;
+    margin-top: 5px;font-size: 14px;
 }
 .firstrow{
     display: inline-block !important;
@@ -142,24 +143,29 @@ opacity: 67%;
 @media screen and (min-width: 760px) {
     .chequedepositcard {
       font-size: 20px;
-      margin-left: 20%;
+      align-items: center;
+    //   margin-left: 20%;
     }
     .cashdepositcard {
         font-size: 20px;
-        margin-left: 20%;
+        align-items: center;
+        // margin-left: 20%;
       }
       .cashwithdrawalcard {
         font-size: 20px;
-        margin-left: 20%;
+        align-items: center;
+        // margin-left: 20%;
       }
       .cards{
         font-size: 20px;
-        margin-left: 15%;
+        align-items: center;
+        // margin-left: 15%;
        
     }
     .chequewithdrawalcard{
         font-size: 20px;
-        margin-left: 10%;
+        align-items: center;
+        // margin-left: 10%;
        
     }
      .image1{
@@ -171,6 +177,41 @@ opacity: 67%;
      .image3{
          width: 53%;
      }
+     .labelaccount{
+        color: #FFFFFF;
+        font-size: 20px;
+        margin-left: 50%;
+        opacity: 67%;
+    }
+    .savingaccount{
+        color: #FFFFFF;
+        font-size: 20px;
+        margin-top: -10%;
+    margin-left: -50%;
+    opacity: 67%;
+    }
+    .balAmt{
+        color: #FFFFFF;margin-left: 50%;font-size: 20px;
+    }
+    .slider2 {
+        height: 200px;
+        width: 100%;
+        border-radius: 15px 15px 15px 15px;
+        background-image: linear-gradient(#FF0303, #D000E2);
+    }
 
+    .slider1 {
+        height: 200px;
+        width: 100%;
+        background-image: linear-gradient(#AF1084,#D000E2);
+        border-radius: 15px 15px 15px 15px;
+    }
+    .slider3 {
+        height: 200px;
+        width: 100%;
+        border-radius: 15px 15px 15px 15px;  
+        background-image: linear-gradient(#032AFF,#D000E2);
+    }
+    
 }
 

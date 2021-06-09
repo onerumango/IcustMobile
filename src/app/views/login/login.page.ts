@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
   }
 
   goToCashWithdrawal(){
-    this.router.navigate(['cashwithdrawal']);
+    this.router.navigate(['tabs']);
     console.log(this.loginForm.value.otp);
     console.log(this.loginForm.value);
 

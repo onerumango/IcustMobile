@@ -23,6 +23,10 @@ export class ProfilePage implements OnInit {
   {
     this.router.navigate(['change-password']);
   }
+  account()
+  {
+    this.router.navigate(['account']);
+  }
   menu()
   {
     this.flag=true;

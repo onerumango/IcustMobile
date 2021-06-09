@@ -22,6 +22,10 @@ export class ChangePasswordPage implements OnInit {
   }
 save(){
   console.log(this.changePasswordForm.value);
-  this.router.navigate(['chequewithdrawal']);
+ 
+}
+previous()
+{
+  this.router.navigate(['/tabs/profile']);
 }
 }

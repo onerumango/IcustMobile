@@ -18,7 +18,7 @@
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
-
+@import '~@ionic/angular/css/ionic.bundle.css';
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
@@ -26,10 +26,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-searchbar ion-icon {
-    right: 16px !important;
-    left: auto !important;
-  }
+// ion-searchbar ion-icon {
+//     right: 16px !important;
+//     left: auto !important;
+//   }
 
   @font-face {
     font-family: 'Montserrat';
@@ -68,4 +68,13 @@ my-custom-class buttons{
   font-size: 16pt;
   font-weight: bold;
   font-family: 'Montserrat' !important;
+}
+.searchbar-input {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  color: #000 !important;
+}
+ion-searchbar{
+  --color: #000;
+  --placeholder-color: #000;
 }

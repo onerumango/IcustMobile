@@ -15,7 +15,7 @@ export class OperationPage implements OnInit {
   flag:boolean=true;
   currencyValue:string;
   @Input() title : any;
- 
+  users=['789045667','8789977889'];
 
 
   ngOnInit() {

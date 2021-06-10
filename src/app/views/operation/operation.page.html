@@ -3,27 +3,23 @@
     <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToLogin()"></ion-icon>
     <span class="text">{{title}}</span>
   </ion-toolbar>
-</ion-header><br>
+</ion-header>
 
 <ion-content *ngIf=flag>
-  <div class="ioncontent">
+  <div>
     <form [formGroup]="slideOneForm">
+      
       <div class="inputCard1">
-          <ion-label position="stacked">Account Number</ion-label>
-          <ion-input class="box" formControlName="accountNo" ></ion-input><br>
-          <ion-label position="stacked" class="labelCard">Account Balance : $12,09,89</ion-label>
-      </div>
+        <ion-label>Account Number</ion-label>
+        <!-- <ion-input class="box"></ion-input> -->
+        <ion-select [compareWith]="compareWith" class="box" formControlName="accountNo" ngDefaultControl>
+          <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
+        </ion-select>
+        </div>
+        <div class="inputCard1">
+          <ion-label position="stacked" class="labelCard" style="font-size: 14px;">Account Balance : $12,09,89</ion-label>   
+          </div>
 
-      <!-- <div class="inputCard1">
-          <ion-label>Transaction Currency</ion-label>
-          <ion-select [compareWith]="compareWith" class="box">
-          <ion-select-option *ngFor="let user of countries" [value]="user">
-            {{user.code + ' ' + user.flag}}
-          </ion-select-option>
-          </ion-select>
-          
-       
-      </div> -->
       <div class="inputCard1">
         <ion-label>Transaction Currency</ion-label>
         </div>
@@ -60,14 +56,13 @@
           <ion-input class="box" formControlName="accountBranch"></ion-input>
       </div>
 <div class="ion-padding-top">
-  <div >
-    <ion-button  expand="block" shape="round"(click)="goToNextPage()">Next</ion-button>
-</div>
+  <div>
+    <ion-button  expand="block" shape="round"(click)="goToNextPage()" style="width: 95%;">Next</ion-button>
+  </div>
 
-<div>
-    <!-- <ion-text (click)="goToHomepage()">Cancel</ion-text> -->
-    <ion-button expand="block" shape="round" fill="clear" style="width: 95%;color:black;"
-(click)="goToHomepage()">Cancel</ion-button>
+  <div>
+    <ion-button expand="block" shape="round" fill="clear" style="color: black;"
+    (click)="goToHomepage()">Cancel</ion-button>
 </div>
 </div>
      
@@ -83,7 +78,7 @@
 </ion-header>
 
 <ion-content *ngIf=!flag>
-  <div class="ioncontent1">
+  <div>
     <form [formGroup]="slideOneForm">
         <div class="textCard">
           <ion-text>
@@ -166,7 +161,7 @@
     <div>
       <ion-button expand="block" shape="round" fill="clear" style="width: 95%;color:black;"
 (click)="goToPreviousPage()">Back</ion-button>
-      <!-- <ion-text (click)="goToPreviousPage()">Back</ion-text> -->
+     
   </div>
 </div>
     

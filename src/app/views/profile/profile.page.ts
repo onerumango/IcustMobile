@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 
@@ -12,10 +13,15 @@ import { PhotoService } from 'src/app/services/photo.service';
 })
 export class ProfilePage implements OnInit {
   flag: boolean;
-
-
-  constructor(public actionSheetController: ActionSheetController,private router:Router,private photoService: PhotoService) { }
-
+  currentImage: any;
+  clickedImage: string;
+  constructor(public platform:Platform,public actionSheetController: ActionSheetController,private camera: Camera,private router:Router,private photoService: PhotoService) { }
+  options: CameraOptions = {
+    quality: 30,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+  }
   ngOnInit() {
     
   }
@@ -59,14 +65,14 @@ export class ProfilePage implements OnInit {
         text: 'Take Photo',
         // icon: 'share',
         handler: () => {
-          this.addPhotoToGallery()
+          this.takePicture()
           console.log('Share clicked');
         }
       }, {
         text: 'Upload photo',
         // icon: 'arrow-dropright-circle',
         handler: () => {
-          this.addPhotoToGallery()
+          this.takePicture()
           console.log('Play clicked');
         }
       }, {
@@ -94,5 +100,16 @@ export class ProfilePage implements OnInit {
   goToFaq(){
     this.router.navigate(['faq']);
   }
-
+  takePicture() {
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.clickedImage = base64Image;
+    }, (err) => {
+      console.log(err);
+      // Handle error
+    });
+  }
 }
+

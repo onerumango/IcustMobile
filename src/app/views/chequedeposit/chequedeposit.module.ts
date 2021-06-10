@@ -19,6 +19,8 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
     NgxFlagPickerModule,
     ChequedepositPageRoutingModule
   ],
-  declarations: [ChequedepositPage,OperationPage]
+  declarations: [ChequedepositPage
+    // ,OperationPage
+  ]
 })
 export class ChequedepositPageModule {}

@@ -1,3 +1,179 @@
-app-operation{
-    height: 600%;
-}
+// // * {
+//   font-family: 'Montserrat' !important;
+//   /* Add !important to overwrite all elements */
+//  }
+ .box {
+     border-width: thin;
+     border-radius: 13px;
+     background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(248, 250, 254, 0.5));
+     box-shadow: 0 3pt 6pt #00000029;
+     width: 95%;
+     height: 55px;
+     margin-top: 10px;
+    
+     border-top-style: hidden;
+     border-right-style: hidden;
+     border-left-style: hidden;
+   }
+ 
+  
+     .chequeCard{
+       border-width: thin;
+       border-radius: 10px;
+       box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+       width: 95%;
+       margin-left: 4%;
+       height: 100px;
+       display: inline-block;
+       background-color: #f9fafb;
+       border-top-style: hidden;
+       border-right-style: hidden;
+       border-left-style: hidden;
+     }
+   
+     form::-webkit-scrollbar {
+       display: none;
+   }
+  .inputCard1{
+     //  padding-top: 10%;
+     //  padding-left: 5%;
+      padding-top: 7%;
+      padding-left: 5%;
+  }
+  .inputCard2{
+   padding-top: 3%;
+   padding-left: 3%;
+ }
+ 
+  .textCard{
+   // padding-top: -6%;
+   padding-left: 5%;
+ }
+  .labelCard{
+      color: gray;
+      //font-size: 20px;
+  }
+ 
+  .underline {
+     text-decoration: underline;
+     font-size: 14px;
+     padding-left: 4%;
+   }
+   .ion-padding-top{
+       padding-top: 10%;
+       padding-left: 3%;
+   }
+ 
+   .ion-padding-top2{
+     padding-top: 8%;
+     padding-left: 5%;
+   }
+   .cancelcard{
+ padding-top: 8%;
+ padding-left: 44%;
+ font-size: 14px;
+   }
+   .backcard{
+     padding-top: 8%;
+     padding-left: 47%;
+     font-size: 14px;
+       }
+   .icondate{
+ display: inline-block;
+ 
+   }
+  
+    ion-searchbar {
+   background-color: #f9fafb;
+  }
+ 
+ ion-select{
+   font-family: 'Montserrat-SemiBold' !important;
+   font-size: 14pt;
+ }
+ ion-text{
+   font-family: 'Montserrat' !important;
+   font-size: 14px;
+   opacity: 75%;
+ }
+ 
+ ion-button{
+   width: 95%;
+   padding-left: 5%;
+   height: 50px;
+   font-family: 'Montserrat' !important;
+   
+ }
+  ion-input {
+   color:black !important;
+   font-size: 14pt;
+   --placeholder-color: black !important;
+   border: 1px solid #f1f1f1 !important;
+   font-family: 'Montserrat' !important;
+   }
+   ion-label{
+     color:#102245;
+      font-family: 'Montserrat' !important;
+       font-size: 14px;
+       opacity: 75%;
+   }
+   ion-back-button{
+       color: rgb(73, 73, 226);
+       margin-bottom: 5%;
+       font-size: larger;
+       text-transform: none;
+   }
+  
+   ion-toolbar{
+     margin-top:5%;
+    box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+ }
+   ngx-flag-picker{
+     display: inline-block;
+     font-size: x-large;
+     padding-top: 14px;
+     padding-left: 20px;
+     padding-top: 4%;
+     align-content: center;
+ 
+   }
+   .box7{
+     padding-top: 0%;
+     padding-left: 0%;
+     margin-left: 10px; 
+     margin-right: 10px; 
+   }
+  .backIcon{
+       font-size: xx-large;
+       // color: blue;
+       color:rgb(70,111,254);
+       display: inline-block;
+       vertical-align: middle;
+    
+   }
+   .ioncontent{
+     height: 110%;
+     margin-top: -3%;
+   }
+   .ioncontent1{
+     height: 135%;
+   }
+   .text{
+       margin-left: 2%;
+     display: inline-block;
+     vertical-align: middle;
+     color: blue;
+     font-size: 20px;
+     font-family: 'Montserrat' !important;
+   }
+  
+ 
+   // @media screen and (max-width: 320px) {
+   //   .ioncontent{
+   //     height: 130%;
+   //     margin-top: -3%;
+   //   }
+   //   .ioncontent1{
+   //     height: 165%;
+   //   }
+   // }

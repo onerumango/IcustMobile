@@ -21,7 +21,7 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
     CashwithdrawalPageRoutingModule,
     NgxFlagPickerModule
   ],
-  declarations: [CashwithdrawalPage,OperationPage],
+  declarations: [CashwithdrawalPage],
   
 })
 export class CashwithdrawalPageModule {}

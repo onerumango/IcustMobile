@@ -18,17 +18,16 @@
       border-right-style: hidden;
       border-left-style: hidden;
     }
-  
-   
       .chequeCard{
         border-width: thin;
         border-radius: 10px;
-        box-shadow: 0 5pt 5pt -2pt #D3D3D3;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(248, 250, 254, 0.5));
+        box-shadow: 0 3pt 6pt #00000029;
         width: 95%;
         margin-left: 4%;
         height: 100px;
         display: inline-block;
-        background-color: #f9fafb;
+        // background-color: #f9fafb;
         border-top-style: hidden;
         border-right-style: hidden;
         border-left-style: hidden;

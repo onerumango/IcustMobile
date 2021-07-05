@@ -99,7 +99,8 @@ const routes: Routes = [
   {
     path: 'account',
     loadChildren: () => import('./views/account/account.module').then( m => m.AccountPageModule)
-  }
+  },
+  
 
 
   

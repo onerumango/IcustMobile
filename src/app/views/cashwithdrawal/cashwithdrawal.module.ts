@@ -11,6 +11,7 @@ import { CashwithdrawalPage } from './cashwithdrawal.page';
 
 import { OperationPage } from '../operation/operation.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
+import { BranchPage } from './branch/branch.page';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
     CashwithdrawalPageRoutingModule,
     NgxFlagPickerModule
   ],
-  declarations: [CashwithdrawalPage],
+  declarations: [CashwithdrawalPage, BranchPage],
   
 })
 export class CashwithdrawalPageModule {}

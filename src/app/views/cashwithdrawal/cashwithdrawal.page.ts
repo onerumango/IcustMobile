@@ -306,6 +306,11 @@ export class CashwithdrawalPage implements OnInit {
     goToHomepage(){
       this.router.navigate(['/tabs/home']);
     }
+
+    goToBranch(){
+      this.router.navigate(['cashwithdrawal/branch']);
+    }
+
     goToNextPage(fb){
       this.flag=false;
       

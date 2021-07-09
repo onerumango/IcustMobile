@@ -9,6 +9,7 @@ import { ChequewithdrawalPageRoutingModule } from './chequewithdrawal-routing.mo
 import { ChequewithdrawalPage } from './chequewithdrawal.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { OperationPage } from '../operation/operation.page';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { OperationPage } from '../operation/operation.page';
     IonicModule,
     ReactiveFormsModule,
     ChequewithdrawalPageRoutingModule,
-    NgxFlagPickerModule
+    NgxFlagPickerModule,
+    HttpClientModule
   ],
   declarations: [ChequewithdrawalPage,OperationPage]
 })

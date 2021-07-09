@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {format} from "date-fns" 
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-chequedeposit',
@@ -11,7 +13,7 @@ export class ChequedepositPage implements OnInit {
   title : any = 'Cheque Deposit';
  
   slideOneForm: FormGroup;
-  constructor(private router:Router,private fb: FormBuilder) {}
+  constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
   transactionAmount="10,000";
   accountBranch="Loita street";
   flag:boolean=true;
@@ -22,11 +24,31 @@ export class ChequedepositPage implements OnInit {
 
   ngOnInit() {
     this.slideOneForm = this.fb.group({
-      accountNo:['', [Validators.required]],
-      amount:['', [Validators.required]],
-      accountBranch:['', [Validators.required]],
-      transactionDate:['', [Validators.required]],
-      transactionTime:['', [Validators.required]]
+      customerId:['', [Validators.required]],
+      chequeDepositId:['', [Validators.required]],
+      accountNumber: ['', [Validators.required]],
+      accountBalance: ['$12,09,89', [Validators.required]],
+      transactionCurrency: ['', [Validators.required]],
+      transactionAmount: ['', [Validators.required]],
+      branchFlag: ['', [Validators.required]],
+      accountBranch: ['', [Validators.required]],
+      transactionDate: ['', [Validators.required]],
+      transactionBranch: ['', [Validators.required]],
+      transactionTime: ['', [Validators.required]],
+      exchangeRate: ['', [Validators.required]],
+      accountAmount: ['', [Validators.required]],
+      totalChargeAmount: ['', [Validators.required]],
+      narrative: ['', [Validators.required]],
+      denomination: ['', [Validators.required]],
+      totalAmount: ['', [Validators.required]],
+      createdBy: ['', [Validators.required]],
+      createdTime: ['', [Validators.required]],
+      modifiedBy: ['', [Validators.required]],
+      modifiedTime: ['', [Validators.required]],
+      recordStatus: ['', [Validators.required]],
+      authStatus: ['', [Validators.required]],
+      version: ['', [Validators.required]],
+        remark:['', [Validators.required]]
     })
      console.log(this.slideOneForm.value);
      console.log(this.countries);
@@ -316,6 +338,27 @@ export class ChequedepositPage implements OnInit {
   }
   goToNextScreen(){
     this.router.navigate(['token-generation']);
+  }
+  save(form)
+  {
+
+    console.log(form)
+    form.transactionDate.toString();
+     
+
+    var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+    console.log(date) //4/
+    form.transactionDate=date;
+    
+    
+    form.transactionCurrency=form.transactionCurrency.currency;
+    form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
+    console.log(form);
+    form.customerId='123'
+    this.api.chequeDepositSave(form).subscribe((resp) => {
+      console.log('backend resp', resp);
+    });
+    
   }
 
 }

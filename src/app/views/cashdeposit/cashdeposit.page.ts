@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {format} from "date-fns" 
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-cashdeposit',
@@ -10,8 +12,8 @@ import { Router } from '@angular/router';
 export class CashdepositPage implements OnInit {
   title : any = 'Cash Deposit';
    
-    slideOneForm: FormGroup;
-    constructor(private router:Router,private fb: FormBuilder) {}
+  depositForm: FormGroup;
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
@@ -21,14 +23,33 @@ export class CashdepositPage implements OnInit {
   
   
     ngOnInit() {
-      this.slideOneForm = this.fb.group({
-        accountNo:['', [Validators.required]],
-        amount:['', [Validators.required]],
-        accountBranch:['', [Validators.required]],
-        transactionDate:['', [Validators.required]],
-        transactionTime:['', [Validators.required]]
+      this.depositForm = this.fb.group({
+        id:['', [Validators.required]],
+        customerId:['', [Validators.required]],
+        accountNumber: ['', [Validators.required]],
+        accountBalance: ['12.00', [Validators.required]],
+        transactionCurrency: ['', [Validators.required]],
+        transactionAmount: ['', [Validators.required]],
+        branchFlag: ['', [Validators.required]],
+        accountBranch: ['', [Validators.required]],
+        transactionDate: ['', [Validators.required]],
+        transactionBranch: ['', [Validators.required]],
+        transactionTime: ['', [Validators.required]],
+        exchangeRate: ['', [Validators.required]],
+        accountAmount: ['', [Validators.required]],
+        totalChargeAmount: ['', [Validators.required]],
+        narrative: ['', [Validators.required]],
+        denomination: ['', [Validators.required]],
+        totalAmount: ['', [Validators.required]],
+        createdBy: ['', [Validators.required]],
+        createdTime: ['', [Validators.required]],
+        modifiedBy: ['', [Validators.required]],
+        modifiedTime: ['', [Validators.required]],
+        recordStatus: ['', [Validators.required]],
+        authStatus: ['', [Validators.required]],
+        version: ['', [Validators.required]],
       })
-       console.log(this.slideOneForm.value);
+       console.log(this.depositForm.value);
        console.log(this.countries);
     }
      countries :CountryType[] =[
@@ -314,8 +335,23 @@ export class CashdepositPage implements OnInit {
     goToPreviousPage(){
       this.flag=true;
     }
-    goToNextScreen(){
-      this.router.navigate(['token-generation']);
+    goToNextScreen(form){
+      form.transactionDate.toString();
+     
+
+      var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+      console.log(date) //4/
+      form.transactionDate=date;
+      
+      form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
+      form.transactionCurrency=form.transactionCurrency.currency;
+      console.log(form);
+      form.customerId='123'
+      this.api.cashDepositSave(form).subscribe((resp) => {
+        console.log('backend resp', resp);
+      });
+     
+            this.router.navigate(['token-generation']);
     }
 
 }

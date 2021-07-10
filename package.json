@@ -29,6 +29,7 @@
     "@ionic/angular": "^5.5.2",
     "@types/googlemaps": "^3.39.3",
     "cordova-android": "9.1.0",
+    "date-fns": "^2.22.1",
     "flag-icon-css": "^3.5.0",
     "google-maps": "^4.2.3",
     "@google/markerclustererplus": "5.0.3",

@@ -12,6 +12,7 @@ import { CashwithdrawalPage } from './cashwithdrawal.page';
 import { OperationPage } from '../operation/operation.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { BranchPage } from './branch/branch.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { BranchPage } from './branch/branch.page';
     ReactiveFormsModule,
     IonicModule,
     CashwithdrawalPageRoutingModule,
-    NgxFlagPickerModule
+    NgxFlagPickerModule,
+    HttpClientModule
   ],
   declarations: [CashwithdrawalPage, BranchPage],
   

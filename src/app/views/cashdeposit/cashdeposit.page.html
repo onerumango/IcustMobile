@@ -1,4 +1,4 @@
-<!-- <app-operation [title] = "cashDeposit"></app-operation> -->
+<!-- <app-operation [title] = "cashWithdrawal"></app-operation> -->
 <ion-header *ngIf=flag>
     <ion-toolbar>
       <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToLogin()"></ion-icon>
@@ -8,17 +8,17 @@
   
   <ion-content *ngIf=flag>
     <div>
-      <form [formGroup]="slideOneForm">
+      <form [formGroup]="depositForm">
         
         <div class="inputCard1">
           <ion-label>Account Number</ion-label>
           <!-- <ion-input class="box"></ion-input> -->
-          <ion-select [compareWith]="compareWith" class="box" formControlName="accountNo" ngDefaultControl>
+          <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" ngDefaultControl>
             <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
           </ion-select>
           </div>
           <div class="inputCard1">
-            <ion-label position="stacked" class="labelCard" style="font-size: 14px;">Account Balance : $12,09,89</ion-label>   
+            <ion-label position="stacked" class="labelCard"  style="font-size: 14px;">Account Balance : $12,09,89</ion-label>   
             </div>
   
         <div class="inputCard1">
@@ -37,7 +37,7 @@
                   </ngx-flag-picker>
                  </ion-col>
                 <ion-col style="width: 20%;">
-                    <ion-select [compareWith]="compareWith" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
+                    <ion-select [compareWith]="compareWith" formControlName="transactionCurrency" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
                       <ion-select-option *ngFor="let user of countries" [value]="user" >
                      {{user.currency + ' : ' + user.countryName}}
                       </ion-select-option>
@@ -49,7 +49,7 @@
   
         <div class="inputCard1">
             <ion-label position="stacked">Transaction Amount</ion-label>
-            <ion-input class="box" formControlName="amount"></ion-input>
+            <ion-input class="box" formControlName="transactionAmount"></ion-input>
         </div>
        
   
@@ -82,7 +82,7 @@
   
   <ion-content *ngIf=!flag>
     <div>
-      <form [formGroup]="slideOneForm">
+      <form [formGroup]="depositForm">
           <!-- <div class="textCard">
             <ion-text>
               <h5 style="color: gray;padding-left: 4%;">Do you wish to perform this transaction in your home branch</h5>
@@ -110,21 +110,21 @@
          </div> -->
   
          <div style="margin-left: 19px;margin-top: 19px;margin-right: 19px">
-          <ion-label>Do you wish to perform this transaction in your branch?</ion-label>
+          <ion-label >Do you wish to perform this transaction in your branch?</ion-label>
           <!-- <ion-label></ion-label> -->
-          <ion-radio-group ngDefaultControl>
+          <ion-radio-group ngDefaultControl formControlName="branchFlag">
             <ion-row >
               <ion-col>
-                   <ion-item lines="none">
+                   <ion-item lines="none" >
                       <ion-label position="start">Yes</ion-label>
-                      <ion-radio mode="md" item-left value="yes"></ion-radio>
+                      <ion-radio mode="md" item-left value=true></ion-radio>
                  </ion-item>
                </ion-col>
           
               <ion-col>
                   <ion-item lines="none">
                       <ion-label>No</ion-label>
-                      <ion-radio mode="md" item-left value="no"></ion-radio>
+                      <ion-radio mode="md" item-left value=false></ion-radio>
                  </ion-item>
               </ion-col>
           </ion-row>
@@ -135,10 +135,10 @@
             <ion-router-link href="#" class="underline">Click here to find nearest branch</ion-router-link>
          </div><br>
     
-         <div class="inputCard2">
+         <div class="inputCard2" >
           <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
           <ion-card class="box" >
-            <ion-searchbar appearence="none"></ion-searchbar>
+            <ion-searchbar appearence="none" formControlName="transactionBranch"></ion-searchbar>
           </ion-card>
                
             
@@ -162,7 +162,7 @@
          <ion-label style="padding-left: 5%;">Time Slot</ion-label>
        <ion-card class="box">
          <ion-item  lines="none">
-          <ion-datetime displayFormat="h:mm A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
+          <ion-datetime displayFormat="HH:mm A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
           <ion-icon name="alarm-outline" slot="end"></ion-icon>
         </ion-item>
        </ion-card>
@@ -178,7 +178,7 @@
   
        <div class="ion-padding-top">
       <div>
-        <ion-button  expand="block" shape="round" (click)="goToNextScreen()">Next</ion-button>
+        <ion-button  expand="block" shape="round" (click)="goToNextScreen(depositForm.value)">Next</ion-button>
       </div>
   
    

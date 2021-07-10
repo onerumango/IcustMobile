@@ -312,7 +312,7 @@ export class OperationPage implements OnInit {
   goToNextPage(fb){
     this.flag=false;
     
-    // console.log(this.slideOneForm.value);
+  console.log("fb",fb);
     // this.router.navigate(['utility-payment']);
     // console.log(this.title);
     // if(this.title=="Cheque Withdrawal")
@@ -328,7 +328,8 @@ export class OperationPage implements OnInit {
   goToPreviousPage(){
     this.flag=true;
   }
-  goToNextScreen(){
+  goToNextScreen(form){
+    console.log("form",form)
     this.router.navigate(['token-generation']);
   }
 }

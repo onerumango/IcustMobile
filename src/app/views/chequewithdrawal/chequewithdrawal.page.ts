@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {format} from "date-fns" 
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -11,7 +13,7 @@ export class ChequewithdrawalPage implements OnInit {
   title : any = 'Cheque Withdrawal';
    
     slideOneForm: FormGroup;
-    constructor(private router:Router,private fb: FormBuilder) {}
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
@@ -22,11 +24,31 @@ export class ChequewithdrawalPage implements OnInit {
   
     ngOnInit() {
       this.slideOneForm = this.fb.group({
-        accountNo:['', [Validators.required]],
-        amount:['', [Validators.required]],
-        accountBranch:['', [Validators.required]],
-        transactionDate:['', [Validators.required]],
-        transactionTime:['', [Validators.required]]
+        customerId:['', [Validators.required]],
+        chequeDepositId:['', [Validators.required]],
+        accountNumber: ['', [Validators.required]],
+        accountBalance: ['12.09', [Validators.required]],
+        transactionCurrency: ['', [Validators.required]],
+        transactionAmount: ['', [Validators.required]],
+        branchFlag: ['', [Validators.required]],
+        accountBranch: ['', [Validators.required]],
+        transactionDate: ['', [Validators.required]],
+        transactionBranch: ['', [Validators.required]],
+        transactionTime: ['', [Validators.required]],
+        exchangeRate: ['', [Validators.required]],
+        accountAmount: ['', [Validators.required]],
+        totalChargeAmount: ['', [Validators.required]],
+        narrative: ['', [Validators.required]],
+        denomination: ['', [Validators.required]],
+        totalAmount: ['', [Validators.required]],
+        createdBy: ['', [Validators.required]],
+        createdTime: ['', [Validators.required]],
+        modifiedBy: ['', [Validators.required]],
+        modifiedTime: ['', [Validators.required]],
+        recordStatus: ['', [Validators.required]],
+        authStatus: ['', [Validators.required]],
+        version: ['', [Validators.required]],
+          remark:['', [Validators.required]]
       })
        console.log(this.slideOneForm.value);
        console.log(this.countries);
@@ -317,6 +339,27 @@ export class ChequewithdrawalPage implements OnInit {
     goToNextScreen(){
       this.router.navigate(['token-generation']);
     }
+    save(form)
+    {
+  
+      console.log(form)
+      form.transactionDate.toString();
+       
+  
+      var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+      console.log(date) //4/
+      form.transactionDate=date;
+      
+      form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
+      form.transactionCurrency=form.transactionCurrency.currency;
+    
+      console.log(form);
+      this.api.chequeDepositSave(form).subscribe((resp) => {
+        console.log('backend resp', resp);
+      });
+      
+    }
+  
 
 }
 interface CountryType {

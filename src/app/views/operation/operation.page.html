@@ -151,7 +151,7 @@
 
      <div class="ion-padding-top">
     <div *ngIf="title =='Cash Withdrawal' || title =='Cash Deposit'" >
-      <ion-button  expand="block" shape="round" (click)="goToNextScreen()">Next</ion-button>
+      <ion-button  expand="block" shape="round" (click)="goToNextScreen(slideOneForm.value)">Next</ion-button>
     </div>
 
   <div *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'" >

@@ -1,0 +1,60 @@
+{
+    "branch": [
+        {
+          "id": 1,
+          "title": "SB, DOWNTOWN",
+          "branch":"1234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 28.6117993,
+          "lng": 77.2194934
+        },
+        {
+          "id": 2,
+          "title": "SB, TEXAS,",
+          "branch":"23234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 28.6132098,
+          "lng": 77.245437
+        },
+        {
+          "id": 3,
+          "title": "SB, CITY",
+          "branch":"1234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 21.1699005,
+          "lng": 72.7955734
+        },
+        {
+          "id": 4,
+          "title": "SB, CLOLONY",
+          "branch":"1234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 32.2263696,
+          "lng": 76.325326
+  
+        },
+        {
+          "id": 5,
+          "title": "SB, STADIUM",
+          "branch":"1234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 18.926873,
+          "lng": 72.8326132
+        },
+        {
+          "id": 6,
+          "title": "SB, INNIN",
+          "branch":"1234",
+          "address":"NH183, Pambey, Kottayam, Kerala 123456",
+          "state" : "Kerala",
+          "lat": 27.315948,
+          "lng": 88.6047829
+  
+        }
+        ]
+  }

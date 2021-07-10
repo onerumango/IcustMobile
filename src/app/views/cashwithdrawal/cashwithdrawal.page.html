@@ -1,7 +1,9 @@
 <!-- <app-operation [title] = "cashWithdrawal"></app-operation> -->
 <ion-header *ngIf=flag>
     <ion-toolbar>
-      <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToLogin()"></ion-icon>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
       <span class="text">{{title}}</span>
     </ion-toolbar>
   </ion-header>
@@ -132,8 +134,9 @@
   </div>
   
          <div class="inputCard2">
-            <ion-router-link href="#" class="underline">Click here to find nearest branch</ion-router-link>
-         </div><br>
+            <p (click)="goToBranch()">Click here to find nearest branch</p>
+         </div>
+         <br>
     
          <div class="inputCard2" >
           <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>

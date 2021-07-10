@@ -1558,6 +1558,10 @@ export class CashwithdrawalPage implements OnInit {
     // this.selectedCountryCode = value;
   }
 
+  goToBranch(){
+    this.router.navigate(['cashwithdrawal/branch']);
+  }
+
   goToHomepage() {
     this.router.navigate(['/tabs/home']);
   }

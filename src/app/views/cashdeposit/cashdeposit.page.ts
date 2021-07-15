@@ -13,6 +13,8 @@ export class CashdepositPage implements OnInit {
   title : any = 'Cash Deposit';
    
   depositForm: FormGroup;
+  currentBalance: any;
+  customerId: string;
     constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
@@ -23,6 +25,13 @@ export class CashdepositPage implements OnInit {
   
   
     ngOnInit() {
+      this.customerId = sessionStorage.getItem('customer_id');
+      console.log("customer_id",this.customerId)
+      this.customerId = sessionStorage.getItem('customer_id');
+        this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+          console.log('backend dropdown', dropdown);
+          this.users=dropdown;
+        });
       this.depositForm = this.fb.group({
         id:['', [Validators.required]],
         customerId:['', [Validators.required]],
@@ -346,14 +355,27 @@ export class CashdepositPage implements OnInit {
       form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
       form.transactionCurrency=form.transactionCurrency.currency;
       console.log(form);
-      form.customerId='123'
+      form.customerId=this.customerId;
       this.api.cashDepositSave(form).subscribe((resp) => {
         console.log('backend resp', resp);
       });
      
             this.router.navigate(['token-generation']);
     }
-
+    accountEvent(event){
+      console.log("event",event.detail.value)
+      this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+        console.log('backend accbal', accbal.currentBalance);
+    this.valueSet(accbal.currentBalance);
+        // this.users=dropdown;
+      
+      });
+     
+    }
+    valueSet(currentBalance){
+      this.currentBalance=currentBalance;
+  
+    }
 }
 interface CountryType {
   code: string;

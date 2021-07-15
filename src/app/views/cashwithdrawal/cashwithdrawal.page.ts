@@ -14,6 +14,7 @@ export class CashwithdrawalPage implements OnInit {
   title: any = 'Cash Withdrawal';
 
   slideOneForm: FormGroup;
+  currentBalance: any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -25,8 +26,15 @@ export class CashwithdrawalPage implements OnInit {
   currencyValue: string;
 
   users = ['123', '456'];
-
+  customerId:any
   ngOnInit() {
+    this.customerId = sessionStorage.getItem('customer_id');
+    console.log("customer_id",this.customerId)
+    this.customerId = sessionStorage.getItem('customer_id');
+      this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+        console.log('backend dropdown', dropdown);
+        this.users=dropdown;
+      });
     this.slideOneForm = this.fb.group({
       id:['', [Validators.required]],
       customerId:['', [Validators.required]],
@@ -56,6 +64,7 @@ export class CashwithdrawalPage implements OnInit {
     console.log(this.slideOneForm.value);
     console.log(this.countries);
   }
+
   countries: CountryType[] = [
     {
       code: 'AF',
@@ -1582,11 +1591,25 @@ export class CashwithdrawalPage implements OnInit {
     form.transactionCurrency = form.transactionCurrency.currency;
     // console.log(form);
     form.transactionTime = format(new Date(form.transactionTime), 'HH:mm');
-    form.customerId='100'
+    form.customerId=this.customerId;
     this.api.cashWithdrawalSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });
    
+  }
+  accountEvent(event){
+    console.log("event",event.detail.value)
+    this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+      console.log('backend accbal', accbal.currentBalance);
+  this.valueSet(accbal.currentBalance);
+      // this.users=dropdown;
+    
+    });
+   
+  }
+  valueSet(currentBalance){
+    this.currentBalance=currentBalance;
+
   }
 }
 interface CountryType {

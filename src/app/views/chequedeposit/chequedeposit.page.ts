@@ -13,6 +13,7 @@ export class ChequedepositPage implements OnInit {
   title : any = 'Cheque Deposit';
  
   slideOneForm: FormGroup;
+  currentBalance: any;
   constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
   transactionAmount="10,000";
   accountBranch="Loita street";
@@ -20,14 +21,19 @@ export class ChequedepositPage implements OnInit {
   currencyValue:string;
  
   users=['789045667','8789977889'];
-
+  customerId:any;
 
   ngOnInit() {
+    this.customerId = sessionStorage.getItem('customer_id');
+    this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+      console.log('backend dropdown', dropdown);
+      this.users=dropdown;
+    });
     this.slideOneForm = this.fb.group({
       customerId:['', [Validators.required]],
       chequeDepositId:['', [Validators.required]],
       accountNumber: ['', [Validators.required]],
-      accountBalance: ['$12,09,89', [Validators.required]],
+      accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
       transactionAmount: ['', [Validators.required]],
       branchFlag: ['', [Validators.required]],
@@ -48,7 +54,7 @@ export class ChequedepositPage implements OnInit {
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]],
-        remark:['', [Validators.required]]
+        remarks:['', [Validators.required]]
     })
      console.log(this.slideOneForm.value);
      console.log(this.countries);
@@ -354,11 +360,25 @@ export class ChequedepositPage implements OnInit {
     form.transactionCurrency=form.transactionCurrency.currency;
     form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     console.log(form);
-    form.customerId='123'
+    form.customerId=this.customerId;
     this.api.chequeDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });
     
+  }
+  accountEvent(event){
+    console.log("event",event.detail.value)
+    this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+      console.log('backend accbal', accbal.currentBalance);
+  this.valueSet(accbal.currentBalance);
+      // this.users=dropdown;
+    
+    });
+   
+  }
+  valueSet(currentBalance){
+    this.currentBalance=currentBalance;
+
   }
 
 }

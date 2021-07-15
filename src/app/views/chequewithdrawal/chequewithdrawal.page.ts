@@ -13,21 +13,29 @@ export class ChequewithdrawalPage implements OnInit {
   title : any = 'Cheque Withdrawal';
    
     slideOneForm: FormGroup;
+  customerId: string;
+  public currentBalance: any;
     constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
     currencyValue:string;
   
-    users=['789045667','8789977889'];
+    users:string[];
   
   
     ngOnInit() {
+      this.customerId = sessionStorage.getItem('customer_id');
+      this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+        console.log('backend dropdown', dropdown);
+        this.users=dropdown;
+      });
+      console.log("customer_id",this.customerId)
       this.slideOneForm = this.fb.group({
         customerId:['', [Validators.required]],
         chequeDepositId:['', [Validators.required]],
         accountNumber: ['', [Validators.required]],
-        accountBalance: ['12.09', [Validators.required]],
+        accountBalance: ['', [Validators.required]],
         transactionCurrency: ['', [Validators.required]],
         transactionAmount: ['', [Validators.required]],
         branchFlag: ['', [Validators.required]],
@@ -48,7 +56,7 @@ export class ChequewithdrawalPage implements OnInit {
         recordStatus: ['', [Validators.required]],
         authStatus: ['', [Validators.required]],
         version: ['', [Validators.required]],
-          remark:['', [Validators.required]]
+          remarks:['', [Validators.required]]
       })
        console.log(this.slideOneForm.value);
        console.log(this.countries);
@@ -352,7 +360,7 @@ export class ChequewithdrawalPage implements OnInit {
       
       form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
       form.transactionCurrency=form.transactionCurrency.currency;
-    
+    form.chequeDepositId=this.customerId;
       console.log(form);
       this.api.chequeDepositSave(form).subscribe((resp) => {
         console.log('backend resp', resp);
@@ -360,7 +368,20 @@ export class ChequewithdrawalPage implements OnInit {
       
     }
   
+    accountEvent(event){
+      console.log("event",event.detail.value)
+      this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+        console.log('backend accbal', accbal.currentBalance);
+    this.valueSet(accbal.currentBalance);
+        // this.users=dropdown;
+      
+      });
+     
+    }
+    valueSet(currentBalance){
+      this.currentBalance=currentBalance;
 
+    }
 }
 interface CountryType {
   code: string;

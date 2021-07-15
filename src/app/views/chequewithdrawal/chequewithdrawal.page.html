@@ -13,12 +13,12 @@
       <div class="inputCard1">
         <ion-label>Account Number</ion-label>
         <!-- <ion-input class="box"></ion-input> -->
-        <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" ngDefaultControl>
-          <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
+        <ion-select [compareWith]="compareWith" class="box" (ionChange)="accountEvent($event)" formControlName="accountNumber" ngDefaultControl>
+          <ion-select-option *ngFor="let user of users" [value]="user" >{{user}}</ion-select-option>
         </ion-select>
         </div>
         <div class="inputCard1">
-          <ion-label position="stacked" class="labelCard"  style="font-size: 14px;">Account Balance : $12,09,89</ion-label>   
+          <ion-label position="stacked" class="labelCard"  style="font-size: 14px;">Account Balance : {{currentBalance}}</ion-label>   
           </div>
 
       <div class="inputCard1">
@@ -170,7 +170,7 @@
 
      <div class="inputCard2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'">
       <ion-label position="stacked">Remark</ion-label>
-      <ion-input class="chequeCard" formControlName="remark" ></ion-input>
+      <ion-input class="chequeCard" formControlName="remarks" ></ion-input>
      </div>
 
      

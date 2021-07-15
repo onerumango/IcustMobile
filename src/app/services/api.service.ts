@@ -27,4 +27,17 @@ chequeDepositSave(data:object)
   return this.http.post<any>(`${API_URL}/cheque-deposit/api`,data);
 }
 
+custpomerDetails(phoneNo:String)
+{
+  return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNo}`);
+}
+
+accountDropDown(custId:String)
+{
+  return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`);
+}
+accountBalance(accId:String)
+{
+  return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`);
+}
 }

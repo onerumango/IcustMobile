@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   image: String;
   loginForm: FormGroup;
-  constructor(private router:Router,private fb: FormBuilder) {
+  constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {
     
   }
 
@@ -24,11 +25,19 @@ export class LoginPage implements OnInit {
     console.log(this.loginForm.value);
   }
 
-  goToCashWithdrawal(){
-    this.router.navigate(['tabs']);
-    console.log(this.loginForm.value.otp);
-    console.log(this.loginForm.value);
-
+  goToCashWithdrawal(loginForm){
+   
+    // console.log(loginForm.value.otp);
+    console.log(loginForm.phoneNo);
+    this.api.custpomerDetails(loginForm.phoneNo).subscribe((resp) => {
+      console.log('backend resp', resp);
+      if(resp!=null)
+      {
+        sessionStorage.setItem('customer_id', resp.customerId);
+        this.router.navigate(['tabs']);
+      }
+    });
+    // this.router.navigate(['tabs']);
   }
 
 

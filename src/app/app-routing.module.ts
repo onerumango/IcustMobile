@@ -99,7 +99,11 @@ const routes: Routes = [
   {
     path: 'account',
     loadChildren: () => import('./views/account/account.module').then( m => m.AccountPageModule)
+  },  {
+    path: 'otp',
+    loadChildren: () => import('./views/otp/otp.module').then( m => m.OtpPageModule)
   },
+
   
 
 

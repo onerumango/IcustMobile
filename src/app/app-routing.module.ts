@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
+export const rootRouterConfig: Routes = [
   // {
   //   path: 'home',
   //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
@@ -100,27 +100,5 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./views/account/account.module').then( m => m.AccountPageModule)
   },
-  {
-    path: 'otp',
-    loadChildren: () => import('./views/otp/otp.module').then( m => m.OtpPageModule)
-  },
-
   
-
-
-  
-
-
- 
-
-
-
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

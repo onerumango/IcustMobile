@@ -14,10 +14,16 @@ export class HomePage implements OnInit {
     spaceBetween: 20,
     centeredSlides: true
 };
-
+accountType:string;
   constructor(private router:Router) { }
 
   ngOnInit() {
+    // console.log(localStorage.getItem('customer_details'));
+    console.log(JSON.parse(localStorage.getItem('customer_details')));
+  var customerDetails= JSON.parse(localStorage.getItem('customer_details'))
+  console.log(customerDetails);
+// this.customerItems=customerDetails;
+this.accountType=customerDetails.accountType;
   }
   goToCashWithdrawal(){
     this.router.navigate(['cashwithdrawal']);

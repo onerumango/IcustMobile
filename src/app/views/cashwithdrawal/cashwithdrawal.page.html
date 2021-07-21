@@ -161,57 +161,48 @@
               </ion-item>
             </ion-col>
           </ion-row>
-        </ion-radio-group>
-      </div>
-
-      <div class="inputCard2">
-        <a (click)="presentModal()">Click here to find nearest branch</a>
-      </div>
-      <br />
-
-      <div class="inputCard2">
-        <ion-label style="padding-left: 5%">Transaction Branch</ion-label>
-        <ion-card class="box">
-          <ion-searchbar
-            appearence="none"
-            formControlName="transactionBranch"
-          ></ion-searchbar>
-        </ion-card>
-      </div>
-
-      <div class="inputCard2">
-        <ion-label style="padding-left: 5%">Transaction date</ion-label>
-        <ion-card class="box">
-          <ion-item lines="none">
-            <ion-datetime
-              displayFormat="DDD. MMM DD, YY"
-              placeholder="Select date"
-              formControlName="transactionDate"
-            >
-            </ion-datetime>
-            <ion-icon name="calendar" slot="end"></ion-icon>
-          </ion-item>
-        </ion-card>
-      </div>
-
-      <div class="inputCard2">
-        <ion-label style="padding-left: 5%">Time Slot</ion-label>
-        <ion-card class="box">
-          <ion-item lines="none">
-            <ion-datetime
-              displayFormat="HH:mm A"
-              placeholder="Select date"
-              formControlName="transactionTime"
-            ></ion-datetime>
-            <ion-icon name="alarm-outline" slot="end"></ion-icon>
-          </ion-item>
-        </ion-card>
-      </div>
-
-      <div
-        class="inputCard2"
-        *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'"
-      >
+          </ion-radio-group>
+  </div>
+  
+         <div class="inputCard2">
+          <a (click)="presentModal()">Click here to find nearest branch</a>
+         </div>
+         <br>
+    
+         <div class="inputCard2" >
+          <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
+          <ion-card class="box" >
+            <ion-searchbar appearence="none" formControlName="transactionBranch"></ion-searchbar>
+          </ion-card>
+               
+            
+         </div>
+  
+        <div class="inputCard2">
+  
+            <ion-label style="padding-left: 5%;">Transaction date</ion-label>
+          <ion-card class="box" >
+            <ion-item lines="none">
+                <ion-datetime displayFormat="DDD. MMM DD, YY" placeholder="Select date" formControlName="transactionDate" >
+                </ion-datetime>
+           <ion-icon name="calendar" slot="end"></ion-icon>
+  
+           </ion-item> 
+       </ion-card>
+       </div>
+      
+  
+       <div class="inputCard2">
+         <ion-label style="padding-left: 5%;">Time Slot</ion-label>
+       <ion-card class="box">
+         <ion-item  lines="none">
+          <ion-datetime displayFormat="hh:mm:ss A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
+          <ion-icon name="alarm-outline" slot="end"></ion-icon>
+        </ion-item>
+       </ion-card>
+       </div> 
+  
+       <div class="inputCard2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'">
         <ion-label position="stacked">Remark</ion-label>
         <ion-input class="chequeCard" formControlName="accountNo"></ion-input>
       </div>

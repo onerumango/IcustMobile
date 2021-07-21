@@ -15,7 +15,7 @@
         <div class="inputCard1">
           <ion-label>Account Number</ion-label>
           <!-- <ion-input class="box"></ion-input> -->
-          <ion-select class="box" formControlName="accountNumber" (ionChange)="accountEvent($event)" ngDefaultControl>
+          <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" (ionChange)="accountEvent($event)" ngDefaultControl>
             <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
           </ion-select>
           </div>
@@ -39,7 +39,7 @@
                   </ngx-flag-picker>
                  </ion-col>
                 <ion-col style="width: 20%;">
-                    <ion-select formControlName="transactionCurrency" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
+                    <ion-select [compareWith]="compareWith" formControlName="transactionCurrency" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
                       <ion-select-option *ngFor="let user of countries" [value]="user" >
                      {{user.currency + ' : ' + user.countryName}}
                       </ion-select-option>
@@ -165,7 +165,7 @@
          <ion-label style="padding-left: 5%;">Time Slot</ion-label>
        <ion-card class="box">
          <ion-item  lines="none">
-          <ion-datetime displayFormat="hh:mm A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
+          <ion-datetime displayFormat="hh:mm:ss A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
           <ion-icon name="alarm-outline" slot="end"></ion-icon>
         </ion-item>
        </ion-card>

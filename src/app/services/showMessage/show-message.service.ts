@@ -27,45 +27,51 @@ export class ShowMessageService {
   errorMessage(status: any,errorResp) {
     console.log("show msg",status);
     console.log(errorResp);
-    let i = 0;
-    while (i < this.errorData.length) {
-      if (this.errorData[i].code === status) {
-        var errCode=status.toString()
-        
-        // this.toast.error(this.errorData[i].message, '', {
-        //   timeOut: 3000,
-        //   progressBar: true,
-        //   tapToDismiss: true,
-        //   closeButton: true,
-        //   easeTime: 300,
-        //   extendedTimeOut: 1000
-        // });
-        // Swal.fire('Oops', this.errorData[i].message, 'error');
-        // Swal.fire({
-          
-        //   title: this.errorData[i].message ,
-        //   text:"<p style='font-size: 20px>status</p>",
-        //   width: 600
-        // })
-        Swal.fire({
-          icon: 'error',
-          title:"Error Code : "+this.errorData[i].code ,
-         text:"Error message : "+this.errorData[i].message,
-          
-          width:500,
-          // timer: 10000,
-          // timerProgressBar: true,
-          confirmButtonText: "OK",
-        
-          confirmButtonColor:'#456EFE'
-          
-          
-         
-        })
-      }
-      i++;
-    }
-
+    console.log("err msg : " + errorResp.error.message);
+    var errCode=status.toString();
+    var errDesc=errorResp.error.message;
+    if (errDesc === null || errDesc === undefined ) {
+        let i = 0;
+        while (i < this.errorData.length) {
+          if (this.errorData[i].code === status) {
+            
+            // this.toast.error(this.errorData[i].message, '', {
+            //   timeOut: 3000,
+            //   progressBar: true,
+            //   tapToDismiss: true,
+            //   closeButton: true,
+            //   easeTime: 300,
+            //   extendedTimeOut: 1000
+            // });
+            // Swal.fire('Oops', this.errorData[i].message, 'error');
+            // Swal.fire({
+              
+            //   title: this.errorData[i].message ,
+            //   text:"<p style='font-size: 20px>status</p>",
+            //   width: 600
+            // })
+            errDesc = this.errorData[i].message;
+          }
+          i++;
+        }
+    } 
+    Swal.fire({
+      icon: 'error',
+      // title:"Error Code : "+this.errorData[i].code ,
+    // text:"Error message : "+this.errorData[i].message,
+      title:"Error Code : " + errCode ,
+      text:"Error message : " + errDesc.substring(0, 200), 
+      
+      width:500,
+      // timer: 10000,
+      // timerProgressBar: true,
+      confirmButtonText: "OK",
+    
+      confirmButtonColor:'#456EFE'
+      
+      
+    
+    })
   }
 
 

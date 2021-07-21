@@ -1,9 +1,9 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cashwithdrawal',
@@ -20,13 +20,16 @@ export class CashwithdrawalPage implements OnInit {
     private fb: FormBuilder,
     private api: ApiService
   ) {}
-  transactionAmount = '10,000';
+  transactionAmount:string;
   accountBranch = 'Loita street';
   flag: boolean = true;
   currencyValue: string;
-
+  cashWithdrawResponse: any;
   users = ['123', '456'];
   customerId:any
+  accountNum: string;
+  transDate: string
+  transTime: string;
   ngOnInit() {
     this.customerId = sessionStorage.getItem('customer_id');
     console.log("customer_id",this.customerId)
@@ -39,7 +42,7 @@ export class CashwithdrawalPage implements OnInit {
       id:['', [Validators.required]],
       customerId:['', [Validators.required]],
       accountNumber: ['', [Validators.required]],
-      accountBalance: ['11.10', [Validators.required]],
+      accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
       transactionAmount: ['', [Validators.required]],
       branchFlag: ['', [Validators.required]],
@@ -51,7 +54,7 @@ export class CashwithdrawalPage implements OnInit {
       accountAmount: ['', [Validators.required]],
       totalChargeAmount: ['', [Validators.required]],
       narrative: ['', [Validators.required]],
-      denomination: ['', [Validators.required]],
+      denomination: [null, [Validators.required]],
       totalAmount: ['', [Validators.required]],
       createdBy: ['', [Validators.required]],
       createdTime: ['', [Validators.required]],
@@ -1558,6 +1561,7 @@ export class CashwithdrawalPage implements OnInit {
 
   selectedCountryCode = 'ad';
 
+ 
   selectCurrencyCode(code) {
     console.log(code.detail.value.code);
     this.selectedCountryCode = code.detail.value.code.toLowerCase();
@@ -1589,12 +1593,29 @@ export class CashwithdrawalPage implements OnInit {
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     form.transactionCurrency = form.transactionCurrency.currency;
-    // console.log(form);
-    form.transactionTime = format(new Date(form.transactionTime), 'HH:mm');
+  
+
+    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
+   
+    console.log(form);
+    this.accountNum=form.accountNumber;
+    this.transactionAmount= form.transactionAmount;
+    console.log(this.transactionAmount);
+    this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
+  
+    localStorage.setItem("AccountNumber",this.accountNum);
+    localStorage.setItem("TransactionDate",this.transDate);
+    localStorage.setItem("TransactionTime",form.transactionTime);
+    localStorage.setItem("TransactionAmount",this.transactionAmount);
+
     this.api.cashWithdrawalSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
+      this.cashWithdrawResponse = resp;
     });
+    if(this.cashWithdrawResponse!==null){
+      this.router.navigate(['token-generation']);
+    }
    
   }
   accountEvent(event){

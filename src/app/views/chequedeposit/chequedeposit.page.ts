@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {format} from "date-fns" 
+import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -19,6 +20,10 @@ export class ChequedepositPage implements OnInit {
   accountBranch="Loita street";
   flag:boolean=true;
   currencyValue:string;
+  accountNum: string;
+  transDate: string
+  transTime: string;
+  cashWithdrawResponse: any;
  
   users=['789045667','8789977889'];
   customerId:any;
@@ -45,7 +50,7 @@ export class ChequedepositPage implements OnInit {
       accountAmount: ['', [Validators.required]],
       totalChargeAmount: ['', [Validators.required]],
       narrative: ['', [Validators.required]],
-      denomination: ['', [Validators.required]],
+      denomination: [null, [Validators.required]],
       totalAmount: ['', [Validators.required]],
       createdBy: ['', [Validators.required]],
       createdTime: ['', [Validators.required]],
@@ -358,12 +363,27 @@ export class ChequedepositPage implements OnInit {
     
     
     form.transactionCurrency=form.transactionCurrency.currency;
-    form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
-    console.log(form);
+    // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
+    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
+   
+    console.log(form);
+    this.accountNum=form.accountNumber;
+    this.transactionAmount= form.transactionAmount;
+    console.log(this.transactionAmount);
+    this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
+  
+    localStorage.setItem("AccountNumber",this.accountNum);
+    localStorage.setItem("TransactionDate",this.transDate);
+    localStorage.setItem("TransactionTime",form.transactionTime);
+    localStorage.setItem("TransactionAmount",this.transactionAmount);
+
     this.api.chequeDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });
+    if(this.cashWithdrawResponse!==null){
+      this.router.navigate(['token-generation']);
+    }
     
   }
   accountEvent(event){

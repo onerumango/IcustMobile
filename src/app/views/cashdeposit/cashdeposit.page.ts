@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {format} from "date-fns" 
+import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -22,7 +23,9 @@ export class CashdepositPage implements OnInit {
     currencyValue:string;
    
     users=['789045667','8789977889'];
-  
+    accountNum: string;
+    transDate: string
+    transTime: string;
   
     ngOnInit() {
       this.customerId = sessionStorage.getItem('customer_id');
@@ -36,7 +39,7 @@ export class CashdepositPage implements OnInit {
         id:['', [Validators.required]],
         customerId:['', [Validators.required]],
         accountNumber: ['', [Validators.required]],
-        accountBalance: ['12.00', [Validators.required]],
+        accountBalance: ['', [Validators.required]],
         transactionCurrency: ['', [Validators.required]],
         transactionAmount: ['', [Validators.required]],
         branchFlag: ['', [Validators.required]],
@@ -48,7 +51,7 @@ export class CashdepositPage implements OnInit {
         accountAmount: ['', [Validators.required]],
         totalChargeAmount: ['', [Validators.required]],
         narrative: ['', [Validators.required]],
-        denomination: ['', [Validators.required]],
+        denomination: [null, [Validators.required]],
         totalAmount: ['', [Validators.required]],
         createdBy: ['', [Validators.required]],
         createdTime: ['', [Validators.required]],
@@ -352,10 +355,23 @@ export class CashdepositPage implements OnInit {
       console.log(date) //4/
       form.transactionDate=date;
       
-      form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
+      // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
       form.transactionCurrency=form.transactionCurrency.currency;
-      console.log(form);
+      form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
       form.customerId=this.customerId;
+     
+      console.log(form);
+      this.accountNum=form.accountNumber;
+      this.transactionAmount= form.transactionAmount;
+      console.log(this.transactionAmount);
+      this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
+    
+      localStorage.setItem("AccountNumber",this.accountNum);
+      localStorage.setItem("TransactionDate",this.transDate);
+      localStorage.setItem("TransactionTime",form.transactionTime);
+      localStorage.setItem("TransactionAmount",this.transactionAmount);
+      console.log(form);
+     
       this.api.cashDepositSave(form).subscribe((resp) => {
         console.log('backend resp', resp);
       });

@@ -1,91 +1,120 @@
 <!-- <app-operation [title] = "cashWithdrawal"></app-operation> -->
-<ion-header *ngIf=flag>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <span class="text">{{title}}</span>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content *ngIf=flag>
-    <div>
-      <form [formGroup]="slideOneForm">
-        
-        <div class="inputCard1">
-          <ion-label>Account Number</ion-label>
-          <!-- <ion-input class="box"></ion-input> -->
-          <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" (ionChange)="accountEvent($event)" ngDefaultControl>
-            <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
-          </ion-select>
-          </div>
-          <div class="inputCard1">
-            <ion-label position="stacked" class="labelCard"  style="font-size: 14px;">Account Balance : {{currentBalance}}</ion-label>   
-            </div>
-  
-        <div class="inputCard1">
-          <ion-label>Transaction Currency</ion-label>
-          </div>
-          <div class="box7">
-            
-            <ion-card class="box">
-              <ion-row>
-                <ion-col style="width: 10%;">
-                    <ngx-flag-picker
-                    [selectedCountryCode]="selectedCountryCode"
-                    [showFlags]="isShow"
-                    [showLabels]="!isShow"
-                    [showArrow]="!isShow">
-                  </ngx-flag-picker>
-                 </ion-col>
-                <ion-col style="width: 20%;">
-                    <ion-select [compareWith]="compareWith" formControlName="transactionCurrency" (ionChange)="selectCurrencyCode($event)" style="font-size: large;margin-left: -40%;">
-                      <ion-select-option *ngFor="let user of countries" [value]="user" >
-                     {{user.currency + ' : ' + user.countryName}}
-                      </ion-select-option>
-                      </ion-select>
-                </ion-col>
-               </ion-row>
-             </ion-card>
-            </div>
-  
-        <div class="inputCard1">
-            <ion-label position="stacked">Transaction Amount</ion-label>
-            <ion-input class="box" formControlName="transactionAmount"></ion-input>
+<ion-header *ngIf="flag">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <span class="text">{{title}}</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="flag">
+  <div>
+    <form [formGroup]="slideOneForm">
+      <div class="inputCard1">
+        <ion-label>Account Number</ion-label>
+        <!-- <ion-input class="box"></ion-input> -->
+        <ion-select
+          [compareWith]="compareWith"
+          class="box"
+          formControlName="accountNumber"
+          (ionChange)="accountEvent($event)"
+          ngDefaultControl
+        >
+          <ion-select-option *ngFor="let user of users" [value]="user"
+            >{{user}}</ion-select-option
+          >
+        </ion-select>
+      </div>
+      <div class="inputCard1">
+        <ion-label position="stacked" class="labelCard" style="font-size: 14px"
+          >Account Balance : {{currentBalance}}</ion-label
+        >
+      </div>
+
+      <div class="inputCard1">
+        <ion-label>Transaction Currency</ion-label>
+      </div>
+      <div class="box7">
+        <ion-card class="box">
+          <ion-row>
+            <ion-col style="width: 10%">
+              <ngx-flag-picker
+                [selectedCountryCode]="selectedCountryCode"
+                [showFlags]="isShow"
+                [showLabels]="!isShow"
+                [showArrow]="!isShow"
+              >
+              </ngx-flag-picker>
+            </ion-col>
+            <ion-col style="width: 20%">
+              <ion-select
+                [compareWith]="compareWith"
+                formControlName="transactionCurrency"
+                (ionChange)="selectCurrencyCode($event)"
+                style="font-size: large; margin-left: -40%"
+              >
+                <ion-select-option
+                  *ngFor="let user of countries"
+                  [value]="user"
+                >
+                  {{user.currency + ' : ' + user.countryName}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </div>
+
+      <div class="inputCard1">
+        <ion-label position="stacked">Transaction Amount</ion-label>
+        <ion-input class="box" formControlName="transactionAmount"></ion-input>
+      </div>
+
+      <div class="inputCard1">
+        <ion-label position="stacked">Account Branch</ion-label>
+        <ion-input class="box" formControlName="accountBranch"></ion-input>
+      </div>
+      <div class="ion-padding-top">
+        <div>
+          <ion-button
+            expand="block"
+            shape="round"
+            (click)="goToNextPage()"
+            style="width: 95%"
+            >Next</ion-button
+          >
         </div>
-       
-  
-        <div class="inputCard1">
-            <ion-label position="stacked" >Account Branch</ion-label>
-            <ion-input class="box" formControlName="accountBranch"></ion-input>
+        <div>
+          <ion-button
+            expand="block"
+            shape="round"
+            fill="clear"
+            style="color: black"
+            (click)="goToHomepage()"
+            >Cancel</ion-button
+          >
         </div>
-    <div class="ion-padding-top">
-    <div>
-      <ion-button  expand="block" shape="round"(click)="goToNextPage()" style="width: 95%;">Next</ion-button>
-    </div>
-    <div>
-      <ion-button expand="block" shape="round" fill="clear" style="color: black;"
-      (click)="goToHomepage()">Cancel</ion-button>
+      </div>
+    </form>
   </div>
-  
-  
-  </div>
-       
-      </form>
-    </div>
-  </ion-content>
-  
-  <ion-header *ngIf=!flag>
-    <ion-toolbar>
-      <ion-icon class="backIcon" name="chevron-back-outline" (click)="goToPreviousPage()"></ion-icon>
-      <span class="text">{{title}}</span>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content *ngIf=!flag>
-    <div>
-      <form [formGroup]="slideOneForm">
-          <!-- <div class="textCard">
+</ion-content>
+
+<ion-header *ngIf="!flag">
+  <ion-toolbar>
+    <ion-icon
+      class="backIcon"
+      name="chevron-back-outline"
+      (click)="goToPreviousPage()"
+    ></ion-icon>
+    <span class="text">{{title}}</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!flag">
+  <div>
+    <form [formGroup]="slideOneForm">
+      <!-- <div class="textCard">
             <ion-text>
               <h5 style="color: gray;padding-left: 4%;">Do you wish to perform this transaction in your home branch</h5>
             </ion-text>
@@ -110,87 +139,104 @@
               </ion-row>
             </ion-radio-group>
          </div> -->
-  
-         <div style="margin-left: 19px;margin-top: 19px;margin-right: 19px">
-          <ion-label >Do you wish to perform this transaction in your branch?</ion-label>
-          <!-- <ion-label></ion-label> -->
-          <ion-radio-group ngDefaultControl formControlName="branchFlag">
-            <ion-row >
-              <ion-col>
-                   <ion-item lines="none" >
-                      <ion-label position="start">Yes</ion-label>
-                      <ion-radio mode="md" item-left value=true></ion-radio>
-                 </ion-item>
-               </ion-col>
-          
-              <ion-col>
-                  <ion-item lines="none">
-                      <ion-label>No</ion-label>
-                      <ion-radio mode="md" item-left value=false></ion-radio>
-                 </ion-item>
-              </ion-col>
+
+      <div style="margin-left: 19px; margin-top: 19px; margin-right: 19px">
+        <ion-label
+          >Do you wish to perform this transaction in your branch?</ion-label
+        >
+        <!-- <ion-label></ion-label> -->
+        <ion-radio-group ngDefaultControl formControlName="branchFlag">
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-label position="start">Yes</ion-label>
+                <ion-radio mode="md" item-left value="true"></ion-radio>
+              </ion-item>
+            </ion-col>
+
+            <ion-col>
+              <ion-item lines="none">
+                <ion-label>No</ion-label>
+                <ion-radio mode="md" item-left value="false"></ion-radio>
+              </ion-item>
+            </ion-col>
           </ion-row>
-          </ion-radio-group>
-  </div>
-  
-         <div class="inputCard2">
-            <p (click)="goToBranch()">Click here to find nearest branch</p>
-         </div>
-         <br>
-    
-         <div class="inputCard2" >
-          <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
-          <ion-card class="box" >
-            <ion-searchbar appearence="none" formControlName="transactionBranch"></ion-searchbar>
-          </ion-card>
-               
-            
-         </div>
-  
-        <div class="inputCard2">
-  
-            <ion-label style="padding-left: 5%;">Transaction date</ion-label>
-          <ion-card class="box" >
-            <ion-item lines="none">
-                <ion-datetime displayFormat="DDD. MMM DD, YY" placeholder="Select date" formControlName="transactionDate" >
-                </ion-datetime>
-           <ion-icon name="calendar" slot="end"></ion-icon>
-  
-           </ion-item> 
-       </ion-card>
-       </div>
-      
-  
-       <div class="inputCard2">
-         <ion-label style="padding-left: 5%;">Time Slot</ion-label>
-       <ion-card class="box">
-         <ion-item  lines="none">
-          <ion-datetime displayFormat="hh:mm:ss A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>
-          <ion-icon name="alarm-outline" slot="end"></ion-icon>
-        </ion-item>
-       </ion-card>
-       </div> 
-  
-       <div class="inputCard2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'">
-        <ion-label position="stacked">Remark</ion-label>
-        <ion-input class="chequeCard" formControlName="accountNo" ></ion-input>
-       </div>
-  
-       
-  
-  
-       <div class="ion-padding-top">
-      <div>
-        <ion-button  expand="block" shape="round" (click)="goToNextScreen(slideOneForm.value)">Next</ion-button>
+        </ion-radio-group>
       </div>
-  
-   
-      <div>
-        <ion-button expand="block" shape="round" fill="clear" style="width: 95%;color:black;"
-  (click)="goToPreviousPage()">Back</ion-button>
-    </div>
-  </div>
+
+      <div class="inputCard2">
+        <a (click)="presentModal()">Click here to find nearest branch</a>
+      </div>
+      <br />
+
+      <div class="inputCard2">
+        <ion-label style="padding-left: 5%">Transaction Branch</ion-label>
+        <ion-card class="box">
+          <ion-searchbar
+            appearence="none"
+            formControlName="transactionBranch"
+          ></ion-searchbar>
+        </ion-card>
+      </div>
+
+      <div class="inputCard2">
+        <ion-label style="padding-left: 5%">Transaction date</ion-label>
+        <ion-card class="box">
+          <ion-item lines="none">
+            <ion-datetime
+              displayFormat="DDD. MMM DD, YY"
+              placeholder="Select date"
+              formControlName="transactionDate"
+            >
+            </ion-datetime>
+            <ion-icon name="calendar" slot="end"></ion-icon>
+          </ion-item>
+        </ion-card>
+      </div>
+
+      <div class="inputCard2">
+        <ion-label style="padding-left: 5%">Time Slot</ion-label>
+        <ion-card class="box">
+          <ion-item lines="none">
+            <ion-datetime
+              displayFormat="HH:mm A"
+              placeholder="Select date"
+              formControlName="transactionTime"
+            ></ion-datetime>
+            <ion-icon name="alarm-outline" slot="end"></ion-icon>
+          </ion-item>
+        </ion-card>
+      </div>
+
+      <div
+        class="inputCard2"
+        *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'"
+      >
+        <ion-label position="stacked">Remark</ion-label>
+        <ion-input class="chequeCard" formControlName="accountNo"></ion-input>
+      </div>
+
+      <div class="ion-padding-top">
+        <div>
+          <ion-button
+            expand="block"
+            shape="round"
+            (click)="goToNextScreen(slideOneForm.value)"
+            >Next</ion-button
+          >
+        </div>
+
+        <div>
+          <ion-button
+            expand="block"
+            shape="round"
+            fill="clear"
+            style="width: 95%; color: black"
+            (click)="goToPreviousPage()"
+            >Back</ion-button
+          >
+        </div>
+      </div>
     </form>
   </div>
-  
-  </ion-content>
+</ion-content>

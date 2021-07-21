@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalController } from '@ionic/angular';
+import { ApiService } from 'src/app/services/api.service';
 import { BranchDataService } from './branch.service';
 import { MapsService } from './maps.service';
 
@@ -12,6 +14,8 @@ import { MapsService } from './maps.service';
 export class BranchPage implements OnInit {
   google;
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+  selectedLocation:any;
+  
   map: google.maps.Map;
   branchData: any = [];
 
@@ -24,21 +28,28 @@ export class BranchPage implements OnInit {
   infoWindows: google.maps.InfoWindow[] = [];
 
   constructor(
+    private modalController:ModalController,
     private geolocation: Geolocation,
+    private apiService: ApiService,
     private _mapsService: MapsService,
     private _element: ElementRef,
     private branchService: BranchDataService) { }
 
   ngOnInit() {
 
-    this.branchService.getBranches().subscribe((data: any) => {
+  }
+
+  ionViewDidEnter() {
+    this.getBankBranches();
+  }
+
+  getBankBranches() {
+    this.branchService.getBranches()
+    .subscribe((data: any) => {
       this.branchData = data.branch;
+      this.setupMap();
       console.log(data);
     });
-    console.log(this.branchData);
-
-    this.setupMap();
-
   }
 
   async setupMap() {
@@ -269,6 +280,7 @@ export class BranchPage implements OnInit {
   }
 
   setUpInfoWindow(location: any, marker: google.maps.Marker) {
+
     const infowindow = new google.maps.InfoWindow({
       content: `
         <div class="info_window_container">
@@ -278,13 +290,14 @@ export class BranchPage implements OnInit {
           <h4>${location.title}</h4>
           Branch Code : ${location.branch}
           <p>${location.address}</p>
-          <ion-chip color="primary">
+          <ion-chip color="primary" onClick="close(location)">
            <ion-label color="primary">SELECT</ion-label>
           </ion-chip>
         </div>
       `,
     });
 
+  
     this.infoWindows = [...this.infoWindows, infowindow];
 
     marker.addListener('click', () => {
@@ -292,13 +305,55 @@ export class BranchPage implements OnInit {
       this.infoWindows.forEach(infoWindow => infoWindow.close());
       infowindow.open(this.map, marker);
       this.markerActive = location.id;
+      this.selectedLocation = location;
       const element = this._element.nativeElement.getElementsByClassName(String(location.id))[0];
 
       if (element) {
         element.scrollIntoView({ block: 'start', behavior: 'smooth' });
       }
-    });
 
+    
+    });
+  
     return infowindow;
+  }
+
+  @HostListener("click", ['$event'])
+  onClick(event: any) {
+    // get the clicked element
+    console.log(event,this.selectedLocation);
+    if(event.target.innerText== "SELECT"){
+      this.dismiss(this.selectedLocation);
+    }
+  }
+
+  clickedOut() {
+    console.log(location);
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'data': location
+    });
+  }
+
+
+  dismiss(location:any) {
+    console.log(location);
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'data': location
+    });
+    
+  }
+
+  close(){
+    this.modalController.dismiss();
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.selectedLocation = null;
   }
 }

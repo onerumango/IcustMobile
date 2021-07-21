@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators'; 
 
 
-// export const API_URL1 = 'http://localhost:1212';
+export const API_URL1 = 'http://localhost:1212';
 export const API_URL = AppConstants.baseURL;
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,8 @@ accountDropDown(custId:String)
 accountBalance(accId:String)
 {
   return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
+}
+generateQRCode(data){
+  return this.http.post(`${API_URL}/token/api/qr-code-generator`,data);
 }
 }

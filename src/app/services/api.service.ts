@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AppConstants } from 'src/config/app.constant';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ShowMessageService } from './showMessage/show-message.service';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators'; 
 
 
@@ -31,7 +31,7 @@ export class ApiService {
   cashWithdrawalSave(data:object)
 {
   console.log("enter inside api")
-  return this.http.post<any>(`${API_URL}/cash-withdrawal-service`,data).pipe(catchError(this.errorHandler));
+  return this.http.post<any>(`${API_URL1}/cash-withdrawal-service`,data).pipe(catchError(this.errorHandler));
 }
 cashDepositSave(data:object)
 {
@@ -54,13 +54,18 @@ custpomerDetails(phoneNo:String)
 
 accountDropDown(custId:String)
 {
-  return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`).pipe(catchError(this.errorHandler));
+  return this.http.get<any>(`${API_URL1}/accountdata/account/${custId}`).pipe(catchError(this.errorHandler));
 }
 accountBalance(accId:String)
 {
-  return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
+  return this.http.get<any>(`${API_URL1}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
 }
-generateQRCode(data){
-  return this.http.post(`${API_URL}/token/api/qr-code-generator`,data);
+generateQRCode(data): Observable<Blob> {
+  return this.http.post(`${API_URL1}/token/api/qr-code-generator`, data, { responseType: 'blob' } );
+  // return this.http.get<any>(`${API_URL1}/token/api/fetch-qr-code/${data}`).pipe(catchError(this.errorHandler));
+
 }
+
 }
+
+

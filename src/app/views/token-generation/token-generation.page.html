@@ -39,13 +39,10 @@
               <ion-label style="opacity: 51%;">Time Slot</ion-label>
               <ion-label class="display">{{transTime}}</ion-label>
               <!-- <ion-input class="box" placeholder="Enter Current Password"></ion-input> -->
-            
-             
-  
-  
-              
+   
               </div>
-              <!-- <img src="assets\images\qr.jpg" alt="Ionic logo">   -->
+              <!-- <img src="data:image/png;base64,{{blobUrl}}">  -->
+              <img [src]="imageToShow">
               <!-- <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
              
               <ion-label class="inputCard" style="display:block;opacity: 70%;font-size: 16pt;">Add to wallet</ion-label> 

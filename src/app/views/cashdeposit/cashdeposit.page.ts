@@ -26,6 +26,7 @@ export class CashdepositPage implements OnInit {
     accountNum: string;
     transDate: string
     transTime: string;
+    productcode:string;
   
     ngOnInit() {
       this.customerId = sessionStorage.getItem('customer_id');
@@ -60,6 +61,7 @@ export class CashdepositPage implements OnInit {
         recordStatus: ['', [Validators.required]],
         authStatus: ['', [Validators.required]],
         version: ['', [Validators.required]],
+        productCode:['CHD',[Validators.required]]
       })
        console.log(this.depositForm.value);
        console.log(this.countries);
@@ -363,6 +365,7 @@ export class CashdepositPage implements OnInit {
       console.log(form);
       this.accountNum=form.accountNumber;
       this.transactionAmount= form.transactionAmount;
+      this.productcode=form.productCode;
       console.log(this.transactionAmount);
       this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
     
@@ -370,6 +373,7 @@ export class CashdepositPage implements OnInit {
       localStorage.setItem("TransactionDate",this.transDate);
       localStorage.setItem("TransactionTime",form.transactionTime);
       localStorage.setItem("TransactionAmount",this.transactionAmount);
+      localStorage.setItem("ProductCode",this.productcode);
       console.log(form);
      
       this.api.cashDepositSave(form).subscribe((resp) => {

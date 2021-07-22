@@ -24,7 +24,7 @@ export class ChequedepositPage implements OnInit {
   transDate: string
   transTime: string;
   cashWithdrawResponse: any;
- 
+  productcode:string;
   users=['789045667','8789977889'];
   customerId:any;
 
@@ -59,7 +59,8 @@ export class ChequedepositPage implements OnInit {
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]],
-        remarks:['', [Validators.required]]
+        remarks:['', [Validators.required]],
+        productCode:['CQD',[Validators.required]]
     })
      console.log(this.slideOneForm.value);
      console.log(this.countries);
@@ -370,6 +371,7 @@ export class ChequedepositPage implements OnInit {
     console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;
+    this.productcode=form.productCode;
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
   
@@ -377,6 +379,7 @@ export class ChequedepositPage implements OnInit {
     localStorage.setItem("TransactionDate",this.transDate);
     localStorage.setItem("TransactionTime",form.transactionTime);
     localStorage.setItem("TransactionAmount",this.transactionAmount);
+    localStorage.setItem("ProductCode",this.productcode);
 
     this.api.chequeDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);

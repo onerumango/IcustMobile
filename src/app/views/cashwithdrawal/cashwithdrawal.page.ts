@@ -1637,7 +1637,10 @@ export class CashwithdrawalPage implements OnInit {
       this.cashWithdrawResponse = resp;
     });
     if(this.cashWithdrawResponse!==null){
-      this.router.navigate(['token-generation']);
+      setTimeout(() => {
+         this.router.navigate(['token-generation']);
+      }, 100);
+     
     }
    
   }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AppConstants } from 'src/config/app.constant';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ShowMessageService } from './showMessage/show-message.service';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import {catchError} from 'rxjs/operators'; 
 
 
 export const API_URL1 = 'http://localhost:1212';
@@ -47,17 +47,20 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNo}`).pipe(catchError(this.errorHandler));
   }
 
-  accountDropDown(custId: String) {
-    return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`).pipe(catchError(this.errorHandler));
-  }
-  accountBalance(accId: String) {
-    return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
-  }
-  generateQRCode(data) {
-    return this.http.post(`${API_URL}/token/api/qr-code-generator`, data);
-  }
-
-  getBranches(city: string) {
-    return this.http.get<any>(`${API_URL}/branch/fetchbranch/${city}`).pipe(catchError(this.errorHandler));
-  }
+accountDropDown(custId:String)
+{
+  return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`).pipe(catchError(this.errorHandler));
 }
+accountBalance(accId:String)
+{
+  return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
+}
+generateQRCode(data): Observable<Blob> {
+  return this.http.post(`${API_URL}/token/api/qr-code-generator`, data, { responseType: 'blob' } );
+  // return this.http.get<any>(`${API_URL1}/token/api/fetch-qr-code/${data}`).pipe(catchError(this.errorHandler));
+
+}
+
+}
+
+

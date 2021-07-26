@@ -15,6 +15,7 @@ export class HomePage implements OnInit {
     centeredSlides: true
 };
 accountType:string;
+accountBalance:string;
   constructor(private router:Router) { }
 
   ngOnInit() {
@@ -24,6 +25,7 @@ accountType:string;
   console.log(customerDetails);
 // this.customerItems=customerDetails;
 this.accountType=customerDetails.accountType;
+this.accountBalance=customerDetails.custAccount[0].currentBalance;
   }
   goToCashWithdrawal(){
     this.router.navigate(['cashwithdrawal']);

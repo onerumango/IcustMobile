@@ -33,6 +33,7 @@ export class CashwithdrawalPage implements OnInit {
   accountNum: string;
   transDate: string
   transTime: string;
+  productcode:string;
   ngOnInit() {
     this.customerId = sessionStorage.getItem('customer_id');
     console.log("customer_id",this.customerId)
@@ -66,6 +67,7 @@ export class CashwithdrawalPage implements OnInit {
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]],
+      productCode:['CHW',[Validators.required]]
     });
     console.log(this.slideOneForm.value);
     console.log(this.countries);
@@ -1624,6 +1626,8 @@ export class CashwithdrawalPage implements OnInit {
     console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;
+    this.productcode=form.productCode;
+    console.log(this.productcode);
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
   
@@ -1631,6 +1635,7 @@ export class CashwithdrawalPage implements OnInit {
     localStorage.setItem("TransactionDate",this.transDate);
     localStorage.setItem("TransactionTime",form.transactionTime);
     localStorage.setItem("TransactionAmount",this.transactionAmount);
+    localStorage.setItem("ProductCode",this.productcode);
 
     this.api.cashWithdrawalSave(form).subscribe((resp) => {
       console.log('backend resp', resp);

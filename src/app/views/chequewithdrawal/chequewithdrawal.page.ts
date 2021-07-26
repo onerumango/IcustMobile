@@ -26,6 +26,7 @@ export class ChequewithdrawalPage implements OnInit {
     accountNum: string;
     transDate: string
     transTime: string;
+    productcode:string;
   
   
     ngOnInit() {
@@ -60,7 +61,8 @@ export class ChequewithdrawalPage implements OnInit {
         recordStatus: ['', [Validators.required]],
         authStatus: ['', [Validators.required]],
         version: ['', [Validators.required]],
-          remarks:['', [Validators.required]]
+          remarks:['', [Validators.required]],
+          productCode:['CQW',[Validators.required]]
       })
        console.log(this.slideOneForm.value);
        console.log(this.countries);
@@ -370,6 +372,7 @@ export class ChequewithdrawalPage implements OnInit {
       console.log(form);
       this.accountNum=form.accountNumber;
       this.transactionAmount= form.transactionAmount;
+      this.productcode=form.productCode;
       console.log(this.transactionAmount);
       this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
     
@@ -377,6 +380,7 @@ export class ChequewithdrawalPage implements OnInit {
       localStorage.setItem("TransactionDate",this.transDate);
       localStorage.setItem("TransactionTime",form.transactionTime);
       localStorage.setItem("TransactionAmount",this.transactionAmount);
+      localStorage.setItem("ProductCode",this.productcode);
    
       console.log(form);
       this.api.chequeDepositSave(form).subscribe((resp) => {

@@ -23,6 +23,7 @@ export class TokenGenerationPage implements OnInit {
   transAmount:any;
   transDate:any;
   transTime:any;
+  productCode:string;
   public myAngularxQrCode: string = null;
   blobUrl: any ;
   imageToShow: any;
@@ -43,7 +44,7 @@ export class TokenGenerationPage implements OnInit {
     this.transAmount=localStorage.getItem('TransactionAmount');
     this.transDate= localStorage.getItem('TransactionDate');
     this.transTime= localStorage.getItem('TransactionTime');
-  
+  this.productCode=localStorage.getItem('ProductCode')
     
 
     
@@ -58,12 +59,13 @@ generateQRCode(token){
   console.log("Token",token);
   
   this.tokenObjects.accountId=localStorage.getItem('AccountNumber');
+  this.tokenObjects.productCode=localStorage.getItem('ProductCode');
   this.tokenObjects.transactionDate= moment(new Date(localStorage.getItem('TransactionDate'))).format("DD-MM-YYYY");
   this.tokenObjects.transactionDate=localStorage.getItem('TransactionDate');
 // this.tokenObjects.timeSlot=moment(new Date(localStorage.getItem('TransactionTime'))).format("MM/DD/YYYY hh:mm:ss a");
- 
+console.log("Token1",token);
   this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
-  this.tokenObjects.productCode='CHD';
+  // this.tokenObjects.productCode='CHD';
 
   this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
     console.log("Token Response", tokenResp);

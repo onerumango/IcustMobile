@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import {format} from "date-fns" 
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-
+import { ToastController } from '@ionic/angular';  
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -16,17 +16,18 @@ export class CashdepositPage implements OnInit {
   depositForm: FormGroup;
   currentBalance: any;
   customerId: string;
-    constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
+    constructor(
+      public toastCtrl: ToastController,private router:Router,private fb: FormBuilder,private api: ApiService,private toastController:ToastController) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
     currencyValue:string;
    
-    users=['789045667','8789977889'];
+    users:any[];
     accountNum: string;
     transDate: string
     transTime: string;
-  
+    toast: HTMLIonToastElement;
     ngOnInit() {
       this.customerId = sessionStorage.getItem('customer_id');
       console.log("customer_id",this.customerId)
@@ -34,6 +35,11 @@ export class CashdepositPage implements OnInit {
         this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
           console.log('backend dropdown', dropdown);
           this.users=dropdown;
+          
+          if(dropdown==null){
+            this.openToast();
+          }
+         
         });
       this.depositForm = this.fb.group({
         id:['', [Validators.required]],
@@ -392,6 +398,13 @@ export class CashdepositPage implements OnInit {
       this.currentBalance=currentBalance;
   
     }
+    async openToast() {  
+      const toast = await this.toastCtrl.create({  
+        message: 'Account Number is not existing for this customer Id',  
+        duration: 5000  
+      });  
+      toast.present();  
+    }  
 }
 interface CountryType {
   code: string;

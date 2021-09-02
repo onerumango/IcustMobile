@@ -25,7 +25,7 @@ accountBalance:string;
   console.log(customerDetails);
 // this.customerItems=customerDetails;
 this.accountType=customerDetails.accountType;
-this.accountBalance=customerDetails.custAccount[0].currentBalance;
+// this.accountBalance=customerDetails.custAccount[0].currentBalance;
   }
   goToCashWithdrawal(){
     this.router.navigate(['cashwithdrawal']);

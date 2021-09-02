@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
@@ -14,21 +14,22 @@ import { BranchPage } from './branch/branch.page';
 })
 export class CashwithdrawalPage implements OnInit {
   title: any = 'Cash Withdrawal';
-
+  // maxData : any = (new Date()).getFullYear() + 3;
+  minDate = new Date().toISOString();
   slideOneForm: FormGroup;
   currentBalance: any;
   constructor(
     private router: Router,
     private modalController:ModalController,
     private fb: FormBuilder,
-    private api: ApiService
+    private api: ApiService,  public toastCtrl: ToastController
   ) {}
   transactionAmount:string;
   accountBranch = 'Loita street';
   flag: boolean = true;
   currencyValue: string;
   cashWithdrawResponse: any;
-  users = ['123', '456'];
+  users :any[];
   customerId:any
   accountNum: string;
   transDate: string
@@ -40,6 +41,9 @@ export class CashwithdrawalPage implements OnInit {
       this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
         console.log('backend dropdown', dropdown);
         this.users=dropdown;
+        if(dropdown==null){
+          this.openToast();
+        }
       });
     this.slideOneForm = this.fb.group({
       id:['', [Validators.required]],
@@ -1653,13 +1657,20 @@ export class CashwithdrawalPage implements OnInit {
     }
    
   }
+  async openToast() {  
+    const toast = await this.toastCtrl.create({  
+      message: 'Account Number is not existing for this customer Id',  
+      duration: 5000  
+    });  
+    toast.present();  
+  }  
   accountEvent(event){
     console.log("event",event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
       // this.users=dropdown;
-    
+    //8042666041 8042666055
     });
    
   }

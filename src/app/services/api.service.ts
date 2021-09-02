@@ -6,7 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators'; 
 
 
-// export const API_URL = 'http://localhost:1212';
+// export const API_URL1 = 'http://localhost:1212';
 export const API_URL = AppConstants.baseURL;
 @Injectable({
   providedIn: 'root'
@@ -49,16 +49,19 @@ export class ApiService {
 
 accountDropDown(custId:String)
 {
-  return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`).pipe(catchError(this.errorHandler));
+  return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`);
 }
 accountBalance(accId:String)
 {
-  return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`).pipe(catchError(this.errorHandler));
+  return this.http.get<any>(`${API_URL}/accountdata/accountBalance/${accId}`);
 }
 generateQRCode(data): Observable<Blob> {
   return this.http.post(`${API_URL}/token/api/qr-code-generator`, data, { responseType: 'blob' } );
   // return this.http.get<any>(`${API_URL1}/token/api/fetch-qr-code/${data}`).pipe(catchError(this.errorHandler));
 
+}
+getLoanInfo(phoneNumber){
+  return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNumber}`)
 }
 
 }

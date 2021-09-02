@@ -47,7 +47,7 @@ export class CashwithdrawalPage implements OnInit {
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
-      transactionAmount: ['', [Validators.required]],
+      transactionAmount: ['', [Validators.required,Validators.min(0),Validators.pattern(/^[1-9]\d*$/)]],
       branchFlag: ['', [Validators.required]],
       accountBranch: ['', [Validators.required]],
       transactionDate: ['', [Validators.required]],
@@ -1564,6 +1564,15 @@ export class CashwithdrawalPage implements OnInit {
 
   selectedCountryCode = 'ad';
 
+  numberOnlyValidation(event: any) {
+    const pattern = /[0-9.,]/;
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
  
   selectCurrencyCode(code) {
     console.log(code.detail.value.code);

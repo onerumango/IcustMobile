@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -29,7 +29,9 @@ export class LoginPage implements OnInit {
   verifyOtpModel = new verifyotpModel();
   otpResponse: any;
   customerPhonenum: any;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService) {
+  userResp: boolean = false;
+  constructor(private router: Router, private cdk: ChangeDetectorRef,
+    private fb: FormBuilder, private api: ApiService) {
 
   }
 
@@ -40,7 +42,7 @@ export class LoginPage implements OnInit {
 
     })
     console.log(this.loginForm.value.otp);
-    console.log(this.loginForm.value);
+    console.log('login :: ', this.loginForm.value);
   }
 
 
@@ -54,9 +56,17 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     this.api.getOtp(this.oTpModel).subscribe(otpResp => {
       console.log("Response Success", otpResp)
+      this.otpResponse = otpResp
+      /* Added validation for un-registered mobile nummber is entered */
+      if (this.otpResponse.otpVal.userId.localeCompare("New Customer") == 0) {
+        this.cdk.detectChanges();
+        this.userResp = true;
+      } else {
+        this.router.navigateByUrl('/otp');
+      }
     })
 
-    this.router.navigateByUrl('/otp');
+    // this.router.navigateByUrl('/otp');
 
   }
 

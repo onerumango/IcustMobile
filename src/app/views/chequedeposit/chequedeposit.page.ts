@@ -326,7 +326,6 @@ export class ChequedepositPage implements OnInit {
  
 
   selectCurrencyCode(code){
- 
     console.log(code.detail.value.code);
     this.selectedCountryCode = code.detail.value.code.toLowerCase();
 
@@ -389,8 +388,14 @@ export class ChequedepositPage implements OnInit {
   accountEvent(event){
     console.log("event",event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
-      console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
+  console.log('backend accbal', accbal);
+  console.log(this.slideOneForm.controls)
+  this.slideOneForm.controls.transactionAmount.setValue(accbal.amount);
+  this.slideOneForm.controls.accountBranch.setValue(accbal.accountBranch);
+  this.slideOneForm.controls.transactionCurrency.setValue(accbal.accountCurrency);
+
+
       // this.users=dropdown;
     
     });

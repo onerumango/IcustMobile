@@ -1649,6 +1649,10 @@ export class CashwithdrawalPage implements OnInit {
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
+  console.log('backend accbal', accbal);
+  console.log(this.slideOneForm.controls)
+  this.slideOneForm.controls.transactionAmount.setValue(accbal.amount);
+  this.slideOneForm.controls.accountBranch.setValue(accbal.accountBranch);
       // this.users=dropdown;
     
     });

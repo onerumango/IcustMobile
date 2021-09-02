@@ -383,6 +383,10 @@ export class CashdepositPage implements OnInit {
       this.api.accountBalance(event.detail.value).subscribe((accbal) => {
         console.log('backend accbal', accbal.currentBalance);
     this.valueSet(accbal.currentBalance);
+    console.log('backend accbal', accbal);
+  console.log(this.depositForm.controls)
+  this.depositForm.controls.transactionAmount.setValue(accbal.amount);
+  this.depositForm.controls.accountBranch.setValue(accbal.accountBranch);
         // this.users=dropdown;
       
       });

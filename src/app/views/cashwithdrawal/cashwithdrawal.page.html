@@ -50,15 +50,15 @@
             <ion-col style="width: 20%">
               <ion-select
                 [compareWith]="compareWith"
-                formControlName="transactionCurrency"
-                (ionChange)="selectCurrencyCode($event)"
+                formControlName="transactionCurrency" #code
+                (ionChange)="selectCurrencyCode(code.value)"
                 style="font-size: large; margin-left: -40%"
               >
                 <ion-select-option
                   *ngFor="let user of countries"
-                  [value]="user"
+                  [value]="user.accountCurrency"
                 >
-                  {{user.currency + ' : ' + user.countryName}}
+                  {{user.accountCurrency + ' : ' + user.countryName}}
                 </ion-select-option>
               </ion-select>
             </ion-col>

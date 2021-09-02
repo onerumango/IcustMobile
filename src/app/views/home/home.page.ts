@@ -16,9 +16,11 @@ export class HomePage implements OnInit {
 };
 accountType:string;
 accountBalance:string;
+  firstName: string;
   constructor(private router:Router) { }
 
   ngOnInit() {
+    this.firstName=localStorage.getItem('firstName');
     // console.log(localStorage.getItem('customer_details'));
     console.log(JSON.parse(localStorage.getItem('customer_details')));
   var customerDetails= JSON.parse(localStorage.getItem('customer_details'))

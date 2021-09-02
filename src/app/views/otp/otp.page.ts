@@ -19,6 +19,7 @@ export class OtpPage implements OnInit {
   otpValid: boolean = false;
   verifyOtpModel = new verifyotpModel();
   otpResponse: any
+  PhoneNumLogin: string;
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService) {
 
   }
@@ -30,7 +31,7 @@ export class OtpPage implements OnInit {
       otp: ['', [Validators.required]]
 
     })
-    localStorage.getItem('PhoneNumLogin');
+    this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
   }
 
@@ -39,21 +40,22 @@ export class OtpPage implements OnInit {
 
     console.log("Phonenumber for OTP", otpValue, otpValue.otp)
     this.verifyOtpModel.sourceKey = 'mobile';
-    this.verifyOtpModel.sourceValue = '9059029994';
+    this.verifyOtpModel.sourceValue = this.PhoneNumLogin;
     this.verifyOtpModel.otp = otpValue.otp;
     this.verifyOtpModel.type = '';
     console.log("model", this.verifyOtpModel);
     this.api.verifyOtp(this.verifyOtpModel).subscribe(otpResp => {
       console.log("Response Success", otpResp)
       this.otpResponse = otpResp
+
+      /* Validation resp */
+      if (this.otpResponse.responseMessage.localeCompare("Otp Validated successfully ...!!") == 0) {
+        // this.router.navigateByUrl('/others/services');
+        this.goToCashWithdrawal(this.otpForm);
+      } else {
+        this.router.navigateByUrl('/sessions/login');
+      }
     })
-    if (this.otpResponse !== null) {
-      // this.router.navigateByUrl('/others/services');
-      this.goToCashWithdrawal(this.otpForm);
-    }
-    else {
-      this.router.navigateByUrl('/sessions/login');
-    }
   }
 
   goToCashWithdrawal(otpForm) {
@@ -63,7 +65,8 @@ export class OtpPage implements OnInit {
     console.log(otpForm.customerPhonenum);
     this.api.custpomerDetails(otpForm.customerPhonenum).subscribe((resp) => {
       console.log('backend resp', resp);
-      if (resp !== null) {
+      if (resp != null) {
+        localStorage.setItem('firstName',resp.firstName);
         sessionStorage.setItem('customer_id', resp.customerId);
         // localStorage.setItem('customer_details', resp);
         localStorage.setItem('customer_details', JSON.stringify(resp));

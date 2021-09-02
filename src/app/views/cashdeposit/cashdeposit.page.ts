@@ -47,7 +47,7 @@ export class CashdepositPage implements OnInit {
         accountNumber: ['', [Validators.required]],
         accountBalance: ['', [Validators.required]],
         transactionCurrency: ['', [Validators.required]],
-        transactionAmount: ['', [Validators.required]],
+        transactionAmount: ['', [Validators.required,Validators.min(0),Validators.pattern(/^[1-9]\d*$/)]],
         branchFlag: ['', [Validators.required]],
         accountBranch: ['', [Validators.required]],
         transactionDate: ['', [Validators.required]],
@@ -68,8 +68,21 @@ export class CashdepositPage implements OnInit {
         version: ['', [Validators.required]],
       })
        console.log(this.depositForm.value);
-       console.log(this.countries);
+
+       
+      //  let disableBtn = false;
+      // this.depositForm.valueChanges 
+      //             .subscribe((changedObj: any) => {
+      //                 //  this.disableBtn = this.depositForm.valid;
+      //                 console.log('transactionAmount :: ',this.depositForm.controls.transactionAmount)
+      //             });
+      //  console.log(this.countries);
+
+     
     }
+
+  
+    
      countries :CountryType[] =[
       { code: 'AF', countryName: 'AFGHANISTAN', currency: 'AFN',currencyName:'Afghani' },
       { code: 'AL', countryName: 'ALBANIA', currency: 'ALL',currencyName:'Lek' },
@@ -325,10 +338,24 @@ export class CashdepositPage implements OnInit {
       { code: 'ZW', countryName: 'ZIMBABWE', currency: 'ZWD',currencyName:'Zimbabwe Dollar' },
       
     ];
+
+    numberOnlyValidation(event: any) {
+      const pattern = /[0-9.,]/;
+      let inputChar = String.fromCharCode(event.charCode);
+  
+      if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+      }
+    }
   
     isShow : boolean = true;
    
     selectedCountryCode = 'ad';
+
+    method(){
+      
+    }
    
   
     selectCurrencyCode(code){

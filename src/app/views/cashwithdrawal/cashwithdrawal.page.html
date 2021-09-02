@@ -68,7 +68,8 @@
 
       <div class="inputCard1">
         <ion-label position="stacked">Transaction Amount</ion-label>
-        <ion-input class="box" formControlName="transactionAmount"></ion-input>
+        <ion-input class="box" formControlName="transactionAmount"
+        type="text" (keypress)="numberOnlyValidation($event)"></ion-input>
       </div>
 
       <div class="inputCard1">
@@ -80,6 +81,7 @@
           <ion-button
             expand="block"
             shape="round"
+            [disabled]="depositForm.controls['accountNumber'||'accountBranch' || 'transactionAmount' || 'transactionCurrency'].invalid"
             (click)="goToNextPage()"
             style="width: 95%"
             >Next</ion-button

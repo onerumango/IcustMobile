@@ -377,7 +377,7 @@ export class ChequewithdrawalPage implements OnInit {
       localStorage.setItem("TransactionDate",this.transDate);
       localStorage.setItem("TransactionTime",form.transactionTime);
       localStorage.setItem("TransactionAmount",this.transactionAmount);
-   
+      localStorage.setItem("TransactionBranch",form.transactionBranch);
       console.log(form);
       this.api.chequeDepositSave(form).subscribe((resp) => {
         console.log('backend resp', resp);

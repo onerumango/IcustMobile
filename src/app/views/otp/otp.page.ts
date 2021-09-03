@@ -49,11 +49,11 @@ export class OtpPage implements OnInit {
       this.otpResponse = otpResp
 
       /* Validation resp */
-      if (this.otpResponse.responseMessage.localeCompare("Otp Validated successfully ...!!") == 0) {
+      if (this.otpResponse.userId !== '' ||  this.otpResponse.userId !==null) {
         // this.router.navigateByUrl('/others/services');
         this.goToCashWithdrawal(this.otpForm);
       } else {
-        this.router.navigateByUrl('/sessions/login');
+        this.router.navigateByUrl('/login');
       }
     })
   }

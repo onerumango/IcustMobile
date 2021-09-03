@@ -58,10 +58,12 @@ export class LoginPage implements OnInit {
       console.log("Response Success", otpResp)
       this.otpResponse = otpResp
       /* Added validation for un-registered mobile nummber is entered */
-      if (this.otpResponse.otpVal.userId.localeCompare("New Customer") == 0) {
+      if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
         this.cdk.detectChanges();
         this.userResp = true;
       } else {
+        // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+        console.log('in else')
         this.router.navigateByUrl('/otp');
       }
     })

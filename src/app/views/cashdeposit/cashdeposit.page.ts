@@ -421,9 +421,9 @@ export class CashdepositPage implements OnInit {
       this.valueSet(accbal.currentBalance);
       console.log('backend accbal', accbal);
       console.log(this.depositForm.controls)
-      // this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
-      // this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
-      // this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+      this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
+      this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
+      this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;
 
     });

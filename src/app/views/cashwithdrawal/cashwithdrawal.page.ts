@@ -18,6 +18,8 @@ export class CashwithdrawalPage implements OnInit {
   minDate = new Date().toISOString();
   slideOneForm: FormGroup;
   currentBalance: any;
+  submitted: boolean=true;
+  submitted1: boolean=true;
   constructor(
     private router: Router,
     private modalController:ModalController,
@@ -1576,6 +1578,30 @@ export class CashwithdrawalPage implements OnInit {
       // invalid character, prevent input
       event.preventDefault();
     }
+  }
+
+  
+  validateDisablebutton(button) {
+
+    this.slideOneForm.valueChanges.subscribe(v => {
+      // console.log("v:: ", v);
+      if (button === 'disable1') {
+        if (v.accountBranch != '' && v.accountNumber != '' && v.transactionAmount != '' && v.transactionCurrency != '') {
+          this.submitted = false;
+        } else {
+          this.submitted = true;
+        }
+      }
+
+      if (button === 'disable2') {
+        if (v.transactionBranch != '' && v.transactionDate != '' && v.transactionTime != '' && v.accountNo != '') {
+          this.submitted1 = false;
+        } else {
+          this.submitted1 = true;
+        }
+      }
+
+    });
   }
  
   selectCurrencyCode(currency) {

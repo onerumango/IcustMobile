@@ -81,7 +81,7 @@
           <ion-button
             expand="block"
             shape="round"
-            [disabled]="slideOneForm.controls['accountNumber'||'accountBranch' || 'transactionAmount' || 'transactionCurrency'].invalid"
+          [disabled]="validateDisablebutton('disable1')  || submitted"
             (click)="goToNextPage()"
             style="width: 95%"
             >Next</ion-button
@@ -214,6 +214,7 @@
           <ion-button
             expand="block"
             shape="round"
+            [disabled]="validateDisablebutton('disable2')  || submitted1"
             (click)="goToNextScreen(slideOneForm.value)"
             >Next</ion-button
           >

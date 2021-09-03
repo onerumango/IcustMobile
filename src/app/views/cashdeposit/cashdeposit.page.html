@@ -60,7 +60,7 @@
       <div class="ion-padding-top">
         <div>
           <ion-button expand="block" shape="round" (click)="goToNextPage()"
-          [disabled]="depositForm.controls['accountNumber'||'accountBranch' || 'transactionAmount' || 'transactionCurrency'].invalid"
+          [disabled]="validateDisablebutton('disable1')  || submitted"
            style="width: 95%;">
             Next</ion-button>
         </div>
@@ -182,7 +182,9 @@
 
       <div class="ion-padding-top">
         <div>
-          <ion-button expand="block" shape="round" (click)="goToNextScreen(depositForm.value)">Next</ion-button>
+          <ion-button expand="block" shape="round" 
+          [disabled]="validateDisablebutton('disable2')  || submitted1"
+          (click)="goToNextScreen(depositForm.value)">Next</ion-button>
         </div>
 
 

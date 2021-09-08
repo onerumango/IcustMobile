@@ -19,6 +19,7 @@ export class OtpPage implements OnInit {
   otpValid: boolean = false;
   verifyOtpModel = new verifyotpModel();
   otpResponse: any
+  phoneNumber: any;
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService) {
 
   }
@@ -35,11 +36,10 @@ export class OtpPage implements OnInit {
   }
 
   validateOtp(otpValue) {
-    console.log("OTP validaion", otpValue);
-
-    console.log("Phonenumber for OTP", otpValue, otpValue.otp)
+this.phoneNumber=localStorage.getItem('PhoneNumLogin');
+    console.log("Phonenumber for OTP", otpValue, otpValue.otp);
     this.verifyOtpModel.sourceKey = 'mobile';
-    this.verifyOtpModel.sourceValue = '9059029994';
+    this.verifyOtpModel.sourceValue = this.phoneNumber;
     this.verifyOtpModel.otp = otpValue.otp;
     this.verifyOtpModel.type = '';
     console.log("model", this.verifyOtpModel);

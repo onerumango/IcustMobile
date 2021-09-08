@@ -26,6 +26,7 @@ export class TokenGenerationPage implements OnInit {
   public myAngularxQrCode: string = null;
   blobUrl: any ;
   imageToShow: any;
+  branch: string;
 
   constructor(private router:Router,private api: ApiService) {
     this.myAngularxQrCode = 'Your QR code data string';
@@ -43,7 +44,7 @@ export class TokenGenerationPage implements OnInit {
     this.transAmount=localStorage.getItem('TransactionAmount');
     this.transDate= localStorage.getItem('TransactionDate');
     this.transTime= localStorage.getItem('TransactionTime');
-  
+    this.branch=localStorage.getItem('TransactionBranch');
     
 
     

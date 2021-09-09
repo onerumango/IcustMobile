@@ -14,12 +14,14 @@ import { BranchPage } from './branch/branch.page';
 })
 export class CashwithdrawalPage implements OnInit {
   title: any = 'Cash Withdrawal';
+  savingAccount:any[];
   // maxData : any = (new Date()).getFullYear() + 3;
   minDate = new Date().toISOString();
   slideOneForm: FormGroup;
   currentBalance: any;
   submitted: boolean=true;
   submitted1: boolean=true;
+  phoneNumber: string;
   constructor(
     private router: Router,
     private modalController:ModalController,
@@ -38,15 +40,29 @@ export class CashwithdrawalPage implements OnInit {
   transTime: string;
   ngOnInit() {
     this.customerId = sessionStorage.getItem('customer_id');
+   this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+   console.log("phoneNumber",this.phoneNumber)
+
+   this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+    console.log('backend resp in home', resp);
+    this.savingAccountFun(resp.custAccount);
+   })
+
+
+
+
+
+
+
     console.log("customer_id",this.customerId)
-    this.customerId = sessionStorage.getItem('customer_id');
-      this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-        console.log('backend dropdown', dropdown);
-        this.users=dropdown;
-        if(dropdown==null){
-          this.openToast();
-        }
-      });
+    // this.customerId = sessionStorage.getItem('customer_id');
+    //   this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+    //     console.log('backend dropdown', dropdown);
+    //     this.users=dropdown;
+    //     if(dropdown==null){
+    //       this.openToast();
+    //     }
+    //   });
     this.slideOneForm = this.fb.group({
       id:['', [Validators.required]],
       customerId:['', [Validators.required]],
@@ -1648,7 +1664,7 @@ export class CashwithdrawalPage implements OnInit {
   }
   goToNextScreen(form) {
     form.transactionDate.toString();
-
+this.slideOneForm.reset();
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');
     console.log(date); //4/
     form.transactionDate = date;
@@ -1666,10 +1682,10 @@ export class CashwithdrawalPage implements OnInit {
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
   
-    localStorage.setItem("AccountNumber",this.accountNum);
+    localStorage.setItem("AccountNumber",form.accountNumber);
     localStorage.setItem("TransactionDate",this.transDate);
     localStorage.setItem("TransactionTime",form.transactionTime);
-    localStorage.setItem("TransactionAmount",this.transactionAmount);
+    localStorage.setItem("TransactionAmount",form.transactionAmount);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
 
     this.api.cashWithdrawalSave(form).subscribe((resp) => {
@@ -1698,7 +1714,8 @@ export class CashwithdrawalPage implements OnInit {
   this.valueSet(accbal.currentBalance);
   console.log('backend accbal', accbal);
   console.log(this.slideOneForm.controls)
-  this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+  this.currentBalance=accbal.amount;
+  this.slideOneForm.controls.accountBalance.patchValue(accbal.amount);
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;
@@ -1710,6 +1727,14 @@ export class CashwithdrawalPage implements OnInit {
     this.currentBalance=currentBalance;
 
   }
+  savingAccountFun(filteredResponseSavingAccount)
+  {
+
+ console.log(filteredResponseSavingAccount)
+ this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ console.log("savingAccount",this.savingAccount);
+
+ }
 }
 interface CountryType {
   code: string;

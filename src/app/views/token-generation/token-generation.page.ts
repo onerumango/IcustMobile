@@ -47,7 +47,8 @@ export class TokenGenerationPage implements OnInit {
     this.branch=localStorage.getItem('TransactionBranch');
     
 
-    
+    console.log( this.transAmount, this.transDate,this.transTime,this.branch
+      )
     
   }
 next()

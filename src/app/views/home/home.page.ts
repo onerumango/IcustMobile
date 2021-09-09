@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +18,30 @@ export class HomePage implements OnInit {
 accountType:string;
 accountBalance:string;
   firstName: string;
-  constructor(private router:Router) { }
+  phoneNumber: string;
+  users: any;
+  savingAccount: any;
+  current: any;
+  saving: any;
+  savingArray: any[]=[];
+  currentArray: any;
+  constructor(private router:Router, private api: ApiService) { }
 
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    console.log("phoneNumber",this.phoneNumber)
+ 
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+     console.log('backend resp in cash withdrawal', resp);
+     this.savingAccountFun(resp.custAccount);
+     this.current = resp.custAccount.filter(res => res.accountType == "current");
+       console.log("current",this.current)
+       this.currentAssign(this.current);
+       this.saving = resp.custAccount.filter(res => res.accountType == "saving");
+       console.log("saving",this.saving)
+       this.savingAssign(this.saving);
+    })
+ 
     this.firstName=localStorage.getItem('firstName');
     // console.log(localStorage.getItem('customer_details'));
     console.log(JSON.parse(localStorage.getItem('customer_details')));
@@ -28,6 +50,12 @@ accountBalance:string;
 // this.customerItems=customerDetails;
 this.accountType=customerDetails.accountType;
 // this.accountBalance=customerDetails.custAccount[0].currentBalance;
+  }
+  currentAssign(current) {
+   this.currentArray=current;
+  }
+  savingAssign(saving: any) {
+   this.savingArray=saving;
   }
   goToCashWithdrawal(){
     this.router.navigate(['cashwithdrawal']);
@@ -53,4 +81,13 @@ this.accountType=customerDetails.accountType;
   goToDepositTopUp(){
     this.router.navigate(['deposit-topup']);
   }
+  savingAccountFun(filteredResponseSavingAccount)
+  {
+
+ console.log(filteredResponseSavingAccount)
+ this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ console.log("savingAccount",this.savingAccount);
+
+ }
+ 
 }

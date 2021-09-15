@@ -1730,10 +1730,11 @@ this.slideOneForm.reset();
   savingAccountFun(filteredResponseSavingAccount)
   {
 
- console.log(filteredResponseSavingAccount)
+ console.log(filteredResponseSavingAccount);
  this.users = filteredResponseSavingAccount.map(a => a.accountId);
- console.log("savingAccount",this.savingAccount);
-
+ const defaultId = this.users ? this.users[0] : null;
+ this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ this.currentBalance = this.users[0].amount;
  }
 }
 interface CountryType {

@@ -9,7 +9,7 @@
     <div>
     <form  [formGroup]="utilityForm">
     <div class="inputCard">
-    <ion-label>Biller Name</ion-label>
+    <ion-label>Biller Name*</ion-label>
     <!-- <ion-input class="box"></ion-input> -->
     <ion-select [compareWith]="compareWith" class="box" formControlName="billerName" ngDefaultControl>
       <ion-select-option *ngFor="let user of billNames" [value]="user">{{user}}</ion-select-option>
@@ -20,18 +20,18 @@
       </div>
       
     <div class="inputCard">
-      <ion-label>Amount</ion-label>
+      <ion-label>Amount*</ion-label>
       <ion-input class="box" formControlName="amount" ngDefaultControl></ion-input> 
       </div>
       <div class="inputCard">
-        <ion-label>PayFromAccount</ion-label>
+        <ion-label>PayFromAccount*</ion-label>
         <!-- <ion-input class="box"></ion-input> -->
         <ion-select [compareWith]="compareWith" class="box" formControlName="payFromAccount" ngDefaultControl>
           <ion-select-option *ngFor="let user of account" [value]="user">{{user}}</ion-select-option>
         </ion-select>
         </div>
         <div class="inputCard">
-          <ion-label>Bill Date</ion-label>
+          <ion-label>Bill Date*</ion-label>
           
           <!-- <ion-input class="box"></ion-input> -->
           <ion-input type="date" class="datepicker-input" displayFormat="DDD. MMM DD, YY" placeholder="Select date" formControlName="billDate" ngDefaultControl (input)="date = $event.target.value" class="box"></ion-input>
@@ -62,7 +62,7 @@
       </div> -->
       
     <div class="inputCard">
-      <ion-label>Bill Number</ion-label>
+      <ion-label>Bill Number*</ion-label>
       <ion-input class="box" formControlName="billNumber" ngDefaultControl></ion-input> 
       </div>
       

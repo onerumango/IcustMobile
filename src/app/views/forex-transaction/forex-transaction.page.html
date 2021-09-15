@@ -9,7 +9,7 @@
     <div>
     <form  [formGroup]="forexForm">
     <div class="inputCard">
-    <ion-label>Account Number</ion-label>
+    <ion-label>Account Number*</ion-label>
     <!-- <ion-input class="box"></ion-input> -->
     <ion-select [compareWith]="compareWith" class="box" formControlName="accountNumber" ngDefaultControl>
       <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
@@ -21,7 +21,7 @@
  
 
       <div class="inputCard">
-        <ion-label>Transaction Type</ion-label>
+        <ion-label>Transaction Type*</ion-label>
         <ion-radio-group formControlName="transactionType" ngDefaultControl>
           <ion-row >
             <ion-col>
@@ -44,7 +44,7 @@
         </ion-radio-group>
 </div>
 <div class="inputCard">
-<ion-label>Transaction Currency</ion-label>
+<ion-label>Transaction Currency*</ion-label>
 </div>
 <div class="box7">
   
@@ -98,7 +98,7 @@
   </div> -->
 
     <div class="inputCard">
-      <ion-label>Fx Amount</ion-label>
+      <ion-label>Fx Amount*</ion-label>
       <ion-input class="box" formControlName="fxAmount" ngDefaultControl></ion-input> 
       </div>
     
@@ -138,7 +138,7 @@
      <div>
       <form [formGroup]="forexForm">
       <div class="inputCard">
-      <ion-label>Negotiated Rate</ion-label>
+      <ion-label>Negotiated Rate*</ion-label>
       <ion-select [compareWith]="compareWith" class="box" formControlName="negotiatedRate" ngDefaultControl>
         <ion-select-option *ngFor="let user of negotiated" [value]="user">{{user}}</ion-select-option>
       </ion-select>
@@ -178,7 +178,7 @@
     </div>
   
       <div class="inputCard">
-      <ion-label>Charges</ion-label>
+      <ion-label>Charges*</ion-label>
       <ion-input class="box" formControlName="charges" ngDefaultControl></ion-input>
       
       </div>

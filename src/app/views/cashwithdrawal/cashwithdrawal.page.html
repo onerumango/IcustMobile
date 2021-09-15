@@ -12,7 +12,7 @@
   <div>
     <form [formGroup]="slideOneForm">
       <div class="inputCard1">
-        <ion-label>Account Number</ion-label>
+        <ion-label>Account Number*</ion-label>
         <!-- <ion-input class="box"></ion-input> -->
         <ion-select
           [compareWith]="compareWith"
@@ -33,7 +33,7 @@
       </div>
 
       <div class="inputCard1">
-        <ion-label>Transaction Currency</ion-label>
+        <ion-label>Transaction Currency*</ion-label>
       </div>
       <div class="box7">
         <ion-card class="box">
@@ -67,16 +67,18 @@
       </div>
 
       <div class="inputCard1">
-        <ion-label position="stacked">Transaction Amount</ion-label>
+        <ion-label position="stacked">Transaction Amount*</ion-label>
         <ion-input class="box" formControlName="transactionAmount"
         type="text" (keypress)="numberOnlyValidation($event)"></ion-input>
       </div>
 
       <div class="inputCard1">
-        <ion-label position="stacked">Account Branch</ion-label>
+        <ion-label position="stacked">Account Branch*</ion-label>
         <ion-input class="box" formControlName="accountBranch"></ion-input>
       </div>
       <div class="ion-padding-top">
+      
+      
         <div>
           <ion-button
             expand="block"
@@ -172,7 +174,7 @@
          <br>
     
          <div class="inputCard2" >
-          <ion-label style="padding-left: 5%;">Transaction Branch</ion-label>
+          <ion-label style="padding-left: 5%;">Transaction Branch*</ion-label>
           <ion-card class="box" >
             <ion-searchbar appearence="none" formControlName="transactionBranch"></ion-searchbar>
           </ion-card>
@@ -182,7 +184,7 @@
   
         <div class="inputCard2">
   
-            <ion-label style="padding-left: 5%;">Transaction date</ion-label>
+            <ion-label style="padding-left: 5%;">Transaction date*</ion-label>
           <ion-card class="box" >
             <ion-item lines="none">
                 <ion-datetime  [min]="minDate"  max="2050" placeholder="Select date" formControlName="transactionDate" >
@@ -195,7 +197,7 @@
       
   
        <div class="inputCard2">
-         <ion-label style="padding-left: 5%;">Time Slot</ion-label>
+         <ion-label style="padding-left: 5%;">Time Slot*</ion-label>
        <ion-card class="box">
          <ion-item  lines="none">
           <ion-datetime displayFormat="hh:mm:ss A"  placeholder="Select date" formControlName="transactionTime"></ion-datetime>

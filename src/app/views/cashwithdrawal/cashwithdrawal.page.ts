@@ -1664,7 +1664,7 @@ export class CashwithdrawalPage implements OnInit {
   }
   goToNextScreen(form) {
     form.transactionDate.toString();
-this.slideOneForm.reset();
+
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');
     console.log(date); //4/
     form.transactionDate = date;
@@ -1687,13 +1687,14 @@ this.slideOneForm.reset();
     localStorage.setItem("TransactionTime",form.transactionTime);
     localStorage.setItem("TransactionAmount",form.transactionAmount);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
-
+    console.log(form);
     this.api.cashWithdrawalSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
     });
     if(this.cashWithdrawResponse!==null){
       setTimeout(() => {
+         //this.slideOneForm.reset();
          this.router.navigate(['token-generation']);
       }, 100);
      

@@ -10,7 +10,7 @@
     <div>
     <form  [formGroup]="loanForm">
     <div class="inputCard">
-    <ion-label>Deposit Account</ion-label>
+    <ion-label>Deposit Account*</ion-label>
     <ion-select [compareWith]="compareWith" class="box" formControlName="depositAccount" ngDefaultControl>
       <ion-select-option *ngFor="let user of users" [value]="user">{{user}}</ion-select-option>
     </ion-select>
@@ -22,13 +22,13 @@
 
       
       <div class="inputCard">
-        <ion-label>Top Up Amount</ion-label>
+        <ion-label>Top Up Amount*</ion-label>
         <ion-input class="box" formControlName="topUpAmount" ngDefaultControl></ion-input>
         
         </div>
 
         <div class="inputCard">
-          <ion-label>Pay From Account</ion-label>
+          <ion-label>Pay From Account*</ion-label>
           <ion-input class="box" formControlName="payFromAccount" ngDefaultControl></ion-input>
           
           </div>

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ApiService } from 'src/app/services/api.service';
+import { __assign } from 'tslib';
 
 
 
@@ -15,7 +17,10 @@ export class ProfilePage implements OnInit {
   flag: boolean;
   currentImage: any;
   clickedImage: string;
-  constructor(public platform:Platform,public actionSheetController: ActionSheetController,private camera: Camera,private router:Router,private photoService: PhotoService) { }
+  phoneNumber: string;
+  fullName:any;
+  email: any;
+  constructor(private api: ApiService,public platform:Platform,public actionSheetController: ActionSheetController,private camera: Camera,private router:Router,private photoService: PhotoService) { }
   options: CameraOptions = {
     quality: 30,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -23,7 +28,19 @@ export class ProfilePage implements OnInit {
     mediaType: this.camera.MediaType.PICTURE
   }
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    console.log("phoneNumber",this.phoneNumber)
+ 
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+     console.log('backend resp in home', resp);
+     this.assign(resp.firstName,resp.middleName,resp.lastName,resp.primaryEmailAdress);
     
+    })
+  }
+  assign(firstName: any, middleName: any, lastName: any,email) {
+   this.fullName=firstName+' '+middleName+' '+lastName;
+   console.log("full name",this.fullName)
+   this.email=email;
   }
   settings()
   {
@@ -142,5 +159,9 @@ export class ProfilePage implements OnInit {
       // Handle error
     });
   }
+}
+
+function assign(firstName: any, middleName: any, lastName: any) {
+  throw new Error('Function not implemented.');
 }
 

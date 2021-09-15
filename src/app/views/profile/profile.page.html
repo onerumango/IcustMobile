@@ -19,7 +19,7 @@
 <div class="header-container">
   <div class="pix" id="pix"></div>
 
-  <img src="assets\images\pf.jpg" class="img"  *ngIf="!currentImage">
+  <img src="assets\images\avatar.png" class="img"  *ngIf="!currentImage">
   <img class="img" [src]="currentImage" *ngIf="currentImage" alt="assets\images\pf.jpg">
   <img class="img1" id="action-sheets-home-page" src="assets\icon\camera.PNG" alt="Ionic logo" (click)="openActionSheet()">
  
@@ -27,8 +27,8 @@
 </div>
 
 <div id="name">
-  <span class="text">Maria Jacob</span>
-  <span class="text1">mariaJacob@gmail.com</span>
+  <span class="text">{{fullName}}</span>
+  <span class="text1">{{email}}</span>
 </div>
 <ion-content>
 

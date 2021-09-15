@@ -38,8 +38,13 @@ export class ProfilePage implements OnInit {
     })
   }
   assign(firstName: any, middleName: any, lastName: any,email) {
+    if(middleName == null){
+      this.fullName=firstName+' '+lastName;
+    }
+   else{
    this.fullName=firstName+' '+middleName+' '+lastName;
    console.log("full name",this.fullName)
+   }
    this.email=email;
   }
   settings()

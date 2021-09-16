@@ -18,6 +18,7 @@ export class CashdepositPage implements OnInit {
   customerId: string;
   submitted: boolean = true;
   submitted1: boolean=true;
+  phoneNumber: string;
   constructor(
     public toastCtrl: ToastController, private router: Router, private fb: FormBuilder, private api: ApiService, private toastController: ToastController) { }
   transactionAmount = "10,000";
@@ -31,18 +32,23 @@ export class CashdepositPage implements OnInit {
   transTime: string;
   toast: HTMLIonToastElement;
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
     console.log("customer_id", this.customerId)
     this.customerId = sessionStorage.getItem('customer_id');
-    this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-      console.log('backend dropdown', dropdown);
-      this.users = dropdown;
+    // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+    //   console.log('backend dropdown', dropdown);
+    //   this.users = dropdown;
 
-      if (dropdown == null) {
-        this.openToast();
-      }
+    //   if (dropdown == null) {
+    //     this.openToast();
+    //   }
 
-    });
+    // });
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      console.log('backend resp in home', resp);
+      this.savingAccountFun(resp.custAccount);
+     })
     this.depositForm = this.fb.group({
       id: ['', [Validators.required]],
       customerId: ['', [Validators.required]],
@@ -373,6 +379,7 @@ export class CashdepositPage implements OnInit {
   }
 
   goToHomepage() {
+    this.depositForm.reset();
     this.router.navigate(['/tabs/home']);
   }
   goToNextPage(fb) {
@@ -411,9 +418,10 @@ export class CashdepositPage implements OnInit {
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });
-
+this.depositForm.reset();
     this.router.navigate(['token-generation']);
   }
+  
   accountEvent(event) {
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
@@ -429,7 +437,15 @@ export class CashdepositPage implements OnInit {
     });
 
   }
+  savingAccountFun(filteredResponseSavingAccount)
+  {
 
+ console.log(filteredResponseSavingAccount);
+ this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ const defaultId = this.users ? this.users[0] : null;
+ this.depositForm.controls.accountNumber.setValue(defaultId);
+ this.currentBalance = this.users[0].amount;
+ }
   validateDisablebutton(button) {
 
     this.depositForm.valueChanges.subscribe(v => {

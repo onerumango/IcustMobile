@@ -427,9 +427,10 @@ this.depositForm.reset();
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
       this.valueSet(accbal.currentBalance);
-      console.log('backend accbal', accbal);
+      console.log('backend accbal', accbal.amount);
+      this.currentBalance = accbal.amount;
       console.log(this.depositForm.controls)
-      this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
+      // this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;

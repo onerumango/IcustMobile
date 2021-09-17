@@ -1622,7 +1622,7 @@ export class CashwithdrawalPage implements OnInit {
  
   selectCurrencyCode(currency) {
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
+    this.selectedCountryCode = (currency.slice(0,-1)).toLowerCase();
   }
 
   changeSelectedCountryCode(value: string): void {

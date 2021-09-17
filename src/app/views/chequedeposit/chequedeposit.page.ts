@@ -326,11 +326,8 @@ export class ChequedepositPage implements OnInit {
  
 
   selectCurrencyCode(currency){
-    console.log(currency)
-    // this.selectedCountryCode = code.toLowerCase();
-    // let selectedCountryCode:any =this.countries.filter(item=> item.accountCurrency == currency);
-    // console.log(selectedCountryCode)
-    this.selectedCountryCode=currency.toLowerCase();
+    console.log(currency);
+    this.selectedCountryCode = (currency.slice(0,-1)).toLowerCase();
 
   }
 

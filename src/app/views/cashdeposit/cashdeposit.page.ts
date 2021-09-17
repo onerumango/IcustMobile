@@ -369,7 +369,7 @@ export class CashdepositPage implements OnInit {
   selectCurrencyCode(currency) {
     //console.log(code);
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
+    this.selectedCountryCode = (currency.slice(0,-1)).toLowerCase();
 
   }
 

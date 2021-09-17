@@ -327,11 +327,8 @@ export class ChequewithdrawalPage implements OnInit {
  
   
     selectCurrencyCode(currency){
-      //console.log(code);
       console.log(currency);
-      // this.selectedCountryCode = code.detail.value.code.toLowerCase();
-      this.selectedCountryCode=currency.toLowerCase();
-  
+      this.selectedCountryCode = (currency.slice(0,-1)).toLowerCase();
     }
   
   

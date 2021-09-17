@@ -11,6 +11,7 @@ export class TokenObjects {
   productCode:string;
   transactionDate:string;
   timeSlot:string;
+  phoneNumber:any;
 }
 @Component({
   selector: 'app-token-generation',
@@ -27,12 +28,14 @@ export class TokenGenerationPage implements OnInit {
   blobUrl: any ;
   imageToShow: any;
   branch: string;
+  phoneNumber: string;
 
   constructor(private router:Router,private api: ApiService) {
     this.myAngularxQrCode = 'Your QR code data string';
    }
 
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     setTimeout(() => {
       this.generateQRCode(this.tokenObjects);
     }, 100);
@@ -66,6 +69,7 @@ generateQRCode(token){
  
   this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
   this.tokenObjects.productCode='CHD';
+  this.tokenObjects.phoneNumber=this.phoneNumber;
 
   this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
     console.log("Token Response", tokenResp);

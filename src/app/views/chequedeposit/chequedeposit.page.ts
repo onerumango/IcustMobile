@@ -24,16 +24,21 @@ export class ChequedepositPage implements OnInit {
   transDate: string
   transTime: string;
   cashWithdrawResponse: any;
- 
-  users=['789045667','8789977889'];
+  phoneNumber: string;
+  users:any[];
   customerId:any;
 
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
-    this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-      console.log('backend dropdown', dropdown);
-      this.users=dropdown;
-    });
+    // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+    //   console.log('backend dropdown', dropdown);
+    //   this.users=dropdown;
+    // });
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      console.log('backend resp in home', resp);
+      this.savingAccountFun(resp.custAccount);
+     })
     this.slideOneForm = this.fb.group({
       customerId:['', [Validators.required]],
       chequeDepositId:['', [Validators.required]],
@@ -350,8 +355,20 @@ export class ChequedepositPage implements OnInit {
     this.flag=true;
   }
   goToNextScreen(){
+    this.api.setIndex({
+      index: 'CQD'
+    });
     this.router.navigate(['token-generation']);
   }
+  savingAccountFun(filteredResponseSavingAccount)
+  {
+
+ console.log(filteredResponseSavingAccount);
+ this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ const defaultId = this.users ? this.users[0] : null;
+ this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ this.currentBalance = this.users[0].amount;
+ }
   save(form)
   {
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppConstants } from 'src/config/app.constant';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ShowMessageService } from './showMessage/show-message.service';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators'; 
 
 
@@ -21,6 +21,16 @@ export class ApiService {
     console.error('status : ' + errorResp.status);
     this.showMessageService.errorMessage(errorResp.status, errorResp);
     return throwError(errorResp.message);
+  }
+  private Index = new BehaviorSubject<any>({
+    index: '',
+  })
+  setIndex(index: any) {
+    this.Index.next(index);
+  }
+
+  getIndex() {
+    return this.Index.asObservable();
   }
   getOtp(data) {
     return this.http.post<any>(`${API_URL}/rest/otp/generateOtp`, data).pipe(catchError(this.errorHandler));

@@ -16,24 +16,30 @@ export class ChequewithdrawalPage implements OnInit {
     slideOneForm: FormGroup;
   customerId: string;
   public currentBalance: any;
+  phoneNumber: string;
     constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
     currencyValue:string;
     cashWithdrawResponse: any;
-    users:string[];
+    users:any[];
     accountNum: string;
     transDate: string
     transTime: string;
   
   
     ngOnInit() {
+      this.phoneNumber= localStorage.getItem('PhoneNumLogin');
       this.customerId = sessionStorage.getItem('customer_id');
-      this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-        console.log('backend dropdown', dropdown);
-        this.users=dropdown;
-      });
+      // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+      //   console.log('backend dropdown', dropdown);
+      //   this.users=dropdown;
+      // });
+      this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+        console.log('backend resp in home', resp);
+        this.savingAccountFun(resp.custAccount);
+       })
       console.log("customer_id",this.customerId)
       this.slideOneForm = this.fb.group({
         customerId:['', [Validators.required]],
@@ -65,6 +71,7 @@ export class ChequewithdrawalPage implements OnInit {
        console.log(this.slideOneForm.value);
        console.log(this.countries);
     }
+ 
      countries :CountryType[] =[
       { code: 'AF', countryName: 'AFGHANISTAN',accountCurrency: 'AFN',currencyName:'Afghani' },
       { code: 'AL', countryName: 'ALBANIA',accountCurrency: 'ALL',currencyName:'Lek' },
@@ -334,7 +341,15 @@ export class ChequewithdrawalPage implements OnInit {
   
     }
   
+    savingAccountFun(filteredResponseSavingAccount)
+    {
   
+   console.log(filteredResponseSavingAccount);
+   this.users = filteredResponseSavingAccount.map(a => a.accountId);
+   const defaultId = this.users ? this.users[0] : null;
+   this.slideOneForm.controls.accountNumber.setValue(defaultId);
+   this.currentBalance = this.users[0].amount;
+   }
     changeSelectedCountryCode(value: string): void {
      // this.selectedCountryCode = value;
     }
@@ -350,6 +365,9 @@ export class ChequewithdrawalPage implements OnInit {
       this.flag=true;
     }
     goToNextScreen(){
+      this.api.setIndex({
+        index: 'CQW'
+      });
       this.router.navigate(['token-generation']);
     }
     save(form)

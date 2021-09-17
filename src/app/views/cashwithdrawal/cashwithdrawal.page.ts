@@ -1663,6 +1663,9 @@ export class CashwithdrawalPage implements OnInit {
     this.flag = true;
   }
   goToNextScreen(form) {
+    this.api.setIndex({
+      index: 'CHW'
+    });
     form.transactionDate.toString();
 
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');

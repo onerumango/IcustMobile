@@ -327,8 +327,11 @@ export class ChequedepositPage implements OnInit {
 
   selectCurrencyCode(currency){
     console.log(currency);
-    this.selectedCountryCode = (currency.slice(0,-1)).toLowerCase();
-
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
 
@@ -361,7 +364,7 @@ export class ChequedepositPage implements OnInit {
     form.transactionDate=date;
     
     
-    form.transactionCurrency=form.transactionCurrency;
+    form.transactionCurrency=form.transactionCurrency.accountCurrency;
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;

@@ -1622,7 +1622,11 @@ export class CashwithdrawalPage implements OnInit {
  
   selectCurrencyCode(currency) {
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
   changeSelectedCountryCode(value: string): void {
@@ -1673,7 +1677,7 @@ export class CashwithdrawalPage implements OnInit {
     form.transactionDate = date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    form.transactionCurrency = form.transactionCurrency;
+    form.transactionCurrency = form.transactionCurrency.accountCurrency;
   
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');

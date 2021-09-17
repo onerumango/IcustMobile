@@ -334,11 +334,12 @@ export class ChequewithdrawalPage implements OnInit {
  
   
     selectCurrencyCode(currency){
-      //console.log(code);
       console.log(currency);
-      // this.selectedCountryCode = code.detail.value.code.toLowerCase();
-      this.selectedCountryCode=currency.toLowerCase();
-  
+      for(let i in this.countries) {
+        if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+          this.selectedCountryCode = (currency.code).toLowerCase();
+        }
+      }
     }
   
     savingAccountFun(filteredResponseSavingAccount)
@@ -382,7 +383,7 @@ export class ChequewithdrawalPage implements OnInit {
       form.transactionDate=date;
       
       // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-      form.transactionCurrency=form.transactionCurrency;
+      form.transactionCurrency=form.transactionCurrency.accountCurrency;
       form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
       form.chequeDepositId=this.customerId;
      
@@ -413,9 +414,10 @@ export class ChequewithdrawalPage implements OnInit {
       this.api.accountBalance(event.detail.value).subscribe((accbal) => {
         console.log('backend accbal', accbal);
     this.valueSet(accbal.currentBalance);
+    this.currentBalance = accbal.amount;
     // console.log(this.slideOneForm.controls)
     this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
-    this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+    // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
     this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency)
 
         // this.users=dropdown;

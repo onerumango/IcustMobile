@@ -367,10 +367,12 @@ export class CashdepositPage implements OnInit {
 
 
   selectCurrencyCode(currency) {
-    //console.log(code);
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
-
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
 
@@ -401,7 +403,7 @@ export class CashdepositPage implements OnInit {
     form.transactionDate = date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    form.transactionCurrency = form.transactionCurrency;
+    form.transactionCurrency = form.transactionCurrency.accountCurrency;
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
 
@@ -430,9 +432,10 @@ this.depositForm.reset();
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
       this.valueSet(accbal.currentBalance);
-      console.log('backend accbal', accbal);
+      console.log('backend accbal', accbal.amount);
+      this.currentBalance = accbal.amount;
       console.log(this.depositForm.controls)
-      this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
+      // this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;

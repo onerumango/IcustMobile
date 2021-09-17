@@ -393,8 +393,9 @@ export class ChequedepositPage implements OnInit {
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
+  this.currentBalance = accbal.amount;
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
-  this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+  // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
 
       // this.users=dropdown;

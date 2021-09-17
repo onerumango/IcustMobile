@@ -395,9 +395,10 @@ export class ChequewithdrawalPage implements OnInit {
       this.api.accountBalance(event.detail.value).subscribe((accbal) => {
         console.log('backend accbal', accbal);
     this.valueSet(accbal.currentBalance);
+    this.currentBalance = accbal.amount;
     // console.log(this.slideOneForm.controls)
     this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
-    this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+    // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
     this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency)
 
         // this.users=dropdown;

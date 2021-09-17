@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { ApiService } from 'src/app/services/api.service';
+import { __assign } from 'tslib';
 // import { setTimeout } from 'timers';
 export class TokenObjects {
 
@@ -29,6 +30,7 @@ export class TokenGenerationPage implements OnInit {
   imageToShow: any;
   branch: string;
   phoneNumber: string;
+  productCode: any;
 
   constructor(private router:Router,private api: ApiService) {
     this.myAngularxQrCode = 'Your QR code data string';
@@ -36,6 +38,10 @@ export class TokenGenerationPage implements OnInit {
 
   ngOnInit() {
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    this.api.getIndex().subscribe(resp => {
+      console.log(resp.index)
+    this.assignProductCode(resp.index);
+      })
     setTimeout(() => {
       this.generateQRCode(this.tokenObjects);
     }, 100);
@@ -54,6 +60,9 @@ export class TokenGenerationPage implements OnInit {
       )
     
   }
+  assignProductCode(index: any) {
+    this.productCode=index;
+  }
 next()
 {
   this.router.navigate(['tabs']);
@@ -68,7 +77,7 @@ generateQRCode(token){
 // this.tokenObjects.timeSlot=moment(new Date(localStorage.getItem('TransactionTime'))).format("MM/DD/YYYY hh:mm:ss a");
  
   this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
-  this.tokenObjects.productCode='CHD';
+  this.tokenObjects.productCode=this.productCode;
   this.tokenObjects.phoneNumber=this.phoneNumber;
 
   this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {

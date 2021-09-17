@@ -392,6 +392,9 @@ export class CashdepositPage implements OnInit {
     this.flag = true;
   }
   goToNextScreen(form) {
+    this.api.setIndex({
+      index: 'CHD'
+    });
     form.transactionDate.toString();
 
 

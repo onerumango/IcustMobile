@@ -89,5 +89,12 @@ this.accountType=customerDetails.accountType;
  console.log("savingAccount",this.savingAccount);
 
  }
- 
+ logOut()
+ {
+   console.log("this is logout");
+   this.router.navigate(["/login"]);
+   localStorage.removeItem('PhoneNumLogin')
+  
+   
+ }
 }

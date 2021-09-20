@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
+import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -17,7 +19,7 @@ export class ChequewithdrawalPage implements OnInit {
   customerId: string;
   public currentBalance: any;
   phoneNumber: string;
-    constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
@@ -429,6 +431,25 @@ export class ChequewithdrawalPage implements OnInit {
     valueSet(currentBalance){
       this.currentBalance=currentBalance;
 
+    }
+    async presentModal() {
+      const modal = await this.modalController.create({
+        component: BranchPage,
+        componentProps: {
+        }
+      });
+  
+      modal.onDidDismiss().then((modelData) => {
+        if (modelData !== null) {
+          let branch = modelData.data;
+          console.log('Modal Data for branch: ', modelData.data);
+          this.slideOneForm.patchValue({
+            transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          });
+        }
+      });
+  
+      return await modal.present();
     }
 }
 interface CountryType {

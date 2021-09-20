@@ -21,7 +21,7 @@
     
       <div class="inputCard" >
        <ion-label position="floating">Phone number</ion-label>
-        <ion-input class="box" formControlName="phoneNo"></ion-input>
+        <ion-input class="box" formControlName="phoneNo" (keypress)=_keyPress($event) maxLength = "10"></ion-input>
     </div>
 <!--     
     <div class="inputCard"  *ngIf="otpValid" >

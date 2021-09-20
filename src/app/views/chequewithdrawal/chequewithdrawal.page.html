@@ -151,7 +151,7 @@
           <ion-label style="padding-left: 5%;">Transaction date*</ion-label>
         <ion-card class="box" >
           <ion-item lines="none">
-              <ion-datetime displayFormat="DDD. MMM DD, YY" placeholder="Select date" formControlName="transactionDate" >
+              <ion-datetime displayFormat="DDD. MMM DD, YY" [min]="minDate"  [max]="maxDate" placeholder="Select date" formControlName="transactionDate" >
               </ion-datetime>
          <ion-icon name="calendar" slot="end"></ion-icon>
 

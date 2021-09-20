@@ -17,6 +17,7 @@ export class CashwithdrawalPage implements OnInit {
   savingAccount:any[];
   // maxData : any = (new Date()).getFullYear() + 3;
   minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   slideOneForm: FormGroup;
   currentBalance: any;
   submitted: boolean=true;
@@ -39,6 +40,7 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   ngOnInit() {
+    
     this.customerId = sessionStorage.getItem('customer_id');
    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
    console.log("phoneNumber",this.phoneNumber)
@@ -1695,7 +1697,7 @@ export class CashwithdrawalPage implements OnInit {
     localStorage.setItem("TransactionAmount",form.transactionAmount);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
     console.log(form);
-    this.api.cashWithdrawalSave(form).subscribe((resp) => {
+    this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
     });

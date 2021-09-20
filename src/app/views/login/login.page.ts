@@ -45,6 +45,15 @@ export class LoginPage implements OnInit {
     console.log('login :: ', this.loginForm.value);
   }
 
+  _keyPress(event: any) {
+    // console.log("key",event);
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+
+    }
+}
 
   getOtp(phone) {
     console.log("Phonenumber for OTP", phone.phoneNo)

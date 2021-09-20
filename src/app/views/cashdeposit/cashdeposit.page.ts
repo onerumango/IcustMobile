@@ -25,7 +25,8 @@ export class CashdepositPage implements OnInit {
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
-
+  minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   users: any[];
   accountNum: string;
   transDate: string

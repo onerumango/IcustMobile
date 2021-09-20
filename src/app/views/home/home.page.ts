@@ -92,6 +92,9 @@ this.accountType=customerDetails.accountType;
  logOut()
  {
    console.log("this is logout");
-   this.router.navigate(["/login"])
+   this.router.navigate(["/login"]);
+   localStorage.removeItem('PhoneNumLogin')
+  
+   
  }
 }

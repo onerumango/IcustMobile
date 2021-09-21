@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { otpModel } from '../login/login.page';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
@@ -20,7 +21,9 @@ export class OtpPage implements OnInit {
   verifyOtpModel = new verifyotpModel();
   otpResponse: any
   PhoneNumLogin: any;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService) {
+  oTpModel = new otpModel();
+  customerPhonenum: any;
+  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService) {
 
   }
 
@@ -34,7 +37,30 @@ export class OtpPage implements OnInit {
     this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
   }
+  getOtp() {
 
+    localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
+    this.oTpModel.source = 'customer';
+    this.oTpModel.source_key = 'mobile';
+    this.oTpModel.source_value = this.PhoneNumLogin;
+    console.log("model", this.oTpModel);
+    this.api.getOtp(this.oTpModel).subscribe(otpResp => {
+      console.log("Response Success", otpResp)
+      this.otpResponse = otpResp
+      /* Added validation for un-registered mobile nummber is entered */
+      if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
+        this.cdk.detectChanges();
+        // this.userResp = true;
+      } else {
+        // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+        console.log('in else')
+        this.router.navigateByUrl('/otp');
+      }
+    })
+
+    // this.router.navigateByUrl('/otp');
+
+  }
   validateOtp(otpValue) {
     console.log("Phonenumber for OTP", otpValue, otpValue.otp);
     this.verifyOtpModel.sourceKey = 'mobile';

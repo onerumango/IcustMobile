@@ -67,7 +67,7 @@ this.accountType=customerDetails.accountType;
           let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileData;
           this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
         }else{
-          this.image="assets/images/personImg.png";
+          this.image="";
         }
         this.cdr.markForCheck();
       }, (error: any) => {

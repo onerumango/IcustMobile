@@ -8,6 +8,8 @@ import { OtpPageRoutingModule } from './otp-routing.module';
 
 import { OtpPage } from './otp.page';
 
+import{ToastrModule, ToastrService} from 'ngx-toastr';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,8 +17,14 @@ import { OtpPage } from './otp.page';
     IonicModule,
     ReactiveFormsModule,
    
-    OtpPageRoutingModule
+    OtpPageRoutingModule,
+    
+    
+    ToastrModule.forRoot()
+    
+    
   ],
-  declarations: [OtpPage]
+  declarations: [OtpPage],
+  providers:[ToastrService]
 })
 export class OtpPageModule {}

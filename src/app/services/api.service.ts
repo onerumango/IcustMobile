@@ -36,7 +36,8 @@ export class ApiService {
     return this.http.post<any>(`${API_URL}/rest/otp/generateOtp`, data).pipe(catchError(this.errorHandler));
   }
   verifyOtp(data) {
-    return this.http.put<any>(`${API_URL}/rest/otp/validateOtp`, data).pipe(catchError(this.errorHandler));
+    return this.http.put<any>(`${API_URL}/rest/otp/validateOtp`, data)
+        // return this.http.put<any>(`${API_URL}/rest/otp/validateOtp`, data).pipe(catchError(this.errorHandler));
   }
   cashWithdrawalSave(data: object) {
     console.log("enter inside api")

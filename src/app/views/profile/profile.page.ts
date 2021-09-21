@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { __assign } from 'tslib';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -20,7 +21,11 @@ export class ProfilePage implements OnInit {
   phoneNumber: string;
   fullName:any;
   email: any;
-  constructor(private api: ApiService,public platform:Platform,public actionSheetController: ActionSheetController,private camera: Camera,private router:Router,private photoService: PhotoService) { }
+  profileData: any;
+  image: Object;
+  constructor(private api: ApiService,public platform:Platform,
+    public actionSheetController: ActionSheetController,private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef,
+    private camera: Camera,private router:Router,private photoService: PhotoService) { }
   options: CameraOptions = {
     quality: 30,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -34,8 +39,9 @@ export class ProfilePage implements OnInit {
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
      console.log('backend resp in home', resp);
      this.assign(resp.firstName,resp.middleName,resp.lastName,resp.primaryEmailAdress);
-    
+     this.getProfilePicture(resp.customerId);
     })
+  
   }
   assign(firstName: any, middleName: any, lastName: any,email) {
     if(middleName == null){
@@ -63,6 +69,24 @@ export class ProfilePage implements OnInit {
       //  document.getElementById("pix").style.mask="yellow"
       // document.getElementById("form").style.backgroundColor="yellow"
       // document.getElementById("name").style.backgroundColor="yellow"
+    }
+    getProfilePicture(customerId) {
+      const contentType = 'image/png';
+      this.api.getProfileDetails(customerId)
+        .subscribe((data: any) => {
+          this.cdr.markForCheck();
+          this.profileData = data;
+          console.log(" profile Image",this.profileData);
+          if (data.profileImage && data.profileImage.fileData != null) {
+            let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileData;
+            this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+          }else{
+            this.image="assets/images/personImg.png";
+          }
+          this.cdr.markForCheck();
+        }, (error: any) => {
+          console.log(error);
+        });
     }
   
   cancel()

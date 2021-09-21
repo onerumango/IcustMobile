@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { format } from "date-fns"
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -20,7 +21,8 @@ export class CashdepositPage implements OnInit {
   submitted1: boolean=true;
   phoneNumber: string;
   constructor(
-    public toastCtrl: ToastController, private router: Router, private fb: FormBuilder, private api: ApiService, private toastController: ToastController) { }
+    public toastCtrl: ToastController, private router: Router, private fb: FormBuilder,
+     private api: ApiService, private toastController: ToastController, private modalController:ModalController,) { }
   transactionAmount = "10,000";
   accountBranch = "Loita street";
   flag: boolean = true;
@@ -364,6 +366,25 @@ export class CashdepositPage implements OnInit {
 
   method() {
 
+  }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: BranchPage,
+      componentProps: {
+      }
+    });
+
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData !== null) {
+        let branch = modelData.data;
+        console.log('Modal Data for branch: ', modelData.data);
+        this.depositForm.patchValue({
+          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+        });
+      }
+    });
+
+    return await modal.present();
   }
 
 

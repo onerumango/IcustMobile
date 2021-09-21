@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -25,7 +26,9 @@ accountBalance:string;
   saving: any;
   savingArray: any[]=[];
   currentArray: any;
-  constructor(private router:Router, private api: ApiService) { }
+  image: Object;
+  profileData: any;
+  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef) { }
 
   ngOnInit() {
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
@@ -33,6 +36,8 @@ accountBalance:string;
  
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
      console.log('backend resp in cash withdrawal', resp);
+     console.log(resp.customerId);
+     this.getProfilePicture(resp.customerId);
      this.savingAccountFun(resp.custAccount);
      this.current = resp.custAccount.filter(res => res.accountType == "current");
        console.log("current",this.current)
@@ -51,6 +56,25 @@ accountBalance:string;
 this.accountType=customerDetails.accountType;
 // this.accountBalance=customerDetails.custAccount[0].currentBalance;
   }
+ 
+  getProfilePicture(customerId) {
+    const contentType = 'image/png';
+    this.api.getProfileDetails(customerId)
+      .subscribe((data: any) => {
+        this.cdr.markForCheck();
+        this.profileData = data;
+        if (data.profileImage && data.profileImage.fileData != null) {
+          let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileData;
+          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+        }else{
+          this.image="assets/images/personImg.png";
+        }
+        this.cdr.markForCheck();
+      }, (error: any) => {
+        console.log(error);
+      });
+  }
+
   currentAssign(current) {
    this.currentArray=current;
   }

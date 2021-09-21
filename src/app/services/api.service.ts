@@ -56,7 +56,9 @@ export class ApiService {
   custpomerDetails(phoneNo: String) {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNo}`).pipe(catchError(this.errorHandler));
   }
-
+  getProfileDetails(customerId: any) {
+    return this.http.get<any>(`${API_URL}/customerdata/getProfileDetails?customerId=${customerId}`).pipe(catchError(this.errorHandler));
+  }
 accountDropDown(custId:String)
 {
   return this.http.get<any>(`${API_URL}/accountdata/account/${custId}`);

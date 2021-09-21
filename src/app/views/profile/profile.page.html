@@ -18,9 +18,10 @@
 </head>
 <div class="header-container">
   <div class="pix" id="pix"></div>
-
-  <img src="assets\images\avatar.png" class="img"  *ngIf="!currentImage">
-  <img class="img" [src]="currentImage" *ngIf="currentImage" alt="assets\images\pf.jpg">
+  <img class="img"
+      [src]="image" alt="profile" *ngIf="image">
+  <img src="assets\images\avatar.png" class="img"  *ngIf="!image">
+  <!-- <img class="img" [src]="currentImage" *ngIf="currentImage" alt="assets\images\pf.jpg"> -->
   <img class="img1" id="action-sheets-home-page" src="assets\icon\camera.PNG" alt="Ionic logo" (click)="openActionSheet()">
  
 

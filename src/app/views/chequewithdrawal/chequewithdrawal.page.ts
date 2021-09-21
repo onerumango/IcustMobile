@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
+import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -16,24 +18,31 @@ export class ChequewithdrawalPage implements OnInit {
     slideOneForm: FormGroup;
   customerId: string;
   public currentBalance: any;
-    constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
+  phoneNumber: string;
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
     currencyValue:string;
     cashWithdrawResponse: any;
-    users:string[];
+    users:any[];
     accountNum: string;
     transDate: string
     transTime: string;
-  
+    minDate = new Date().toISOString();
+    maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   
     ngOnInit() {
+      this.phoneNumber= localStorage.getItem('PhoneNumLogin');
       this.customerId = sessionStorage.getItem('customer_id');
-      this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-        console.log('backend dropdown', dropdown);
-        this.users=dropdown;
-      });
+      // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+      //   console.log('backend dropdown', dropdown);
+      //   this.users=dropdown;
+      // });
+      this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+        console.log('backend resp in home', resp);
+        this.savingAccountFun(resp.custAccount);
+       })
       console.log("customer_id",this.customerId)
       this.slideOneForm = this.fb.group({
         customerId:['', [Validators.required]],
@@ -65,6 +74,7 @@ export class ChequewithdrawalPage implements OnInit {
        console.log(this.slideOneForm.value);
        console.log(this.countries);
     }
+ 
      countries :CountryType[] =[
       { code: 'AF', countryName: 'AFGHANISTAN',accountCurrency: 'AFN',currencyName:'Afghani' },
       { code: 'AL', countryName: 'ALBANIA',accountCurrency: 'ALL',currencyName:'Lek' },
@@ -327,14 +337,23 @@ export class ChequewithdrawalPage implements OnInit {
  
   
     selectCurrencyCode(currency){
-      //console.log(code);
       console.log(currency);
-      // this.selectedCountryCode = code.detail.value.code.toLowerCase();
-      this.selectedCountryCode=currency.toLowerCase();
-  
+      for(let i in this.countries) {
+        if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+          this.selectedCountryCode = (currency.code).toLowerCase();
+        }
+      }
     }
   
+    savingAccountFun(filteredResponseSavingAccount)
+    {
   
+   console.log(filteredResponseSavingAccount);
+   this.users = filteredResponseSavingAccount.map(a => a.accountId);
+   const defaultId = this.users ? this.users[0] : null;
+   this.slideOneForm.controls.accountNumber.setValue(defaultId);
+   this.currentBalance = this.users[0].amount;
+   }
     changeSelectedCountryCode(value: string): void {
      // this.selectedCountryCode = value;
     }
@@ -350,6 +369,9 @@ export class ChequewithdrawalPage implements OnInit {
       this.flag=true;
     }
     goToNextScreen(){
+      this.api.setIndex({
+        index: 'CQW'
+      });
       this.router.navigate(['token-generation']);
     }
     save(form)
@@ -364,7 +386,7 @@ export class ChequewithdrawalPage implements OnInit {
       form.transactionDate=date;
       
       // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-      form.transactionCurrency=form.transactionCurrency;
+      form.transactionCurrency=form.transactionCurrency.accountCurrency;
       form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
       form.chequeDepositId=this.customerId;
      
@@ -395,9 +417,10 @@ export class ChequewithdrawalPage implements OnInit {
       this.api.accountBalance(event.detail.value).subscribe((accbal) => {
         console.log('backend accbal', accbal);
     this.valueSet(accbal.currentBalance);
+    this.currentBalance = accbal.amount;
     // console.log(this.slideOneForm.controls)
     this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
-    this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+    // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
     this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency)
 
         // this.users=dropdown;
@@ -409,6 +432,25 @@ export class ChequewithdrawalPage implements OnInit {
     valueSet(currentBalance){
       this.currentBalance=currentBalance;
 
+    }
+    async presentModal() {
+      const modal = await this.modalController.create({
+        component: BranchPage,
+        componentProps: {
+        }
+      });
+  
+      modal.onDidDismiss().then((modelData) => {
+        if (modelData !== null) {
+          let branch = modelData.data;
+          console.log('Modal Data for branch: ', modelData.data);
+          this.slideOneForm.patchValue({
+            transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          });
+        }
+      });
+  
+      return await modal.present();
     }
 }
 interface CountryType {

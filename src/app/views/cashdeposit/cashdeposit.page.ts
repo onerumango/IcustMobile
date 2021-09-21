@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { format } from "date-fns"
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -20,12 +21,14 @@ export class CashdepositPage implements OnInit {
   submitted1: boolean=true;
   phoneNumber: string;
   constructor(
-    public toastCtrl: ToastController, private router: Router, private fb: FormBuilder, private api: ApiService, private toastController: ToastController) { }
+    public toastCtrl: ToastController, private router: Router, private fb: FormBuilder,
+     private api: ApiService, private toastController: ToastController, private modalController:ModalController,) { }
   transactionAmount = "10,000";
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
-
+  minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   users: any[];
   accountNum: string;
   transDate: string
@@ -364,13 +367,34 @@ export class CashdepositPage implements OnInit {
   method() {
 
   }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: BranchPage,
+      componentProps: {
+      }
+    });
+
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData !== null) {
+        let branch = modelData.data;
+        console.log('Modal Data for branch: ', modelData.data);
+        this.depositForm.patchValue({
+          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+        });
+      }
+    });
+
+    return await modal.present();
+  }
 
 
   selectCurrencyCode(currency) {
-    //console.log(code);
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
-
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
 
@@ -390,6 +414,9 @@ export class CashdepositPage implements OnInit {
     this.flag = true;
   }
   goToNextScreen(form) {
+    this.api.setIndex({
+      index: 'CHD'
+    });
     form.transactionDate.toString();
 
 
@@ -398,7 +425,7 @@ export class CashdepositPage implements OnInit {
     form.transactionDate = date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    form.transactionCurrency = form.transactionCurrency;
+    form.transactionCurrency = form.transactionCurrency.accountCurrency;
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
 
@@ -427,9 +454,10 @@ this.depositForm.reset();
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
       this.valueSet(accbal.currentBalance);
-      console.log('backend accbal', accbal);
+      console.log('backend accbal', accbal.amount);
+      this.currentBalance = accbal.amount;
       console.log(this.depositForm.controls)
-      this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
+      // this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;

@@ -17,6 +17,7 @@ export class CashwithdrawalPage implements OnInit {
   savingAccount:any[];
   // maxData : any = (new Date()).getFullYear() + 3;
   minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   slideOneForm: FormGroup;
   currentBalance: any;
   submitted: boolean=true;
@@ -39,6 +40,7 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   ngOnInit() {
+    
     this.customerId = sessionStorage.getItem('customer_id');
    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
    console.log("phoneNumber",this.phoneNumber)
@@ -1622,7 +1624,11 @@ export class CashwithdrawalPage implements OnInit {
  
   selectCurrencyCode(currency) {
     console.log(currency);
-    this.selectedCountryCode = currency.toLowerCase();
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
   changeSelectedCountryCode(value: string): void {
@@ -1663,6 +1669,9 @@ export class CashwithdrawalPage implements OnInit {
     this.flag = true;
   }
   goToNextScreen(form) {
+    this.api.setIndex({
+      index: 'CHW'
+    });
     form.transactionDate.toString();
 
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');
@@ -1670,7 +1679,7 @@ export class CashwithdrawalPage implements OnInit {
     form.transactionDate = date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    form.transactionCurrency = form.transactionCurrency;
+    form.transactionCurrency = form.transactionCurrency.accountCurrency;
   
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
@@ -1688,7 +1697,7 @@ export class CashwithdrawalPage implements OnInit {
     localStorage.setItem("TransactionAmount",form.transactionAmount);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
     console.log(form);
-    this.api.cashWithdrawalSave(form).subscribe((resp) => {
+    this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
     });

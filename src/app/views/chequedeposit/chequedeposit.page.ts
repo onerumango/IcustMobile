@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
+import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 
 @Component({
   selector: 'app-chequedeposit',
@@ -15,7 +17,7 @@ export class ChequedepositPage implements OnInit {
  
   slideOneForm: FormGroup;
   currentBalance: any;
-  constructor(private router:Router,private fb: FormBuilder,private api: ApiService) {}
+  constructor(private router:Router,private fb: FormBuilder,private api: ApiService ,private modalController:ModalController,) {}
   transactionAmount="10,000";
   accountBranch="Loita street";
   flag:boolean=true;
@@ -24,16 +26,22 @@ export class ChequedepositPage implements OnInit {
   transDate: string
   transTime: string;
   cashWithdrawResponse: any;
- 
-  users=['789045667','8789977889'];
+  phoneNumber: string;
+  users:any[];
   customerId:any;
-
+  minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
-    this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
-      console.log('backend dropdown', dropdown);
-      this.users=dropdown;
-    });
+    // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
+    //   console.log('backend dropdown', dropdown);
+    //   this.users=dropdown;
+    // });
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      console.log('backend resp in home', resp);
+      this.savingAccountFun(resp.custAccount);
+     })
     this.slideOneForm = this.fb.group({
       customerId:['', [Validators.required]],
       chequeDepositId:['', [Validators.required]],
@@ -326,18 +334,38 @@ export class ChequedepositPage implements OnInit {
  
 
   selectCurrencyCode(currency){
-    console.log(currency)
-    // this.selectedCountryCode = code.toLowerCase();
-    // let selectedCountryCode:any =this.countries.filter(item=> item.accountCurrency == currency);
-    // console.log(selectedCountryCode)
-    this.selectedCountryCode=currency.toLowerCase();
-
+    console.log(currency);
+    for(let i in this.countries) {
+      if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
+        this.selectedCountryCode = (currency.code).toLowerCase();
+      }
+    }
   }
 
 
   changeSelectedCountryCode(value: string): void {
    // this.selectedCountryCode = value;
   }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: BranchPage,
+      componentProps: {
+      }
+    });
+
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData !== null) {
+        let branch = modelData.data;
+        console.log('Modal Data for branch: ', modelData.data);
+        this.slideOneForm.patchValue({
+          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+        });
+      }
+    });
+
+    return await modal.present();
+  }
+
 
   goToHomepage(){
     this.router.navigate(['/tabs/home']);
@@ -350,8 +378,20 @@ export class ChequedepositPage implements OnInit {
     this.flag=true;
   }
   goToNextScreen(){
+    this.api.setIndex({
+      index: 'CQD'
+    });
     this.router.navigate(['token-generation']);
   }
+  savingAccountFun(filteredResponseSavingAccount)
+  {
+
+ console.log(filteredResponseSavingAccount);
+ this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ const defaultId = this.users ? this.users[0] : null;
+ this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ this.currentBalance = this.users[0].amount;
+ }
   save(form)
   {
 
@@ -364,7 +404,7 @@ export class ChequedepositPage implements OnInit {
     form.transactionDate=date;
     
     
-    form.transactionCurrency=form.transactionCurrency;
+    form.transactionCurrency=form.transactionCurrency.accountCurrency;
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
@@ -393,8 +433,9 @@ export class ChequedepositPage implements OnInit {
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
+  this.currentBalance = accbal.amount;
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
-  this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
+  // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
 
       // this.users=dropdown;

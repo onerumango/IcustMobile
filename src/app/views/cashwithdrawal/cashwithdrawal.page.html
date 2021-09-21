@@ -56,7 +56,7 @@
               >
                 <ion-select-option
                   *ngFor="let user of countries"
-                  [value]="user.accountCurrency"
+                  [value]="user"
                 >
                   {{user.accountCurrency + ' : ' + user.countryName}}
                 </ion-select-option>
@@ -187,7 +187,7 @@
             <ion-label style="padding-left: 5%;">Transaction date*</ion-label>
           <ion-card class="box" >
             <ion-item lines="none">
-                <ion-datetime  [min]="minDate"  max="2050" placeholder="Select date" formControlName="transactionDate" >
+                <ion-datetime  [min]="minDate"  [max]="maxDate" placeholder="Select date" formControlName="transactionDate" >
                 </ion-datetime>
            <ion-icon name="calendar" slot="end"></ion-icon>
   

@@ -49,7 +49,9 @@ ion-item{
 //     -webkit-align-items: normal !important;
 //     align-items: normal !important;
 // }
-
+ion-icon {
+    color: blue;
+  }
 .icon {
     margin-top: 20%;
     font-size: 120px;
@@ -235,4 +237,17 @@ opacity: 67%;
     }
     
 }
+
+.img {
+    width: 40pt;
+    height: 40pt;
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    left: 90%;
+    bottom: -40px;
+    transform: translateX(-50%);
+    margin-bottom:40px;
+    border:1px solid white;
+  }
 

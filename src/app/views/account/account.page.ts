@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, PopoverController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+import { CommonserviceService } from 'src/app/services/commonservice.service';
 
 @Component({
   selector: 'app-account',
@@ -9,10 +12,24 @@ import { ActionSheetController, PopoverController } from '@ionic/angular';
 })
 export class AccountPage implements OnInit {
   flag: boolean;
+  private subscriptionName: Subscription; 
+  formData: any;
+  phoneNumber: string;
 
-  constructor(public popoverCtrl: PopoverController,public router:Router,public actionSheetController: ActionSheetController) { }
+  constructor(public popoverCtrl: PopoverController,
+    public router:Router,
+    public actionSheetController: ActionSheetController,
+    private commonService:CommonserviceService,private api: ApiService, private cdr:ChangeDetectorRef) { 
+    }
 
   ngOnInit() {
+    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      console.log('backend resp in account', resp);
+      this.cdr.detectChanges();
+      this.cdr.markForCheck();
+      this.formData=resp;
+     })
   }
   // presentPopover(myEvent) {
   //   let popover = this.popoverCtrl.create();

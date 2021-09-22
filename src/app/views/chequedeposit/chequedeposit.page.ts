@@ -29,7 +29,8 @@ export class ChequedepositPage implements OnInit {
   phoneNumber: string;
   users:any[];
   customerId:any;
-
+  minDate = new Date().toISOString();
+  maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   ngOnInit() {
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');

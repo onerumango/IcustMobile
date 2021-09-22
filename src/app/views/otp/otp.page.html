@@ -26,7 +26,7 @@
     
     <div class="inputCard">
       <ion-label position="floating">OTP</ion-label>
-       <ion-input class="box" formControlName="otp"></ion-input>
+       <ion-input class="box" formControlName="otp" maxLength = "6"></ion-input>
     </div>
     
     <div class="inputCardButton">
@@ -38,7 +38,9 @@
     </div>
     
     <div class="ion-padding-top">
-      <p style="padding-left: 20%;">Didn't Received your OTP? Resend</p>
+      <p style="padding-left: 20%;display: inline;">Didn't Received your OTP? </p>
+      <p (click) ="getOtp()"   style="display: inline; font-weight: bolder; cursor: pointer;">Resend</p>
+  
     </div>
   </div>
     </form> <div class="top-left-quarter-circle"></div>

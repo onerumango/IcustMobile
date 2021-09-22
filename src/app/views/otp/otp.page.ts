@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { otpModel } from '../login/login.page';
+
+import { ToastrService } from 'ngx-toastr';
+import { ToastController } from '@ionic/angular';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
@@ -14,13 +18,18 @@ export class verifyotpModel {
   styleUrls: ['./otp.page.scss'],
 })
 export class OtpPage implements OnInit {
+
+  
   otpValue: any = null;
   otpForm: FormGroup;
   otpValid: boolean = false;
   verifyOtpModel = new verifyotpModel();
+  oTpModel = new otpModel();
   otpResponse: any
   PhoneNumLogin: any;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService) {
+  customerPhonenum:any;
+  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
+    private toastCtrl: ToastController) {
 
   }
 
@@ -34,7 +43,33 @@ export class OtpPage implements OnInit {
     this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
   }
+  getOtp() {
 
+    localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
+    this.oTpModel.source = 'customer';
+    this.oTpModel.source_key = 'mobile';
+    this.oTpModel.source_value = this.PhoneNumLogin;
+    console.log("model", this.oTpModel);
+    this.api.getOtp(this.oTpModel).subscribe(otpResp => {
+      console.log("Response Success", otpResp)
+      this.otpResponse = otpResp
+      /* Added validation for un-registered mobile nummber is entered */
+      if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
+        this.cdk.detectChanges();
+        // this.userResp = true;
+      } else {
+        // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+        console.log('in else')
+        this.router.navigateByUrl('/otp');
+      }
+    })
+
+    // this.router.navigateByUrl('/otp');
+
+  }
+ // customerPhonenum(arg0: string, customerPhonenum: any) {
+   // throw new Error('Method not implemented.');
+  //}
   validateOtp(otpValue) {
     console.log("Phonenumber for OTP", otpValue, otpValue.otp);
     this.verifyOtpModel.sourceKey = 'mobile';
@@ -50,9 +85,14 @@ export class OtpPage implements OnInit {
       if (this.otpResponse.userId !== '' ||  this.otpResponse.userId !==null) {
         // this.router.navigateByUrl('/others/services');
         this.goToCashWithdrawal(this.otpForm);
+      
       } else {
         this.router.navigateByUrl('/login');
       }
+    },(err)=>{
+      console.log(err);
+      this.openToast();
+      //this.toastr.error('');
     })
   }
 
@@ -74,6 +114,12 @@ export class OtpPage implements OnInit {
     });
     // this.router.navigate(['tabs']);
   }
-
+  async openToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Please enter the valid OTP Number',
+      duration: 5000
+    });
+    toast.present();
+  }
 
 }

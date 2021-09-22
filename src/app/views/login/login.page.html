@@ -21,7 +21,7 @@
     
       <div class="inputCard" >
        <ion-label position="floating">Phone number</ion-label>
-        <ion-input class="box" formControlName="phoneNo"></ion-input>
+        <ion-input class="box" formControlName="phoneNo" (keypress)=_keyPress($event) maxLength = "10"></ion-input>
     </div>
 <!--     
     <div class="inputCard"  *ngIf="otpValid" >
@@ -32,16 +32,17 @@
     <div class="inputCardButton">
       <ion-button expand="block" shape="round" (click) ="getOtp(loginForm.value)"
       >Continue</ion-button>
-      <span *ngIf="userResp">
+      <!-- <span *ngIf="userResp">
         <small style="color: red;">User Not Registered</small>
-      </span>
+      </span> -->
       <!-- <ion-button expand="block" shape="round" (click) ="validateOtp(loginForm.value.otp) ;goToCashWithdrawal(loginForm.value)"
       >Login</ion-button> -->
       <!-- (click)="goToCashWithdrawal(loginForm.value)" -->
     </div>
     
     <div class="ion-padding-top">
-      <p style="padding-left: 20%;">Didn't Received your OTP? Resend</p>
+      <p style="padding-left: 20%;display: inline;">Didn't Received your OTP?</p>
+      <p (click) ="getOtp(loginForm.value)"   style="display: inline; font-weight: bolder; cursor: pointer;">Resend</p>
     </div>
   </div>
     </form> <div class="top-left-quarter-circle"></div>

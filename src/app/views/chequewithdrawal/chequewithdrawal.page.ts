@@ -29,7 +29,8 @@ export class ChequewithdrawalPage implements OnInit {
     accountNum: string;
     transDate: string
     transTime: string;
-  
+    minDate = new Date().toISOString();
+    maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   
     ngOnInit() {
       this.phoneNumber= localStorage.getItem('PhoneNumLogin');

@@ -18,9 +18,16 @@
 </head>
 <div class="header-container">
   <div class="pix" id="pix"></div>
-  <img class="img"
-      [src]="image" alt="profile" *ngIf="image">
-  <img src="assets\images\avatar.png" class="img"  *ngIf="!image">
+      <ion-avatar >
+        <div *ngIf="image==null" >
+          <h1 class="img" [style.background]="getRandomColor(i+3)" style="text-align: center; font-size: 50px; padding-top: 30px;">
+            {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName | uppercase | slice:0:1}}</h1>
+        </div>
+        <div *ngIf="image!=null">
+          <img class="img" [src]="image" alt="profile" >
+        </div>
+      </ion-avatar>
+  <!-- <img src="assets\images\avatar.png" class="img"  *ngIf="!image"> -->
   <!-- <img class="img" [src]="currentImage" *ngIf="currentImage" alt="assets\images\pf.jpg"> -->
   <img class="img1" id="action-sheets-home-page" src="assets\icon\camera.PNG" alt="Ionic logo" (click)="openActionSheet()">
  

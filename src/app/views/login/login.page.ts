@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 export class otpModel {
   source_key: any;
@@ -31,7 +32,7 @@ export class LoginPage implements OnInit {
   customerPhonenum: any;
   userResp: boolean = false;
   constructor(private router: Router, private cdk: ChangeDetectorRef,
-    private fb: FormBuilder, private api: ApiService) {
+    private fb: FormBuilder, private api: ApiService, public toastCtrl: ToastController) {
 
   }
 
@@ -45,6 +46,15 @@ export class LoginPage implements OnInit {
     console.log('login :: ', this.loginForm.value);
   }
 
+  _keyPress(event: any) {
+    // console.log("key",event);
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+
+    }
+}
 
   getOtp(phone) {
     console.log("Phonenumber for OTP", phone.phoneNo)
@@ -61,6 +71,7 @@ export class LoginPage implements OnInit {
       if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
         this.cdk.detectChanges();
         this.userResp = true;
+        this.openToast();
       } else {
         // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
         console.log('in else')
@@ -98,7 +109,7 @@ export class LoginPage implements OnInit {
 
     // console.log(loginForm.value.otp);
     console.log(loginForm.phoneNo);
-    this.api.custpomerDetails(loginForm.phoneNo).subscribe((resp) => {
+    this.api.custpomerDetails(loginForm.phoneNo).subscribe((resp) => {       //where u need to add?
       console.log('backend resp', resp);
       if (resp != null) {
         sessionStorage.setItem('customer_id', resp.customerId);
@@ -107,6 +118,13 @@ export class LoginPage implements OnInit {
 
     });
     // this.router.navigate(['tabs']);
+  }
+  async openToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'User Phone Number is not Registered',
+      duration: 5000
+    });
+    toast.present();
   }
 
 

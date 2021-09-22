@@ -9,6 +9,9 @@ import { OtpPageRoutingModule } from './otp-routing.module';
 import { OtpPage } from './otp.page';
 
 import{ToastrModule, ToastrService} from 'ngx-toastr';
+//import { NumberDirective } from './numbers-only.directive';
+//import { NumbersOnlyDirective } from './numbers-only.directive';
+//import { NumbersOnlyDirective } from './numbers-only.directive';
 
 @NgModule({
   imports: [

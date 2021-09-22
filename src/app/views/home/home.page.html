@@ -73,7 +73,7 @@
            padding: 10px;font-weight: 500;">Account Balance</th> </tr>
            <tr  *ngFor="let info of savingArray; index as i;">
         <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
+        <th style="font-size: 12px;font-weight: 500;">${{info.amount}}</th>
            </tr>
           </table>
 
@@ -121,7 +121,7 @@
            padding: 10px;font-weight: 500;">Account Balance</th> </tr>
            <tr  *ngFor="let info of savingArray; index as i;">
         <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
+        <th style="font-size: 12px;font-weight: 500;">${{info.amount}}</th>
            </tr>
           </table>
         </div>

@@ -1584,7 +1584,7 @@ export class CashwithdrawalPage implements OnInit {
   ];
   isShow: boolean = true;
 
-  selectedCountryCode = 'ad';
+  selectedCountryCode = 'us';
 
   numberOnlyValidation(event: any) {
     const pattern = /[0-9.,]/;
@@ -1625,13 +1625,11 @@ export class CashwithdrawalPage implements OnInit {
     for(let i in this.countries) {
       if(currency.countryName === this.countries[i].countryName && currency.accountCurrency === this.countries[i].accountCurrency) {
         this.selectedCountryCode = (currency.code).toLowerCase();
+        console.log(this.selectedCountryCode);
       }
     }
   }
 
-  changeSelectedCountryCode(value: string): void {
-    // this.selectedCountryCode = value;
-  }
 
   async presentModal() {
     const modal = await this.modalController.create({
@@ -1718,14 +1716,26 @@ export class CashwithdrawalPage implements OnInit {
   accountEvent(event){
     console.log("event",event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
-      console.log('backend accbal', accbal.currentBalance);
+      // console.log('backend accbal', accbal.currentBalance);
   this.valueSet(accbal.currentBalance);
-  console.log('backend accbal', accbal);
-  console.log(this.slideOneForm.controls)
+  // console.log('backend accbal', accbal);
+  console.log(this.slideOneForm.controls.transactionCurrency);
   this.currentBalance=accbal.amount;
+  
   this.slideOneForm.controls.accountBalance.patchValue(accbal.amount);
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
+  // console.log(this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch));
+  console.log(accbal.accountCurrency);
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+  console.log(accbal.accountCurrency.countryName);
+  for(let i in this.countries) {
+    console.log(this.selectedCountryCode);
+    if(accbal.accountCurrency === this.countries[i].accountCurrency) {
+      this.selectedCountryCode = (this.countries[i].code).toLowerCase();
+      console.log(this.selectedCountryCode);
+    }
+  }
+  // this.selectedCountryCode = (currency.code).toLowerCase();
       // this.users=dropdown;
     //8042666041 8042666055
     });

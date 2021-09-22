@@ -56,7 +56,7 @@
               >
                 <ion-select-option
                   *ngFor="let user of countries"
-                  [value]="user"
+                  [value]="user.accountCurrency"
                 >
                   {{user.accountCurrency + ' : ' + user.countryName}}
                 </ion-select-option>

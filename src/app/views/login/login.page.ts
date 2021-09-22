@@ -59,25 +59,31 @@ export class LoginPage implements OnInit {
   getOtp(phone) {
     console.log("Phonenumber for OTP", phone.phoneNo)
     this.customerPhonenum = phone.phoneNo;
+    if(this.customerPhonenum == '')
+    this.openToast();
     localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     this.oTpModel.source = 'customer';
     this.oTpModel.source_key = 'mobile';
     this.oTpModel.source_value = phone.phoneNo;
     console.log("model", this.oTpModel);
-    this.api.getOtp(this.oTpModel).subscribe(otpResp => {
-      console.log("Response Success", otpResp)
-      this.otpResponse = otpResp
-      /* Added validation for un-registered mobile nummber is entered */
-      if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
-        this.cdk.detectChanges();
-        this.userResp = true;
-        this.openToast();
-      } else {
-        // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
-        console.log('in else')
-        this.router.navigateByUrl('/otp');
-      }
-    })
+    if(this.oTpModel.source_value != ''){
+      this.api.getOtp(this.oTpModel).subscribe(otpResp => {
+        console.log("Response Success", otpResp)
+        this.otpResponse = otpResp
+        /* Added validation for un-registered mobile nummber is entered */
+        if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
+          this.cdk.detectChanges();
+          this.userResp = true;
+          this.openToast();
+        } else {
+          // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+          console.log('in else')
+          this.router.navigateByUrl('/otp');
+        }
+      })
+
+    }
+   
 
     // this.router.navigateByUrl('/otp');
 
@@ -121,7 +127,7 @@ export class LoginPage implements OnInit {
   }
   async openToast() {
     const toast = await this.toastCtrl.create({
-      message: 'User Phone Number is not Registered',
+      message: 'Please enter the registered Phone Number',
       duration: 5000
     });
     toast.present();

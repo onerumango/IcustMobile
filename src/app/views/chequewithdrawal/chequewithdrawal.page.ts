@@ -74,6 +74,16 @@ export class ChequewithdrawalPage implements OnInit {
        console.log(this.slideOneForm.value);
        console.log(this.countries);
     }
+    numberOnlyValidation(event: any) {
+      const pattern = /[0-9.,]/;
+      let inputChar = String.fromCharCode(event.charCode);
+  
+      if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+      }
+    }
+  
  
      countries :CountryType[] =[
       { code: 'AF', countryName: 'AFGHANISTAN',accountCurrency: 'AFN',currencyName:'Afghani' },

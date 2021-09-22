@@ -26,7 +26,7 @@
     
     <div class="inputCard">
       <ion-label position="floating">OTP</ion-label>
-       <ion-input class="box" formControlName="otp" maxLength = "6"></ion-input>
+       <ion-input class="box" formControlName="otp" (keypress)="numberOnly($event)" numbersOnly  maxLength = "6"></ion-input>
     </div>
     
     <div class="inputCardButton">

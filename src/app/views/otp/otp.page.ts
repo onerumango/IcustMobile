@@ -43,6 +43,14 @@ export class OtpPage implements OnInit {
     this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
   }
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
   getOtp() {
 
     localStorage.setItem("PhoneNumLogin", this.customerPhonenum);

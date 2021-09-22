@@ -51,7 +51,7 @@
 
       <div class="inputCard1">
           <ion-label position="stacked">Transaction Amount*</ion-label>
-          <ion-input class="box" formControlName="transactionAmount"></ion-input>
+          <ion-input class="box" formControlName="transactionAmount" type="text" (keypress)="numberOnlyValidation($event)"></ion-input>
       </div>
      
 

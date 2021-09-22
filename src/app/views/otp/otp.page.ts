@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { otpModel } from '../login/login.page';
 
 import { ToastrService } from 'ngx-toastr';
+import { ToastController } from '@ionic/angular';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
@@ -17,13 +18,18 @@ export class verifyotpModel {
   styleUrls: ['./otp.page.scss'],
 })
 export class OtpPage implements OnInit {
+
+  cdk: any;
   otpValue: any = null;
   otpForm: FormGroup;
   otpValid: boolean = false;
   verifyOtpModel = new verifyotpModel();
+  oTpModel = new otpModel();
   otpResponse: any
   PhoneNumLogin: any;
-  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService) {
+  customerPhonenum:any;
+  constructor(private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
+    private toastCtrl: ToastController) {
 
   }
 
@@ -61,6 +67,9 @@ export class OtpPage implements OnInit {
     // this.router.navigateByUrl('/otp');
 
   }
+ // customerPhonenum(arg0: string, customerPhonenum: any) {
+   // throw new Error('Method not implemented.');
+  //}
   validateOtp(otpValue) {
     console.log("Phonenumber for OTP", otpValue, otpValue.otp);
     this.verifyOtpModel.sourceKey = 'mobile';
@@ -76,12 +85,14 @@ export class OtpPage implements OnInit {
       if (this.otpResponse.userId !== '' ||  this.otpResponse.userId !==null) {
         // this.router.navigateByUrl('/others/services');
         this.goToCashWithdrawal(this.otpForm);
+      
       } else {
         this.router.navigateByUrl('/login');
       }
     },(err)=>{
       console.log(err);
-      this.toastr.error('Incorrect OTP. Please try again.');
+      this.openToast();
+      //this.toastr.error('');
     })
   }
 
@@ -103,6 +114,12 @@ export class OtpPage implements OnInit {
     });
     // this.router.navigate(['tabs']);
   }
-
+  async openToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Please enter the valid OTP Number',
+      duration: 5000
+    });
+    toast.present();
+  }
 
 }

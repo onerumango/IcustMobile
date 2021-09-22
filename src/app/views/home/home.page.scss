@@ -238,3 +238,16 @@ opacity: 67%;
     
 }
 
+.img {
+    width: 40pt;
+    height: 40pt;
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    left: 90%;
+    bottom: -40px;
+    transform: translateX(-50%);
+    margin-bottom:40px;
+    border:1px solid white;
+  }
+

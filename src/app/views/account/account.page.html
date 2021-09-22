@@ -21,7 +21,8 @@
       <div class="name">
         <div style="width:fit-content;margin-left: 10pt;">
           <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Number</div>
-          <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">109 0000 889897 87123.</div>
+          <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
+            {{formData?.accountId}}</div>
         </div>
       </div>
       <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo">
@@ -37,7 +38,8 @@
     <div class="name">
       <div style="width:fit-content;margin-left: 10pt;">
         <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Holder's Name</div>
-        <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">Maria Jacob</div>
+        <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
+          {{formData?.firstName}} {{formData?.lastName}}</div>
       </div>
     </div>
     <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
@@ -50,9 +52,14 @@
    
   <img class="icon" src="assets\icon\location.PNG" alt="Ionic logo">
   <div class="name">
-    <div style="width:fit-content;margin-left: 10pt;">
-      <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Communication Address</div>
-      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">80 feet road, Indiranagar, Bengaluru, 686536</div>
+    <div style="width:fit-content;margin-left: 10pt;" >
+      <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">
+        Communication Address</div>
+      <div  *ngFor="let address of formData?.userAddress;let i=index">
+      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;"
+      *ngIf="address.addressType === 'communication'">
+        {{address.address1}} {{address.address2}} {{address.city}} {{address.state}} {{address.country}} {{address.zipCode}}</div>
+      </div>
     </div>
   </div>
   <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
@@ -66,8 +73,10 @@
   <img class="icon" src="assets\icon\phoneNumber.PNG" alt="Ionic logo">
   <div class="name">
     <div style="width:fit-content;margin-left: 10pt;">
-      <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Mobile Number</div>
-      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">8547073111</div>
+      <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">
+        Mobile Number</div>
+      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
+        {{formData?.phoneNumber}}</div>
     </div>
   </div>
   <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
@@ -82,7 +91,8 @@
   <div class="name">
     <div style="width:fit-content;margin-left: 10pt;">
       <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Email Id</div>
-      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">mariajacob@gmail.com</div>
+      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
+        {{formData?.primaryEmailAdress}}</div>
     </div>
   </div>
   <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
@@ -95,9 +105,13 @@
    
   <img class="icon" src="assets\icon\pan.PNG" alt="Ionic logo">
   <div class="name">
-    <div style="width:fit-content;margin-left: 10pt;">
+    <div style="width:fit-content;margin-left: 10pt;" >
       <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">PAN Number</div>
-      <div style="font-size:12px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">7647 07311 5671</div>
+      <div  *ngFor="let id of formData?.custIdProofs;let i=index">
+      <div style="font-size:12px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;"
+      *ngIf="id.idType === 'Pancard'">
+        {{id.idNumber}}</div>
+      </div>
     </div>
   </div>
   <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->

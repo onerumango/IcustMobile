@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { otpModel } from '../login/login.page';
+
+import { ToastrService } from 'ngx-toastr';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
@@ -21,9 +23,7 @@ export class OtpPage implements OnInit {
   verifyOtpModel = new verifyotpModel();
   otpResponse: any
   PhoneNumLogin: any;
-  oTpModel = new otpModel();
-  customerPhonenum: any;
-  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService) {
+  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService) {
 
   }
 
@@ -79,6 +79,9 @@ export class OtpPage implements OnInit {
       } else {
         this.router.navigateByUrl('/login');
       }
+    },(err)=>{
+      console.log(err);
+      this.toastr.error('Incorrect OTP. Please try again.');
     })
   }
 

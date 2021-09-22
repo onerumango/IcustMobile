@@ -461,7 +461,13 @@ this.depositForm.reset();
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;
-
+      for(let i in this.countries) {
+        console.log(this.selectedCountryCode);
+        if(accbal.accountCurrency === this.countries[i].accountCurrency) {
+          this.selectedCountryCode = (this.countries[i].code).toLowerCase();
+          console.log(this.selectedCountryCode);
+        }
+      }
     });
 
   }

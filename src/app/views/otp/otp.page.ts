@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { ToastController } from '@ionic/angular';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
@@ -21,7 +22,8 @@ export class OtpPage implements OnInit {
   verifyOtpModel = new verifyotpModel();
   otpResponse: any
   PhoneNumLogin: any;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService) {
+  constructor(private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
+    private toastCtrl: ToastController) {
 
   }
 
@@ -51,12 +53,14 @@ export class OtpPage implements OnInit {
       if (this.otpResponse.userId !== '' ||  this.otpResponse.userId !==null) {
         // this.router.navigateByUrl('/others/services');
         this.goToCashWithdrawal(this.otpForm);
+      
       } else {
         this.router.navigateByUrl('/login');
       }
     },(err)=>{
       console.log(err);
-      this.toastr.error('Incorrect OTP. Please try again.');
+      this.openToast();
+      //this.toastr.error('');
     })
   }
 
@@ -78,6 +82,12 @@ export class OtpPage implements OnInit {
     });
     // this.router.navigate(['tabs']);
   }
-
+  async openToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Please enter the valid OTP Number',
+      duration: 5000
+    });
+    toast.present();
+  }
 
 }

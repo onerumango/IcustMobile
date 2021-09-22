@@ -21,8 +21,10 @@ export class OtpPage implements OnInit {
   otpForm: FormGroup;
   otpValid: boolean = false;
   verifyOtpModel = new verifyotpModel();
+  oTpModel = new otpModel();
   otpResponse: any
   PhoneNumLogin: any;
+  customerPhonenum:any;
   constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService) {
 
   }

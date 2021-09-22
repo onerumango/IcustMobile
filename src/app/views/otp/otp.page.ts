@@ -19,7 +19,7 @@ export class verifyotpModel {
 })
 export class OtpPage implements OnInit {
 
-  cdk: any;
+  
   otpValue: any = null;
   otpForm: FormGroup;
   otpValid: boolean = false;
@@ -28,7 +28,7 @@ export class OtpPage implements OnInit {
   otpResponse: any
   PhoneNumLogin: any;
   customerPhonenum:any;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
+  constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
     private toastCtrl: ToastController) {
 
   }

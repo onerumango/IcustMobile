@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionSheetController, PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -15,21 +16,91 @@ export class AccountPage implements OnInit {
   private subscriptionName: Subscription; 
   formData: any;
   phoneNumber: string;
+  users: any[];
+  option=new Option();
+  userAddress: any;
+  address: any;
+  kycVerificationForm: FormGroup;
+  communicationAdress: string;
 
   constructor(public popoverCtrl: PopoverController,
     public router:Router,
+    private fb: FormBuilder,
     public actionSheetController: ActionSheetController,
     private commonService:CommonserviceService,private api: ApiService, private cdr:ChangeDetectorRef) { 
     }
 
   ngOnInit() {
+    this.kycVerificationForm = this.fb.group({
+      cifNumber: [""],
+      prefix: [""],
+      // firstName: ['',[Validators.required]],
+      primaryEmailAdress: ["",[ Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
+      phoneNumber: ['', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      firstName: [""],
+      lastName: [""],
+      middleName: [""],
+      customer_id: [""], //we need to add customerid dynamically based on Post and Put method --->added by jaya
+      isAddressSame: [""],
+      gender: [""],
+      dateOfBirth: [""],
+      materialStatus: [""],
+      nationality: [""],
+      communicationAddress: this.fb.group({
+        addressType: ["communication"],
+        address1: [""],
+        address2: [""],
+        city: [""],
+        zipCode: [""],
+        country: [""],
+        residenceType: [""],
+      }),
+      
+    });
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
       console.log('backend resp in account', resp);
+      console.log(resp.userAddress[0])
+      this.assignAddress(resp.userAddress[0],resp)
+       this.address=resp.userAddress[0];
       this.cdr.detectChanges();
       this.cdr.markForCheck();
+      this.savingAccountFun(resp.custAccount);
       this.formData=resp;
+
+      
      })
+
+
+  }
+  assignAddress(address,form) {
+   this.communicationAdress=address.address1+" "+address.address2+" "+address.city+" "+address.zipCode+" "+address.country;
+   console.log(this.communicationAdress)
+   this.option.address=this.communicationAdress
+   this.kycVerificationForm.get('primaryEmailAdress').setValue(form.primaryEmailAdress);
+   this.kycVerificationForm.get('phoneNumber').setValue(form.phoneNumber);
+
+  }
+
+  
+  setCustVerificationValues(data) {
+    this.kycVerificationForm.patchValue(data.customerInfoList[0]);
+    if (data.userAddress.length == 2) {
+      // this.kycVerificationForm.addControl("permanentAddress", this.permanentAddress);
+      // this.kycVerificationForm.get("isAddressSame").patchValue(this.array[1].name);
+      this.kycVerificationForm.get("communicationAddress").patchValue(data.customerInfoList[0].userAddress[0]);
+      // this.kycVerificationForm.get("permanentAddress").patchValue(data.customerInfoList[0].userAddress[1]);
+    } else {
+     
+      this.kycVerificationForm.get("communicationAddress").patchValue(data.customerInfoList[0].userAddress[0]);
+    }
+  }
+  savingAccountFun(filteredResponseSavingAccount: any) {
+  
+    this.users = filteredResponseSavingAccount.map(a => a.accountId);
+   this.option.defaultId = this.users ? this.users[0] : null;
+    console.log( this.option.defaultId )
+    // this.formData.controls.accountNumber.setValue(defaultId);
   }
   // presentPopover(myEvent) {
   //   let popover = this.popoverCtrl.create();
@@ -74,6 +145,9 @@ export class AccountPage implements OnInit {
   {
     this.flag=true;
   }
+  test(){
+    console.log("eneter inside save method")
+  }
   previous()
   {
     this.router.navigate(['/tabs/profile']);
@@ -83,4 +157,8 @@ export class AccountPage implements OnInit {
     // this.router.navigate(['account']);
     this.flag=false;
   }
+}
+export class Option{
+defaultId:any;
+address:any;
 }

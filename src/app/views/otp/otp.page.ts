@@ -61,15 +61,23 @@ export class OtpPage implements OnInit {
     this.api.getOtp(this.oTpModel).subscribe(otpResp => {
       console.log("Response Success", otpResp)
       this.otpResponse = otpResp
+    
       /* Added validation for un-registered mobile nummber is entered */
       if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
         this.cdk.detectChanges();
+        
         // this.userResp = true;
       } else {
         // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
         console.log('in else')
+        this.openToast1('OTP has been sent again');
         this.router.navigateByUrl('/otp');
+        
+
       }
+    },error=>{
+      console.log('error :: ',error);
+      this.openToast1('Failed to send OTP');
     })
 
     // this.router.navigateByUrl('/otp');
@@ -129,5 +137,11 @@ export class OtpPage implements OnInit {
     });
     toast.present();
   }
-
+ async openToast1(errorMessage) {
+  const toast = await this.toastCtrl.create({
+    message: `${errorMessage}` ,//'OTP has been sent again',
+    duration: 5000
+  });
+  toast.present();
+ }
 }

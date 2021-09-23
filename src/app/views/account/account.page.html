@@ -22,10 +22,19 @@
         <div style="width:fit-content;margin-left: 10pt;">
           <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Number</div>
           <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
-            {{formData?.accountId}}</div>
+       
+            <ion-select
+            [compareWith]="compareWith"
+            class="box"
+            ngDefaultControl  [(ngModel)]="option.defaultId" #defaultId 
+          >
+          <ion-select-option *ngFor="let user of users"  [value]="user"
+          >{{user}}</ion-select-option>
+          </ion-select>
+          </div>
         </div>
       </div>
-      <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo">
+      <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
      
 
 
@@ -55,11 +64,9 @@
     <div style="width:fit-content;margin-left: 10pt;" >
       <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">
         Communication Address</div>
-      <div  *ngFor="let address of formData?.userAddress;let i=index">
-      <div style="font-size:16px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;"
-      *ngIf="address.addressType === 'communication'">
-        {{address.address1}} {{address.address2}} {{address.city}} {{address.state}} {{address.country}} {{address.zipCode}}</div>
-      </div>
+      <ion-textarea  class="box4"  [(ngModel)]=option.address [ngModelOptions]="{standalone: true}">
+        <!-- <ion-select-option></ion-select-option> -->
+        </ion-textarea>
     </div>
   </div>
   <!-- <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo"> -->
@@ -138,7 +145,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content *ngIf="flag">
-   
+   <form [formGroup]="kycVerificationForm">
   
     <!-- <ion-item-divider> -->
      
@@ -157,38 +164,58 @@
           <!-- </div> -->
           <div class="inputCard" readonly>
             <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Number</ion-label>
-            <ion-select  class="box" >
-              <ion-select-option></ion-select-option>
-            </ion-select>
+            <ion-select
+            [compareWith]="compareWith"
+            class="box"
+            ngDefaultControl  [(ngModel)]="option.defaultId" #defaultId [ngModelOptions]="{standalone: true}"
+          >
+          <ion-select-option *ngFor="let user of users"  [value]="user"
+          >{{user}}</ion-select-option>
+          </ion-select>
           
             </div>
             <div class="inputCard" readonly>
               <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Holder's Name</ion-label>
               <ion-input  class="box" readonly>
               <!-- <ion-select-option></ion-select-option> -->
+              {{formData?.firstName}} {{formData?.lastName}}
               </ion-input>
             
               </div>
               <div class="inputCard">
                 <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Communication Address</ion-label>
-                <ion-input  class="box1">
+                <ion-textarea style="font-family: 'Montserrat' !important;" class="box1" [(ngModel)]=option.address [ngModelOptions]="{standalone: true}">
                 <!-- <ion-select-option></ion-select-option> -->
-                </ion-input>
+                </ion-textarea>
               
                 </div>
        
                 <div class="inputCard">
                   <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Mobile Number</ion-label>
-                  <ion-input  class="box1">
+                  <ion-input  class="box1"  formControlName="phoneNumber">
                   <!-- <ion-select-option></ion-select-option> -->
+             
                   </ion-input>
+                  <div class="error" *ngIf="kycVerificationForm.get('phoneNumber').hasError('pattern')">
+                    Phone number must be 10 digits.
+                  </div>
+                  <div class="error" *ngIf="kycVerificationForm.get('phoneNumber').hasError('required')">
+                    phone number is Required!
+                  </div>
                 
                   </div>
                   <div class="inputCard">
                     <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Email Id</ion-label>
-                    <ion-input  class="box1">
+                    <ion-input  class="box1" formControlName="primaryEmailAdress">
                     <!-- <ion-select-option></ion-select-option> -->
+                    <!-- {{formData?.primaryEmailAdress}} -->
                     </ion-input>
+                    <div class="error" *ngIf="kycVerificationForm.get('primaryEmailAdress').hasError('pattern')">
+                      Please enter valid email address!
+                    </div>
+                    <div class="error" *ngIf="kycVerificationForm.get('primaryEmailAdress').hasError('required')">
+                      email address is Required!
+                    </div>
                   
                     </div>
                     <div class="inputCard">
@@ -204,9 +231,9 @@
   
                       <div>
                         <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;margin-top:28px;
-                        height: 50px;margin-bottom:28px;"
+                        height: 50px;margin-bottom:28px;" [disabled]="kycVerificationForm.invalid"
                         >Save Changes</ion-button>
                         </div>
   
-  
+                      </form>
     </ion-content>

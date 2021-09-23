@@ -32,7 +32,21 @@ ion-icon{
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
+    font-size: 15px;
     // margin-left:10px;
+  }
+
+  .box4{
+    background-color: white;
+    font-size: 16px;
+    border: none;
+    margin-top: -2%;
+    margin-left: -3%;
+    font-family: 'Montserrat' !important;
+    font-weight:bolder;
+    opacity:100%;
+    color:#102245;
+    
   }
   .box1 {
     // border-width: 1pt;
@@ -48,12 +62,16 @@ ion-icon{
     // border-right-style: hidden;
     // border-left-style: hidden;
     // margin-left:10px;
+    font-size: 15px;
   }
 .inputCard{
 padding-top: 7%;
 padding-left: 5%;
 
 font-family: 'Montserrat' !important;
+}
+.error{
+  color:red;
 }
 
 ion-label{
@@ -76,14 +94,12 @@ ion-label{
         ion-footer{
             margin-bottom: 0px;
         }
-        ion-button{
-            font-size: 16pt;
-            font-family: 'Montserrat' !important;
-            text-transform: capitalize;
-        }
-        .button{
-            opacity: 100%;
-        }
+        // ion-button{
+        //     font-size: 16pt;
+        //     font-family: 'Montserrat' !important;
+        //     text-transform: capitalize;
+        // }
+     
         .name{
             flex-grow: 1;
             display: flex;

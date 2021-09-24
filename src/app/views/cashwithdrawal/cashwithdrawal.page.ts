@@ -19,7 +19,7 @@ export class CashwithdrawalPage implements OnInit {
   minDate = new Date().toISOString();
   maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   slideOneForm: FormGroup;
-  currentBalance: any;
+  currentBalance: number;
   submitted: boolean=true;
   submitted1: boolean=true;
   phoneNumber: string;
@@ -48,6 +48,7 @@ export class CashwithdrawalPage implements OnInit {
    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
     console.log('backend resp in home', resp);
     this.savingAccountFun(resp.custAccount);
+
    })
 
 
@@ -71,7 +72,7 @@ export class CashwithdrawalPage implements OnInit {
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
-      transactionAmount: ['', [Validators.required,Validators.min(0),Validators.pattern(/^[1-9]\d*$/)]],
+      transactionAmount: ['', [Validators.required,]],
       branchFlag: ['', [Validators.required]],
       accountBranch: ['', [Validators.required]],
       transactionDate: ['', [Validators.required]],
@@ -1591,11 +1592,14 @@ export class CashwithdrawalPage implements OnInit {
   numberOnlyValidation(event: any) {
     const pattern = /[0-9.,]/;
     let inputChar = String.fromCharCode(event.charCode);
+    
 
     if (!pattern.test(inputChar)) {
       // invalid character, prevent input
       event.preventDefault();
     }
+
+    // this.slideOneForm.controls['transactionAmount'].setValidators();
   }
 
   
@@ -1729,8 +1733,10 @@ export class CashwithdrawalPage implements OnInit {
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.users=dropdown;
+    
     //8042666041 8042666055
     });
+    
    
   }
   valueSet(currentBalance){

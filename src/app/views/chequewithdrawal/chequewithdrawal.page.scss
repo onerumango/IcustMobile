@@ -5,6 +5,11 @@
     font-family: 'Montserrat' !important;
    /* Add !important to overwrite all elements */
   }
+  .transactionAmounterrormsg{
+    color:red;
+    font-size: small;
+    padding-top: 7px;
+  }
   .box {
       border-width: thin;
       border-radius: 13px;

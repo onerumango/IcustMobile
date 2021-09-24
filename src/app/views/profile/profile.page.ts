@@ -146,7 +146,7 @@ export class ProfilePage implements OnInit {
         text: 'Take Photo',
         // icon: 'share',
         handler: () => {
-          this.takePicture()
+          this.takePicture();
           console.log('Share clicked');
         }
       }, {
@@ -199,9 +199,11 @@ export class ProfilePage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     };
+    console.log(options);
 
     this.camera.getPicture(options).then((imageData) => {
       this.currentImage = 'data:image/jpeg;base64,' + imageData;
+      console.log(this.currentImage);
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);

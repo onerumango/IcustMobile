@@ -80,7 +80,8 @@ export class ChequewithdrawalPage implements OnInit {
       this.slideOneForm.valueChanges.subscribe(v => {
         // console.log("v:: ", v);
         if (button === 'disable1') {
-          if (v.accountBranch != '' && v.accountNumber != '' && v.transactionAmount != '' && v.transactionCurrency != '') {
+          if (v.accountBranch != '' && v.accountNumber != '' && v.transactionAmount != ''
+           && v.transactionCurrency != '' && v.transactionAmount != 0) {
             this.submitted = false;
           } else {
             this.submitted = true;

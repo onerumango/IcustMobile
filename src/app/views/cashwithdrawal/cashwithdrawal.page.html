@@ -69,7 +69,7 @@
       <div class="inputCard1">
         <ion-label position="stacked">Transaction Amount*</ion-label>
         <ion-input class="box" formControlName="transactionAmount"
-        type="text" (keypress)="numberOnlyValidation($event)" ></ion-input>
+        type="text" min="1" (keypress)="numberOnlyValidation($event)" ></ion-input>
        
           <div class="transactionAmounterrormsg" *ngIf=" currentBalance < slideOneForm.controls['transactionAmount'].value">
             Transaction  Amount cannot be greater than Account Balance         </div>

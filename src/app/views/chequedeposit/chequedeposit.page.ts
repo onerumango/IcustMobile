@@ -14,7 +14,8 @@ import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 })
 export class ChequedepositPage implements OnInit {
   title : any = 'Cheque Deposit';
- 
+  submitted: boolean = true;
+  submitted1: boolean=true;
   slideOneForm: FormGroup;
   currentBalance: any;
   constructor(private router:Router,private fb: FormBuilder,private api: ApiService ,private modalController:ModalController,) {}
@@ -81,6 +82,31 @@ export class ChequedepositPage implements OnInit {
       event.preventDefault();
     }
   }
+
+  validateDisablebutton(button) {
+
+    this.slideOneForm.valueChanges.subscribe(v => {
+      console.log("v:: ", v);
+      if (button === 'disable1') {
+        if (v.accountBranch != '' && v.accountNumber != '' && v.transactionAmount != ''
+         && v.transactionCurrency != '' && v.transactionAmount != 0) {
+          this.submitted = false;
+        } else {
+          this.submitted = true;
+        }
+        console.log(this.submitted);
+      }
+
+      if (button === 'disable2') {
+        if (v.transactionBranch != '' && v.transactionDate != '' && v.transactionTime != '' && v.accountNo != '') {
+          this.submitted1 = false;
+        } else {
+          this.submitted1 = true;
+        }
+      }
+
+    });
+  } 
 
    countries :CountryType[] =[
     { code: 'AF', countryName: 'AFGHANISTAN',accountCurrency: 'AFN',currencyName:'Afghani' },

@@ -53,7 +53,7 @@ export class OtpPage implements OnInit {
   }
   getOtp() {
 
-    //localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
+    
     this.oTpModel.source = 'customer';
     this.oTpModel.source_key = 'mobile';
     this.oTpModel.source_value = this.PhoneNumLogin;

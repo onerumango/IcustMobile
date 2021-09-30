@@ -9,7 +9,7 @@ import { ToastController } from '@ionic/angular';
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
-  otp: any;
+  otp: number;
   type: any;
 }
 @Component({
@@ -36,7 +36,7 @@ export class OtpPage implements OnInit {
   ngOnInit() {
 
     this.otpForm = this.fb.group({
-      // phoneNo:['', [Validators.required]],
+       phoneNo:['', [Validators.required]],
       otp: ['', [Validators.required]]
 
     })
@@ -53,7 +53,7 @@ export class OtpPage implements OnInit {
   }
   getOtp() {
 
-    localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
+    //localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     this.oTpModel.source = 'customer';
     this.oTpModel.source_key = 'mobile';
     this.oTpModel.source_value = this.PhoneNumLogin;
@@ -144,4 +144,4 @@ export class OtpPage implements OnInit {
   });
   toast.present();
  }
-}
+} 

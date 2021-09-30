@@ -12,7 +12,7 @@ export class otpModel {
 export class verifyotpModel {
   sourceKey: any;
   sourceValue: any;
-  otp: any;
+  otp: number;
   type: any;
 }
 
@@ -59,9 +59,11 @@ export class LoginPage implements OnInit {
   getOtp(phone) {
     console.log("Phonenumber for OTP", phone.phoneNo)
     this.customerPhonenum = phone.phoneNo;
+    console.log(this.customerPhonenum)
+    localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     if(this.customerPhonenum == '')
     this.openToast();
-    localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
+   // localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     this.oTpModel.source = 'customer';
     this.oTpModel.source_key = 'mobile';
     this.oTpModel.source_value = phone.phoneNo;

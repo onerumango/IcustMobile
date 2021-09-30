@@ -29,7 +29,46 @@
     <ion-slides pager="true" [options]="slideOpts">
       <ion-slide  >
         <div class="slider1">
-         
+          <img src="assets\images\BL2.png" class="bankLogo" >
+  
+          <ion-text class="accType">Loan Account</ion-text>
+          <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
+        
+          <!-- <ion-label  style="width: 48pt;height: 32pt; margin-left: -20%;font-size: small;margin-bottom: 20%;">Account Balance</ion-label> -->
+          <!-- <th>Account Id</th>
+
+          <p >{{info.accountId}}</p>
+
+          <p  style="font-size: small;">{{info.amount}}</p> -->
+          
+          <!-- <table style="margin: auto;">
+            <th style="margin: auto;
+            font-size: small;
+            padding-left: 30px;
+            color: white;font-weight: 500;">Saving Account</th>
+            <tr>
+              <th style="font-size: 12px;
+              font-weight: 500;;">Account Id</th>
+           <th style="font-size: 12px;
+           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
+           <tr  *ngFor="let info of savingArray; index as i;">
+        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
+        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
+           </tr>
+          </table> -->
+
+
+          <table class="accTable">
+            <tr>
+              <th style="font-size: 12px;
+              font-weight: 500;;">Account Id</th>
+           <th style="font-size: 12px;
+           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
+           <tr  *ngFor="let info of loanArray; index as i;">
+        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
+        <th style="font-size: 12px;font-weight: 500;">${{info.amount | number: '2.'}}</th>
+           </tr>
+          </table>
         </div>
         
       </ion-slide>
@@ -119,7 +158,7 @@
               font-weight: 500;;">Account Id</th>
            <th style="font-size: 12px;
            padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr  *ngFor="let info of savingArray; index as i;">
+           <tr  *ngFor="let info of currentArray; index as i;">
         <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
         <th style="font-size: 12px;font-weight: 500;">${{info.amount | number: '2.'}}</th>
            </tr>

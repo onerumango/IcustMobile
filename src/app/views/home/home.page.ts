@@ -25,10 +25,12 @@ accountBalance:string;
   current: any;
   saving: any;
   savingArray: any[]=[];
-  currentArray: any;
+  currentArray: any[]=[];
   image: Object;
   profileData: any;
   formData: any;
+  loan: any;
+  loanArray: any[]=[];
   constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -41,12 +43,15 @@ accountBalance:string;
      this.formData=resp;
      this.getProfilePicture(resp.customerId);
      this.savingAccountFun(resp.custAccount);
-     this.current = resp.custAccount.filter(res => res.accountType == "current");
+     this.current = resp.custAccount.filter(res => res.accountType == "Current");
        console.log("current",this.current)
        this.currentAssign(this.current);
-       this.saving = resp.custAccount.filter(res => res.accountType == "saving");
+       this.saving = resp.custAccount.filter(res => res.accountType == "Savings");
        console.log("saving",this.saving)
        this.savingAssign(this.saving);
+       this.loan = resp.custAccount.filter(res => res.accountType == "loan");
+       console.log("loan",this.loan)
+       this.loanAssign(this.loan);
     })
  
     this.firstName=localStorage.getItem('firstName');
@@ -57,6 +62,10 @@ accountBalance:string;
 // this.customerItems=customerDetails;
 this.accountType=customerDetails.accountType;
 // this.accountBalance=customerDetails.custAccount[0].currentBalance;
+  }
+  loanAssign(loan: any) {
+   
+    this.loanArray=loan;
   }
  
   getProfilePicture(customerId) {

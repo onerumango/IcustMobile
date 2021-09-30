@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController, ToastController } from '@ionic/angular';
 import { BranchPage } from '../cashwithdrawal/branch/branch.page';
+import { getCurrencySymbol } from '@angular/common';
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -20,6 +21,7 @@ export class CashdepositPage implements OnInit {
   submitted: boolean = true;
   submitted1: boolean=true;
   phoneNumber: string;
+  curr: string;
   constructor(
     public toastCtrl: ToastController, private router: Router, private fb: FormBuilder,
      private api: ApiService, private toastController: ToastController, private modalController:ModalController,) { }
@@ -478,6 +480,8 @@ this.depositForm.reset();
  this.users = filteredResponseSavingAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
  this.depositForm.controls.accountNumber.setValue(defaultId);
+ this.depositForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount[0].accountCurrency);
+ this.curr = getCurrencySymbol(filteredResponseSavingAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
  }
   validateDisablebutton(button) {

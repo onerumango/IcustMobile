@@ -1,3 +1,4 @@
+import { getCurrencySymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class ChequedepositPage implements OnInit {
   submitted1: boolean=true;
   slideOneForm: FormGroup;
   currentBalance: any;
+  curr: any;
   constructor(private router:Router,private fb: FormBuilder,private api: ApiService ,private modalController:ModalController,) {}
   transactionAmount="10,000";
   accountBranch="Loita street";
@@ -426,6 +428,8 @@ export class ChequedepositPage implements OnInit {
  this.users = filteredResponseSavingAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
  this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount[0].accountCurrency);
+ this.curr = getCurrencySymbol(filteredResponseSavingAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
  }
   save(form)

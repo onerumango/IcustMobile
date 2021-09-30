@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
 import { BranchPage } from './branch/branch.page';
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-cashwithdrawal',
@@ -39,6 +40,7 @@ export class CashwithdrawalPage implements OnInit {
   accountNum: string;
   transDate: string
   transTime: string;
+  curr: string;
   ngOnInit() {
     
     this.customerId = sessionStorage.getItem('customer_id');
@@ -1761,6 +1763,8 @@ export class CashwithdrawalPage implements OnInit {
  this.users = filteredResponseSavingAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
  this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount[0].accountCurrency);
+ this.curr = getCurrencySymbol(filteredResponseSavingAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
  }
 }

@@ -1,3 +1,4 @@
+import { getCurrencySymbol } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +20,7 @@ export class ChequewithdrawalPage implements OnInit {
   customerId: string;
   public currentBalance: any;
   phoneNumber: string;
+  curr: string;
     constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
@@ -377,6 +379,8 @@ export class ChequewithdrawalPage implements OnInit {
    this.users = filteredResponseSavingAccount.map(a => a.accountId);
    const defaultId = this.users ? this.users[0] : null;
    this.slideOneForm.controls.accountNumber.setValue(defaultId);
+   this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount[0].accountCurrency);
+   this.curr = getCurrencySymbol(filteredResponseSavingAccount[0].accountCurrency, "narrow");
    this.currentBalance = this.users[0].amount;
    }
     changeSelectedCountryCode(value: string): void {

@@ -1733,9 +1733,10 @@ export class CashwithdrawalPage implements OnInit {
   
   this.slideOneForm.controls.accountBalance.patchValue(accbal.amount);
   this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
-  // console.log(this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch));
+  console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
   console.log(accbal.accountCurrency);
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+  this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
   console.log(accbal.accountCurrency.countryName);
   for(let i in this.countries) {
     console.log(this.selectedCountryCode);

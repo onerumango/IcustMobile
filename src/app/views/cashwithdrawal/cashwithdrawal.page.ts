@@ -23,8 +23,6 @@ export class CashwithdrawalPage implements OnInit {
   currentBalance: number;
   submitted: boolean=true;
   submitted1: boolean=true;
-  productCode = "CHW";
-  tokenOrigin = "Mobile";
   phoneNumber: string;
   constructor(
     private router: Router,
@@ -43,7 +41,6 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   curr: string;
-
   ngOnInit() {
     
     this.customerId = sessionStorage.getItem('customer_id');
@@ -74,8 +71,6 @@ export class CashwithdrawalPage implements OnInit {
     this.slideOneForm = this.fb.group({
       id:['', [Validators.required]],
       customerId:['', [Validators.required]],
-      productCode:['CHW',[Validators.required]],
-      tokenOrigin : ['Mobile',[Validators.required]],
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
@@ -1690,10 +1685,11 @@ export class CashwithdrawalPage implements OnInit {
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');
     console.log(date); //4/
     form.transactionDate = date;
+
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    form.transactionCurrency = form.transactionCurrency.accountCurrency
-    form.accountNumber = form.accountNumber.accountId;
-    form.productCode = this.productCode;
+    form.transactionCurrency = form.transactionCurrency.accountCurrency;
+  
+
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
    

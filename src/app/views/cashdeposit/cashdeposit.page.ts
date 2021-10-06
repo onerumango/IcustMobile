@@ -14,7 +14,8 @@ import { BranchComponent } from 'src/app/components/branch/branch.component';
 })
 export class CashdepositPage implements OnInit {
   title: any = 'Cash Deposit';
-
+  productCode = "CHD";
+  tokenOrigin = "Mobile";
   depositForm: FormGroup;
   currentBalance: any;
   customerId: string;
@@ -57,6 +58,8 @@ export class CashdepositPage implements OnInit {
     this.depositForm = this.fb.group({
       id: ['', [Validators.required]],
       customerId: ['', [Validators.required]],
+      productCode:['CHD',[Validators.required]],
+      tokenOrigin : ['Mobile',[Validators.required]],
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
@@ -431,6 +434,8 @@ export class CashdepositPage implements OnInit {
     form.transactionCurrency = form.transactionCurrency.accountCurrency;
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
+    form.productCode = this.productCode;
+    form.tokenOrigin = this.tokenOrigin;
 
     console.log(form);
     this.accountNum = form.accountNumber;

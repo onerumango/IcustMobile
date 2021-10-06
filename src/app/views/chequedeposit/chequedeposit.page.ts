@@ -15,6 +15,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ChequedepositPage implements OnInit {
   title : any = 'Cheque Deposit';
+  productCode = 'CQD';
+  tokenOrigin = 'Mobile';
   submitted: boolean = true;
   submitted1: boolean=true;
   slideOneForm: FormGroup;
@@ -49,6 +51,8 @@ export class ChequedepositPage implements OnInit {
       customerId:['', [Validators.required]],
       chequeDepositId:['', [Validators.required]],
       accountNumber: ['', [Validators.required]],
+      productCode:['CQD',[Validators.required]],
+      tokenOrigin : ['Mobile',[Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
       transactionAmount: ['', [Validators.required]],
@@ -449,6 +453,8 @@ export class ChequedepositPage implements OnInit {
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
+    form.productCode = this.productCode;
+    form.tokenOrigin = this.tokenOrigin;
    
     console.log(form);
     this.accountNum=form.accountNumber;

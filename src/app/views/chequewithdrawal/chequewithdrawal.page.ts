@@ -21,6 +21,8 @@ export class ChequewithdrawalPage implements OnInit {
   public currentBalance: any;
   phoneNumber: string;
   curr: string;
+  productCode = 'CQW';
+  tokenOrigin = 'Mobile';
     constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
     transactionAmount="10,000";
     accountBranch="Loita street";
@@ -50,6 +52,8 @@ export class ChequewithdrawalPage implements OnInit {
       this.slideOneForm = this.fb.group({
         customerId:['', [Validators.required]],
         chequeDepositId:['', [Validators.required]],
+        productCode:['CQW',[Validators.required]],
+        tokenOrigin : ['Mobile',[Validators.required]],
         accountNumber: ['', [Validators.required]],
         accountBalance: ['', [Validators.required]],
         transactionCurrency: ['', [Validators.required]],
@@ -418,6 +422,8 @@ export class ChequewithdrawalPage implements OnInit {
       form.transactionCurrency=form.transactionCurrency.accountCurrency;
       form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
       form.chequeDepositId=this.customerId;
+      form.productCode = this.productCode;
+      form.tokenOrigin = this.tokenOrigin;
      
       console.log(form);
       this.accountNum=form.accountNumber;

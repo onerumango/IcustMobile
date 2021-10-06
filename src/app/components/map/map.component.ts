@@ -2,23 +2,20 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
-import { BranchDataService } from './branch.service';
-import { MapsService } from './maps.service';
 
+import { MapsService } from '../../services/maps.service';
 
 @Component({
-  selector: 'app-branch',
-  templateUrl: './branch.page.html',
-  styleUrls: ['./branch.page.scss'],
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.scss'],
 })
-export class BranchPage implements OnInit {
+export class MapComponent implements OnInit {
   google;
-  @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
-  selectedLocation:any;
-  
+  @ViewChild('mapContainer', { static: true }) gmap: ElementRef;
+  selectedLocation: any;
   map: google.maps.Map;
   branchData: any = [];
-
   relatedMap: { [key: string]: any };
   typesMap = {};
   typesList: any[] = [];
@@ -28,32 +25,31 @@ export class BranchPage implements OnInit {
   infoWindows: google.maps.InfoWindow[] = [];
 
   constructor(
-    private modalController:ModalController,
+    private modalController: ModalController,
     private geolocation: Geolocation,
     private apiService: ApiService,
     private _mapsService: MapsService,
-    private _element: ElementRef,
-    private branchService: BranchDataService) { }
+    private _element: ElementRef) { }
 
   ngOnInit() {
-
-  }
-
-  ionViewDidEnter() {
+    this.setupMap();
     this.getBankBranches();
   }
 
+  ionViewWillEnter() {
+    
+  }
+
   getBankBranches() {
-    this.branchService.getBranches()
-    .subscribe((data: any) => {
-      this.branchData = data.branch;
-      this.setupMap();
-      console.log(data);
-    });
+    this.apiService.getBranchByCity("Bangalore")
+      .subscribe((data: any) => {
+        this.branchData = data;
+        console.log(data);
+        this.getMarkers();
+      });
   }
 
   async setupMap() {
-
     const styledMapType = [
       {
         "elementType": "geometry",
@@ -214,10 +210,8 @@ export class BranchPage implements OnInit {
         ]
       }
     ] as google.maps.MapOptions['styles'];
-
     this.google = await this._mapsService.getGoogleMaps();
-    const latLng = new google.maps.LatLng(28.6117993, 77.2194934);
-
+    const latLng = new google.maps.LatLng(12.9716, 77.5946);
     this.map = new this.google.maps.Map(this.gmap.nativeElement, {
       center: latLng,
       zoom: 14,
@@ -227,8 +221,7 @@ export class BranchPage implements OnInit {
         style: this.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
       }
     });
-
-    this.getMarkers();
+    
   }
 
 
@@ -251,9 +244,9 @@ export class BranchPage implements OnInit {
     };
 
     const mrkr = new this.google.maps.Marker({
-      position: new this.google.maps.LatLng(Number(location.lat), Number(location.lng)),
+      position: new this.google.maps.LatLng(Number(location.lattitude), Number(location.longitude)),
       label: {
-        text: location.title,
+        text: location.branchName,
         fontSize: '1.6rem',
         fontWeight: '400',
         fontFamily: "'PlantinMTPro', 'Times New Roman', 'Times', 'Baskerville', 'Georgia', serif",
@@ -287,8 +280,8 @@ export class BranchPage implements OnInit {
           <ion-item detail="false" lines="none">
            <ion-badge slot="end">22 KM Away</ion-badge>
           </ion-item>
-          <h4>${location.title}</h4>
-          Branch Code : ${location.branch}
+          <h4>${location.branchName}</h4>
+          Branch Code : ${location.branchCode}
           <p>${location.address}</p>
           <ion-chip color="primary" onClick="close(location)">
            <ion-label color="primary">SELECT</ion-label>
@@ -297,7 +290,7 @@ export class BranchPage implements OnInit {
       `,
     });
 
-  
+
     this.infoWindows = [...this.infoWindows, infowindow];
 
     marker.addListener('click', () => {
@@ -307,49 +300,37 @@ export class BranchPage implements OnInit {
       this.markerActive = location.id;
       this.selectedLocation = location;
       const element = this._element.nativeElement.getElementsByClassName(String(location.id))[0];
-
       if (element) {
         element.scrollIntoView({ block: 'start', behavior: 'smooth' });
       }
-
-    
     });
-  
     return infowindow;
   }
 
   @HostListener("click", ['$event'])
   onClick(event: any) {
-    // get the clicked element
-    console.log(event,this.selectedLocation);
-    if(event.target.innerText== "SELECT"){
+    console.log(event, this.selectedLocation);
+    if (event.target.innerText == "SELECT") {
       this.dismiss(this.selectedLocation);
+      return;
+    } else {
+      return;
     }
   }
 
-  clickedOut() {
+
+  dismiss(location: any) {
     console.log(location);
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      'data': location
-    });
+    this.modalController.dismiss(location);
+
   }
 
-
-  dismiss(location:any) {
-    console.log(location);
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      'data': location
-    });
-    
-  }
-
-  close(){
+  close() {
     this.modalController.dismiss();
   }
+
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.

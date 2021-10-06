@@ -5,8 +5,8 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
-import { BranchPage } from './branch/branch.page';
 import { getCurrencySymbol } from '@angular/common';
+import { BranchComponent } from 'src/app/components/branch/branch.component';
 
 @Component({
   selector: 'app-cashwithdrawal',
@@ -1644,7 +1644,8 @@ export class CashwithdrawalPage implements OnInit {
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BranchPage,
+      component: BranchComponent,
+      id:"branchModal",
       componentProps: {
       }
     });
@@ -1654,7 +1655,7 @@ export class CashwithdrawalPage implements OnInit {
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
         this.slideOneForm.patchValue({
-          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          transactionBranch:modelData.data['data'].address
         });
       }
     });

@@ -4,7 +4,7 @@
   <!-- </div> -->
   
  
-    <form [formGroup]="otpForm"  novalidate>
+    <form *ngIf="otpForm" [formGroup]="otpForm"  novalidate>
       <div class="login-logo">
         <img src="assets\images\BL1.png" alt="Ionic logo">
       </div>

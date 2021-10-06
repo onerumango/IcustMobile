@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
+import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
-import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -471,7 +471,8 @@ export class ChequewithdrawalPage implements OnInit {
     }
     async presentModal() {
       const modal = await this.modalController.create({
-        component: BranchPage,
+        component: BranchComponent,
+        id:"branchModal",
         componentProps: {
         }
       });
@@ -481,7 +482,7 @@ export class ChequewithdrawalPage implements OnInit {
           let branch = modelData.data;
           console.log('Modal Data for branch: ', modelData.data);
           this.slideOneForm.patchValue({
-            transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+            transactionBranch:modelData.data['data'].address
           });
         }
       });

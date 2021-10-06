@@ -37,11 +37,20 @@ export class OtpPage implements OnInit {
 
     this.otpForm = this.fb.group({
        phoneNo:['', [Validators.required]],
-      otp: ['', [Validators.required]]
+        otp: ['', [Validators.required]]
 
     })
     this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
+
+    this.api.getOtpToken.subscribe(otp =>{
+      console.log("Subject otp",otp);
+       if(otp.length === 6){
+         let otpToken = +otp;
+         this.otpForm.get('otp').patchValue(otpToken);
+         this.openToast1("OTP auto populated successfully!");
+       }
+    })
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

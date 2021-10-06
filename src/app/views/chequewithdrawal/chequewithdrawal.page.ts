@@ -7,6 +7,7 @@ import {format} from "date-fns"
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { BranchPage } from '../cashwithdrawal/branch/branch.page';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -21,8 +22,9 @@ export class ChequewithdrawalPage implements OnInit {
   public currentBalance: any;
   phoneNumber: string;
   curr: string;
-    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
-    transactionAmount="10,000";
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController, 
+      private changeDef: ChangeDetectorRef) {}
+    //transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
     currencyValue:string;
@@ -34,6 +36,11 @@ export class ChequewithdrawalPage implements OnInit {
     transTime: string;
     minDate = new Date().toISOString();
     maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
+    transactionAmount:string;
+    transAmount: string;
+    //transAmount:number;
+    isedit:boolean=true;
+    transAmt: any;
   
     ngOnInit() {
       this.phoneNumber= localStorage.getItem('PhoneNumLogin');
@@ -92,13 +99,33 @@ export class ChequewithdrawalPage implements OnInit {
       })
     }
     numberOnlyValidation(event: any) {
-      const pattern = /[0-9.,]/;
-      let inputChar = String.fromCharCode(event.charCode);
+      // const pattern = /[0-9.,]/;
+      // let inputChar = String.fromCharCode(event.charCode);
   
-      if (!pattern.test(inputChar)) {
-        // invalid character, prevent input
-        event.preventDefault();
-      }
+      // if (!pattern.test(inputChar)) {
+      //   // invalid character, prevent input
+      //   event.preventDefault();
+      // }
+
+      console.log(this.slideOneForm)
+      console.log(event);
+      let value:string;
+      value=this.slideOneForm.value.transactionAmount;
+      this.transAmount = value;
+     // debugger
+      const pattern = value;
+      let lastCharIsPoint = false;
+    if (pattern.charAt(pattern.length - 1) === '.') {
+      lastCharIsPoint = true;
+    }
+    const num = pattern.replace(/[^0-9.]/g, '');
+    
+    this.transAmt = Number(num);
+    this.transAmount = this.transAmt.toLocaleString('en-US');
+    if (lastCharIsPoint) {
+      this.transAmount = this.transAmount.concat('.');
+    }
+    this.changeDef.detectChanges();
     }
   
  

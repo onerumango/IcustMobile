@@ -7,6 +7,8 @@ import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
 import { BranchPage } from './branch/branch.page';
 import { getCurrencySymbol } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-cashwithdrawal',
@@ -28,9 +30,9 @@ export class CashwithdrawalPage implements OnInit {
     private router: Router,
     private modalController:ModalController,
     private fb: FormBuilder,
-    private api: ApiService,  public toastCtrl: ToastController
+    private api: ApiService,  public toastCtrl: ToastController, private changeDef: ChangeDetectorRef
   ) {}
-  transactionAmount:string;
+  
   accountBranch = 'Loita street';
   flag: boolean = true;
   currencyValue: string;
@@ -41,6 +43,12 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   curr: string;
+  transactionAmount:string;
+  transAmount: string;
+  //transAmount:number;
+  isedit:boolean=true;
+  transAmt: any;
+  
   ngOnInit() {
     
     this.customerId = sessionStorage.getItem('customer_id');
@@ -1594,19 +1602,40 @@ export class CashwithdrawalPage implements OnInit {
   selectedCountryCode = 'us';
 
   numberOnlyValidation(event: any) {
-    const pattern = /[0-9.,]/;
-    let inputChar = String.fromCharCode(event.charCode);
+    // debugger
+    console.log(this.slideOneForm)
+    console.log(event);
+    //const pattern = /[0-9.,]/;
+    let value:string;
+   
+    value=this.slideOneForm.value.transactionAmount;
+    //let inputChar = String.fromCharCode(event.charCode);
+   // debugger;
     
+    this.transAmount = value;
+   // debugger
+    const pattern = value;
+    let lastCharIsPoint = false;
+  if (pattern.charAt(pattern.length - 1) === '.') {
+    lastCharIsPoint = true;
+  }
+  const num = pattern.replace(/[^0-9.]/g, '');
+  
+  this.transAmt = Number(num);
+  this.transAmount = this.transAmt.toLocaleString('en-US');
+  if (lastCharIsPoint) {
+    this.transAmount = this.transAmount.concat('.');
+  }
+  this.changeDef.detectChanges();
 
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
+    // if (!pattern.test(inputChar)) {
+    //   // invalid character, prevent input
+    //   event.preventDefault();
+    // }
 
     // this.slideOneForm.controls['transactionAmount'].setValidators();
   }
 
-  
   validateDisablebutton(button) {
 
     this.slideOneForm.valueChanges.subscribe(v => {
@@ -1695,13 +1724,16 @@ export class CashwithdrawalPage implements OnInit {
     console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;
-    console.log(this.transactionAmount);
+
+    // this.numberOnlyValidation(this.transactionAmount);
+    // console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
   
     localStorage.setItem("AccountNumber",form.accountNumber);
     localStorage.setItem("TransactionDate",this.transDate);
     localStorage.setItem("TransactionTime",form.transactionTime);
-    localStorage.setItem("TransactionAmount",form.transactionAmount);
+    //localStorage.setItem("TransactionAmount",form.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
     localStorage.setItem("TransactionBranch",form.transactionBranch);
     console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
@@ -1751,8 +1783,11 @@ export class CashwithdrawalPage implements OnInit {
     }
   ]
   accountEvent(event){
+    this.isedit=false;
     console.log("event",event.detail.value)
+    // this.numberOnlyValidation(event.detail.value);
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+      console.log(accbal)
       // console.log('backend accbal', accbal.lastTransactions);
   this.valueSet(accbal.currentBalance);
   // console.log('backend accbal', accbal);
@@ -1764,6 +1799,11 @@ export class CashwithdrawalPage implements OnInit {
   // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
   // console.log(accbal.accountCurrency);
   this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+  //debugger;
+  console.log(accbal.transactionAmount);
+  this.numberOnlyValidation(accbal.transactionAmount);
+  // this.slideOneForm.controls.transactionAmount.patchValue(accbal.transactionAmount)
+  
   console.log('backend accbal', accbal.lastTransactions);
   if(accbal.lastTransactions!=null){
     if(accbal.lastTransactions.length <=2 ){
@@ -1843,3 +1883,4 @@ interface LastTransaction {
   accBranch:string;
   
 }
+

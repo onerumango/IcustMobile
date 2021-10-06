@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ModalController, ToastController } from '@ionic/angular';
 import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { getCurrencySymbol } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -24,8 +25,9 @@ export class CashdepositPage implements OnInit {
   curr: string;
   constructor(
     public toastCtrl: ToastController, private router: Router, private fb: FormBuilder,
-     private api: ApiService, private toastController: ToastController, private modalController:ModalController,) { }
-  transactionAmount = "10,000";
+     private api: ApiService, private toastController: ToastController, private modalController:ModalController,
+     private changeDef: ChangeDetectorRef) { }
+  //transactionAmount = "10,000";
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
@@ -36,6 +38,11 @@ export class CashdepositPage implements OnInit {
   transDate: string
   transTime: string;
   toast: HTMLIonToastElement;
+  transactionAmount:string;
+  transAmount: string;
+  //transAmount:number;
+  isedit:boolean=true;
+  transAmt: any;
   ngOnInit() {
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
@@ -353,13 +360,32 @@ export class CashdepositPage implements OnInit {
   ];
 
   numberOnlyValidation(event: any) {
-    const pattern = /[0-9.,]/;
-    let inputChar = String.fromCharCode(event.charCode);
+    // const pattern = /[0-9.,]/;
+    // let inputChar = String.fromCharCode(event.charCode);
 
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
+    // if (!pattern.test(inputChar)) {
+    //   // invalid character, prevent input
+    //   event.preventDefault();
+    // }
+    console.log(this.depositForm)
+    console.log(event);
+    let value:string;
+    value=this.depositForm.value.transactionAmount;
+    this.transAmount = value;
+   // debugger
+    const pattern = value;
+    let lastCharIsPoint = false;
+  if (pattern.charAt(pattern.length - 1) === '.') {
+    lastCharIsPoint = true;
+  }
+  const num = pattern.replace(/[^0-9.]/g, '');
+  
+  this.transAmt = Number(num);
+  this.transAmount = this.transAmt.toLocaleString('en-US');
+  if (lastCharIsPoint) {
+    this.transAmount = this.transAmount.concat('.');
+  }
+  this.changeDef.detectChanges();
   }
 
   isShow: boolean = true;
@@ -459,6 +485,9 @@ this.depositForm.reset();
       console.log('backend accbal', accbal.amount);
       this.currentBalance = accbal.amount;
       console.log(this.depositForm.controls)
+       //debugger;
+      console.log(accbal.transactionAmount);
+      this.numberOnlyValidation(accbal.transactionAmount);
       // this.depositForm.controls.transactionAmount.patchValue(accbal.amount);
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.depositForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Nearest Branch</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentMap()">
+        <ion-icon slot="start" name="map-outline"></ion-icon> MAP
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="branchData.length > 0; else showNoBranch">
+    <ion-list>
+    <ion-item *ngFor="let branch of branchData; let i=index">
+      <ion-avatar slot="start">
+        <app-avatar-photo [name]="branch?.branchName"></app-avatar-photo> 
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="primary">
+          <h3>{{ branch?.branchName }}</h3>
+        </ion-text>
+        <p><small>{{ branch?.address }}</small></p>
+      </ion-label>
+      <ion-button fill="outline" slot="end" (click)="dismiss(branch)">SELECT</ion-button>
+    </ion-item>
+  </ion-list>
+  </ng-container>
+  <ng-template #showNoBranch>
+    <p>No Branch Available!</p>
+  </ng-template>
+
+</ion-content>

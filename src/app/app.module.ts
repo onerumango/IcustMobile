@@ -10,12 +10,13 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { rootRouterConfig } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentsModule } from './components/components.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(),HttpClientModule, BrowserAnimationsModule,RouterModule.forRoot(rootRouterConfig, { useHash: true, relativeLinkResolution: 'legacy' })],
+  imports: [BrowserModule, IonicModule.forRoot(),HttpClientModule, BrowserAnimationsModule,ComponentsModule,RouterModule.forRoot(rootRouterConfig, { useHash: true, relativeLinkResolution: 'legacy' })],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy},Geolocation],
   bootstrap: [AppComponent],
 })

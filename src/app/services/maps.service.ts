@@ -6,7 +6,7 @@ import { Loader } from 'google-maps';
 })
 export class MapsService {
   clientKey = 'AIzaSyAts9Xbep-5hDLqzkNe8hKCEJANLX47E8c';//'AIzaSyAqE03KhEslHZpffJzGs6a2Ju2mXFBDvHc';
-  googleMaps;
+  googleMaps:any;
   loader: Loader;
 
   constructor() { }

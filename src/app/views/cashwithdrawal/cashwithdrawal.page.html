@@ -55,10 +55,10 @@
                 style="font-size: large; margin-left: -40%"
               >
                 <ion-select-option
-                  *ngFor="let user of countries"
-                  [value]="user.accountCurrency"
+                  *ngFor="let currency of currencies"
+                  [value]="currency.countryCode"
                 >
-                  {{user.accountCurrency + ' : ' + user.countryName}}
+                {{currency.currencyCode + ' : ' + currency.countryName}}
                 </ion-select-option>
               </ion-select>
             </ion-col>

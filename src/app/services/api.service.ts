@@ -51,6 +51,7 @@ export class ApiService {
     return this.http.post<any>(`${API_URL}/cash-withdrawal-service`, data).pipe(catchError(this.errorHandler));
   }
   cashDepositSave(data: object) {
+    console.log("cashDepositSave----------",data)
     return this.http.post<any>(`${API_URL}/cash-deposit/api`, data).pipe(catchError(this.errorHandler));
   }
   chequeWithdrawalSave(data: object) {
@@ -85,6 +86,10 @@ export class ApiService {
   getLoanInfo(phoneNumber) {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNumber}`)
   }
+
+getCurrencyValues(){
+  return this.http.get(`${API_URL}/currency`).pipe(catchError(this.errorHandler));
+}
 
 }
 

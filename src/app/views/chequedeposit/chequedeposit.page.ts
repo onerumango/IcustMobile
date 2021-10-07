@@ -51,7 +51,7 @@ export class ChequedepositPage implements OnInit {
     // });
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
       console.log('backend resp in home', resp);
-      this.savingAccountFun(resp.custAccount);
+      this.savingAccountFun(resp);
      })
     this.slideOneForm = this.fb.group({
       transactionId:['', [Validators.required]],
@@ -186,12 +186,14 @@ export class ChequedepositPage implements OnInit {
   {
 
  console.log(filteredResponseSavingAccount);
- this.users = filteredResponseSavingAccount.map(a => a.accountId);
+ this.users = filteredResponseSavingAccount.custAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
  this.slideOneForm.controls.accountNumber.setValue(defaultId);
- this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount[0].accountCurrency);
- this.curr = getCurrencySymbol(filteredResponseSavingAccount[0].accountCurrency, "narrow");
+ this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
+
+ this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
+ this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
  }
   save(form)
   {

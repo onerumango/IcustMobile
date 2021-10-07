@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ChequedepositPageRoutingModule } from './chequedeposit-routing.module';
 
 import { ChequedepositPage } from './chequedeposit.page';
-import { OperationPage } from '../operation/operation.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -17,10 +17,11 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
     IonicModule,
     ReactiveFormsModule,
     NgxFlagPickerModule,
-    ChequedepositPageRoutingModule
+    ChequedepositPageRoutingModule,
+    ComponentsModule
   ],
-  declarations: [ChequedepositPage
-    // ,OperationPage
+  declarations: [
+    ChequedepositPage
   ]
 })
 export class ChequedepositPageModule {}

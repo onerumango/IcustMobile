@@ -5,9 +5,10 @@ import { format } from "date-fns"
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController, ToastController } from '@ionic/angular';
-import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
+import { BranchComponent } from 'src/app/components/branch/branch.component';
+
 @Component({
   selector: 'app-cashdeposit',
   templateUrl: './cashdeposit.page.html',
@@ -15,7 +16,8 @@ import { DataService } from "src/app/services/data.service";
 })
 export class CashdepositPage implements OnInit {
   title: any = 'Cash Deposit';
-
+  productCode = "CHD";
+  tokenOrigin = "Mobile";
   depositForm: FormGroup;
   currentBalance: any;
   customerId: string;
@@ -66,6 +68,8 @@ export class CashdepositPage implements OnInit {
     this.depositForm = this.fb.group({
       transactionId: ['', [Validators.required]],
       customerId: ['', [Validators.required]],
+      productCode:['CHD',[Validators.required]],
+      tokenOrigin : ['Mobile',[Validators.required]],
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
@@ -134,7 +138,8 @@ export class CashdepositPage implements OnInit {
   }
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BranchPage,
+      component: BranchComponent,
+      id:"branchModal",
       componentProps: {
       }
     });
@@ -144,7 +149,7 @@ export class CashdepositPage implements OnInit {
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
         this.depositForm.patchValue({
-          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          transactionBranch:modelData.data['data'].address
         });
       }
     });
@@ -191,8 +196,8 @@ export class CashdepositPage implements OnInit {
     form.transactionCurrency = this.currencyData.currencyCode;
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
-    form.productCode = 'CHD';
-    form.tokenOrigin = 'Mobile';
+    form.productCode = this.productCode;
+    form.tokenOrigin = this.tokenOrigin;
     console.log(form);
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;

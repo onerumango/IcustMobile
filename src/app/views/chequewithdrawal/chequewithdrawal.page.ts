@@ -5,9 +5,11 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
+import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
 import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { DataService } from "src/app/services/data.service";
+
 
 @Component({
   selector: 'app-chequewithdrawal',
@@ -30,6 +32,10 @@ export class ChequewithdrawalPage implements OnInit {
       private api: ApiService,
       private modalController:ModalController,
       private shareDataService:DataService) {}
+  productCode = 'CQW';
+  tokenOrigin = 'Mobile';
+    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
+
     transactionAmount="10,000";
     accountBranch="Loita street";
     flag:boolean=true;
@@ -59,6 +65,8 @@ export class ChequewithdrawalPage implements OnInit {
         transactionId:['', [Validators.required]],
         customerId:['', [Validators.required]],
         chequeDepositId:['', [Validators.required]],
+        productCode:['CQW',[Validators.required]],
+        tokenOrigin : ['Mobile',[Validators.required]],
         accountNumber: ['', [Validators.required]],
         accountBalance: ['', [Validators.required]],
         transactionCurrency: ['', [Validators.required]],
@@ -180,10 +188,13 @@ export class ChequewithdrawalPage implements OnInit {
       this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
       form.transactionCurrency = this.currencyData.currencyCode;
       form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+
       form.customerId=this.customerId;
-      form.productCode = 'CQW';
-      form.tokenOrigin = 'Mobile';
-      console.log("form ::",form);
+      form.productCode = this.productCode;
+      form.tokenOrigin = this.tokenOrigin;
+     
+      console.log(form);
+
       this.accountNum=form.accountNumber;
       this.transactionAmount= form.transactionAmount;
       console.log(this.transactionAmount);
@@ -238,7 +249,8 @@ export class ChequewithdrawalPage implements OnInit {
     }
     async presentModal() {
       const modal = await this.modalController.create({
-        component: BranchPage,
+        component: BranchComponent,
+        id:"branchModal",
         componentProps: {
         }
       });
@@ -248,7 +260,7 @@ export class ChequewithdrawalPage implements OnInit {
           let branch = modelData.data;
           console.log('Modal Data for branch: ', modelData.data);
           this.slideOneForm.patchValue({
-            transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+            transactionBranch:modelData.data['data'].address
           });
         }
       });

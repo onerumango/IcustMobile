@@ -70,11 +70,13 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     if(this.oTpModel.source_value != ''){
       this.api.getOtp(this.oTpModel).subscribe(otpResp => {
-        console.log("Response Success", otpResp)
-        this.otpResponse = otpResp
+        console.log("Response Success", otpResp);
+        this.otpResponse = otpResp;
+        console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
+        this.api.sendOtp(this.otpResponse['otpVal'].token);
         /* Added validation for un-registered mobile nummber is entered */
         if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
-          this.cdk.detectChanges();
+          this.cdk.detectChanges();   
           this.userResp = true;
           this.openToast();
         } else {

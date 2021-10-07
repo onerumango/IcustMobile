@@ -5,9 +5,10 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
-import { BranchPage } from './branch/branch.page';
 import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
+import { BranchComponent } from 'src/app/components/branch/branch.component';
+
 
 @Component({
   selector: 'app-cashwithdrawal',
@@ -24,6 +25,8 @@ export class CashwithdrawalPage implements OnInit {
   currentBalance: number;
   submitted: boolean=true;
   submitted1: boolean=true;
+  productCode = "CHW";
+  tokenOrigin = "Mobile";
   phoneNumber: string;
   currencyValues: any;
   currencies: any;
@@ -46,6 +49,7 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   curr: string;
+
   ngOnInit() {
     
     this.customerId = sessionStorage.getItem('customer_id');
@@ -75,6 +79,8 @@ this.getCountrynameValues();
     this.slideOneForm = this.fb.group({
       transactionId:['', [Validators.required]],
       customerId:['', [Validators.required]],
+      productCode:['CHW',[Validators.required]],
+      tokenOrigin : ['Mobile',[Validators.required]],
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
@@ -164,7 +170,8 @@ this.getCountrynameValues();
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BranchPage,
+      component: BranchComponent,
+      id:"branchModal",
       componentProps: {
       }
     });
@@ -174,7 +181,7 @@ this.getCountrynameValues();
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
         this.slideOneForm.patchValue({
-          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          transactionBranch:modelData.data['data'].address
         });
       }
     });
@@ -204,15 +211,15 @@ this.getCountrynameValues();
     var date = new Date(form.transactionDate).toLocaleDateString('en-us');
     console.log(date); //4/
     form.transactionDate = date;
-
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-  
+    form.accountNumber = form.accountNumber.accountId;
+    form.productCode = this.productCode;
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
-    form.productCode = 'CHW';
+  
     form.tokenOrigin = 'Mobile';
     console.log(form);
     this.accountNum=form.accountNumber;
@@ -356,16 +363,7 @@ this.getCountrynameValues();
  this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount.custAccount[0].accountCurrency);
  this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
- for(let i in filteredResponseSavingAccount.userAddress) {
-   if(filteredResponseSavingAccount.userAddress[i].addressType == "Communication"){
-     let country = filteredResponseSavingAccount.userAddress[i].country;
-     console.log("this.currencies::",this.currencies)
-    this.currencyData =  this.currencies.find(x => x.countryName == country);
-    console.log("this.currencyData::",this.currencyData)
-    this.selectedCountryCode = this.currencyData.countryCode.toLowerCase();
-    console.log("this.selectedCountryCode::",this.selectedCountryCode)
-   }
- }
+
  
  }
 }

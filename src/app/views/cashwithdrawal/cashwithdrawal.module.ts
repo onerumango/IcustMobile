@@ -8,11 +8,9 @@ import { CashwithdrawalPageRoutingModule } from './cashwithdrawal-routing.module
 
 import { CashwithdrawalPage } from './cashwithdrawal.page';
 
-
-import { OperationPage } from '../operation/operation.page';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
-import { BranchPage } from './branch/branch.page';
 import { HttpClientModule } from '@angular/common/http';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -22,9 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule,
     CashwithdrawalPageRoutingModule,
     NgxFlagPickerModule,
-    HttpClientModule
+    HttpClientModule,
+    ComponentsModule
   ],
-  declarations: [CashwithdrawalPage, BranchPage],
+  declarations: [CashwithdrawalPage],
   
 })
 export class CashwithdrawalPageModule {}

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import {format} from "date-fns" 
 import * as moment from 'moment';
+import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
 import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { DataService } from "src/app/services/data.service";
@@ -16,6 +17,8 @@ import { DataService } from "src/app/services/data.service";
 })
 export class ChequedepositPage implements OnInit {
   title : any = 'Cheque Deposit';
+  productCode = 'CQD';
+  tokenOrigin = 'Mobile';
   submitted: boolean = true;
   submitted1: boolean=true;
   slideOneForm: FormGroup;
@@ -56,6 +59,8 @@ export class ChequedepositPage implements OnInit {
       customerId:['', [Validators.required]],
       chequeDepositId:['', [Validators.required]],
       accountNumber: ['', [Validators.required]],
+      productCode:['CQD',[Validators.required]],
+      tokenOrigin : ['Mobile',[Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
       transactionAmount: ['', [Validators.required]],
@@ -144,7 +149,8 @@ export class ChequedepositPage implements OnInit {
   }
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BranchPage,
+      component: BranchComponent,
+      id:"branchModal",
       componentProps: {
       }
     });
@@ -154,7 +160,7 @@ export class ChequedepositPage implements OnInit {
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
         this.slideOneForm.patchValue({
-          transactionBranch:modelData.data['data'].title + ', ' + modelData.data['data'].address
+          transactionBranch:modelData.data['data'].address
         });
       }
     });
@@ -208,8 +214,10 @@ export class ChequedepositPage implements OnInit {
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
-    form.productCode = 'CQD';
-    form.tokenOrigin = 'Mobile';
+
+    form.productCode = this.productCode;
+    form.tokenOrigin = this.tokenOrigin;
+   
     console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;

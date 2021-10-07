@@ -43,7 +43,9 @@ export class CashwithdrawalPage implements OnInit {
   transDate: string
   transTime: string;
   curr: string;
-  transactionAmount:string;
+  //for comma separator transaction amount
+  //transactionAmount:string;
+  transactionAmount:any;
   transAmount: string;
   //transAmount:number;
   isedit:boolean=true;
@@ -1607,11 +1609,9 @@ export class CashwithdrawalPage implements OnInit {
     console.log(event);
     //const pattern = /[0-9.,]/;
     let value:string;
-   
     value=this.slideOneForm.value.transactionAmount;
     //let inputChar = String.fromCharCode(event.charCode);
    // debugger;
-    
     this.transAmount = value;
    // debugger
     const pattern = value;
@@ -1620,7 +1620,6 @@ export class CashwithdrawalPage implements OnInit {
     lastCharIsPoint = true;
   }
   const num = pattern.replace(/[^0-9.]/g, '');
-  
   this.transAmt = Number(num);
   this.transAmount = this.transAmt.toLocaleString('en-US');
   if (lastCharIsPoint) {
@@ -1721,7 +1720,7 @@ export class CashwithdrawalPage implements OnInit {
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
    
-    console.log(form);
+    //console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;
 
@@ -1733,8 +1732,12 @@ export class CashwithdrawalPage implements OnInit {
     localStorage.setItem("TransactionDate",this.transDate);
     localStorage.setItem("TransactionTime",form.transactionTime);
     //localStorage.setItem("TransactionAmount",form.transactionAmount);
-    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    // console.log(form);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
+    //console.log(form);
+    //console.log(this.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    console.log(this.transactionAmount);
     console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);

@@ -27,7 +27,7 @@ export class CashdepositPage implements OnInit {
     public toastCtrl: ToastController, private router: Router, private fb: FormBuilder,
      private api: ApiService, private toastController: ToastController, private modalController:ModalController,
      private changeDef: ChangeDetectorRef) { }
-  //transactionAmount = "10,000";
+  
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
@@ -38,7 +38,10 @@ export class CashdepositPage implements OnInit {
   transDate: string
   transTime: string;
   toast: HTMLIonToastElement;
-  transactionAmount:string;
+
+  //for comma separator
+  //transactionAmount = "10,000";
+  transactionAmount:any;
   transAmount: string;
   //transAmount:number;
   isedit:boolean=true;
@@ -367,19 +370,20 @@ export class CashdepositPage implements OnInit {
     //   // invalid character, prevent input
     //   event.preventDefault();
     // }
-    console.log(this.depositForm)
-    console.log(event);
-    let value:string;
-    value=this.depositForm.value.transactionAmount;
-    this.transAmount = value;
+
+    //for comma separator 
+  console.log(this.depositForm)
+  console.log(event);
+  let value:string;
+  value=this.depositForm.value.transactionAmount;
+  this.transAmount = value;
    // debugger
-    const pattern = value;
-    let lastCharIsPoint = false;
+  const pattern = value;
+  let lastCharIsPoint = false;
   if (pattern.charAt(pattern.length - 1) === '.') {
-    lastCharIsPoint = true;
-  }
+  lastCharIsPoint = true;
+   }
   const num = pattern.replace(/[^0-9.]/g, '');
-  
   this.transAmt = Number(num);
   this.transAmount = this.transAmt.toLocaleString('en-US');
   if (lastCharIsPoint) {
@@ -456,7 +460,6 @@ export class CashdepositPage implements OnInit {
     form.transactionCurrency = form.transactionCurrency.accountCurrency;
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
-
     console.log(form);
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
@@ -468,8 +471,11 @@ export class CashdepositPage implements OnInit {
     localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
+    //for transaction amount
+    //console.log(this.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    console.log(this.transactionAmount);
     console.log(form);
-
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });

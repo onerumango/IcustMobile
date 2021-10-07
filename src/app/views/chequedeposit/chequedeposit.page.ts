@@ -22,7 +22,6 @@ export class ChequedepositPage implements OnInit {
   currentBalance: any;
   curr: any;
   constructor(private router:Router,private fb: FormBuilder,private api: ApiService ,private modalController:ModalController,private changeDef: ChangeDetectorRef) {}
-  //transactionAmount="10,000";
   accountBranch="Loita street";
   flag:boolean=true;
   currencyValue:string;
@@ -35,7 +34,10 @@ export class ChequedepositPage implements OnInit {
   customerId:any;
   minDate = new Date().toISOString();
   maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
-  transactionAmount:string;
+  // for transaction amount comma separator
+  //transactionAmount="10,000";
+  transactionAmount:any;
+  //transactionAmount:double;
   transAmount: string;
   //transAmount:number;
   isedit:boolean=true;
@@ -83,24 +85,22 @@ export class ChequedepositPage implements OnInit {
      console.log(this.countries);
   }
   numberOnlyValidation(event: any) {
-    
-    console.log(this.slideOneForm)
-    console.log(event);
-    let value:string;
-    value=this.slideOneForm.value.transactionAmount;
-    this.transAmount = value;
+  console.log(this.slideOneForm)
+  console.log(event);
+  let value:string;
+  value=this.slideOneForm.value.transactionAmount;
+  this.transAmount = value;
    // debugger
-    const pattern = value;
-    let lastCharIsPoint = false;
+  const pattern = value;
+  let lastCharIsPoint = false;
   if (pattern.charAt(pattern.length - 1) === '.') {
-    lastCharIsPoint = true;
+  lastCharIsPoint = true;
   }
   const num = pattern.replace(/[^0-9.]/g, '');
-  
   this.transAmt = Number(num);
   this.transAmount = this.transAmt.toLocaleString('en-US');
   if (lastCharIsPoint) {
-    this.transAmount = this.transAmount.concat('.');
+  this.transAmount = this.transAmount.concat('.');
   }
   this.changeDef.detectChanges();
   }
@@ -468,11 +468,12 @@ export class ChequedepositPage implements OnInit {
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId=this.customerId;
-   
-    console.log(form);
+    // for transaction amount
+    //console.log(form);
     this.accountNum=form.accountNumber;
     this.transactionAmount= form.transactionAmount;
-    console.log(this.transactionAmount);
+    
+    //console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
   
     localStorage.setItem("AccountNumber",this.accountNum);
@@ -480,6 +481,10 @@ export class ChequedepositPage implements OnInit {
     localStorage.setItem("TransactionTime",form.transactionTime);
     localStorage.setItem("TransactionAmount",this.transactionAmount);
     localStorage.setItem("TransactionBranch",form.transactionBranch);
+    //console.log(this.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    console.log(this.transactionAmount);
+    //console.log(form);
     this.api.chequeDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
     });

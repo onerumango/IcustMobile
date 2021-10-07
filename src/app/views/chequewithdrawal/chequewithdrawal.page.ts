@@ -36,7 +36,8 @@ export class ChequewithdrawalPage implements OnInit {
     transTime: string;
     minDate = new Date().toISOString();
     maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
-    transactionAmount:string;
+    //transactionAmount:string;
+    transactionAmount:any;
     transAmount: string;
     //transAmount:number;
     isedit:boolean=true;
@@ -432,8 +433,8 @@ export class ChequewithdrawalPage implements OnInit {
     }
     save(form)
     {
-  
-      console.log(form)
+      // to view the saved information of the form in console
+      //console.log(form)
       form.transactionDate.toString();
        
   
@@ -446,10 +447,10 @@ export class ChequewithdrawalPage implements OnInit {
       form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
       form.chequeDepositId=this.customerId;
      
-      console.log(form);
+      //console.log(form);
       this.accountNum=form.accountNumber;
       this.transactionAmount= form.transactionAmount;
-      console.log(this.transactionAmount);
+      //console.log(this.transactionAmount);
       this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
     
       localStorage.setItem("AccountNumber",this.accountNum);
@@ -457,6 +458,10 @@ export class ChequewithdrawalPage implements OnInit {
       localStorage.setItem("TransactionTime",form.transactionTime);
       localStorage.setItem("TransactionAmount",this.transactionAmount);
       localStorage.setItem("TransactionBranch",form.transactionBranch);
+      //console.log(form);
+     // console.log(this.transactionAmount);
+      form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+      console.log(this.transactionAmount);
       console.log(form);
       this.api.chequeDepositSave(form).subscribe((resp) => {
         console.log('backend resp', resp);

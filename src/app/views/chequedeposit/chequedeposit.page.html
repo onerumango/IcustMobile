@@ -49,8 +49,8 @@
 
       <div class="inputCard1">
           <ion-label position="stacked">Transaction Amount*</ion-label>
-          <ion-input class="box"  #myRef [(ngModel)]= "transAmount"  formControlName="transactionAmount" [value]= "transAmt" 
-          type="text" min="1" (change)="numberOnlyValidation($event)"></ion-input>
+          <ion-input class="box" #myRef [(ngModel)]= "transAmount"  formControlName="transactionAmount" [value]= "transAmt" 
+          type="text" min="1" (keyup)="numberOnlyValidation($event)"></ion-input>
       </div>
      
 

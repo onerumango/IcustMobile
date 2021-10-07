@@ -7,7 +7,6 @@ import {format} from "date-fns"
 import * as moment from 'moment';
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
-import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { DataService } from "src/app/services/data.service";
 
 @Component({
@@ -82,9 +81,7 @@ export class ChequedepositPage implements OnInit {
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]],
-        remarks:['', [Validators.required]],
-        productCode: ['', [Validators.required]],
-      tokenOrigin: ['', [Validators.required]]
+        remarks:['', [Validators.required]]
     })
      console.log(this.slideOneForm.value);
      this.getCountrynameValues();

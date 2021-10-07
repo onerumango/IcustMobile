@@ -102,9 +102,7 @@ this.getCountrynameValues();
       modifiedTime: ['', [Validators.required]],
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
-      version: ['', [Validators.required]],
-      productCode: ['', [Validators.required]],
-      tokenOrigin: ['', [Validators.required]]
+      version: ['', [Validators.required]]
     });
     console.log(this.slideOneForm.value);
    

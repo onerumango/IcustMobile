@@ -7,7 +7,6 @@ import {format} from "date-fns"
 import * as moment from 'moment';
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
-import { BranchPage } from '../cashwithdrawal/branch/branch.page';
 import { DataService } from "src/app/services/data.service";
 
 
@@ -34,7 +33,7 @@ export class ChequewithdrawalPage implements OnInit {
       private shareDataService:DataService) {}
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
-    constructor(private router:Router,private fb: FormBuilder,private api: ApiService,private modalController:ModalController) {}
+    
 
     transactionAmount="10,000";
     accountBranch="Loita street";
@@ -89,9 +88,7 @@ export class ChequewithdrawalPage implements OnInit {
         recordStatus: ['', [Validators.required]],
         authStatus: ['', [Validators.required]],
         version: ['', [Validators.required]],
-        remarks:['', [Validators.required]],
-        productCode: ['', [Validators.required]],
-        tokenOrigin: ['', [Validators.required]]
+        remarks:['', [Validators.required]]
       })
        console.log(this.slideOneForm.value);
        this.getCountrynameValues();

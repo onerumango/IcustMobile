@@ -5,9 +5,10 @@ import * as moment from 'moment';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { ApiService } from 'src/app/services/api.service';
 import { __assign } from 'tslib';
+import { DataService } from "src/app/services/data.service";
 // import { setTimeout } from 'timers';
 export class TokenObjects {
-
+  transactionId: any;
   accountId:string;
   productCode:string;
   transactionDate:string;
@@ -32,7 +33,10 @@ export class TokenGenerationPage implements OnInit {
   phoneNumber: string;
   productCode: any;
 
-  constructor(private router:Router,private api: ApiService) {
+  constructor(
+    private router:Router,
+    private api: ApiService,
+    private shareDataService:DataService) {
     this.myAngularxQrCode = 'Your QR code data string';
    }
 
@@ -71,6 +75,13 @@ next()
 generateQRCode(token){
   console.log("Token",token);
   
+  this.shareDataService.getTransactionId.subscribe(transId => {
+    console.log("transId::",transId)
+    if (transId != null) {
+      this.tokenObjects.transactionId = transId;
+    }
+  })
+
   this.tokenObjects.accountId=localStorage.getItem('AccountNumber');
   this.tokenObjects.transactionDate= moment(new Date(localStorage.getItem('TransactionDate'))).format("DD-MM-YYYY");
   this.tokenObjects.transactionDate=localStorage.getItem('TransactionDate');

@@ -358,11 +358,11 @@ this.getCountrynameValues();
  this.users = filteredResponseSavingAccount.custAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
  this.slideOneForm.controls.accountNumber.setValue(defaultId);
- this.slideOneForm.controls.transactionCurrency.setValue(filteredResponseSavingAccount.custAccount[0].accountCurrency);
  this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
 
- 
+ this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
+ this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
  }
 }
 interface CountryType {

@@ -25,7 +25,7 @@
        
             <ion-select
             [compareWith]="compareWith"
-            class="box"
+            class="box" disabled
             ngDefaultControl  [(ngModel)]="option.defaultId" #defaultId 
           >
           <ion-select-option *ngFor="let user of users"  [value]="user"

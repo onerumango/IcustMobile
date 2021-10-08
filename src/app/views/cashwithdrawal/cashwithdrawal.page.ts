@@ -212,7 +212,7 @@ this.getCountrynameValues();
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.accountNumber = form.accountNumber.accountId;
+    form.accountNumber = form.accountNumber;
     form.productCode = this.productCode;
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
@@ -330,13 +330,14 @@ this.getCountrynameValues();
   else{
     this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
   }
-  // console.log(accbal.accountCurrency.countryName);
+  console.log(accbal.accountCurrency.countryName);
   for(let i in this.currencies) {
-    // console.log(this.selectedCountryCode);
-    if(accbal.countryCode === this.currencies[i].countryCode) {
+    console.log("accbal.countryCode ::",this.currencies[i].countryCode);
+    // if(accbal.countryCode === this.currencies[i].countryCode) {
       this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
+      this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
       // console.log(this.selectedCountryCode);
-    }
+    // }
   }
   // this.selectedCountryCode = (currency.code).toLowerCase();
       // this.users=dropdown;
@@ -357,7 +358,9 @@ this.getCountrynameValues();
  console.log(filteredResponseSavingAccount);
  this.users = filteredResponseSavingAccount.custAccount.map(a => a.accountId);
  const defaultId = this.users ? this.users[0] : null;
+ console.log("defaultId::",defaultId)
  this.slideOneForm.controls.accountNumber.setValue(defaultId);
+ 
  this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
 

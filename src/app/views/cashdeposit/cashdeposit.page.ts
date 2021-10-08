@@ -28,6 +28,7 @@ export class CashdepositPage implements OnInit {
   currencyValues: any;
   currencyData: any;
   currencies: any;
+  customerDetails: any;
   constructor(
     public toastCtrl: ToastController, 
     private router: Router,
@@ -42,7 +43,7 @@ export class CashdepositPage implements OnInit {
   currencyValue: string;
   minDate = new Date().toISOString();
   maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
-  users: any[];
+  users: any[] = [];
   accountNum: string;
   transDate: string
   transTime: string;
@@ -63,6 +64,7 @@ export class CashdepositPage implements OnInit {
     // });
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
       console.log('backend resp in home', resp);
+      this.customerDetails = resp;
       this.savingAccountFun(resp);
      })
     this.depositForm = this.fb.group({
@@ -74,7 +76,7 @@ export class CashdepositPage implements OnInit {
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
       transactionAmount: ['', [Validators.required, Validators.min(0), Validators.pattern(/^[1-9]\d*$/)]],
-      branchFlag: ['', [Validators.required]],
+      branchFlag: [true, [Validators.required]],
       accountBranch: ['', [Validators.required]],
       transactionDate: ['', [Validators.required]],
       transactionBranch: ['', [Validators.required]],
@@ -105,8 +107,18 @@ export class CashdepositPage implements OnInit {
     //  console.log(this.countries);
     this.getCountrynameValues();
 
+    this.depositForm.get('branchFlag').valueChanges.subscribe(val => {
+      console.log("branch flag?", val);
+      if (val == false) {
+        this.depositForm.get('transactionBranch').patchValue("");
+      }else{
+        this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+      }
+    })
+
   }
 
+  get f() { return this.depositForm.controls; }
 
   getCountrynameValues() {
 
@@ -146,9 +158,7 @@ export class CashdepositPage implements OnInit {
       if (modelData !== null) {
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
-        this.depositForm.patchValue({
-          transactionBranch:modelData.data['data'].address
-        });
+        this.depositForm.get('transactionBranch').patchValue(modelData.data['data'].branchName);
       }
     });
 
@@ -247,12 +257,13 @@ export class CashdepositPage implements OnInit {
   {
 
  console.log(filteredResponseSavingAccount);
- this.users = filteredResponseSavingAccount.custAccount.map(a => a.accountId);
- const defaultId = this.users ? this.users[0] : null;
- this.depositForm.controls.accountNumber.setValue(defaultId);
+ this.users = filteredResponseSavingAccount.custAccount;
+
+
  this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
  this.currentBalance = this.users[0].amount;
 
+ this.depositForm.get('accountNumber').patchValue(this.users[0].accountId);
  this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
  this.depositForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
 

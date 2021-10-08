@@ -21,8 +21,8 @@
           (ionChange)="accountEvent($event)"
           ngDefaultControl
         >
-          <ion-select-option *ngFor="let user of users" [value]="user"
-            >{{user}}</ion-select-option
+          <ion-select-option *ngFor="let user of users" [value]="user.accountId"
+            >{{user.accountId}}</ion-select-option
           >
         </ion-select>
       </div>
@@ -154,19 +154,19 @@
           >Do you wish to perform this transaction in your branch?</ion-label
         >
         <!-- <ion-label></ion-label> -->
-        <ion-radio-group ngDefaultControl formControlName="branchFlag">
+        <ion-radio-group name="branchFlags" formControlName="branchFlag">
           <ion-row>
             <ion-col>
               <ion-item lines="none">
                 <ion-label position="start">Yes</ion-label>
-                <ion-radio mode="md" item-left value="true"></ion-radio>
+                <ion-radio mode="md" item-left name="flagYes" [value]="true"></ion-radio>
               </ion-item>
             </ion-col>
 
             <ion-col>
               <ion-item lines="none">
                 <ion-label>No</ion-label>
-                <ion-radio mode="md" item-left value="false"></ion-radio>
+                <ion-radio mode="md" item-left name="flagNo" [value]="false"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -181,10 +181,17 @@
          <div class="inputCard2" >
           <ion-label style="padding-left: 5%;">Transaction Branch*</ion-label>
           <ion-card class="box" >
-            <ion-input appearence="none" formControlName="transactionBranch"></ion-input>
+            <ion-item lines="none">
+              <ion-input appearence="none" formControlName="transactionBranch" 
+              [readonly]="slideOneForm.get('branchFlag').value ? true : false">
+             </ion-input>
+             <ion-icon *ngIf="slideOneForm.get('branchFlag').value == true" name="home-outline" color="primary" slot="end"></ion-icon>
+             <ion-icon *ngIf="slideOneForm.get('branchFlag').value == false" name="navigate-circle-outline" color="primary" slot="end"></ion-icon>
+            </ion-item>
           </ion-card>
-               
-            
+            <ion-note style="color: red; margin-left: 22px;top: 13px;" *ngIf="f.transactionBranch.errors?.required"> 
+              <small>Transaction Branch Required</small>
+            </ion-note>
          </div>
   
         <div class="inputCard2">

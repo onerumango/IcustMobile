@@ -212,7 +212,7 @@ this.getCountrynameValues();
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.accountNumber = form.accountNumber.accountId;
+    form.accountNumber = form.accountNumber;
     form.productCode = this.productCode;
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');

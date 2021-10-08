@@ -341,13 +341,10 @@ export class CashwithdrawalPage implements OnInit {
         this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       }
       // console.log(accbal.accountCurrency.countryName);
-      for (let i in this.currencies) {
-        // console.log(this.selectedCountryCode);
-        if (accbal.countryCode === this.currencies[i].countryCode) {
-          this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
-          // console.log(this.selectedCountryCode);
-        }
-      }
+      for(let i in this.currencies) {
+        this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
+        this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
+    }
       // this.selectedCountryCode = (currency.code).toLowerCase();
       // this.users=dropdown;
 

@@ -27,6 +27,8 @@ export class ChequewithdrawalPage implements OnInit {
   currencyData: any;
   currencies: any;
   customerDetails: any;
+  chequeWithdrawal: any;
+  transactionId: any;
   constructor(private router: Router,
     private fb: FormBuilder,
     private api: ApiService,
@@ -220,13 +222,16 @@ export class ChequewithdrawalPage implements OnInit {
     console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
-      let transactionId = resp.transactionId;
-      console.log("transactionId::", transactionId)
-      this.shareDataService.shareTransactionId(transactionId);
+      this.chequeWithdrawal = resp;
+      this.transactionId = this.chequeWithdrawal.transactionId;
+      console.log('transactionId::',this.transactionId);
+     if( this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null ){
+       this.shareDataService.shareTransactionId(this.transactionId);
+       this.slideOneForm.reset();
+       this.router.navigate(['token-generation']);
+      }
+
     });
-    if (this.cashWithdrawResponse !== null) {
-      this.router.navigate(['token-generation']);
-    }
 
 
   }

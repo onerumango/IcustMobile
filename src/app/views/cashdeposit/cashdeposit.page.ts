@@ -28,6 +28,8 @@ export class CashdepositPage implements OnInit {
   currencyValues: any;
   currencyData: any;
   currencies: any;
+  cashDepositResp: any;
+  transactionId: any;
   constructor(
     public toastCtrl: ToastController, 
     private router: Router,
@@ -183,12 +185,9 @@ export class CashdepositPage implements OnInit {
       index: 'CHD'
     });
     form.transactionDate.toString();
-
-
     var date = new Date(form.transactionDate).toLocaleDateString("en-us")
     console.log(date) //4/
     form.transactionDate = date;
-
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
@@ -201,23 +200,24 @@ export class CashdepositPage implements OnInit {
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
-
-    localStorage.setItem("AccountNumber", this.accountNum);
-    localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
-    localStorage.setItem("TransactionAmount", this.transactionAmount);
-    localStorage.setItem("TransactionBranch", form.transactionBranch);
-    console.log("form::",form);
+    localStorage.setItem('AccountNumber', this.accountNum);
+    localStorage.setItem('TransactionDate', this.transDate);
+    localStorage.setItem('TransactionTime', form.transactionTime);
+    localStorage.setItem('TransactionAmount', this.transactionAmount);
+    localStorage.setItem('TransactionBranch', form.transactionBranch);
+    console.log('form::',form);
 
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
-    let transactionId = resp.transactionId;
-    console.log("transactionId::",transactionId)
-    this.shareDataService.shareTransactionId(transactionId);
-    this.depositForm.reset();
-    this.router.navigate(['token-generation']);
-    });
-
+     this.cashDepositResp = resp;
+     this.transactionId = this.cashDepositResp.transactionId;
+     console.log('transactionId::',this.transactionId);
+    if( this.cashDepositResp === 200 || this.cashDepositResp !== null ){
+      this.shareDataService.shareTransactionId(this.transactionId);
+      this.depositForm.reset();
+      this.router.navigate(['token-generation']);
+     }
+});
   }
   
   accountEvent(event) {

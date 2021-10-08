@@ -31,6 +31,7 @@ export class CashwithdrawalPage implements OnInit {
   currencyValues: any;
   currencies: any;
   currencyData: any;
+  transactionId: any;
   constructor(
     private router: Router,
     private modalController:ModalController,
@@ -210,9 +211,9 @@ this.getCountrynameValues();
     console.log(date); //4/
     form.transactionDate = date;
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
+    this.currencyData =  this.currencies.find(x => x.countryCode === form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.accountNumber = form.accountNumber.accountId;
+    // form.accountNumber = form.accountNumber.accountId;
     form.productCode = this.productCode;
 
     form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
@@ -234,18 +235,14 @@ this.getCountrynameValues();
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
-      let transactionId = resp.transactionId;
-      console.log("transactionId::",transactionId)
-      this.shareDataService.shareTransactionId(transactionId);
+       this.transactionId = this.cashWithdrawResponse.transactionId;
+      console.log('transactionId::',this.transactionId);
+      if( this.cashWithdrawResponse === 200 || this.cashWithdrawResponse !== null ){
+        this.shareDataService.shareTransactionId(this.transactionId);
+        this.slideOneForm.reset();
+        this.router.navigate(['token-generation']);
+       }
     });
-    if(this.cashWithdrawResponse!==null){
-      setTimeout(() => {
-         //this.slideOneForm.reset();
-         this.router.navigate(['token-generation']);
-      }, 100);
-     
-    }
-   
   }
   async openToast() {  
     const toast = await this.toastCtrl.create({  

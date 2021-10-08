@@ -242,13 +242,10 @@ export class ChequewithdrawalPage implements OnInit {
       // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
       this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-      for (let i in this.currencies) {
-        console.log(this.selectedCountryCode);
-        if (accbal.countryCode === this.currencies[i].countryCode) {
-          this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
-          console.log(this.selectedCountryCode);
-        }
-      }
+      for(let i in this.currencies) {
+        this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
+        this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
+    }
       // this.users=dropdown;
 
 

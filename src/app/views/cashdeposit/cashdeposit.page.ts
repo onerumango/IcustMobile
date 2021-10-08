@@ -244,12 +244,9 @@ export class CashdepositPage implements OnInit {
       this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       // this.users=dropdown;
       for(let i in this.currencies) {
-        console.log(this.selectedCountryCode);
-        if(accbal.countryCode === this.currencies[i].countryCode) {
-          this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
-          console.log(this.selectedCountryCode);
-        }
-      }
+        this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
+        this.depositForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
+    }
     });
 
   }

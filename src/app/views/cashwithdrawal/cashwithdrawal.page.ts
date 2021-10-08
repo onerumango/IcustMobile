@@ -31,6 +31,7 @@ export class CashwithdrawalPage implements OnInit {
   currencyValues: any;
   currencies: any;
   currencyData: any;
+  transactionId: any;
   constructor(
     private router: Router,
     private modalController: ModalController,
@@ -243,19 +244,14 @@ export class CashwithdrawalPage implements OnInit {
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
-      let transactionId = resp.transactionId;
-      console.log("transactionId::", transactionId)
-      this.shareDataService.shareTransactionId(transactionId);
-      this.showToast(resp.transactionId ? 'Success' : resp);
-    });
-    if (this.cashWithdrawResponse !== null) {
-      setTimeout(() => {
-        //this.slideOneForm.reset();
-        this.router.navigate(['token-generation']);
-      }, 100);
-
-    }
-
+      this.transactionId = this.cashWithdrawResponse.transactionId;
+     console.log('transactionId::',this.transactionId);
+     if( this.cashWithdrawResponse === 200 || this.cashWithdrawResponse !== null ){
+       this.shareDataService.shareTransactionId(this.transactionId);
+       this.slideOneForm.reset();
+       this.router.navigate(['token-generation']);
+      }
+   });
   }
   async openToast() {
     const toast = await this.toastCtrl.create({

@@ -1,4 +1,4 @@
-=import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { format } from "date-fns"
@@ -18,6 +18,8 @@ export class CashdepositPage implements OnInit {
   title: any = 'Cash Deposit';
   productCode = "CHD";
   tokenOrigin = "Mobile";
+  cashDepositResp: any;
+  transactionId: any;
   depositForm: FormGroup;
   currentBalance: any;
   customerId: string;
@@ -80,7 +82,17 @@ export class CashdepositPage implements OnInit {
       accountBranch: ['', [Validators.required]],
       transactionDate: ['', [Validators.required]],
       transactionBranch: ['', [Validators.required]],
-	@@ -94,58 +104,69 @@ export class CashdepositPage implements OnInit {
+      transactionTime: ['', [Validators.required]],
+      exchangeRate: ['', [Validators.required]],
+      accountAmount: ['', [Validators.required]],
+      totalChargeAmount: ['', [Validators.required]],
+      narrative: ['', [Validators.required]],
+      denomination: [null, [Validators.required]],
+      totalAmount: ['', [Validators.required]],
+      createdBy: ['', [Validators.required]],
+      createdTime: ['', [Validators.required]],
+      modifiedBy: ['', [Validators.required]],
+      modifiedTime: ['', [Validators.required]],
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]]
@@ -118,7 +130,7 @@ export class CashdepositPage implements OnInit {
     }
 
 
-
+ 
   numberOnlyValidation(event: any) {
     const pattern = /[0-9.,]/;
     let inputChar = String.fromCharCode(event.charCode);
@@ -139,7 +151,12 @@ export class CashdepositPage implements OnInit {
   async presentModal() {
     const modal = await this.modalController.create({
       component: BranchComponent,
-	@@ -158,153 +179,197 @@ export class CashdepositPage implements OnInit {
+      id:"branchModal",
+      componentProps: {
+      }
+    });
+
+    modal.onDidDismiss().then((modelData) => {
       if (modelData !== null) {
         let branch = modelData.data;
         console.log('Modal Data for branch: ', modelData.data);
@@ -205,16 +222,19 @@ export class CashdepositPage implements OnInit {
     console.log("form::",form);
 
     this.api.cashDepositSave(form).subscribe((resp) => {
-      console.log('backend resp', resp);
-    let transactionId = resp.transactionId;
-    console.log("transactionId::",transactionId)
-    this.shareDataService.shareTransactionId(transactionId);
-    this.depositForm.reset();
-    this.router.navigate(['token-generation']);
-    });
+       this.cashDepositResp = resp;
+      this.transactionId = this.cashDepositResp.transactionId;
+     console.log('transactionId::',this.transactionId);
+     if( this.cashDepositResp === 200 || this.cashDepositResp !== null ){
+       this.shareDataService.shareTransactionId(this.transactionId);
+       this.depositForm.reset();
+       this.router.navigate(['token-generation']);
+      }
+   });
+  
 
   }
-
+  
   accountEvent(event) {
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {

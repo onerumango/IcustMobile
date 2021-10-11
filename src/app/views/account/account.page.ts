@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ActionSheetController, PopoverController } from '@ionic/angular';
+import { ActionSheetController, PopoverController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { CommonserviceService } from 'src/app/services/commonservice.service';
@@ -23,7 +23,7 @@ export class AccountPage implements OnInit {
   kycVerificationForm: FormGroup;
   communicationAdress: string;
 
-  constructor(public popoverCtrl: PopoverController,
+  constructor(public popoverCtrl: PopoverController,public toastCtrl: ToastController,
     public router:Router,
     private fb: FormBuilder,
     public actionSheetController: ActionSheetController,
@@ -159,8 +159,13 @@ export class AccountPage implements OnInit {
     console.log(data);
     this.api.saveAccount(data).subscribe((resp) => {
       console.log('backend resp in account', resp);
-     })
-this.previous1();
+      if(resp){
+        this.previous1();
+        this.openToast();
+      }
+     });
+     
+
 
   }
   // presentPopover(myEvent) {
@@ -218,6 +223,14 @@ this.previous1();
     // this.router.navigate(['account']);
     this.flag=false;
   }
+  async openToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Saved Successfully',
+      duration: 5000,
+    });
+    toast.present();
+  }
+
 }
 export class Option{
 defaultId:any;

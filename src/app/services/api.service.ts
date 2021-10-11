@@ -83,6 +83,9 @@ export class ApiService {
     // return this.http.get<any>(`${API_URL1}/token/api/fetch-qr-code/${data}`).pipe(catchError(this.errorHandler));
 
   }
+  saveAccount(data) {
+    return this.http.post(`${API_URL}/customerdata/upsertCustomerDetails`, data,);
+  }
   getLoanInfo(phoneNumber) {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNumber}`)
   }

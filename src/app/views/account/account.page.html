@@ -65,7 +65,7 @@
       <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">
         Communication Address</div>
       <ion-textarea  class="box4"  [(ngModel)]=option.address [ngModelOptions]="{standalone: true}">
-        <!-- <ion-select-option></ion-select-option> -->
+      
         </ion-textarea>
     </div>
   </div>
@@ -115,9 +115,8 @@
     <div style="width:fit-content;margin-left: 10pt;" >
       <div style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">PAN Number</div>
       <div  *ngFor="let id of formData?.custIdProofs;let i=index">
-      <div style="font-size:12px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;"
-      *ngIf="id.idType === 'Pancard'">
-        {{id.idNumber}}</div>
+      <div style="font-size:12px;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">
+        {{formData?.panNumber}}</div>
       </div>
     </div>
   </div>
@@ -145,7 +144,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content *ngIf="flag">
-   <form [formGroup]="kycVerificationForm">
+   <form [formGroup]="kycVerificationForm" (ngSubmit)="onSubmitTemplateBased()">
   
     <!-- <ion-item-divider> -->
      
@@ -160,7 +159,7 @@
               <img class="button" src="assets\icon\downArrow.PNG" alt="Ionic logo">
             </ion-item>
             
-            <!-- <div style="font-size:12pt;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">109 0000 889897 87123.</div> -->
+          <div style="font-size:12pt;font-family:'Montserrat'!important;font-weight:bolder;opacity:100%;color:#102245;">109 0000 889897 87123.</div> -->
           <!-- </div> -->
           <div class="inputCard" readonly>
             <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Number</ion-label>
@@ -174,19 +173,29 @@
           </ion-select>
           
             </div>
-            <div class="inputCard" readonly>
+            <div class="inputCard">
               <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Account Holder's Name</ion-label>
-              <ion-input  class="box" readonly>
+              <ion-input  class="box" formControlName="firstName">
               <!-- <ion-select-option></ion-select-option> -->
-              {{formData?.firstName}} {{formData?.lastName}}
+              <!-- {{formData?.firstName}} {{formData?.lastName}} -->
               </ion-input>
-            
+              <div class="error" *ngIf="kycVerificationForm.get('firstName').invalid || kycVerificationForm.get('firstName').touched">
+                Enter Account Holder Name.
               </div>
+              <!-- <small *ngIf="kycVerificationForm.get('firstName').invalid && (kycVerificationForm.get('firstName').dirty ||kycVerificationForm.get('firstName').touched )">
+                <small *ngIf="(kycVerificationForm.get('firstName')).errors?.required">Name is required</small>
+             -->
+            </div>
               <div class="inputCard">
                 <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">Communication Address</ion-label>
-                <ion-textarea style="font-family: 'Montserrat' !important;" class="box1" [(ngModel)]=option.address [ngModelOptions]="{standalone: true}">
-                <!-- <ion-select-option></ion-select-option> -->
-                </ion-textarea>
+                <!-- <ion-textarea style="font-family: 'Montserrat' !important;" class="box1" 
+                [(ngModel)]=option.address [ngModelOptions]="{standalone: true}" value="option.address">
+                 
+                </ion-textarea> -->
+                <ion-input  class="box" formArrayName="communicationAddress" [value]=option.address>
+                  </ion-input>
+               
+                
               
                 </div>
        
@@ -220,7 +229,7 @@
                     </div>
                     <div class="inputCard">
                       <ion-label style="font-size:16px;opacity:40%;padding-bottom: 7pt;font-family:'Montserrat'!important;color:#102245;">PAN Number</ion-label>
-                      <ion-input  class="box1">
+                      <ion-input  class="box1" formControlName="panNumber">
                       <!-- <ion-select-option></ion-select-option> -->
                       </ion-input>
                     
@@ -231,7 +240,7 @@
   
                       <div>
                         <ion-button expand="block" shape="round" style="width: 95%;padding-left: 7%;margin-top:28px;
-                        height: 50px;margin-bottom:28px;" [disabled]="kycVerificationForm.invalid"
+                        height: 50px;margin-bottom:28px;" [disabled]="kycVerificationForm.invalid" (click)="saveAccount(kycVerificationForm.value)"
                         >Save Changes</ion-button>
                         </div>
   

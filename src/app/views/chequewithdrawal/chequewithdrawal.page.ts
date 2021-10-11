@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -33,12 +34,18 @@ export class ChequewithdrawalPage implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,
     private modalController: ModalController,
-    private shareDataService: DataService) { }
+    private shareDataService: DataService,private changeDef: ChangeDetectorRef) { }
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
-
-
-  transactionAmount = "10,000";
+  // for transaction amount comma separator
+  //transactionAmount="10,000";
+  //transactionAmount:double;
+  transactionAmount:any;
+  transAmount: string;
+  //transAmount:number;
+  isedit:boolean=true;
+  transAmt: any;
+  
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
@@ -125,13 +132,33 @@ export class ChequewithdrawalPage implements OnInit {
     })
   }
   numberOnlyValidation(event: any) {
-    const pattern = /[0-9.,]/;
-    let inputChar = String.fromCharCode(event.charCode);
+    // const pattern = /[0-9.,]/;
+    // let inputChar = String.fromCharCode(event.charCode);
 
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
+    // if (!pattern.test(inputChar)) {
+    //   // invalid character, prevent input
+    //   event.preventDefault();
+    // }
+
+    //for comma separator transaction amount
+    console.log(this.slideOneForm)
+    console.log(event);
+    let value:string;
+    value=this.slideOneForm.value.transactionAmount;
+    this.transAmount = value;
+     // debugger
+    const pattern = value;
+    let lastCharIsPoint = false;
+    if (pattern.charAt(pattern.length - 1) === '.') {
+    lastCharIsPoint = true;
     }
+    const num = pattern.replace(/[^0-9.]/g, '');
+    this.transAmt = Number(num);
+    this.transAmount = this.transAmt.toLocaleString('en-US');
+    if (lastCharIsPoint) {
+    this.transAmount = this.transAmount.concat('.');
+    }
+    this.changeDef.detectChanges();
   }
 
   getCountrynameValues() {
@@ -219,7 +246,10 @@ export class ChequewithdrawalPage implements OnInit {
     localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
-    console.log(form);
+    //console.log(this.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    console.log(this.transactionAmount);
+    //console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.chequeWithdrawal = resp;

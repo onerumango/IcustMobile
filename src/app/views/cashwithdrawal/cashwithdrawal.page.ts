@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -37,9 +38,16 @@ export class CashwithdrawalPage implements OnInit {
     private modalController: ModalController,
     private fb: FormBuilder,
     private api: ApiService, public toastCtrl: ToastController,
-    private shareDataService: DataService
+    private shareDataService: DataService,private changeDef: ChangeDetectorRef
   ) { }
-  transactionAmount: string;
+   //for comma separator transaction amount
+  //transactionAmount:string;
+  transactionAmount:any;
+  transAmount: string;
+  //transAmount:number;
+  isedit:boolean=true;
+  transAmt: any;
+  //transactionAmount: string;
   accountBranch = 'Loita street';
   flag: boolean = true;
   currencyValue: string;
@@ -134,15 +142,37 @@ export class CashwithdrawalPage implements OnInit {
   selectedCountryCode = '';
 
   numberOnlyValidation(event: any) {
-    const pattern = /[0-9.,]/;
-    let inputChar = String.fromCharCode(event.charCode);
+//old changes
+    // const pattern = /[0-9.,]/;
+    // let inputChar = String.fromCharCode(event.charCode);
+    // if (!pattern.test(inputChar)) {
+    //   // invalid character, prevent input
+    //   event.preventDefault();
+    // }
 
-
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
-
+    // new code added for transaction amount comma separator
+    // debugger
+     console.log(this.slideOneForm)
+     console.log(event);
+     //const pattern = /[0-9.,]/;
+     let value:string;
+     value=this.slideOneForm.value.transactionAmount;
+     //let inputChar = String.fromCharCode(event.charCode);
+    // debugger;
+     this.transAmount = value;
+    // debugger
+     const pattern = value;
+     let lastCharIsPoint = false;
+   if (pattern.charAt(pattern.length - 1) === '.') {
+     lastCharIsPoint = true;
+   }
+   const num = pattern.replace(/[^0-9.]/g, '');
+   this.transAmt = Number(num);
+   this.transAmount = this.transAmt.toLocaleString('en-US');
+   if (lastCharIsPoint) {
+     this.transAmount = this.transAmount.concat('.');
+   }
+   this.changeDef.detectChanges();
     // this.slideOneForm.controls['transactionAmount'].setValidators();
   }
 
@@ -238,7 +268,10 @@ export class CashwithdrawalPage implements OnInit {
     localStorage.setItem("AccountNumber", form.accountNumber);
     localStorage.setItem("TransactionDate", this.transDate);
     localStorage.setItem("TransactionTime", form.transactionTime);
-    localStorage.setItem("TransactionAmount", form.transactionAmount);
+    //localStorage.setItem("TransactionAmount", form.transactionAmount);
+    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    console.log(this.transactionAmount);
+    console.log(form);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
@@ -287,6 +320,7 @@ export class CashwithdrawalPage implements OnInit {
     }
   ]
   accountEvent(event) {
+    this.isedit=false;
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       // console.log('backend accbal', accbal.lastTransactions);
@@ -300,6 +334,9 @@ export class CashwithdrawalPage implements OnInit {
       // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
       // console.log(accbal.accountCurrency);
       this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+      //debugger;
+      console.log(accbal.transactionAmount);
+      this.numberOnlyValidation(accbal.transactionAmount);
       console.log('backend accbal', accbal.lastTransactions);
       if (accbal.lastTransactions != null) {
         if (accbal.lastTransactions.length <= 2) {

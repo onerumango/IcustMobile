@@ -43,7 +43,7 @@ accountBalance:string;
      this.formData=resp;
      this.getProfilePicture(resp.customerId);
      this.savingAccountFun(resp.custAccount);
-     this.current = resp.custAccount.filter(res => res.accountType == "current" );
+     this.current = resp.custAccount.filter(res => res.accountType == "current");
        console.log("current",this.current)
        this.currentAssign(this.current);
        this.saving = resp.custAccount.filter(res => res.accountType == "saving");

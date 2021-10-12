@@ -15,7 +15,7 @@ export class AccountPage implements OnInit {
   flag: boolean;
   private subscriptionName: Subscription; 
   formData: any;
-  phoneNumber: string;
+  phoneNumber: any;
   users: any[];
   option=new Option();
   userAddress: any;
@@ -44,7 +44,7 @@ export class AccountPage implements OnInit {
       prefix: [""],
       // firstName: ['',[Validators.required]],
       primaryEmailAdress: ["",[ Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
-      phoneNumber: ['', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phoneNumber: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(10),Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       firstName: [""],
       lastName: [""],
       middleName: [""],
@@ -83,7 +83,7 @@ export class AccountPage implements OnInit {
   }
   assignAddress(address,form) {
     console.log(form);
-   this.communicationAdress=address.address1+" "+address.address2+" "+address.city+" "+address.zipCode+" "+address.country;
+   this.communicationAdress=address.address1+", "+address.address2+", "+address.city+", "+address.zipCode+" ,"+address.country;
    console.log(this.communicationAdress)
    this.option.address=this.communicationAdress;
    this.kycVerificationForm.get('primaryEmailAdress').setValue(form.primaryEmailAdress);

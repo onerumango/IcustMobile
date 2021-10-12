@@ -203,12 +203,13 @@ export class CashwithdrawalPage implements OnInit {
 
   selectCurrencyCode(currency) {
     console.log(currency);
+    console.log(this.currencies)
     this.currencyData = this.currencies.find(x => x.countryCode == currency);
     this.selectedCountryCode = this.currencyData.countryCode.toLowerCase();
   }
 
 
-  async presentModal() {
+  async presentModal() {  
     const modal = await this.modalController.create({
       component: BranchComponent,
       id: "branchModal",
@@ -332,8 +333,9 @@ export class CashwithdrawalPage implements OnInit {
       this.slideOneForm.controls.accountBalance.patchValue(accbal.amount);
       this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
       // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
-      // console.log(accbal.accountCurrency);
-      this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+      console.log(accbal.accountCurrency);
+      // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
+      this.selectCurrencyCode(accbal.accountCurrency);
       //debugger;
       console.log(accbal.transactionAmount);
       this.numberOnlyValidation(accbal.transactionAmount);

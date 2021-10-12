@@ -133,14 +133,14 @@ export class AccountPage implements OnInit {
     // this.formData.controls.accountNumber.setValue(defaultId);
   }
   saveAccount(data){
-    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-      console.log('backend resp in account', resp);
-      this.cdr.detectChanges();
-      this.cdr.markForCheck();
-      this.formData=resp;
-      console.log(this.formData);
+    // this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+    //   console.log('backend resp in account', resp);
+    //   this.cdr.detectChanges();
+    //   this.cdr.markForCheck();
+    //   this.formData=resp;
+    //   console.log(this.formData);
 
-     })
+    //  })
     let userAddress : any[] = [];
     userAddress.push(this.kycVerificationForm.value.communicationAddress);
     let payload = {
@@ -159,6 +159,9 @@ export class AccountPage implements OnInit {
     console.log(data);
     this.api.saveAccount(data).subscribe((resp) => {
       console.log('backend resp in account', resp);
+      this.formData=resp;
+      this.cdr.detectChanges();
+      this.cdr.markForCheck();
       if(resp){
         this.previous1();
         this.openToast();

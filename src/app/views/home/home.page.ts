@@ -1,3 +1,4 @@
+import { getCurrencySymbol } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -31,6 +32,9 @@ accountBalance:string;
   formData: any;
   loan: any;
   loanArray: any[]=[];
+  curr: string;
+  currLoan: string;
+  currCurrent: string;
   constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -42,16 +46,22 @@ accountBalance:string;
      console.log(resp.customerId);
      this.formData=resp;
      this.getProfilePicture(resp.customerId);
-     this.savingAccountFun(resp.custAccount);
+    //  this.savingAccountFun(resp.custAccount);
      this.current = resp.custAccount.filter(res => res.accountType == "current" );
        console.log("current",this.current)
+       if(this.current.length>0){
        this.currentAssign(this.current);
+       }
        this.saving = resp.custAccount.filter(res => res.accountType == "saving");
        console.log("saving",this.saving)
+       if(this.saving.length>0){
        this.savingAssign(this.saving);
+       }
        this.loan = resp.custAccount.filter(res => res.accountType == "loan");
        console.log("loan",this.loan)
+       if(this.loan.length>0){
        this.loanAssign(this.loan);
+       }
     })
  
     this.firstName=localStorage.getItem('firstName');
@@ -64,8 +74,11 @@ this.accountType=customerDetails.accountType;
 // this.accountBalance=customerDetails.custAccount[0].currentBalance;
   }
   loanAssign(loan: any) {
-   
+   if(loan!=undefined){
     this.loanArray=loan;
+    this.currLoan = getCurrencySymbol(loan[0].accountCurrency, "narrow");
+ console.log(this.currLoan);
+   }
   }
  
   getProfilePicture(customerId) {
@@ -117,10 +130,20 @@ this.accountType=customerDetails.accountType;
   }
 
   currentAssign(current) {
+ console.log(current)
    this.currentArray=current;
+   this.currCurrent = getCurrencySymbol(current[0].accountCurrency, "narrow");
+ console.log(this.currCurrent);
+    
   }
   savingAssign(saving: any) {
+    
+    if(saving!=undefined){
+
    this.savingArray=saving;
+   this.curr = getCurrencySymbol(saving[0].accountCurrency, "narrow");
+ console.log(this.curr);
+    }
   }
   goToCashWithdrawal(){
     this.router.navigate(['cashwithdrawal']);
@@ -152,6 +175,7 @@ this.accountType=customerDetails.accountType;
  console.log(filteredResponseSavingAccount)
  this.users = filteredResponseSavingAccount.map(a => a.accountId);
  console.log("savingAccount",this.savingAccount);
+ 
 
  }
  logOut()

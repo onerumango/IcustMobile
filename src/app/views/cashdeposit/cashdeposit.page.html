@@ -62,7 +62,7 @@
       <div class="ion-padding-top">
         <div>
           <ion-button expand="block" shape="round" (click)="goToNextPage()"
-          [disabled]="validateDisablebutton('disable1')  || submitted" style="width: 95%;">
+          [disabled]="validateDisablebutton('disable1')||!transAmount  || submitted" style="width: 95%;">
             Next</ion-button>
         </div>
         <div>

@@ -88,7 +88,7 @@
           <ion-button
             expand="block"
             shape="round"
-          [disabled]="validateDisablebutton('disable1')  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value"
+          [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value"
             (click)="goToNextPage()"
             style="width: 95%"
             >Next</ion-button

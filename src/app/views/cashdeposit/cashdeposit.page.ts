@@ -32,6 +32,7 @@ export class CashdepositPage implements OnInit {
   currencyData: any;
   currencies: any;
   customerDetails: any;
+  IntValue: number;
   constructor(
     public toastCtrl: ToastController, 
     private router: Router,
@@ -139,6 +140,8 @@ export class CashdepositPage implements OnInit {
 
  
   numberOnlyValidation(event: any) {
+    this.IntValue=Math.floor(this.depositForm.value.transactionAmount).toString().length;
+    if(this.IntValue>3){
     // const pattern = /[0-9.,]/;
     // let inputChar = String.fromCharCode(event.charCode);
     // if (!pattern.test(inputChar)) {
@@ -165,6 +168,10 @@ export class CashdepositPage implements OnInit {
     this.transAmount = this.transAmount.concat('.');
   }
   this.changeDef.detectChanges();
+}
+else{
+  return;
+}
   }
 
   isShow: boolean = true;

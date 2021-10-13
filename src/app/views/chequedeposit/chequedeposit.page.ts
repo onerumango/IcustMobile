@@ -9,6 +9,7 @@ import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
+import { ReturnStatement } from '@angular/compiler';
 
 @Component({
   selector: 'app-chequedeposit',
@@ -30,6 +31,7 @@ export class ChequedepositPage implements OnInit {
   customerDetails: any;
   chequeDeposit: any;
   transactionId: any;
+  IntValue: number;
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService,
     private modalController: ModalController,
     private shareDataService: DataService, private changeDef: ChangeDetectorRef) { }
@@ -109,6 +111,8 @@ export class ChequedepositPage implements OnInit {
     
   }
   numberOnlyValidation(event: any) {
+    this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+    if(this.IntValue>3){
     // const pattern = /[0-9.,]/;
     // let inputChar = String.fromCharCode(event.charCode);
 
@@ -135,6 +139,10 @@ export class ChequedepositPage implements OnInit {
     this.transAmount = this.transAmount.concat('.');
     }
     this.changeDef.detectChanges();
+  }
+  else{
+    return;
+  }
   }
 
   validateDisablebutton(button) {

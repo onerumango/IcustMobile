@@ -17,6 +17,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./cashwithdrawal.page.scss'],
 })
 export class CashwithdrawalPage implements OnInit {
+  IntValue:any;
   title: any = 'Cash Withdrawal';
   savingAccount: any[];
   // maxData : any = (new Date()).getFullYear() + 3;
@@ -142,6 +143,8 @@ export class CashwithdrawalPage implements OnInit {
   selectedCountryCode = '';
 
   numberOnlyValidation(event: any) {
+  this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+  if(this.IntValue>3){
 //old changes
     // const pattern = /[0-9.,]/;
     // let inputChar = String.fromCharCode(event.charCode);
@@ -157,6 +160,7 @@ export class CashwithdrawalPage implements OnInit {
      //const pattern = /[0-9.,]/;
      let value:string;
      value=this.slideOneForm.value.transactionAmount;
+   
      //let inputChar = String.fromCharCode(event.charCode);
     // debugger;
      this.transAmount = value;
@@ -173,7 +177,11 @@ export class CashwithdrawalPage implements OnInit {
      this.transAmount = this.transAmount.concat('.');
    }
    this.changeDef.detectChanges();
+  }
     // this.slideOneForm.controls['transactionAmount'].setValidators();
+    else{
+      return;
+    }
   }
 
 

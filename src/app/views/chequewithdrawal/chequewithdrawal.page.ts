@@ -30,6 +30,7 @@ export class ChequewithdrawalPage implements OnInit {
   customerDetails: any;
   chequeWithdrawal: any;
   transactionId: any;
+  IntValue: number;
   constructor(private router: Router,
     private fb: FormBuilder,
     private api: ApiService,
@@ -132,6 +133,8 @@ export class ChequewithdrawalPage implements OnInit {
     })
   }
   numberOnlyValidation(event: any) {
+    this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+    if(this.IntValue>3){
     // const pattern = /[0-9.,]/;
     // let inputChar = String.fromCharCode(event.charCode);
 
@@ -159,6 +162,10 @@ export class ChequewithdrawalPage implements OnInit {
     this.transAmount = this.transAmount.concat('.');
     }
     this.changeDef.detectChanges();
+  }
+  else{
+    return;
+  }
   }
 
   getCountrynameValues() {

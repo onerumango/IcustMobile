@@ -189,7 +189,7 @@ else{
   }
   async openToast1() {
     const toast = await this.toastCtrl.create({
-      message: 'Account Number is not existing for this customer Id',
+      message: 'Transaction Amount should not exceed than Account Balance',
       duration: 2000
     });
     toast.present();

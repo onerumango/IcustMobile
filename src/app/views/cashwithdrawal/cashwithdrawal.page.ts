@@ -24,7 +24,7 @@ export class CashwithdrawalPage implements OnInit {
   minDate = new Date().toISOString();
   maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
   slideOneForm: FormGroup;
-  currentBalance: number;
+  currentBalance: any;
   submitted: boolean = true;
   submitted1: boolean = true;
   productCode = "CHW";
@@ -143,6 +143,7 @@ export class CashwithdrawalPage implements OnInit {
   selectedCountryCode = '';
 
   numberOnlyValidation(event: any) {
+    console.log(event.target.value);
   this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
   if(this.IntValue>3){
 //old changes
@@ -155,8 +156,8 @@ export class CashwithdrawalPage implements OnInit {
 
     // new code added for transaction amount comma separator
     // debugger
-     console.log(this.slideOneForm)
-     console.log(event);
+    //  console.log(this.slideOneForm)
+    //  console.log(event);
      //const pattern = /[0-9.,]/;
      let value:string;
      value=this.slideOneForm.value.transactionAmount;
@@ -177,6 +178,14 @@ export class CashwithdrawalPage implements OnInit {
      this.transAmount = this.transAmount.concat('.');
    }
    this.changeDef.detectChanges();
+  //  console.log(this.currentBalance);
+  //  console.log(this.transAmt);
+   this.transAmt = pattern.replace(/[^0-9.]/g, '');
+   console.log(this.transAmt);
+   if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+    console.log("Bigger");
+   this.openToast1();
+  }
   }
     // this.slideOneForm.controls['transactionAmount'].setValidators();
     else{
@@ -184,7 +193,13 @@ export class CashwithdrawalPage implements OnInit {
     }
   }
 
-
+  async openToast1() {
+    const toast = await this.toastCtrl.create({
+      message: 'Account Number is not existing for this customer Id',
+      duration: 2000
+    });
+    toast.present();
+  }
   validateDisablebutton(button) {
 
     this.slideOneForm.valueChanges.subscribe(v => {

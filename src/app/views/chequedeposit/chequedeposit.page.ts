@@ -2,7 +2,7 @@ import { getCurrencySymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { format } from "date-fns"
 import * as moment from 'moment';
 import { BranchComponent } from 'src/app/components/branch/branch.component';
@@ -32,7 +32,7 @@ export class ChequedepositPage implements OnInit {
   chequeDeposit: any;
   transactionId: any;
   IntValue: number;
-  constructor(private router: Router, private fb: FormBuilder, private api: ApiService,
+  constructor(private router: Router, private fb: FormBuilder, private api: ApiService,public toastCtrl: ToastController,
     private modalController: ModalController,
     private shareDataService: DataService, private changeDef: ChangeDetectorRef) { }
    // for transaction amount comma separator
@@ -139,12 +139,24 @@ export class ChequedepositPage implements OnInit {
     this.transAmount = this.transAmount.concat('.');
     }
     this.changeDef.detectChanges();
+    this.transAmt = pattern.replace(/[^0-9.]/g, '');
+    console.log(this.transAmt);
+    if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+     console.log("Bigger");
+    this.openToast1();
+   }
   }
   else{
     return;
   }
   }
-
+  async openToast1() {
+    const toast = await this.toastCtrl.create({
+      message: 'Account Number is not existing for this customer Id',
+      duration: 2000
+    });
+    toast.present();
+  }
   validateDisablebutton(button) {
 
     this.slideOneForm.valueChanges.subscribe(v => {

@@ -168,6 +168,12 @@ export class CashdepositPage implements OnInit {
     this.transAmount = this.transAmount.concat('.');
   }
   this.changeDef.detectChanges();
+  this.transAmt = pattern.replace(/[^0-9.]/g, '');
+  console.log(this.transAmt);
+  if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+   console.log("Bigger");
+  this.openToast1();
+ }
 }
 else{
   return;
@@ -181,6 +187,14 @@ else{
   method() {
 
   }
+  async openToast1() {
+    const toast = await this.toastCtrl.create({
+      message: 'Account Number is not existing for this customer Id',
+      duration: 2000
+    });
+    toast.present();
+  }
+  
   async presentModal() {
     const modal = await this.modalController.create({
       component: BranchComponent,

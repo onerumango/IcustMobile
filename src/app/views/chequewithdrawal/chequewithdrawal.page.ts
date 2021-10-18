@@ -132,46 +132,50 @@ export class ChequewithdrawalPage implements OnInit {
       }
     })
   }
+  
   numberOnlyValidation(event: any) {
-    this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
-    if(this.IntValue>3){
-    // const pattern = /[0-9.,]/;
-    // let inputChar = String.fromCharCode(event.charCode);
+    this.transAmt= event.target.value;
+    console.log(event.target.value);
+  this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+  if(this.IntValue>3){
 
-    // if (!pattern.test(inputChar)) {
-    //   // invalid character, prevent input
-    //   event.preventDefault();
-    // }
-
-    //for comma separator transaction amount
-    console.log(this.slideOneForm)
-    console.log(event);
-    let value:string;
-    value=this.slideOneForm.value.transactionAmount;
-    this.transAmount = value;
-     // debugger
-    const pattern = value;
-    let lastCharIsPoint = false;
-    if (pattern.charAt(pattern.length - 1) === '.') {
-    lastCharIsPoint = true;
-    }
-    const num = pattern.replace(/[^0-9.]/g, '');
-    this.transAmt = Number(num);
-    this.transAmount = this.transAmt.toLocaleString('en-US');
-    if (lastCharIsPoint) {
-    this.transAmount = this.transAmount.concat('.');
-    }
-    this.changeDef.detectChanges();
-    this.transAmt = pattern.replace(/[^0-9.]/g, '');
-    console.log(this.transAmt);
-    if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-     console.log("Bigger");
-    this.openToast1();
+     let value:string;
+     value=this.slideOneForm.value.transactionAmount;
+   
+     //let inputChar = String.fromCharCode(event.charCode);
+    // debugger;
+     this.transAmount = value;
+    // debugger
+     const pattern = value;
+     let lastCharIsPoint = false;
+   if (pattern.charAt(pattern.length - 1) === '.') {
+     lastCharIsPoint = true;
    }
+   const num = pattern.replace(/[^0-9.]/g, '');
+   this.transAmt = Number(num);
+   this.transAmount = this.transAmt.toLocaleString('en-US');
+   if (lastCharIsPoint) {
+     this.transAmount = this.transAmount.concat('.');
+   }
+   this.changeDef.detectChanges();
+  
+  
+  
   }
-  else{
-    return;
+  // console.log(this.transAmt);
+  console.log(this.currentBalance);
+  console.log(this.transAmt);
+  this.transAmt=this.transAmt.replace(/,/g, '');
+  console.log(this.transAmt);
+  if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+    console.log("Bigger");
+    this.openToast1();
+ 
   }
+    // this.slideOneForm.controls['transactionAmount'].setValidators();
+    else{
+      return;
+    }
   }
   async openToast1() {
     const toast = await this.toastCtrl.create({

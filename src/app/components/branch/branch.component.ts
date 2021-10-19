@@ -45,13 +45,14 @@ export class BranchComponent implements OnInit {
     this.apiService.getBranchByCity("Bangalore")
       .subscribe((data: any) => {
         
+        this.branchData = data;
         if(this.branchFlag == 'false'){
+          console.log("ifff");
       
          data.forEach((element,index)=>{
           if(data[index].branchName==this.accBranch) data.splice(index,1);
        });
        
-        this.branchData = data;
           console.log( this.branchData);
 
         }

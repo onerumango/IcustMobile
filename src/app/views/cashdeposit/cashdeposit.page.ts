@@ -119,6 +119,7 @@ export class CashdepositPage implements OnInit {
 
     this.depositForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
+      localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.depositForm.get('transactionBranch').patchValue("");
       }else{
@@ -317,6 +318,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
      
       this.depositForm.controls.accountBalance.patchValue(accbal.amount);
       this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
+      localStorage.setItem("AccBranch", accbal.accountBranch);
       // this.depositForm.controls.transactionCurrency.patchValue(accbal.countryCode);
       this.selectCurrencyCode(accbal.accountCurrency);
       // this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);

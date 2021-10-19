@@ -102,6 +102,7 @@ export class ChequedepositPage implements OnInit {
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
+      localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
       }else{
@@ -316,6 +317,7 @@ export class ChequedepositPage implements OnInit {
       // this.slideOneForm.controls.transactionAmount.patchValue(accbal.amount);
       this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
       this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+      localStorage.setItem("AccBranch", accbal.accountBranch);
 
       for(let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();

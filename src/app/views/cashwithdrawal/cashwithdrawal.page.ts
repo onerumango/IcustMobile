@@ -120,6 +120,8 @@ export class CashwithdrawalPage implements OnInit {
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
+      localStorage.setItem("BranchFlag", val);
+
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
       }else{
@@ -353,6 +355,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
 
       this.slideOneForm.controls.accountBalance.patchValue(accbal.amount);
       this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
+      localStorage.setItem("AccBranch", accbal.accountBranch);
       // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
       console.log(accbal.accountCurrency);
       // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);

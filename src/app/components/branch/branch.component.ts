@@ -27,6 +27,8 @@ export class BranchComponent implements OnInit {
   markers: google.maps.Marker[] = [];
   infoWindows: google.maps.InfoWindow[] = [];
   segment: string;
+  branchFlag: any;
+  accBranch: string;
 
   constructor(
     private apiService: ApiService,
@@ -34,13 +36,25 @@ export class BranchComponent implements OnInit {
 
   ngOnInit() {
     this.getBankBranches();
+    this.branchFlag = localStorage.getItem('BranchFlag');
+    this.accBranch = localStorage.getItem('AccBranch');
+    console.log(this.branchFlag);
   }
 
   getBankBranches() {
     this.apiService.getBranchByCity("Bangalore")
       .subscribe((data: any) => {
+        
+        if(this.branchFlag == 'false'){
+      
+         data.forEach((element,index)=>{
+          if(data[index].branchName==this.accBranch) data.splice(index,1);
+       });
+       
         this.branchData = data;
-        console.log(data);
+          console.log( this.branchData);
+
+        }
       });
   }
 

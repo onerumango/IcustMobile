@@ -357,12 +357,14 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
       this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
       localStorage.setItem("AccBranch", accbal.accountBranch);
       // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
-      console.log(accbal.accountCurrency);
+      console.log(accbal);
       // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
-      this.selectCurrencyCode(accbal.accountCurrency);
+      // this.selectCurrencyCode(accbal.accountCurrency);
       //debugger;
-      console.log(accbal.transactionAmount);
-      this.numberOnlyValidation(accbal.transactionAmount);
+      // console.log(accbal.transactionAmount);
+      if(accbal.transactionAmount!=null || accbal.transactionAmount!=undefined ){
+        this.numberOnlyValidation(accbal.transactionAmount);
+      }
       console.log('backend accbal', accbal.lastTransactions);
       if (accbal.lastTransactions != null) {
         if (accbal.lastTransactions.length <= 2) {

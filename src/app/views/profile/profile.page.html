@@ -24,7 +24,7 @@
             {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName | uppercase | slice:0:1}}</h1>
         </div>
         <div *ngIf="image!=null">
-          <img class="img" [src]="image" alt="profile" >
+          <img class="img" [src]="image" alt="" >
         </div>
       </ion-avatar>
   <!-- <img src="assets\images\avatar.png" class="img"  *ngIf="!image"> -->

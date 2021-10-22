@@ -87,9 +87,11 @@ this.accountType=customerDetails.accountType;
       .subscribe((data: any) => {
         this.cdr.markForCheck();
         this.profileData = data;
-        if (data.profileImage && data.profileImage.fileData != null) {
-          let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileData;
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+        console.log(" profile Image",this.profileData.profileImage.fileUrl);
+        if (data.profileImage && data.profileImage.fileUrl != null) {
+         // let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileName;
+          let objectURL =  data.profileImage.fileUrl;
+          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         }else{
           this.image=null;
         }

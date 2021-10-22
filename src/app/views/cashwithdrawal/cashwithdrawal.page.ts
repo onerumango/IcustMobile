@@ -296,7 +296,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     localStorage.setItem("AccountNumber", form.accountNumber);
     localStorage.setItem("TransactionDate", this.transDate);
     localStorage.setItem("TransactionTime", form.transactionTime);
-    //localStorage.setItem("TransactionAmount", form.transactionAmount);
+    localStorage.setItem("TransactionAmount", form.transactionAmount);
     form.transactionAmount=form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     console.log(form);

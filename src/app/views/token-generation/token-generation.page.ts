@@ -60,8 +60,7 @@ export class TokenGenerationPage implements OnInit {
     this.branch=localStorage.getItem('TransactionBranch');
     
 
-    console.log( this.transAmount, this.transDate,this.transTime,this.branch
-      )
+    console.log( this.transAmount)
     
   }
   assignProductCode(index: any) {

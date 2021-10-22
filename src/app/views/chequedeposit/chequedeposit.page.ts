@@ -32,6 +32,7 @@ export class ChequedepositPage implements OnInit {
   chequeDeposit: any;
   transactionId: any;
   IntValue: number;
+  nearestBrn: boolean;
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService,public toastCtrl: ToastController,
     private modalController: ModalController,
     private shareDataService: DataService, private changeDef: ChangeDetectorRef) { }
@@ -105,8 +106,10 @@ export class ChequedepositPage implements OnInit {
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
+        this.nearestBrn=true;
       }else{
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+        this.nearestBrn=false;
       }
     })
     
@@ -145,15 +148,15 @@ export class ChequedepositPage implements OnInit {
   console.log(this.transAmt);
   this.transAmt=this.transAmt.replace(/,/g, '');
   console.log(this.transAmt);
-  if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-    console.log("Bigger");
-    this.openToast1();
+  // if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+  //   console.log("Bigger");
+  //   this.openToast1();
   
-  }
-    // this.slideOneForm.controls['transactionAmount'].setValidators();
-    else{
-      return;
-    }
+  // }
+  //   // this.slideOneForm.controls['transactionAmount'].setValidators();
+  //   else{
+  //     return;
+  //   }
   }
   async openToast1() {
     const toast = await this.toastCtrl.create({

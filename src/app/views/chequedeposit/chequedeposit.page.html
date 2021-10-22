@@ -134,7 +134,7 @@
 </div>
 
        <div class="inputCard2">
-          <ion-router-link (click)="presentModal()" class="underline">Click here to find nearest branch</ion-router-link>
+          <ion-router-link (click)="presentModal()" [hidden]="!nearestBrn" class="underline">Click here to find nearest branch</ion-router-link>
        </div><br>
   
        <div class="inputCard2" >

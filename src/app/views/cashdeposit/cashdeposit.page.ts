@@ -33,6 +33,7 @@ export class CashdepositPage implements OnInit {
   currencies: any;
   customerDetails: any;
   IntValue: number;
+  nearestBrn: boolean;
   constructor(
     public toastCtrl: ToastController, 
     private router: Router,
@@ -122,7 +123,9 @@ export class CashdepositPage implements OnInit {
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.depositForm.get('transactionBranch').patchValue("");
+        this.nearestBrn=true;
       }else{
+        this.nearestBrn=false;
         this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
@@ -186,19 +189,19 @@ console.log(this.currentBalance);
 console.log(this.transAmt);
 this.transAmt=this.transAmt.replace(/,/g, '');
 console.log(this.transAmt);
-if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-  console.log("Bigger");
-  this.openToast1();
-  // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
-  //   duration: 2000,
-  //   verticalPosition: 'top',
-  //   horizontalPosition: 'right'
-  // });
-}
-  // this.slideOneForm.controls['transactionAmount'].setValidators();
-  else{
-    return;
-  }
+// if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+//   console.log("Bigger");
+//   this.openToast1();
+//   // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
+//   //   duration: 2000,
+//   //   verticalPosition: 'top',
+//   //   horizontalPosition: 'right'
+//   // });
+// }
+//   // this.slideOneForm.controls['transactionAmount'].setValidators();
+//   else{
+//     return;
+//   }
 }
   isShow: boolean = true;
 

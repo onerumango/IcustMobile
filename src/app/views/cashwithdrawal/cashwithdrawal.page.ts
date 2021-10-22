@@ -34,6 +34,7 @@ export class CashwithdrawalPage implements OnInit {
   currencies: any;
   currencyData: any;
   transactionId: any;
+  nearestBrn: boolean;
   constructor(
     private router: Router,
     private modalController: ModalController,
@@ -123,8 +124,11 @@ export class CashwithdrawalPage implements OnInit {
       localStorage.setItem("BranchFlag", val);
 
       if (val == false) {
+        
         this.slideOneForm.get('transactionBranch').patchValue("");
+        this.nearestBrn=true;
       }else{
+        this.nearestBrn=false;
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })

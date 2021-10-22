@@ -31,6 +31,7 @@ export class ChequewithdrawalPage implements OnInit {
   chequeWithdrawal: any;
   transactionId: any;
   IntValue: number;
+  nearestBrn: boolean;
   constructor(private router: Router,
     private fb: FormBuilder,
     private api: ApiService,public toastCtrl: ToastController,
@@ -110,8 +111,10 @@ export class ChequewithdrawalPage implements OnInit {
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
+        this.nearestBrn=true;
       } else {
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+        this.nearestBrn=true;
       }
     })
 

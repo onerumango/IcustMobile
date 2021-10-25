@@ -374,6 +374,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
         if (accbal.lastTransactions.length <= 2) {
           this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
         }
+       
         else {
           var trnBrn = null;
           var brnCnt = 0;
@@ -386,13 +387,18 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
                   if (accbal.lastTransactions[i].transactionBranch === accbal.lastTransactions[n].transactionBranch) {
                     brnCnt = brnCnt + 1;
                   }
+                  if (accbal.lastTransactions[i].transactionBranch != accbal.lastTransactions[n].transactionBranch) {
+                    trnBrn = accbal.lastTransactions[i].accountBranch;
+                  }
                 }
+
               }
             }
             if (brnOldCnt < brnCnt && brnCnt >= 2) {
               trnBrn = accbal.lastTransactions[i].transactionBranch;
               brnOldCnt = brnCnt;
             }
+          
             brnCnt = 0;
           }
           if (trnBrn != null) {

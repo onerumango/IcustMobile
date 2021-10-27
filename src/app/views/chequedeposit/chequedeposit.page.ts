@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { ReturnStatement } from '@angular/compiler';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-chequedeposit',
@@ -35,6 +37,7 @@ export class ChequedepositPage implements OnInit {
   nearestBrn: boolean;
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService,public toastCtrl: ToastController,
     private modalController: ModalController,
+    public datepipe: DatePipe,
     private shareDataService: DataService, private changeDef: ChangeDetectorRef) { }
    // for transaction amount comma separator
   //transactionAmount="10,000";
@@ -267,10 +270,10 @@ export class ChequedepositPage implements OnInit {
     console.log(form)
     form.transactionDate.toString();
 
-
-    var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+    var date = new Date(form.transactionDate);
     console.log(date) //4/
-    form.transactionDate = date;
+    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    form.transactionDate = latest_date;
 
 
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);

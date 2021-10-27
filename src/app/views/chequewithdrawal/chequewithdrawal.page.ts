@@ -9,6 +9,8 @@ import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 
 
 @Component({
@@ -36,6 +38,7 @@ export class ChequewithdrawalPage implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,public toastCtrl: ToastController,
     private modalController: ModalController,
+    public datepipe: DatePipe,
     private shareDataService: DataService,private changeDef: ChangeDetectorRef) { }
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
@@ -247,10 +250,10 @@ export class ChequewithdrawalPage implements OnInit {
     console.log(form)
     form.transactionDate.toString();
 
-
-    var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+    var date = new Date(form.transactionDate);
     console.log(date) //4/
-    form.transactionDate = date;
+    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);

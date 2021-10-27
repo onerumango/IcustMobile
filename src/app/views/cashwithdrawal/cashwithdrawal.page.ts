@@ -9,6 +9,8 @@ import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 
 
 @Component({
@@ -39,6 +41,7 @@ export class CashwithdrawalPage implements OnInit {
     private router: Router,
     private modalController: ModalController,
     private fb: FormBuilder,
+    public datepipe: DatePipe,
     private api: ApiService, public toastCtrl: ToastController,
     private shareDataService: DataService,private changeDef: ChangeDetectorRef
   ) { }
@@ -274,9 +277,11 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     });
     form.transactionDate.toString();
 
-    var date = new Date(form.transactionDate).toLocaleDateString('en-us');
-    console.log(date); //4/
-    form.transactionDate = date;
+    var date = new Date(form.transactionDate);
+    console.log(date) //4/
+    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    form.transactionDate = latest_date;
+
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;

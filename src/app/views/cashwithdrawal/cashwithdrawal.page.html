@@ -58,7 +58,7 @@
                   *ngFor="let currency of currencies"
                   [value]="currency.countryCode"
                 >
-                {{currency.currencyCode + ' : ' + currency.countryName}}
+                {{currency.currencyCode + ' : ' + currency.countryName.toUpperCase()}}
                 </ion-select-option>
               </ion-select>
             </ion-col>

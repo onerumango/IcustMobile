@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common'
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -17,7 +18,7 @@ import { ComponentsModule } from './components/components.module';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(),HttpClientModule, BrowserAnimationsModule,ComponentsModule,RouterModule.forRoot(rootRouterConfig, { useHash: true, relativeLinkResolution: 'legacy' })],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy},Geolocation],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy},Geolocation,DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

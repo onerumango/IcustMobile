@@ -9,6 +9,8 @@ import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ChangeDetectorRef } from '@angular/core'; 
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-cashdeposit',
@@ -37,6 +39,7 @@ export class CashdepositPage implements OnInit {
   constructor(
     public toastCtrl: ToastController, 
     private router: Router,
+    public datepipe: DatePipe,
     private fb: FormBuilder,
     private api: ApiService, 
     private toastController: ToastController,
@@ -267,9 +270,10 @@ console.log(this.transAmt);
     form.transactionDate.toString();
 
 
-    var date = new Date(form.transactionDate).toLocaleDateString("en-us")
+    var date = new Date(form.transactionDate);
     console.log(date) //4/
-    form.transactionDate = date;
+    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);

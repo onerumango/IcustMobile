@@ -10,6 +10,7 @@ import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
 import { LoadingService } from 'src/app/services/loading.service';
 
 
@@ -295,7 +296,7 @@ export class CashdepositPage implements OnInit {
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
     form.productCode = this.productCode;
     form.tokenOrigin = this.tokenOrigin;
@@ -304,10 +305,10 @@ export class CashdepositPage implements OnInit {
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
-
+    form.transactionTime=this.format24HrsTo12Hrs(form.transactionTime);
     localStorage.setItem("AccountNumber", this.accountNum);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+    // localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     form.transactionAmount = form.transactionAmount.replace(/,/g, '');
@@ -316,7 +317,8 @@ export class CashdepositPage implements OnInit {
     console.log("form::", form);
 
     this.api.cashDepositSave(form).subscribe((resp) => {
-      this.cashDepositResp = resp;
+      localStorage.setItem("TransactionTime", resp.transactionTime);
+       this.cashDepositResp = resp;
       this.transactionId = this.cashDepositResp.transactionId;
       console.log('transactionId::', this.transactionId);
       if (this.cashDepositResp === 200 || this.cashDepositResp !== null) {
@@ -443,7 +445,31 @@ export class CashdepositPage implements OnInit {
     });
     toast.present();
   }
+  format24HrsTo12Hrs(time){
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
+  openPopup()
+  { console.log("popup");
+    this.modalController.create({
+      component:TimeSlotsComponent,
+      componentProps:{
+        date:this.depositForm.get('transactionDate').value
+      }
+    }).then(modalResp=>{
+      modalResp.present()
+      modalResp.onDidDismiss().then(res=>{
+        if(res.data!=null)
+        {
+          console.log(res);
+          this.depositForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
 }
+
+
 interface CountryType {
   code: string;
   countryName: string;

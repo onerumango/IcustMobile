@@ -89,11 +89,12 @@
           <ion-button
             expand="block"
             shape="round"
-          [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value"
+            [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value" 
             (click)="goToNextPage()"
             style="width: 95%"
             >Next</ion-button
           >
+          <!-- [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value" -->
         </div>
         <div>
           <ion-button
@@ -200,24 +201,38 @@
             <ion-label style="padding-left: 5%;">Transaction date*</ion-label>
           <ion-card class="box" >
             <ion-item lines="none">
-                <ion-datetime  [min]="minDate"  [max]="maxDate" placeholder="Select date" formControlName="transactionDate" >
+                <ion-datetime  [min]="minDate"  (ionChange)="gettingAvailableSlots()" [max]="maxDate" placeholder="Select date" formControlName="transactionDate" >
                 </ion-datetime>
-           <ion-icon name="calendar" slot="end"></ion-icon>
+              <ion-icon name="calendar" slot="end" ></ion-icon>
   
            </ion-item> 
        </ion-card>
        </div>
       
   
-       <div class="inputCard2">
-         <ion-label style="padding-left: 5%;">Time Slot*</ion-label>
-       <ion-card class="box">
-         <ion-item  lines="none">
-          <ion-datetime displayFormat="hh:mm A"  placeholder="Select time slot" formControlName="transactionTime"></ion-datetime>
-          <ion-icon name="alarm-outline" slot="end"></ion-icon>
-        </ion-item>
-       </ion-card>
-       </div> 
+      
+        <div class="inputCard2">
+            <ion-label style="padding-left: 5%;">Time Slot*</ion-label>
+          <ion-card class="box">
+            <ion-item  lines="none"  (click)="openPopup()">
+                <ion-input  formControlName="transactionTime"></ion-input>
+             <!-- <ion-datetime displayFormat="hh:mm A"  placeholder="Select time slot" formControlName="transactionTime"></ion-datetime> -->
+             <ion-icon name="alarm-outline" slot="end"  (click)="openPopup()"></ion-icon>
+           </ion-item>
+          </ion-card>
+          </div> 
+         <!-- <ion-label style="padding-left: 5%;">Time Slot*</ion-label>
+      
+  
+             <ion-chip *ngFor="let slot of timeSlots;let i=index;" [id]="i+1"  color="warn" >
+                <ion-label (click)="onSelectiongTimeSlots($event,slot)">{{format24HrsTo12Hrs(slot)}}</ion-label>
+              
+              </ion-chip>
+            
+              <input type="text" hidden formControlName="transactionTime"> -->
+            
+            
+      
   
        <div class="inputCard2" *ngIf="title == 'Cheque Withdrawal' || title =='Cheque Deposit'">
         <ion-label position="stacked">Remark</ion-label>

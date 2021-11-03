@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, IonDatetime } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
@@ -11,6 +11,8 @@ import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { LoadingService } from 'src/app/services/loading.service';
+
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
 
 
 
@@ -38,15 +40,18 @@ export class CashwithdrawalPage implements OnInit {
   currencyData: any;
   transactionId: any;
   nearestBrn: boolean;
+  timeSlots: any;
+  customPickerOptions: {};
+  mydt: any;
   constructor(
     private router: Router,
     private modalController: ModalController,
     private fb: FormBuilder,
     public loading: LoadingService,
     public datepipe: DatePipe,
-    private api: ApiService, 
+    private api: ApiService,
     public toastCtrl: ToastController,
-    private shareDataService: DataService, 
+    private shareDataService: DataService,
     private cdr: ChangeDetectorRef,
   ) { }
   //for comma separator transaction amount
@@ -68,6 +73,7 @@ export class CashwithdrawalPage implements OnInit {
   transTime: string;
   curr: string;
   customerDetails: any;
+  selectAbleColor: string = "secondary";
 
   ngOnInit() {
 
@@ -123,6 +129,7 @@ export class CashwithdrawalPage implements OnInit {
         this.slideOneForm.get('transactionBranch').patchValue("");
         this.nearestBrn = true;
       } else {
+        console.log("branch", this.customerDetails.custAccount[0].accountBranch);
         this.nearestBrn = false;
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
@@ -137,7 +144,7 @@ export class CashwithdrawalPage implements OnInit {
         console.log('backend resp in home', resp);
         this.customerDetails = resp;
         this.savingAccountFun(resp);
-      },(err:any) => {
+      }, (err: any) => {
         this.loading.dismiss();
       })
   }
@@ -277,6 +284,7 @@ export class CashwithdrawalPage implements OnInit {
     this.flag = true;
   }
   goToNextScreen(form) {
+    console.log(form);
     this.api.setIndex({
       index: 'CHW'
     });
@@ -292,8 +300,8 @@ export class CashwithdrawalPage implements OnInit {
     form.transactionCurrency = this.currencyData.currencyCode;
     form.accountNumber = form.accountNumber;
     form.productCode = this.productCode;
-
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    form.transactionTime = this.format24HrsTo12Hrs(form.transactionTime);
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
 
     form.tokenOrigin = 'Mobile';
@@ -301,26 +309,31 @@ export class CashwithdrawalPage implements OnInit {
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
+
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
 
     localStorage.setItem("AccountNumber", form.accountNumber);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+
     localStorage.setItem("TransactionAmount", form.transactionAmount);
     form.transactionAmount = form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     console.log(form);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     console.log(form);
+
+    console.log("after", form);
+    // this.format24HrsTo12Hrs(form.transactionTime);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
       this.transactionId = this.cashWithdrawResponse.transactionId;
-      console.log('transactionId::', this.transactionId);
+      localStorage.setItem("TransactionTime", resp.transactionTime);
       if (this.cashWithdrawResponse === 200 || this.cashWithdrawResponse !== null) {
         this.shareDataService.shareTransactionId(this.transactionId);
         this.slideOneForm.reset();
         this.router.navigate(['token-generation']);
+        console.log('transactionId::', this.transactionId);
       }
     });
   }
@@ -459,9 +472,62 @@ export class CashwithdrawalPage implements OnInit {
     });
     toast.present();
   }
+  gettingAvailableSlots() {
+    console.log("here in availabel slotshhhhhhhh");
+    console.log(this.slideOneForm.controls.transactionDate.value);
+    // let date=new Date()
+    if (this.slideOneForm.controls.transactionDate.value != null) {
+      let date = this.datepipe.transform(this.slideOneForm.controls.transactionDate.value, 'yyyy-MM-dd');
+      let date1 = this.datepipe.transform(date, 'yyyy-MM-dd');
+      console.log("here in slots", date1);
+      this.api.gettingAvailableSlots(date1).subscribe(resp => {
+        console.log(resp);
+        this.timeSlots = resp;
+
+      })
+    }
+    else {
+      return;
+    }
+  }
+  onSelectiongTimeSlots(event, data) {
+    console.log("hitting", data);
+    this.slideOneForm.get('transactionTime').patchValue(data);
+    console.log(this.slideOneForm.value);
+    if (this.selectAbleColor === "secondary") {
+      this.selectAbleColor = "primary";
+    }
+    else {
+      this.selectAbleColor = "secondary";
+    }
+  }
+
+  format24HrsTo12Hrs(time) {
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
+  openPopup() {
+    console.log("popup");
+    this.modalController.create({
+      component: TimeSlotsComponent,
+      componentProps: {
+        date: this.slideOneForm.get('transactionDate').value,
+      }
+    }).then(modalResp => {
+      modalResp.present()
+      modalResp.onDidDismiss().then(res => {
+        if (res.data != null) {
+          console.log(res);
+          this.slideOneForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
 
 
 }
+
+
 interface CountryType {
   code: string;
   countryName: string;

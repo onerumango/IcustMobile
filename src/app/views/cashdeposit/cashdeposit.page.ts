@@ -8,9 +8,10 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
-import { ChangeDetectorRef } from '@angular/core'; 
+import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class CashdepositPage implements OnInit {
   currentBalance: any;
   customerId: string;
   submitted: boolean = true;
-  submitted1: boolean=true;
+  submitted1: boolean = true;
   phoneNumber: string;
   curr: string;
   currencyValues: any;
@@ -38,20 +39,22 @@ export class CashdepositPage implements OnInit {
   IntValue: number;
   nearestBrn: boolean;
   constructor(
-    public toastCtrl: ToastController, 
+    public toastCtrl: ToastController,
     private router: Router,
     public datepipe: DatePipe,
     private fb: FormBuilder,
-    private api: ApiService, 
+    public loading: LoadingService,
+    private api: ApiService,
     private toastController: ToastController,
-    private modalController:ModalController,
-    private shareDataService:DataService, private changeDef: ChangeDetectorRef ) { }
+    private modalController: ModalController,
+    private shareDataService: DataService, 
+    private cdr: ChangeDetectorRef) { }
   //for transaction amount comma separator
   // transactionAmount = "10,000";
-  transactionAmount:any;
+  transactionAmount: any;
   transAmount: string;
   //transAmount:number;
-  isedit:boolean=true;
+  isedit: boolean = true;
   transAmt: any;
   accountBranch = "Loita street";
   flag: boolean = true;
@@ -64,10 +67,10 @@ export class CashdepositPage implements OnInit {
   transTime: string;
   toast: HTMLIonToastElement;
   ngOnInit() {
-    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
     console.log("customer_id", this.customerId)
-    this.customerId = sessionStorage.getItem('customer_id');
+    this.getCountrynameValues();
     // this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
     //   console.log('backend dropdown', dropdown);
     //   this.users = dropdown;
@@ -77,16 +80,12 @@ export class CashdepositPage implements OnInit {
     //   }
 
     // });
-    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-      console.log('backend resp in home', resp);
-      this.customerDetails = resp;
-      this.savingAccountFun(resp);
-     })
+
     this.depositForm = this.fb.group({
       transactionId: ['', [Validators.required]],
       customerId: ['', [Validators.required]],
-      productCode:['CHD',[Validators.required]],
-      tokenOrigin : ['Mobile',[Validators.required]],
+      productCode: ['CHD', [Validators.required]],
+      tokenOrigin: ['Mobile', [Validators.required]],
       accountNumber: ['', [Validators.required]],
       accountBalance: ['', [Validators.required]],
       transactionCurrency: ['', [Validators.required]],
@@ -113,6 +112,10 @@ export class CashdepositPage implements OnInit {
     console.log(this.depositForm.value);
 
 
+    this.loadData();
+    this.onChanges();
+
+
     //  let disableBtn = false;
     // this.depositForm.valueChanges 
     //             .subscribe((changedObj: any) => {
@@ -120,93 +123,107 @@ export class CashdepositPage implements OnInit {
     //                 console.log('transactionAmount :: ',this.depositForm.controls.transactionAmount)
     //             });
     //  console.log(this.countries);
-    this.getCountrynameValues();
+  
 
+   
+
+  }
+
+  loadData() {
+    this.loading.present();
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      console.log('backend resp in home', resp);
+      this.loading.dismiss();
+      this.customerDetails = resp;
+      this.savingAccountFun(resp);
+    }, (err: any) => {
+      this.loading.dismiss();
+    })
+  }
+
+
+  onChanges(){
     this.depositForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.depositForm.get('transactionBranch').patchValue("");
-        this.nearestBrn=true;
-      }else{
-        this.nearestBrn=false;
+        this.nearestBrn = true;
+      } else {
+        this.nearestBrn = false;
         this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
-
   }
 
   get f() { return this.depositForm.controls; }
 
   getCountrynameValues() {
-
-    this.api.getCurrencyValues().subscribe((allCurrencyValues : any)=> {
+    this.api.getCurrencyValues().subscribe((allCurrencyValues: any) => {
       this.currencies = allCurrencyValues;
-      });
+    });
+  }
+
+
+
+  numberOnlyValidation(event: any) {
+    this.transAmt = event.target.value;
+    console.log(event.target.value);
+    this.IntValue = Math.floor(this.depositForm.value.transactionAmount).toString().length;
+    if (this.IntValue > 3) {
+      //old changes
+      // const pattern = /[0-9.,]/;
+      // let inputChar = String.fromCharCode(event.charCode);
+      // if (!pattern.test(inputChar)) {
+      //   // invalid character, prevent input
+      //   event.preventDefault();
+      // }
+
+      // new code added for transaction amount comma separator
+      // debugger
+      //  console.log(this.slideOneForm)
+      //  console.log(event.value);
+      //const pattern = /[0-9.,]/;
+      let value: string;
+      value = this.depositForm.value.transactionAmount;
+
+      //let inputChar = String.fromCharCode(event.charCode);
+      // debugger;
+      this.transAmount = value;
+      // debugger
+      const pattern = value;
+      let lastCharIsPoint = false;
+      if (pattern.charAt(pattern.length - 1) === '.') {
+        lastCharIsPoint = true;
+      }
+      const num = pattern.replace(/[^0-9.]/g, '');
+      this.transAmt = Number(num);
+      this.transAmount = this.transAmt.toLocaleString('en-US');
+      if (lastCharIsPoint) {
+        this.transAmount = this.transAmount.concat('.');
+      }
+
+      this.cdr.markForCheck();
     }
-
-
-
-numberOnlyValidation(event: any) {
-  this.transAmt= event.target.value;
-  console.log(event.target.value);
-this.IntValue=Math.floor(this.depositForm.value.transactionAmount).toString().length;
-if(this.IntValue>3){
-//old changes
-  // const pattern = /[0-9.,]/;
-  // let inputChar = String.fromCharCode(event.charCode);
-  // if (!pattern.test(inputChar)) {
-  //   // invalid character, prevent input
-  //   event.preventDefault();
-  // }
-
-  // new code added for transaction amount comma separator
-  // debugger
-  //  console.log(this.slideOneForm)
-  //  console.log(event.value);
-   //const pattern = /[0-9.,]/;
-   let value:string;
-   value=this.depositForm.value.transactionAmount;
- 
-   //let inputChar = String.fromCharCode(event.charCode);
-  // debugger;
-   this.transAmount = value;
-  // debugger
-   const pattern = value;
-   let lastCharIsPoint = false;
- if (pattern.charAt(pattern.length - 1) === '.') {
-   lastCharIsPoint = true;
- }
- const num = pattern.replace(/[^0-9.]/g, '');
- this.transAmt = Number(num);
- this.transAmount = this.transAmt.toLocaleString('en-US');
- if (lastCharIsPoint) {
-   this.transAmount = this.transAmount.concat('.');
- }
- this.changeDef.detectChanges();
-
-
-
-}
-// console.log(this.transAmt);
-console.log(this.currentBalance);
-console.log(this.transAmt);
-this.transAmt=this.transAmt.replace(/,/g, '');
-console.log(this.transAmt);
-// if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-//   console.log("Bigger");
-//   this.openToast1();
-//   // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
-//   //   duration: 2000,
-//   //   verticalPosition: 'top',
-//   //   horizontalPosition: 'right'
-//   // });
-// }
-//   // this.slideOneForm.controls['transactionAmount'].setValidators();
-//   else{
-//     return;
-//   }
-}
+    // console.log(this.transAmt);
+    console.log(this.currentBalance);
+    console.log(this.transAmt);
+    this.transAmt = this.transAmt.replace(/,/g, '');
+    console.log(this.transAmt);
+    // if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+    //   console.log("Bigger");
+    //   this.openToast1();
+    //   // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
+    //   //   duration: 2000,
+    //   //   verticalPosition: 'top',
+    //   //   horizontalPosition: 'right'
+    //   // });
+    // }
+    //   // this.slideOneForm.controls['transactionAmount'].setValidators();
+    //   else{
+    //     return;
+    //   }
+  }
   isShow: boolean = true;
 
   selectedCountryCode = '';
@@ -221,11 +238,11 @@ console.log(this.transAmt);
     });
     toast.present();
   }
-  
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: BranchComponent,
-      id:"branchModal",
+      id: "branchModal",
       componentProps: {
       }
     });
@@ -244,7 +261,7 @@ console.log(this.transAmt);
 
   selectCurrencyCode(currency) {
     console.log(currency);
-    this.currencyData =  this.currencies.find(x => x.countryCode == currency);
+    this.currencyData = this.currencies.find(x => x.countryCode == currency);
     this.selectedCountryCode = this.currencyData.countryCode.toLowerCase();
   }
 
@@ -273,11 +290,11 @@ console.log(this.transAmt);
 
     var date = new Date(form.transactionDate);
     console.log(date) //4/
-    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
     form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
-    this.currencyData =  this.currencies.find(x => x.countryCode == form.transactionCurrency);
+    this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
     // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
@@ -294,26 +311,26 @@ console.log(this.transAmt);
     // localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
-    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    form.transactionAmount = form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     console.log(form);
-    console.log("form::",form);
+    console.log("form::", form);
 
     this.api.cashDepositSave(form).subscribe((resp) => {
       localStorage.setItem("TransactionTime", resp.transactionTime);
        this.cashDepositResp = resp;
       this.transactionId = this.cashDepositResp.transactionId;
-     console.log('transactionId::',this.transactionId);
-     if( this.cashDepositResp === 200 || this.cashDepositResp !== null ){
-       this.shareDataService.shareTransactionId(this.transactionId);
-       this.depositForm.reset();
-       this.router.navigate(['token-generation']);
+      console.log('transactionId::', this.transactionId);
+      if (this.cashDepositResp === 200 || this.cashDepositResp !== null) {
+        this.shareDataService.shareTransactionId(this.transactionId);
+        this.depositForm.reset();
+        this.router.navigate(['token-generation']);
       }
-   });
-  
+    });
+
 
   }
-  
+
   accountEvent(event) {
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
@@ -324,9 +341,9 @@ console.log(this.transAmt);
       console.log(this.depositForm.controls)
       //debugger;
       console.log(accbal.transactionAmount);
-     
+
       this.depositForm.controls.accountBalance.patchValue(accbal.amount);
-      this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
+    
       localStorage.setItem("AccBranch", accbal.accountBranch);
       // this.depositForm.controls.transactionCurrency.patchValue(accbal.countryCode);
       this.selectCurrencyCode(accbal.accountCurrency);
@@ -369,35 +386,37 @@ console.log(this.transAmt);
         this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       }
       // this.users=dropdown;
-      for(let i in this.currencies) {
+      for (let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
         this.depositForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
-    }
+      }
     });
 
   }
-  savingAccountFun(filteredResponseSavingAccount)
-  {
+  savingAccountFun(filteredResponseSavingAccount) {
 
- console.log(filteredResponseSavingAccount);
- this.users = filteredResponseSavingAccount.custAccount;
+    console.log(filteredResponseSavingAccount);
+    this.users = filteredResponseSavingAccount.custAccount;
 
 
- this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
- this.currentBalance = this.users[0].amount;
+    this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
+    this.currentBalance = this.users[0].amount;
 
- this.depositForm.get('accountNumber').patchValue(this.users[0].accountId);
- this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
- this.depositForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
+    this.depositForm.get('accountNumber').patchValue(this.users[0].accountId);
+    this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
+    this.depositForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.depositForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
+    this.depositForm.get('transactionBranch').patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
 
- }
+    this.cdr.markForCheck();
+  }
   validateDisablebutton(button) {
 
     this.depositForm.valueChanges.subscribe(v => {
       // console.log("v:: ", v);
       if (button === 'disable1') {
         if (v.accountBranch != '' && v.accountNumber != '' && v.transactionAmount != ''
-         && v.transactionCurrency != '' && v.transactionAmount != 0) {
+          && v.transactionCurrency != '' && v.transactionAmount != 0) {
           this.submitted = false;
         } else {
           this.submitted = true;

@@ -11,6 +11,7 @@ import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 
@@ -35,12 +36,14 @@ export class ChequewithdrawalPage implements OnInit {
   transactionId: any;
   IntValue: number;
   nearestBrn: boolean;
+
   constructor(private router: Router,
     private fb: FormBuilder,
     private api: ApiService,public toastCtrl: ToastController,
     private modalController: ModalController,
     public datepipe: DatePipe,
-    private shareDataService: DataService,private changeDef: ChangeDetectorRef) { }
+    public loading: LoadingService,
+    private shareDataService: DataService,private cdr: ChangeDetectorRef) { }
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
   // for transaction amount comma separator
@@ -71,11 +74,7 @@ export class ChequewithdrawalPage implements OnInit {
     //   console.log('backend dropdown', dropdown);
     //   this.users=dropdown;
     // });
-    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-      console.log('backend resp in home', resp);
-      this.customerDetails = resp;
-      this.savingAccountFun(resp);
-    })
+   
     console.log("customer_id", this.customerId)
     this.slideOneForm = this.fb.group({
       transactionId: ['', [Validators.required]],
@@ -109,6 +108,7 @@ export class ChequewithdrawalPage implements OnInit {
     })
     console.log(this.slideOneForm.value);
     this.getCountrynameValues();
+    this.loadData();
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
@@ -122,6 +122,18 @@ export class ChequewithdrawalPage implements OnInit {
       }
     })
 
+  }
+
+  loadData(){
+    this.loading.present();
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      this.loading.dismiss();
+      console.log('backend resp in home', resp);
+      this.customerDetails = resp;
+      this.savingAccountFun(resp);
+    },(err:any) =>{
+      this.loading.dismiss();
+    })
   }
 
   get f() { return this.slideOneForm.controls; }
@@ -165,10 +177,8 @@ export class ChequewithdrawalPage implements OnInit {
    if (lastCharIsPoint) {
      this.transAmount = this.transAmount.concat('.');
    }
-   this.changeDef.detectChanges();
-  
-  
-  
+
+   this.cdr.detectChanges();
   }
   // console.log(this.transAmt);
   console.log(this.currentBalance);
@@ -223,6 +233,10 @@ export class ChequewithdrawalPage implements OnInit {
     this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
+    this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.slideOneForm.get('transactionBranch').patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.cdr.markForCheck();
+    
   }
   changeSelectedCountryCode(value: string): void {
     // this.selectedCountryCode = value;

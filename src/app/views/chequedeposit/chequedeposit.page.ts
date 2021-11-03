@@ -11,6 +11,7 @@ import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { ReturnStatement } from '@angular/compiler';
 import { DatePipe } from '@angular/common';
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
 
 
 @Component({
@@ -280,7 +281,7 @@ export class ChequedepositPage implements OnInit {
     form.transactionCurrency = this.currencyData.currencyCode;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm"); 
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
 
     form.productCode = this.productCode;
@@ -291,10 +292,10 @@ export class ChequedepositPage implements OnInit {
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
-
+    form.transactionTime=this.format24HrsTo12Hrs(form.transactionTime);
     localStorage.setItem("AccountNumber", this.accountNum);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+    // localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     //console.log(this.transactionAmount);
@@ -302,6 +303,7 @@ export class ChequedepositPage implements OnInit {
     console.log(this.transactionAmount);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
+      localStorage.setItem("TransactionTime", resp.transactionTime)
       this.chequeDeposit = resp;
       this.transactionId = this.chequeDeposit.transactionId;
       console.log('transactionId::',this.transactionId);
@@ -338,7 +340,28 @@ export class ChequedepositPage implements OnInit {
     this.currentBalance = currentBalance;
 
   }
-
+  openPopup()
+  { console.log("popup");
+    this.modalController.create({
+      component:TimeSlotsComponent,
+      componentProps:{
+        date:this.slideOneForm.get('transactionDate').value,
+      }
+    }).then(modalResp=>{
+      modalResp.present()
+      modalResp.onDidDismiss().then(res=>{
+        if(res.data!=null)
+        {
+          console.log(res);
+          this.slideOneForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
+  format24HrsTo12Hrs(time){
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
 }
 interface CountryType {
   code: string;

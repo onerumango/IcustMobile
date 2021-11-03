@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
 
 
 
@@ -258,14 +259,14 @@ export class ChequewithdrawalPage implements OnInit {
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
 
     form.customerId = this.customerId;
     form.productCode = this.productCode;
     form.tokenOrigin = this.tokenOrigin;
 
     console.log(form);
-
+    form.transactionTime=this.format24HrsTo12Hrs(form.transactionTime);
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
@@ -273,7 +274,7 @@ export class ChequewithdrawalPage implements OnInit {
 
     localStorage.setItem("AccountNumber", this.accountNum);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+    // localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     //console.log(this.transactionAmount);
@@ -283,6 +284,7 @@ export class ChequewithdrawalPage implements OnInit {
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.chequeWithdrawal = resp;
+      localStorage.setItem("TransactionTime", resp.transactionTime);
       this.transactionId = this.chequeWithdrawal.transactionId;
       console.log('transactionId::',this.transactionId);
      if( this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null ){
@@ -295,7 +297,28 @@ export class ChequewithdrawalPage implements OnInit {
 
 
   }
-
+  format24HrsTo12Hrs(time){
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
+  openPopup()
+  { console.log("popup");
+    this.modalController.create({
+      component:TimeSlotsComponent,
+      componentProps:{
+        date:this.slideOneForm.get('transactionDate').value,
+      }
+    }).then(modalResp=>{
+      modalResp.present()
+      modalResp.onDidDismiss().then(res=>{
+        if(res.data!=null)
+        {
+          console.log(res);
+          this.slideOneForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
   accountEvent(event) {
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {

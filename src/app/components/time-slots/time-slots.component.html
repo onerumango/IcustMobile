@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="text-center">Available Slots</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-button (click)="close()">close</ion-button> -->
+
+  <!-- <ion-label style="padding-left: 5%;">Time Slot*</ion-label> -->
+
+  <!-- [outline]="selected===slot ? 'true':'false'" -->
+   <!-- <ion-grid>
+    <ion-row class="ion-justify-content-evenly">
+      <ion-col size="4"*ngFor="let slot of TimeSolts;let i=index;" >
+          <ion-chip [id]="i+1" [color]="slot.booked==slot.booked ? 'primary':'' ||slot.available==slot.available ? 'primary':''" >
+              <ion-label (click)="onSelectiongTimeSlots($event,slot.time)">{{format24HrsTo12Hrs(slot.time)}}</ion-label>
+              <ion-icon name="checkmark-outline" *ngIf="selected==slot.time"></ion-icon>
+              
+            
+            </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>   -->
+  <!-- <ion-grid>
+      <ion-row class="ion-justify-content-evenly">
+        <ion-col size="4"*ngFor="let slot of TimeSolts;let i=index;" >
+            <ion-chip [id]="i+1" [ngClass]="{'bookedSlot': slot.booked, 'availableSlot' : slot.available,'selectedClass': dateCollection.indexOf(slot.time)!=-1}">
+                <ion-label (click)="onSelectiongTimeSlots($event,slot.time)" [color]="selected==slot.time ? 'primary':''">{{format24HrsTo12Hrs(slot.time)}}</ion-label>
+                <ion-icon name="checkmark-outline" *ngIf="selected==slot.time"></ion-icon>
+                
+              
+              </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+
+  <!-- new  -->
+  <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+  <ion-grid>
+  
+    <ion-row class="ion-justify-content-evenly">
+      <ion-col size="4" *ngFor="let slot of TimeSolts;let i=index">
+        <ion-chip [ngClass]="{'bookedSlot': slot.booked, 'availableSlot' : slot.available,'selectedClass': dateCollection.indexOf(slot.time)!=-1}">
+          <ion-label (click)="onSelectTime1(slot.time,i)">{{format24HrsTo12Hrs(slot.time)}}</ion-label>
+          <ion-icon name="checkmark-outline" *ngIf="selected==slot"></ion-icon>
+
+
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <input type="text" hidden > -->
+
+</ion-content>

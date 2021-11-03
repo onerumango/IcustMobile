@@ -41,14 +41,15 @@ export class TokenGenerationPage implements OnInit {
    }
 
   ngOnInit() {
+    console.log("token generation");
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.api.getIndex().subscribe(resp => {
       console.log(resp.index)
     this.assignProductCode(resp.index);
       })
-    setTimeout(() => {
-      this.generateQRCode(this.tokenObjects);
-    }, 100);
+    // setTimeout(() => {
+     
+    // }, 100);
     localStorage.getItem('AccountNumber');
     localStorage.getItem('TransactionDate');
 
@@ -61,7 +62,8 @@ export class TokenGenerationPage implements OnInit {
     
 
     console.log( this.transAmount)
-    
+    console.log(this.tokenObjects);
+    this.generateQRCode(this.tokenObjects);
   }
   assignProductCode(index: any) {
     this.productCode=index;
@@ -89,6 +91,7 @@ generateQRCode(token){
   this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
   this.tokenObjects.productCode=this.productCode;
   this.tokenObjects.phoneNumber=this.phoneNumber;
+  console.log("tokenObjects",this.tokenObjects);
 
   this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
     console.log("Token Response", tokenResp);

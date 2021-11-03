@@ -5,11 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BranchComponent } from './branch/branch.component';
 import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
 import { MapComponent } from './map/map.component';
+import { TimeSlotsComponent } from './time-slots/time-slots.component';
+
 
 @NgModule({
   declarations: [
     BranchComponent,
     AvatarPhotoComponent,
+    TimeSlotsComponent,
     MapComponent
   ],
   exports: [
@@ -23,7 +26,8 @@ import { MapComponent } from './map/map.component';
   entryComponents: [
     BranchComponent,
     AvatarPhotoComponent,
-    MapComponent
+    MapComponent,
+    TimeSlotsComponent
   ]
 })
 export class ComponentsModule { }

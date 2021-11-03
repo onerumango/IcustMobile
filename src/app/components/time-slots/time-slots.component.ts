@@ -147,8 +147,13 @@ export class TimeSlotsComponent implements OnInit {
   }
 
   close() {
+    this.modalCtr.dismiss(null);
+  }
+
+  done(){
     this.modalCtr.dismiss(this.selected);
   }
+  
   callingTimeslots() {
     this.TimeSolts = [
       {

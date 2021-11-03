@@ -39,22 +39,22 @@ export class ChequewithdrawalPage implements OnInit {
 
   constructor(private router: Router,
     private fb: FormBuilder,
-    private api: ApiService,public toastCtrl: ToastController,
+    private api: ApiService, public toastCtrl: ToastController,
     private modalController: ModalController,
     public datepipe: DatePipe,
     public loading: LoadingService,
-    private shareDataService: DataService,private cdr: ChangeDetectorRef) { }
+    private shareDataService: DataService, private cdr: ChangeDetectorRef) { }
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
   // for transaction amount comma separator
   //transactionAmount="10,000";
   //transactionAmount:double;
-  transactionAmount:any;
+  transactionAmount: any;
   transAmount: string;
   //transAmount:number;
-  isedit:boolean=true;
+  isedit: boolean = true;
   transAmt: any;
-  
+
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
@@ -74,7 +74,7 @@ export class ChequewithdrawalPage implements OnInit {
     //   console.log('backend dropdown', dropdown);
     //   this.users=dropdown;
     // });
-   
+
     console.log("customer_id", this.customerId)
     this.slideOneForm = this.fb.group({
       transactionId: ['', [Validators.required]],
@@ -115,23 +115,23 @@ export class ChequewithdrawalPage implements OnInit {
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
-        this.nearestBrn=true;
+        this.nearestBrn = true;
       } else {
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
-        this.nearestBrn=true;
+        this.nearestBrn = true;
       }
     })
 
   }
 
-  loadData(){
+  loadData() {
     this.loading.present();
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
       this.loading.dismiss();
       console.log('backend resp in home', resp);
       this.customerDetails = resp;
       this.savingAccountFun(resp);
-    },(err:any) =>{
+    }, (err: any) => {
       this.loading.dismiss();
     })
   }
@@ -152,46 +152,46 @@ export class ChequewithdrawalPage implements OnInit {
       }
     })
   }
-  
+
   numberOnlyValidation(event: any) {
-    this.transAmt= event.target.value;
+    this.transAmt = event.target.value;
     console.log(event.target.value);
-  this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
-  if(this.IntValue>3){
+    this.IntValue = Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+    if (this.IntValue > 3) {
 
-     let value:string;
-     value=this.slideOneForm.value.transactionAmount;
-   
-     //let inputChar = String.fromCharCode(event.charCode);
-    // debugger;
-     this.transAmount = value;
-    // debugger
-     const pattern = value;
-     let lastCharIsPoint = false;
-   if (pattern.charAt(pattern.length - 1) === '.') {
-     lastCharIsPoint = true;
-   }
-   const num = pattern.replace(/[^0-9.]/g, '');
-   this.transAmt = Number(num);
-   this.transAmount = this.transAmt.toLocaleString('en-US');
-   if (lastCharIsPoint) {
-     this.transAmount = this.transAmount.concat('.');
-   }
+      let value: string;
+      value = this.slideOneForm.value.transactionAmount;
 
-   this.cdr.detectChanges();
-  }
-  // console.log(this.transAmt);
-  console.log(this.currentBalance);
-  console.log(this.transAmt);
-  this.transAmt=this.transAmt.replace(/,/g, '');
-  console.log(this.transAmt);
-  if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-    console.log("Bigger");
-    this.openToast1();
- 
-  }
+      //let inputChar = String.fromCharCode(event.charCode);
+      // debugger;
+      this.transAmount = value;
+      // debugger
+      const pattern = value;
+      let lastCharIsPoint = false;
+      if (pattern.charAt(pattern.length - 1) === '.') {
+        lastCharIsPoint = true;
+      }
+      const num = pattern.replace(/[^0-9.]/g, '');
+      this.transAmt = Number(num);
+      this.transAmount = this.transAmt.toLocaleString('en-US');
+      if (lastCharIsPoint) {
+        this.transAmount = this.transAmount.concat('.');
+      }
+
+      this.cdr.detectChanges();
+    }
+    // console.log(this.transAmt);
+    console.log(this.currentBalance);
+    console.log(this.transAmt);
+    this.transAmt = this.transAmt.replace(/,/g, '');
+    console.log(this.transAmt);
+    if (parseFloat(this.currentBalance) < parseFloat(this.transAmt)) {
+      console.log("Bigger");
+      this.openToast1();
+
+    }
     // this.slideOneForm.controls['transactionAmount'].setValidators();
-    else{
+    else {
       return;
     }
   }
@@ -236,7 +236,7 @@ export class ChequewithdrawalPage implements OnInit {
     this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
     this.slideOneForm.get('transactionBranch').patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
     this.cdr.markForCheck();
-    
+
   }
   changeSelectedCountryCode(value: string): void {
     // this.selectedCountryCode = value;
@@ -267,7 +267,7 @@ export class ChequewithdrawalPage implements OnInit {
 
     var date = new Date(form.transactionDate);
     console.log(date) //4/
-    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
     form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
@@ -280,7 +280,7 @@ export class ChequewithdrawalPage implements OnInit {
     form.tokenOrigin = this.tokenOrigin;
 
     console.log(form);
-    form.transactionTime=this.format24HrsTo12Hrs(form.transactionTime);
+    form.transactionTime = this.format24HrsTo12Hrs(form.transactionTime);
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
@@ -292,7 +292,7 @@ export class ChequewithdrawalPage implements OnInit {
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     //console.log(this.transactionAmount);
-    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    form.transactionAmount = form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     //console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
@@ -300,33 +300,32 @@ export class ChequewithdrawalPage implements OnInit {
       this.chequeWithdrawal = resp;
       localStorage.setItem("TransactionTime", resp.transactionTime);
       this.transactionId = this.chequeWithdrawal.transactionId;
-      console.log('transactionId::',this.transactionId);
-     if( this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null ){
-       this.shareDataService.shareTransactionId(this.transactionId);
-       this.slideOneForm.reset();
-       this.router.navigate(['token-generation']);
+      console.log('transactionId::', this.transactionId);
+      if (this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null) {
+        this.shareDataService.shareTransactionId(this.transactionId);
+        this.slideOneForm.reset();
+        this.router.navigate(['token-generation']);
       }
 
     });
 
 
   }
-  format24HrsTo12Hrs(time){
+  format24HrsTo12Hrs(time) {
     var formatted = moment(time, "HH:mm").format("LT");
     return formatted;
   }
-  openPopup()
-  { console.log("popup");
+  openPopup() {
+    console.log("popup");
     this.modalController.create({
-      component:TimeSlotsComponent,
-      componentProps:{
-        date:this.slideOneForm.get('transactionDate').value,
+      component: TimeSlotsComponent,
+      componentProps: {
+        date: this.slideOneForm.get('transactionDate').value,
       }
-    }).then(modalResp=>{
+    }).then(modalResp => {
       modalResp.present()
-      modalResp.onDidDismiss().then(res=>{
-        if(res.data!=null)
-        {
+      modalResp.onDidDismiss().then(res => {
+        if (res.data != null) {
           console.log(res);
           this.slideOneForm.get('transactionTime').patchValue(res.data);
         }
@@ -345,10 +344,10 @@ export class ChequewithdrawalPage implements OnInit {
       this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       localStorage.setItem("AccBranch", accbal.accountBranch);
-      for(let i in this.currencies) {
+      for (let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
         this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
-    }
+      }
       // this.users=dropdown;
 
 

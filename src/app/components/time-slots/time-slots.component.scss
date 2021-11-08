@@ -1,0 +1,16 @@
+.bookedSlot{
+    // background-image: linear-gradient(to right, #9c9c9c ,#c4c4c4,#f5f5f5)!important;
+    background-color: rgb(212, 212, 212)!important;
+    pointer-events: none;
+    // opacity: .5 !important;
+    }
+    .availableSlot{
+      background-color: #ffffff !important;
+      cursor:pointer;
+      color: #7c7c7c !important;
+    }
+    .selectedClass{
+        color: #f7f7f7 !important;
+        background-image: linear-gradient(to right, #FE6700 ,#FE8430,#FEA96E)!important; 
+        // background-color:lightblue;
+      }

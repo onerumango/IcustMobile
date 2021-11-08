@@ -93,7 +93,12 @@ export class ApiService {
 getCurrencyValues(){
   return this.http.get(`${API_URL}/currency`).pipe(catchError(this.errorHandler));
 }
+gettingAvailableSlots(selectedDate)
+{ console.log(selectedDate);
+  return this.http.get<any>(`${API_URL}/rest/data/customer/availableslots?scheduledDate=${selectedDate}`).pipe(catchError(this.errorHandler));
+ 
 
+}
 }
 
 

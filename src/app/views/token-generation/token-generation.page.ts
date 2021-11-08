@@ -6,14 +6,15 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { ApiService } from 'src/app/services/api.service';
 import { __assign } from 'tslib';
 import { DataService } from "src/app/services/data.service";
+import { ToastService } from 'src/app/services/toast.service';
 // import { setTimeout } from 'timers';
 export class TokenObjects {
   transactionId: any;
-  accountId:string;
-  productCode:string;
-  transactionDate:string;
-  timeSlot:string;
-  phoneNumber:any;
+  accountId: string;
+  productCode: string;
+  transactionDate: string;
+  timeSlot: string;
+  phoneNumber: any;
 }
 @Component({
   selector: 'app-token-generation',
@@ -21,31 +22,35 @@ export class TokenObjects {
   styleUrls: ['./token-generation.page.scss'],
 })
 export class TokenGenerationPage implements OnInit {
-  tokenObjects =new TokenObjects();
+  tokenObjects = new TokenObjects();
   tokenResponse: any;
-  transAmount:any;
-  transDate:any;
-  transTime:any;
+  transAmount: any;
+  transDate: any;
+  transTime: any;
   public myAngularxQrCode: string = null;
-  blobUrl: any ;
+  blobUrl: any;
   imageToShow: any;
   branch: string;
   phoneNumber: string;
   productCode: any;
 
   constructor(
-    private router:Router,
+    private router: Router,
     private api: ApiService,
-    private shareDataService:DataService) {
+    private toastService: ToastService,
+    private shareDataService: DataService) {
     this.myAngularxQrCode = 'Your QR code data string';
-   }
+  }
 
   ngOnInit() {
+    console.log("token generation");
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
     this.api.getIndex().subscribe(resp => {
       console.log(resp.index)
     this.assignProductCode(resp.index);
       })
+  
+  
     setTimeout(() => {
       this.generateQRCode(this.tokenObjects);
     }, 100);
@@ -61,15 +66,15 @@ export class TokenGenerationPage implements OnInit {
     
 
     console.log( this.transAmount)
-    
+    console.log(this.tokenObjects);
+    this.generateQRCode(this.tokenObjects);
   }
   assignProductCode(index: any) {
-    this.productCode=index;
+    this.productCode = index;
   }
-next()
-{
-  this.router.navigate(['tabs']);
-}
+  next() {
+    this.router.navigate(['tabs']);
+  }
 
 generateQRCode(token){
   console.log("Token",token);
@@ -89,27 +94,32 @@ generateQRCode(token){
   this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
   this.tokenObjects.productCode=this.productCode;
   this.tokenObjects.phoneNumber=this.phoneNumber;
+  console.log("tokenObjects",this.tokenObjects);
 
   this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
     console.log("Token Response", tokenResp);
     this.createImageFromBlob(tokenResp);
     },
-    err=>
-    {
-      console.log("err : ",err);
-     
-    });
-    
-}
+      err => {
+        console.log("err : ", err);
 
-createImageFromBlob(image: Blob) {
-   let reader = new FileReader();
-   reader.addEventListener("load", () => {
+      });
+
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
       this.imageToShow = reader.result;
-   }, false);
+    }, false);
 
-   if (image) {
+    if (image) {
       reader.readAsDataURL(image);
-   }
-}
+    }
+  }
+
+  addToWallet() {
+    this.toastService.showToast("Added Successfully!");
+    this.router.navigate(['tabs']);
+  }
 }

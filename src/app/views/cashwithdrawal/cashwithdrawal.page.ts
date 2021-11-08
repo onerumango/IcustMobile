@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, IonDatetime } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
@@ -10,6 +10,9 @@ import { DataService } from "src/app/services/data.service";
 import { BranchComponent } from 'src/app/components/branch/branch.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { LoadingService } from 'src/app/services/loading.service';
+
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
 
 
 
@@ -19,7 +22,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./cashwithdrawal.page.scss'],
 })
 export class CashwithdrawalPage implements OnInit {
-  IntValue:any;
+  IntValue: any;
   title: any = 'Cash Withdrawal';
   savingAccount: any[];
   // maxData : any = (new Date()).getFullYear() + 3;
@@ -37,20 +40,26 @@ export class CashwithdrawalPage implements OnInit {
   currencyData: any;
   transactionId: any;
   nearestBrn: boolean;
+  timeSlots: any;
+  customPickerOptions: {};
+  mydt: any;
   constructor(
     private router: Router,
     private modalController: ModalController,
     private fb: FormBuilder,
+    public loading: LoadingService,
     public datepipe: DatePipe,
-    private api: ApiService, public toastCtrl: ToastController,
-    private shareDataService: DataService,private changeDef: ChangeDetectorRef
+    private api: ApiService,
+    public toastCtrl: ToastController,
+    private shareDataService: DataService,
+    private cdr: ChangeDetectorRef,
   ) { }
-   //for comma separator transaction amount
+  //for comma separator transaction amount
   //transactionAmount:string;
-  transactionAmount:any;
+  transactionAmount: any;
   transAmount: string;
   //transAmount:number;
-  isedit:boolean=true;
+  isedit: boolean = true;
   transAmt: any;
   //transactionAmount: string;
   accountBranch = 'Loita street';
@@ -64,25 +73,15 @@ export class CashwithdrawalPage implements OnInit {
   transTime: string;
   curr: string;
   customerDetails: any;
+  selectAbleColor: string = "secondary";
 
   ngOnInit() {
 
     this.customerId = sessionStorage.getItem('customer_id');
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
-    console.log("phoneNumber", this.phoneNumber)
+    console.log("phoneNumber", this.phoneNumber);
     this.getCountrynameValues();
-    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-      console.log('backend resp in home', resp);
-      this.customerDetails = resp;
-      this.savingAccountFun(resp);
-
-    })
-
-
-
-
-
-    console.log("customer_id", this.customerId)
+    console.log("customer_id", this.customerId);
     // this.customerId = sessionStorage.getItem('customer_id');
     //   this.api.accountDropDown(this.customerId).subscribe((dropdown) => {
     //     console.log('backend dropdown', dropdown);
@@ -121,20 +120,33 @@ export class CashwithdrawalPage implements OnInit {
     });
     console.log(this.slideOneForm.value);
 
+    this.loadData();
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
       localStorage.setItem("BranchFlag", val);
-
       if (val == false) {
-        
         this.slideOneForm.get('transactionBranch').patchValue("");
-        this.nearestBrn=true;
-      }else{
-        this.nearestBrn=false;
+        this.nearestBrn = true;
+      } else {
+        console.log("branch", this.customerDetails.custAccount[0].accountBranch);
+        this.nearestBrn = false;
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
+  }
+
+  loadData() {
+    this.loading.present();
+    this.api.custpomerDetails(this.phoneNumber)
+      .subscribe((resp) => {
+        this.loading.dismiss();
+        console.log('backend resp in home', resp);
+        this.customerDetails = resp;
+        this.savingAccountFun(resp);
+      }, (err: any) => {
+        this.loading.dismiss();
+      })
   }
 
   get f() { return this.slideOneForm.controls; }
@@ -152,54 +164,54 @@ export class CashwithdrawalPage implements OnInit {
   selectedCountryCode = '';
 
 
-numberOnlyValidation(event: any) {
-  this.transAmt= event.target.value;
-  console.log(event.target.value);
-this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
-if(this.IntValue>3){
+  numberOnlyValidation(event: any) {
+    this.transAmt = event.target.value;
+    console.log(event.target.value);
+    this.IntValue = Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+    if (this.IntValue > 3) {
 
-   let value:string;
-   value=this.slideOneForm.value.transactionAmount;
- 
-   //let inputChar = String.fromCharCode(event.charCode);
-  // debugger;
-   this.transAmount = value;
-  // debugger
-   const pattern = value;
-   let lastCharIsPoint = false;
- if (pattern.charAt(pattern.length - 1) === '.') {
-   lastCharIsPoint = true;
- }
- const num = pattern.replace(/[^0-9.]/g, '');
- this.transAmt = Number(num);
- this.transAmount = this.transAmt.toLocaleString('en-US');
- if (lastCharIsPoint) {
-   this.transAmount = this.transAmount.concat('.');
- }
- this.changeDef.detectChanges();
+      let value: string;
+      value = this.slideOneForm.value.transactionAmount;
+
+      //let inputChar = String.fromCharCode(event.charCode);
+      // debugger;
+      this.transAmount = value;
+      // debugger
+      const pattern = value;
+      let lastCharIsPoint = false;
+      if (pattern.charAt(pattern.length - 1) === '.') {
+        lastCharIsPoint = true;
+      }
+      const num = pattern.replace(/[^0-9.]/g, '');
+      this.transAmt = Number(num);
+      this.transAmount = this.transAmt.toLocaleString('en-US');
+      if (lastCharIsPoint) {
+        this.transAmount = this.transAmount.concat('.');
+      }
+      this.cdr.markForCheck();
 
 
 
-}
-// console.log(this.transAmt);
-console.log(this.currentBalance);
-console.log(this.transAmt);
-this.transAmt=this.transAmt.replace(/,/g, '');
-console.log(this.transAmt);
-if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-  console.log("Bigger");
-  this.openToast1();
-  // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
-  //   duration: 2000,
-  //   verticalPosition: 'top',
-  //   horizontalPosition: 'right'
-  // });
-}
-  // this.slideOneForm.controls['transactionAmount'].setValidators();
-  else{
-    return;
+    }
+    // console.log(this.transAmt);
+    console.log(this.currentBalance);
+    console.log(this.transAmt);
+    this.transAmt = this.transAmt.replace(/,/g, '');
+    console.log(this.transAmt);
+    if (parseFloat(this.currentBalance) < parseFloat(this.transAmt)) {
+      console.log("Bigger");
+      this.openToast1();
+      // this.snack.open(`Transaction Amount should not exceed than Account Balance`, 'OK', {
+      //   duration: 2000,
+      //   verticalPosition: 'top',
+      //   horizontalPosition: 'right'
+      // });
+    }
+    // this.slideOneForm.controls['transactionAmount'].setValidators();
+    else {
+      return;
+    }
   }
-}
   async openToast1() {
     const toast = await this.toastCtrl.create({
       message: 'Transaction Amount should not exceed than Account Balance',
@@ -239,7 +251,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
   }
 
 
-  async presentModal() {  
+  async presentModal() {
     const modal = await this.modalController.create({
       component: BranchComponent,
       id: "branchModal",
@@ -272,6 +284,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     this.flag = true;
   }
   goToNextScreen(form) {
+    console.log(form);
     this.api.setIndex({
       index: 'CHW'
     });
@@ -279,7 +292,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
 
     var date = new Date(form.transactionDate);
     console.log(date) //4/
-    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
     form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
@@ -287,8 +300,8 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     form.transactionCurrency = this.currencyData.currencyCode;
     form.accountNumber = form.accountNumber;
     form.productCode = this.productCode;
-
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    form.transactionTime = this.format24HrsTo12Hrs(form.transactionTime);
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
     form.customerId = this.customerId;
 
     form.tokenOrigin = 'Mobile';
@@ -296,28 +309,33 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
+
     this.transDate = moment(new Date(form.transactionDate)).format("DD-MM-YYYY").toString();
 
     localStorage.setItem("AccountNumber", form.accountNumber);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+
     localStorage.setItem("TransactionAmount", form.transactionAmount);
-    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    form.transactionAmount = form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     console.log(form);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     console.log(form);
+
+    console.log("after", form);
+    // this.format24HrsTo12Hrs(form.transactionTime);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.cashWithdrawResponse = resp;
       this.transactionId = this.cashWithdrawResponse.transactionId;
-     console.log('transactionId::',this.transactionId);
-     if( this.cashWithdrawResponse === 200 || this.cashWithdrawResponse !== null ){
-       this.shareDataService.shareTransactionId(this.transactionId);
-       this.slideOneForm.reset();
-       this.router.navigate(['token-generation']);
+      localStorage.setItem("TransactionTime", resp.transactionTime);
+      if (this.cashWithdrawResponse === 200 || this.cashWithdrawResponse !== null) {
+        this.shareDataService.shareTransactionId(this.transactionId);
+        this.slideOneForm.reset();
+        this.router.navigate(['token-generation']);
+        console.log('transactionId::', this.transactionId);
       }
-   });
+    });
   }
   async openToast() {
     const toast = await this.toastCtrl.create({
@@ -353,7 +371,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     }
   ]
   accountEvent(event) {
-    this.isedit=false;
+    this.isedit = false;
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       // console.log('backend accbal', accbal.lastTransactions);
@@ -371,7 +389,7 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
       // this.selectCurrencyCode(accbal.accountCurrency);
       //debugger;
       // console.log(accbal.transactionAmount);
-      if(accbal.transactionAmount!=null || accbal.transactionAmount!=undefined ){
+      if (accbal.transactionAmount != null || accbal.transactionAmount != undefined) {
         this.numberOnlyValidation(accbal.transactionAmount);
       }
       console.log('backend accbal', accbal.lastTransactions);
@@ -452,10 +470,10 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
       //   this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       // }
       // console.log(accbal.accountCurrency.countryName);
-      for(let i in this.currencies) {
+      for (let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
         this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
-    }
+      }
       // this.selectedCountryCode = (currency.code).toLowerCase();
       // this.users=dropdown;
 
@@ -477,18 +495,74 @@ if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
     this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
+    this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.slideOneForm.get('transactionBranch').patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.cdr.markForCheck();
   }
 
   async showToast(errorMessage) {
     const toast = await this.toastCtrl.create({
-      message: `${errorMessage}` ,//'OTP has been sent again',
+      message: `${errorMessage}`,//'OTP has been sent again',
       duration: 5000
     });
     toast.present();
-   }
+  }
+  gettingAvailableSlots() {
+    console.log("here in availabel slotshhhhhhhh");
+    console.log(this.slideOneForm.controls.transactionDate.value);
+    // let date=new Date()
+    if (this.slideOneForm.controls.transactionDate.value != null) {
+      let date = this.datepipe.transform(this.slideOneForm.controls.transactionDate.value, 'yyyy-MM-dd');
+      let date1 = this.datepipe.transform(date, 'yyyy-MM-dd');
+      console.log("here in slots", date1);
+      this.api.gettingAvailableSlots(date1).subscribe(resp => {
+        console.log(resp);
+        this.timeSlots = resp;
+
+      })
+    }
+    else {
+      return;
+    }
+  }
+  onSelectiongTimeSlots(event, data) {
+    console.log("hitting", data);
+    this.slideOneForm.get('transactionTime').patchValue(data);
+    console.log(this.slideOneForm.value);
+    if (this.selectAbleColor === "secondary") {
+      this.selectAbleColor = "primary";
+    }
+    else {
+      this.selectAbleColor = "secondary";
+    }
+  }
+
+  format24HrsTo12Hrs(time) {
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
+  openPopup() {
+    console.log("popup");
+    this.modalController.create({
+      component: TimeSlotsComponent,
+      componentProps: {
+        date: this.slideOneForm.get('transactionDate').value,
+      }
+    }).then(modalResp => {
+      modalResp.present()
+      modalResp.onDidDismiss().then(res => {
+        if (res.data != null) {
+          console.log(res);
+          this.slideOneForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
 
 
 }
+
+
 interface CountryType {
   code: string;
   countryName: string;

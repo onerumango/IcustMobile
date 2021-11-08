@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { DataService } from "src/app/services/data.service";
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { TimeSlotsComponent } from 'src/app/components/time-slots/time-slots.component';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 
@@ -34,23 +36,25 @@ export class ChequewithdrawalPage implements OnInit {
   transactionId: any;
   IntValue: number;
   nearestBrn: boolean;
+
   constructor(private router: Router,
     private fb: FormBuilder,
-    private api: ApiService,public toastCtrl: ToastController,
+    private api: ApiService, public toastCtrl: ToastController,
     private modalController: ModalController,
     public datepipe: DatePipe,
-    private shareDataService: DataService,private changeDef: ChangeDetectorRef) { }
+    public loading: LoadingService,
+    private shareDataService: DataService, private cdr: ChangeDetectorRef) { }
   productCode = 'CQW';
   tokenOrigin = 'Mobile';
   // for transaction amount comma separator
   //transactionAmount="10,000";
   //transactionAmount:double;
-  transactionAmount:any;
+  transactionAmount: any;
   transAmount: string;
   //transAmount:number;
-  isedit:boolean=true;
+  isedit: boolean = true;
   transAmt: any;
-  
+
   accountBranch = "Loita street";
   flag: boolean = true;
   currencyValue: string;
@@ -70,11 +74,7 @@ export class ChequewithdrawalPage implements OnInit {
     //   console.log('backend dropdown', dropdown);
     //   this.users=dropdown;
     // });
-    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-      console.log('backend resp in home', resp);
-      this.customerDetails = resp;
-      this.savingAccountFun(resp);
-    })
+
     console.log("customer_id", this.customerId)
     this.slideOneForm = this.fb.group({
       transactionId: ['', [Validators.required]],
@@ -108,19 +108,32 @@ export class ChequewithdrawalPage implements OnInit {
     })
     console.log(this.slideOneForm.value);
     this.getCountrynameValues();
+    this.loadData();
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag?", val);
       localStorage.setItem("BranchFlag", val);
       if (val == false) {
         this.slideOneForm.get('transactionBranch').patchValue("");
-        this.nearestBrn=true;
+        this.nearestBrn = true;
       } else {
         this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
-        this.nearestBrn=true;
+        this.nearestBrn = true;
       }
     })
 
+  }
+
+  loadData() {
+    this.loading.present();
+    this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
+      this.loading.dismiss();
+      console.log('backend resp in home', resp);
+      this.customerDetails = resp;
+      this.savingAccountFun(resp);
+    }, (err: any) => {
+      this.loading.dismiss();
+    })
   }
 
   get f() { return this.slideOneForm.controls; }
@@ -139,48 +152,46 @@ export class ChequewithdrawalPage implements OnInit {
       }
     })
   }
-  
-  numberOnlyValidation(event: any) {
-    this.transAmt= event.target.value;
-    console.log(event.target.value);
-  this.IntValue=Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
-  if(this.IntValue>3){
 
-     let value:string;
-     value=this.slideOneForm.value.transactionAmount;
-   
-     //let inputChar = String.fromCharCode(event.charCode);
-    // debugger;
-     this.transAmount = value;
-    // debugger
-     const pattern = value;
-     let lastCharIsPoint = false;
-   if (pattern.charAt(pattern.length - 1) === '.') {
-     lastCharIsPoint = true;
-   }
-   const num = pattern.replace(/[^0-9.]/g, '');
-   this.transAmt = Number(num);
-   this.transAmount = this.transAmt.toLocaleString('en-US');
-   if (lastCharIsPoint) {
-     this.transAmount = this.transAmount.concat('.');
-   }
-   this.changeDef.detectChanges();
-  
-  
-  
-  }
-  // console.log(this.transAmt);
-  console.log(this.currentBalance);
-  console.log(this.transAmt);
-  this.transAmt=this.transAmt.replace(/,/g, '');
-  console.log(this.transAmt);
-  if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-    console.log("Bigger");
-    this.openToast1();
- 
-  }
+  numberOnlyValidation(event: any) {
+    this.transAmt = event.target.value;
+    console.log(event.target.value);
+    this.IntValue = Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
+    if (this.IntValue > 3) {
+
+      let value: string;
+      value = this.slideOneForm.value.transactionAmount;
+
+      //let inputChar = String.fromCharCode(event.charCode);
+      // debugger;
+      this.transAmount = value;
+      // debugger
+      const pattern = value;
+      let lastCharIsPoint = false;
+      if (pattern.charAt(pattern.length - 1) === '.') {
+        lastCharIsPoint = true;
+      }
+      const num = pattern.replace(/[^0-9.]/g, '');
+      this.transAmt = Number(num);
+      this.transAmount = this.transAmt.toLocaleString('en-US');
+      if (lastCharIsPoint) {
+        this.transAmount = this.transAmount.concat('.');
+      }
+
+      this.cdr.detectChanges();
+    }
+    // console.log(this.transAmt);
+    console.log(this.currentBalance);
+    console.log(this.transAmt);
+    this.transAmt = this.transAmt.replace(/,/g, '');
+    console.log(this.transAmt);
+    if (parseFloat(this.currentBalance) < parseFloat(this.transAmt)) {
+      console.log("Bigger");
+      this.openToast1();
+
+    }
     // this.slideOneForm.controls['transactionAmount'].setValidators();
-    else{
+    else {
       return;
     }
   }
@@ -222,6 +233,10 @@ export class ChequewithdrawalPage implements OnInit {
     this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
+    this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.slideOneForm.get('transactionBranch').patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
+    this.cdr.markForCheck();
+
   }
   changeSelectedCountryCode(value: string): void {
     // this.selectedCountryCode = value;
@@ -252,20 +267,20 @@ export class ChequewithdrawalPage implements OnInit {
 
     var date = new Date(form.transactionDate);
     console.log(date) //4/
-    let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');
     form.transactionDate = latest_date;
 
     // form.transactionTime=format(new Date(form.transactionTime), "HH:mm");
     this.currencyData = this.currencies.find(x => x.countryCode == form.transactionCurrency);
     form.transactionCurrency = this.currencyData.currencyCode;
-    form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
+    // form.transactionTime = format(new Date(form.transactionTime), 'hh:mm:ss a');
 
     form.customerId = this.customerId;
     form.productCode = this.productCode;
     form.tokenOrigin = this.tokenOrigin;
 
     console.log(form);
-
+    form.transactionTime = this.format24HrsTo12Hrs(form.transactionTime);
     this.accountNum = form.accountNumber;
     this.transactionAmount = form.transactionAmount;
     console.log(this.transactionAmount);
@@ -273,29 +288,50 @@ export class ChequewithdrawalPage implements OnInit {
 
     localStorage.setItem("AccountNumber", this.accountNum);
     localStorage.setItem("TransactionDate", this.transDate);
-    localStorage.setItem("TransactionTime", form.transactionTime);
+    // localStorage.setItem("TransactionTime", form.transactionTime);
     localStorage.setItem("TransactionAmount", this.transactionAmount);
     localStorage.setItem("TransactionBranch", form.transactionBranch);
     //console.log(this.transactionAmount);
-    form.transactionAmount=form.transactionAmount.replace(/,/g, '');
+    form.transactionAmount = form.transactionAmount.replace(/,/g, '');
     console.log(this.transactionAmount);
     //console.log(form);
     this.api.cashDepositSave(form).subscribe((resp) => {
       console.log('backend resp', resp);
       this.chequeWithdrawal = resp;
+      localStorage.setItem("TransactionTime", resp.transactionTime);
       this.transactionId = this.chequeWithdrawal.transactionId;
-      console.log('transactionId::',this.transactionId);
-     if( this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null ){
-       this.shareDataService.shareTransactionId(this.transactionId);
-       this.slideOneForm.reset();
-       this.router.navigate(['token-generation']);
+      console.log('transactionId::', this.transactionId);
+      if (this.chequeWithdrawal === 200 || this.chequeWithdrawal !== null) {
+        this.shareDataService.shareTransactionId(this.transactionId);
+        this.slideOneForm.reset();
+        this.router.navigate(['token-generation']);
       }
 
     });
 
 
   }
-
+  format24HrsTo12Hrs(time) {
+    var formatted = moment(time, "HH:mm").format("LT");
+    return formatted;
+  }
+  openPopup() {
+    console.log("popup");
+    this.modalController.create({
+      component: TimeSlotsComponent,
+      componentProps: {
+        date: this.slideOneForm.get('transactionDate').value,
+      }
+    }).then(modalResp => {
+      modalResp.present()
+      modalResp.onDidDismiss().then(res => {
+        if (res.data != null) {
+          console.log(res);
+          this.slideOneForm.get('transactionTime').patchValue(res.data);
+        }
+      })
+    })
+  }
   accountEvent(event) {
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
@@ -308,10 +344,10 @@ export class ChequewithdrawalPage implements OnInit {
       this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       localStorage.setItem("AccBranch", accbal.accountBranch);
-      for(let i in this.currencies) {
+      for (let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
         this.slideOneForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
-    }
+      }
       // this.users=dropdown;
 
 

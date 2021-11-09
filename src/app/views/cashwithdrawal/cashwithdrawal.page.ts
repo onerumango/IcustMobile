@@ -74,6 +74,7 @@ export class CashwithdrawalPage implements OnInit {
   curr: string;
   customerDetails: any;
   selectAbleColor: string = "secondary";
+  trnBrn = null ;
 
   ngOnInit() {
 
@@ -130,8 +131,10 @@ export class CashwithdrawalPage implements OnInit {
         this.nearestBrn = true;
       } else {
         console.log("branch", this.customerDetails.custAccount[0].accountBranch);
+        console.log("branch", this.trnBrn);
         this.nearestBrn = false;
-        this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+        this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+        // this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
   }
@@ -398,7 +401,7 @@ export class CashwithdrawalPage implements OnInit {
           this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
           }
           else{
-            var trnBrn = null ;
+           
             var brnCnt = 0;
             var brnOldCnt = 0 ;
             console.log("Else",accbal.lastTransactions);
@@ -413,13 +416,13 @@ export class CashwithdrawalPage implements OnInit {
                 }
               }
               if(brnOldCnt < brnCnt && brnCnt >= 2){
-                trnBrn = accbal.lastTransactions[i].transactionBranch ;
+                this.trnBrn = accbal.lastTransactions[i].transactionBranch ;
                 brnOldCnt = brnCnt ;
               }
               brnCnt = 0;
             }
-            if (trnBrn != null){
-              this.slideOneForm.controls.transactionBranch.patchValue(trnBrn);
+            if (this.trnBrn != null){
+              this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
             } else {
               this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
             }

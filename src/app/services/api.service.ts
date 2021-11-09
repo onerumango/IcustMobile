@@ -90,15 +90,17 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNumber}`)
   }
 
-getCurrencyValues(){
-  return this.http.get(`${API_URL}/currency`).pipe(catchError(this.errorHandler));
-}
-gettingAvailableSlots(selectedDate)
-{ console.log(selectedDate);
-  return this.http.get<any>(`${API_URL}/rest/data/customer/availableslots?scheduledDate=${selectedDate}`).pipe(catchError(this.errorHandler));
- 
+  getCurrencyValues(){
+    return this.http.get(`${API_URL}/currency`).pipe(catchError(this.errorHandler));
+  }
+  gettingAvailableSlots(selectedDate)
+  { console.log(selectedDate);
+    return this.http.get<any>(`${API_URL}/rest/data/customer/availableslots?scheduledDate=${selectedDate}`).pipe(catchError(this.errorHandler));
+  }
 
-}
+  getDashboardDataNew(tellerId: any) {
+    return this.http.get<any>(`${API_URL}/teller-service/api/dashboard/${tellerId}`)
+  }
 }
 
 

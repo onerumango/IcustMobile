@@ -1,0 +1,36 @@
+.transactionCard {
+    height: 525px;
+    width: 100%;
+}
+#wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    height:auto; 
+    width:75%;
+}
+.event {
+    flex-flow: row wrap;
+    box-sizing: border-box;
+    display: flex;
+    overflow-y: scroll;
+    height: 525px;
+}
+.cusNameClass {
+    font-size: small;
+}
+.cusHistoryContent {
+    color: #aba9a9;
+    font-size: 10px;
+}
+.email-icon {
+    color: #707070;
+    cursor: pointer;
+    float: right;
+    font-size: large;
+}
+.imgStyle {
+    margin-left: 10px; 
+    margin-right: 10px; 
+    height: 35px;
+    width: 30px;
+}

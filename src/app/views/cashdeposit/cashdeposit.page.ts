@@ -66,6 +66,7 @@ export class CashdepositPage implements OnInit {
   transDate: string
   transTime: string;
   toast: HTMLIonToastElement;
+  trnBrn = null;
   ngOnInit() {
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
@@ -151,7 +152,8 @@ export class CashdepositPage implements OnInit {
         this.nearestBrn = true;
       } else {
         this.nearestBrn = false;
-        this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+        this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
+        // this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
   }
@@ -355,7 +357,7 @@ export class CashdepositPage implements OnInit {
           this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
         }
         else {
-          var trnBrn = null;
+         
           var brnCnt = 0;
           var brnOldCnt = 0;
           console.log("Else", accbal.lastTransactions);
@@ -370,13 +372,13 @@ export class CashdepositPage implements OnInit {
               }
             }
             if (brnOldCnt < brnCnt && brnCnt >= 2) {
-              trnBrn = accbal.lastTransactions[i].transactionBranch;
+              this.trnBrn = accbal.lastTransactions[i].transactionBranch;
               brnOldCnt = brnCnt;
             }
             brnCnt = 0;
           }
-          if (trnBrn != null) {
-            this.depositForm.controls.transactionBranch.patchValue(trnBrn);
+          if (this.trnBrn != null) {
+            this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
           } else {
             this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
           }

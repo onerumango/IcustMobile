@@ -43,6 +43,9 @@ export class CashwithdrawalPage implements OnInit {
   timeSlots: any;
   customPickerOptions: {};
   mydt: any;
+  brnflg: any;
+  accBranch: string;
+  displayRadio: boolean;
   constructor(
     private router: Router,
     private modalController: ModalController,
@@ -124,16 +127,32 @@ export class CashwithdrawalPage implements OnInit {
     this.loadData();
 
     this.slideOneForm.get('branchFlag').valueChanges.subscribe(val => {
-      console.log("branch flag?", val);
+      console.log("branch flag? val", val);
+      console.log("branch flag?", this.brnflg);
       localStorage.setItem("BranchFlag", val);
-      if (val == false) {
-        this.slideOneForm.get('transactionBranch').patchValue("");
-        this.nearestBrn = true;
-      } else {
-        console.log("branch", this.customerDetails.custAccount[0].accountBranch);
-        console.log("branch", this.trnBrn);
-        this.nearestBrn = false;
+      // if (val == false) {
+      //   console.log("1st if");
+      //   this.slideOneForm.get('transactionBranch').patchValue("");
+      //   this.nearestBrn = true;
+      // }
+      if (this.brnflg == false && val == false) {
+        console.log("2nd if");
         this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+        this.nearestBrn = true;
+      } 
+      if (this.brnflg == true && val == false) {
+        console.log("2nd if");
+        this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
+        this.nearestBrn = true;
+      } 
+
+      else {
+        console.log("else");
+        this.nearestBrn = false;
+        // this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+        this.accBranch=localStorage.getItem("AccBranch");
+        console.log(this.accBranch);
+        this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
         // this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
     })
@@ -387,7 +406,7 @@ export class CashwithdrawalPage implements OnInit {
       this.slideOneForm.controls.accountBranch.patchValue(accbal.accountBranch);
       localStorage.setItem("AccBranch", accbal.accountBranch);
       // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
-      console.log(accbal);
+      // console.log(accbal);
       // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.selectCurrencyCode(accbal.accountCurrency);
       //debugger;
@@ -395,7 +414,7 @@ export class CashwithdrawalPage implements OnInit {
       if (accbal.transactionAmount != null || accbal.transactionAmount != undefined) {
         this.numberOnlyValidation(accbal.transactionAmount);
       }
-      console.log('backend accbal', accbal.lastTransactions);
+      // console.log('backend accbal', accbal.lastTransactions);
       if(accbal.lastTransactions!=null){
         if(accbal.lastTransactions.length <=2 ){
           this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
@@ -418,18 +437,31 @@ export class CashwithdrawalPage implements OnInit {
               if(brnOldCnt < brnCnt && brnCnt >= 2){
                 this.trnBrn = accbal.lastTransactions[i].transactionBranch ;
                 brnOldCnt = brnCnt ;
+                console.log("yhjghguuyjgh");
               }
               brnCnt = 0;
             }
-            if (this.trnBrn != null){
+            if (this.trnBrn != null && this.trnBrn!==accbal.accountBranch){
+              console.log(this.trnBrn);
+              this.slideOneForm.controls.branchFlag.patchValue(false);
               this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+              console.log(localStorage.getItem("BranchFlag"));
+              this.brnflg=localStorage.getItem("BranchFlag");
+              
+              this.brnflg=false;
+              this.nearestBrn = true;
             } else {
               this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+              this.nearestBrn = false;
+              this.brnflg=true;
+              console.log(this.nearestBrn);
+          
             }
           }
       }
       else{
         this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+        this.nearestBrn = false;
       }
       // if (accbal.lastTransactions != null) {
       //   if (accbal.lastTransactions.length <= 2) {

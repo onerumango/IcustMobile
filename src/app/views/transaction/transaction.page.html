@@ -6,6 +6,9 @@
 
 <ion-content>
   <div class="transactionCard">
+    <div *ngIf="displayInfo">
+      <p>{{message}}</p>
+    </div>
     <div class="event" [ngStyle]="{'overflow-y': notToShowAll2 ? 'hidden' : 'scroll'}">
       <ion-list style="padding-top: 3px; width: 90%; margin-left: 10px;">
         <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn">
@@ -28,15 +31,6 @@
           <!-- <ion-icon class="email-icon" (click)="showTransactionDetail(trans.transactionId)">mail-outline</ion-icon> -->
         </ion-item>
       </ion-list>
-    </div>
-
-    <div fxLayout="row wrap" class="view-card" fxLayoutGap="100px">
-      <!-- <a (mouseover)="changeText=true" (mouseout)="changeText=false">
-        <a *ngIf="notToShowAll2" (click)="notToShowAll2 = false" class="viewAll">View All ></a>
-      </a> -->
-      <!-- <a title="go to revert transaction summary" class="viewAll" (click)="openRevertTransactionDialog()"> 
-        View Revert Requests > 
-      </a> -->
     </div>
   </div>
 </ion-content>

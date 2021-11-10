@@ -140,12 +140,7 @@ export class CashwithdrawalPage implements OnInit {
         this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
         this.nearestBrn = true;
       } 
-      if (this.brnflg == true && val == false) {
-        console.log("2nd if");
-        this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
-        this.nearestBrn = true;
-      } 
-
+     
       else {
         console.log("else");
         this.nearestBrn = false;
@@ -155,6 +150,11 @@ export class CashwithdrawalPage implements OnInit {
         this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
         // this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
+       if (this.brnflg == true && val == false) {
+        this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
+        this.nearestBrn = true;
+      } 
+
     })
   }
 

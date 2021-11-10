@@ -180,12 +180,11 @@ this.accountType=customerDetails.accountType;
  
 
  }
- logOut()
- {
-   console.log("this is logout");
-   this.router.navigate(["/login"]);
-   localStorage.removeItem('PhoneNumLogin')
-  
-   
- }
+
+  logOut() {
+    console.log("this is logout");
+    this.router.navigate(["/login"]);
+    localStorage.removeItem('PhoneNumLogin');
+    sessionStorage.removeItem('customer_id');
+  }
 }

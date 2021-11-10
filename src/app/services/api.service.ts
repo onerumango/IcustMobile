@@ -98,8 +98,8 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/rest/data/customer/availableslots?scheduledDate=${selectedDate}`).pipe(catchError(this.errorHandler));
   }
 
-  getDashboardDataNew(tellerId: any) {
-    return this.http.get<any>(`${API_URL}/teller-service/api/dashboard/${tellerId}`)
+  getDashboardDataNew(customerId: any) {
+    return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`)
   }
 }
 

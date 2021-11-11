@@ -348,7 +348,7 @@ export class CashdepositPage implements OnInit {
     
       localStorage.setItem("AccBranch", accbal.accountBranch);
       // this.depositForm.controls.transactionCurrency.patchValue(accbal.countryCode);
-      this.selectCurrencyCode(accbal.accountCurrency);
+      // this.selectCurrencyCode(accbal.accountCurrency);
       // this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       console.log(accbal.transactionAmount);
       this.numberOnlyValidation(accbal.transactionAmount);

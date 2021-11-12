@@ -67,6 +67,8 @@ export class CashdepositPage implements OnInit {
   transTime: string;
   toast: HTMLIonToastElement;
   trnBrn = null;
+  brnflg: any;
+  accBranch: string;
   ngOnInit() {
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
@@ -115,7 +117,7 @@ export class CashdepositPage implements OnInit {
 
     this.loadData();
     this.onChanges();
-
+    
 
     //  let disableBtn = false;
     // this.depositForm.valueChanges 
@@ -145,16 +147,36 @@ export class CashdepositPage implements OnInit {
 
   onChanges(){
     this.depositForm.get('branchFlag').valueChanges.subscribe(val => {
-      console.log("branch flag?", val);
+      console.log("branch flag? val", val);
+      console.log("branch flag?", this.brnflg);
       localStorage.setItem("BranchFlag", val);
-      if (val == false) {
-        this.depositForm.get('transactionBranch').patchValue("");
-        this.nearestBrn = true;
-      } else {
-        this.nearestBrn = false;
+      // if (val == false) {
+      //   console.log("1st if");
+      //   this.slideOneForm.get('transactionBranch').patchValue("");
+      //   this.nearestBrn = true;
+      // }
+      if (this.brnflg == false && val == false) {
+        console.log("1st if");
         this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
-        // this.depositForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
+        this.nearestBrn = true;
+      } 
+     
+      else {
+        console.log("else");
+        this.nearestBrn = false;
+        // this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+        this.accBranch=localStorage.getItem("AccBranch");
+        console.log(this.accBranch);
+        this.depositForm.controls.transactionBranch.patchValue(this.accBranch);
+        // this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
+       if (this.brnflg == true && val == false) {
+        console.log(this.accBranch);
+        console.log("2nd if");
+        this.depositForm.controls.transactionBranch.patchValue(this.accBranch);
+        this.nearestBrn = true;
+      } 
+
     })
   }
 
@@ -332,69 +354,196 @@ export class CashdepositPage implements OnInit {
 
 
   }
-
   accountEvent(event) {
+    this.isedit = false;
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
-      console.log('backend accbal', accbal.currentBalance);
+      // console.log('backend accbal', accbal.lastTransactions);
       this.valueSet(accbal.currentBalance);
-      console.log('backend accbal', accbal.amount);
+      // console.log('backend accbal', accbal);
+      // console.log(this.slideOneForm.controls.transactionCurrency);
       this.currentBalance = accbal.amount;
-      console.log(this.depositForm.controls)
-      //debugger;
-      console.log(accbal.transactionAmount);
 
       this.depositForm.controls.accountBalance.patchValue(accbal.amount);
-    
+      this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
       localStorage.setItem("AccBranch", accbal.accountBranch);
-      // this.depositForm.controls.transactionCurrency.patchValue(accbal.countryCode);
+      // console.log(this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch));
+      // console.log(accbal);
+      // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.selectCurrencyCode(accbal.accountCurrency);
-      // this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-      console.log(accbal.transactionAmount);
-      this.numberOnlyValidation(accbal.transactionAmount);
-      if (accbal.lastTransactions != null) {
-        if (accbal.lastTransactions.length <= 2) {
+      //debugger;
+      // console.log(accbal.transactionAmount);
+      if (accbal.transactionAmount != null || accbal.transactionAmount != undefined) {
+        this.numberOnlyValidation(accbal.transactionAmount);
+      }
+      // console.log('backend accbal', accbal.lastTransactions);
+      if(accbal.lastTransactions!=null){
+        if(accbal.lastTransactions.length <=2 ){
           this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-        }
-        else {
-         
-          var brnCnt = 0;
-          var brnOldCnt = 0;
-          console.log("Else", accbal.lastTransactions);
-          for (var i = 0; i < accbal.lastTransactions.length; i++) {
-            if (accbal.lastTransactions[i].transactionBranch != null) {
-              for (var n = 0; n < accbal.lastTransactions.length; n++) {
-                if (accbal.lastTransactions[n].transactionBranch != null) {
-                  if (accbal.lastTransactions[i].transactionBranch === accbal.lastTransactions[n].transactionBranch) {
-                    brnCnt = brnCnt + 1;
+          }
+          else{
+           
+            var brnCnt = 0;
+            var brnOldCnt = 0 ;
+            console.log("Else",accbal.lastTransactions);
+            for(var i=0;i<accbal.lastTransactions.length;i++){
+              if(accbal.lastTransactions[i].transactionBranch != null){
+                for(var n=0;n<accbal.lastTransactions.length;n++){
+                  if(accbal.lastTransactions[n].transactionBranch != null){
+                    if(accbal.lastTransactions[i].transactionBranch===accbal.lastTransactions[n].transactionBranch){
+                      brnCnt = brnCnt + 1 ;
+                    }
                   }
                 }
               }
+              if(brnOldCnt < brnCnt && brnCnt >= 2){
+                this.trnBrn = accbal.lastTransactions[i].transactionBranch ;
+                brnOldCnt = brnCnt ;
+                console.log("yhjghguuyjgh");
+              }
+              brnCnt = 0;
             }
-            if (brnOldCnt < brnCnt && brnCnt >= 2) {
-              this.trnBrn = accbal.lastTransactions[i].transactionBranch;
-              brnOldCnt = brnCnt;
+            if (this.trnBrn != null && this.trnBrn!==accbal.accountBranch){
+              console.log(this.trnBrn);
+              this.depositForm.controls.branchFlag.patchValue(false);
+              this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
+              console.log(localStorage.getItem("BranchFlag"));
+              this.brnflg=localStorage.getItem("BranchFlag");
+              
+              this.brnflg=false;
+              this.nearestBrn = true;
+            } else {
+              this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+              this.nearestBrn = false;
+              this.brnflg=true;
+              console.log(this.nearestBrn);
+          
             }
-            brnCnt = 0;
           }
-          if (this.trnBrn != null) {
-            this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
-          } else {
-            this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-          }
-        }
       }
-      else {
+      else{
         this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+        this.nearestBrn = false;
       }
-      // this.users=dropdown;
+      // if (accbal.lastTransactions != null) {
+      //   if (accbal.lastTransactions.length <= 2) {
+      //     this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+      //   }
+       
+      //   else {
+      //     var trnBrn = null;
+      //     var brnCnt = 0;
+      //     var brnOldCnt = 0;
+      //     console.log("Else", accbal.lastTransactions);
+      //     for (var i = 0; i < accbal.lastTransactions.length; i++) {
+      //       if (accbal.lastTransactions[i].transactionBranch != null) {
+      //         for (var n = 0; n < accbal.lastTransactions.length; n++) {
+      //           if (accbal.lastTransactions[n].transactionBranch != null) {
+      //             if (accbal.lastTransactions[i].transactionBranch === accbal.lastTransactions[n].transactionBranch) {
+      //               brnCnt = brnCnt + 1;
+      //             }
+      //             if (accbal.lastTransactions[i].transactionBranch != accbal.lastTransactions[n].transactionBranch) {
+      //               trnBrn = accbal.lastTransactions[i].accountBranch;
+      //             }
+      //           }
+
+      //         }
+      //       }
+      //       if (brnOldCnt < brnCnt && brnCnt >= 2) {
+      //         trnBrn = accbal.lastTransactions[i].transactionBranch;
+      //         brnOldCnt = brnCnt;
+      //       }
+          
+      //       brnCnt = 0;
+      //     }
+      //     if (trnBrn != null) {
+      //       this.slideOneForm.controls.transactionBranch.patchValue(trnBrn);
+      //     } else {
+      //       this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+      //     }
+      //   }
+      // }
+      // else {
+      //   this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+      // }
+      // console.log(accbal.accountCurrency.countryName);
       for (let i in this.currencies) {
         this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
         this.depositForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
       }
+      // this.selectedCountryCode = (currency.code).toLowerCase();
+      // this.users=dropdown;
+
+      //8042666041 8042666055
     });
 
+
   }
+  // accountEvent(event) {
+  //   console.log("event", event.detail.value)
+  //   this.api.accountBalance(event.detail.value).subscribe((accbal) => {
+  //     console.log('backend accbal', accbal.currentBalance);
+  //     this.valueSet(accbal.currentBalance);
+  //     console.log('backend accbal', accbal.amount);
+  //     this.currentBalance = accbal.amount;
+  //     console.log(this.depositForm.controls)
+  //     //debugger;
+  //     console.log(accbal.transactionAmount);
+
+  //     this.depositForm.controls.accountBalance.patchValue(accbal.amount);
+  //     this.depositForm.controls.accountBranch.patchValue(accbal.accountBranch);
+    
+  //     localStorage.setItem("AccBranch", accbal.accountBranch);
+  //     // this.depositForm.controls.transactionCurrency.patchValue(accbal.countryCode);
+  //     // this.selectCurrencyCode(accbal.accountCurrency);
+  //     // this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+  //     console.log(accbal.transactionAmount);
+  //     if (accbal.transactionAmount != null || accbal.transactionAmount != undefined) {
+  //       this.numberOnlyValidation(accbal.transactionAmount);
+  //     }
+  //     if (accbal.lastTransactions != null) {
+  //       if (accbal.lastTransactions.length <= 2) {
+  //         this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+  //       }
+  //       else {
+         
+  //         var brnCnt = 0;
+  //         var brnOldCnt = 0;
+  //         console.log("Else", accbal.lastTransactions);
+  //         for (var i = 0; i < accbal.lastTransactions.length; i++) {
+  //           if (accbal.lastTransactions[i].transactionBranch != null) {
+  //             for (var n = 0; n < accbal.lastTransactions.length; n++) {
+  //               if (accbal.lastTransactions[n].transactionBranch != null) {
+  //                 if (accbal.lastTransactions[i].transactionBranch === accbal.lastTransactions[n].transactionBranch) {
+  //                   brnCnt = brnCnt + 1;
+  //                 }
+  //               }
+  //             }
+  //           }
+  //           if (brnOldCnt < brnCnt && brnCnt >= 2) {
+  //             this.trnBrn = accbal.lastTransactions[i].transactionBranch;
+  //             brnOldCnt = brnCnt;
+  //           }
+  //           brnCnt = 0;
+  //         }
+  //         if (this.trnBrn != null) {
+  //           this.depositForm.controls.transactionBranch.patchValue(this.trnBrn);
+  //         } else {
+  //           this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+  //         }
+  //       }
+  //     }
+  //     else {
+  //       this.depositForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+  //     }
+  //     // this.users=dropdown;
+  //     for (let i in this.currencies) {
+  //       this.selectedCountryCode = (this.currencies[i].countryCode).toLowerCase();
+  //       this.depositForm.controls.transactionCurrency.patchValue(this.currencies[i].countryCode);
+  //     }
+  //   });
+
+  // }
   savingAccountFun(filteredResponseSavingAccount) {
 
     console.log(filteredResponseSavingAccount);

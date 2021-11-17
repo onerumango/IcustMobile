@@ -11,24 +11,18 @@
     </div>
     <div class="event" [ngStyle]="{'overflow-y': notToShowAll2 ? 'hidden' : 'scroll'}">
       <ion-list style="padding-top: 3px; width: 90%; margin-left: 10px;">
-        <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn">
-        <!-- <ion-item> -->
-          <!-- <ion-avatar style="margin-left: 10px; margin-right: 10px;" alt="..."
-            [src]="trans.profileImage=='not_available'? defaultImage : trans.profileImage"></ion-avatar> -->
-            <img class="imgStyle" alt="..."
+        <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn" (click)="onClick(trans)">
+          <img class="imgStyle" alt="..."
             [src]="trans.profileImage=='not_available'? defaultImage : trans.profileImage">
           <div id="wrapper">
             <b class="cusNameClass">
               {{trans.customerName}} 
-              <ion-icon name="mail-outline" class="email-icon"></ion-icon>
             </b>
             <p class="cusHistoryContent"> 
-              {{trans.transactionId}} | 
               {{trans.operation}} | 
               {{trans.trnAmount | currency:trans.transactionCurrency:'symbol':'1.0-1'}} 
             </p>
           </div>
-          <!-- <ion-icon class="email-icon" (click)="showTransactionDetail(trans.transactionId)">mail-outline</ion-icon> -->
         </ion-item>
       </ion-list>
     </div>

@@ -99,7 +99,11 @@ export class ApiService {
   }
 
   getDashboardDataNew(customerId: any) {
-    return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`)
+    return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`).pipe(catchError(this.errorHandler));
+  }
+
+  getByTransactionId(transId: number) {
+    return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchByTransId/${transId}`).pipe(catchError(this.errorHandler));
   }
 }
 

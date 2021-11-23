@@ -52,7 +52,7 @@ accountBalance:string;
        if(this.current.length>0){
        this.currentAssign(this.current);
        }
-       this.saving = resp.custAccount.filter(res => res.accountType == "saving");
+       this.saving = resp.custAccount.filter(res => res.accountType == "Savings");
        console.log("saving",this.saving)
        if(this.saving.length>0){
        this.savingAssign(this.saving);

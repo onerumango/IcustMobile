@@ -44,7 +44,7 @@ accountBalance:string;
      this.current = resp.custAccount.filter(res => res.accountType == "current");
        console.log("current",this.current)
        this.currentAssign(this.current);
-       this.saving = resp.custAccount.filter(res => res.accountType == "saving");
+       this.saving = resp.custAccount.filter(res => res.accountType == "Savings");
        console.log("saving",this.saving)
        this.savingAssign(this.saving);
     })

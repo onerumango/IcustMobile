@@ -39,6 +39,8 @@ export class ChequedepositPage implements OnInit {
   nearestBrn: boolean;
   trnBrn = null;
   accBranch: string;
+  accountInfo: any;
+
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService, public toastCtrl: ToastController,
     private modalController: ModalController,
     public datepipe: DatePipe,
@@ -65,6 +67,7 @@ export class ChequedepositPage implements OnInit {
   brnflg: any;
   minDate = new Date().toISOString();
   maxDate: any = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString();
+
   ngOnInit() {
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     this.customerId = sessionStorage.getItem('customer_id');
@@ -138,6 +141,10 @@ export class ChequedepositPage implements OnInit {
         this.nearestBrn = true;
       } 
 
+    })
+    this.shareDataService.getAccountInfo.subscribe(data=>{
+      this.accountInfo=data;
+      console.log(data);
     })
 
   }
@@ -298,7 +305,11 @@ export class ChequedepositPage implements OnInit {
     this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
     this.currentBalance = this.users[0].amount;
 
-    this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    if(this.accountInfo.accountId!=null){
+      this.slideOneForm.get('accountNumber').patchValue(this.accountInfo.accountId);
+    }else{
+      this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    }
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
     this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);

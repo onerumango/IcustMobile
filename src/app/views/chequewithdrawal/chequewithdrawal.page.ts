@@ -37,6 +37,8 @@ export class ChequewithdrawalPage implements OnInit {
   IntValue: number;
   nearestBrn: boolean;
   accBranch: string;
+  accountInfo: any;
+
 
   constructor(private router: Router,
     private fb: FormBuilder,
@@ -144,6 +146,10 @@ export class ChequewithdrawalPage implements OnInit {
         this.nearestBrn = true;
       } 
 
+    })
+    this.shareDataService.getAccountInfo.subscribe(data=>{
+      this.accountInfo=data;
+      console.log(data);
     })
 
   }
@@ -254,7 +260,11 @@ export class ChequewithdrawalPage implements OnInit {
     this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
     this.currentBalance = this.users[0].amount;
 
-    this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    if(this.accountInfo.accountId!=null){
+      this.slideOneForm.get('accountNumber').patchValue(this.accountInfo.accountId);
+    }else{
+      this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    }
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
     this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);

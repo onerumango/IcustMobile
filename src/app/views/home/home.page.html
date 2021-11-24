@@ -24,7 +24,7 @@
 
   <div>
     <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide  *ngFor="let info of loanArray; index as i;">
+      <ion-slide  *ngFor="let info of loanArray; index as i;" (click)="getAccountNumber(info)">
         <div class="slider1">
           <img src="assets\images\BL2.png" class="bankLogo" >
   
@@ -70,7 +70,7 @@
         
       </ion-slide>
   
-      <ion-slide style="position: initial;" *ngFor="let info of savingArray; index as i;">
+      <ion-slide style="position: initial;" *ngFor="let info of savingArray; index as i;" (click)="getAccountNumber(info)">
         <div class="slider2">
           <img src="assets\images\BL2.png" class="bankLogo" >
   
@@ -118,7 +118,7 @@
         
       </ion-slide>
   
-      <ion-slide *ngFor="let info of currentArray; index as i;">
+      <ion-slide *ngFor="let info of currentArray; index as i;" (click)="getAccountNumber(info)">
         <div class="slider3" >
           <img src="assets\images\BL2.png" class="bankLogo" >
   

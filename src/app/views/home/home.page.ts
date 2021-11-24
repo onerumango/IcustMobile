@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,8 @@ accountBalance:string;
   curr: string;
   currLoan: string;
   currCurrent: string;
-  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef) { }
+  selectedAccountNumber: any;
+  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef, private dataService: DataService) { }
 
   ngOnInit() {
     this.phoneNumber= localStorage.getItem('PhoneNumLogin');
@@ -63,7 +65,6 @@ accountBalance:string;
        this.loanAssign(this.loan);
        }
     })
- 
     this.firstName=localStorage.getItem('firstName');
     // console.log(localStorage.getItem('customer_details'));
     console.log(JSON.parse(localStorage.getItem('customer_details')));
@@ -142,7 +143,7 @@ this.accountType=customerDetails.accountType;
     
     if(saving!=undefined){
 
-   this.savingArray=saving;
+      this.savingArray=saving;
    this.curr = getCurrencySymbol(saving[0].accountCurrency, "narrow");
  console.log(this.curr);
     }
@@ -179,6 +180,10 @@ this.accountType=customerDetails.accountType;
  console.log("savingAccount",this.savingAccount);
  
 
+ }
+ getAccountNumber(info){
+  this.dataService.shareAccountInfo(info);
+  console.log(this.selectedAccountNumber);
  }
 
   logOut() {

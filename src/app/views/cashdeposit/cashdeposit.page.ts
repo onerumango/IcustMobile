@@ -38,6 +38,7 @@ export class CashdepositPage implements OnInit {
   customerDetails: any;
   IntValue: number;
   nearestBrn: boolean;
+  accountInfo:any;
   constructor(
     public toastCtrl: ToastController,
     private router: Router,
@@ -127,6 +128,10 @@ export class CashdepositPage implements OnInit {
     //             });
     //  console.log(this.countries);
   
+    this.shareDataService.getAccountInfo.subscribe(data=>{
+      this.accountInfo=data;
+      console.log(data);
+    })
 
    
 
@@ -553,7 +558,11 @@ export class CashdepositPage implements OnInit {
     this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
     this.currentBalance = this.users[0].amount;
 
-    this.depositForm.get('accountNumber').patchValue(this.users[0].accountId);
+    if(this.accountInfo.accountId!=null){
+      this.depositForm.get('accountNumber').patchValue(this.accountInfo.accountId);
+    }else{
+      this.depositForm.get('accountNumber').patchValue(this.users[0].accountId);
+    }
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.depositForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);
     this.depositForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);

@@ -78,6 +78,7 @@ export class CashwithdrawalPage implements OnInit {
   customerDetails: any;
   selectAbleColor: string = "secondary";
   trnBrn = null ;
+  accountInfo: any;
 
   ngOnInit() {
 
@@ -155,6 +156,10 @@ export class CashwithdrawalPage implements OnInit {
         this.nearestBrn = true;
       } 
 
+    })
+    this.shareDataService.getAccountInfo.subscribe(data=>{
+      this.accountInfo=data;
+      console.log(data);
     })
   }
 
@@ -394,6 +399,8 @@ export class CashwithdrawalPage implements OnInit {
   ]
   accountEvent(event) {
     this.isedit = false;
+    console.log("events::", event);
+    console.log("events details::", event.detail);
     console.log("event", event.detail.value)
     this.api.accountBalance(event.detail.value).subscribe((accbal) => {
       // console.log('backend accbal', accbal.lastTransactions);
@@ -527,7 +534,12 @@ export class CashwithdrawalPage implements OnInit {
     this.users = filteredResponseSavingAccount.custAccount;
     this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
     this.currentBalance = this.users[0].amount;
-    this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    if(this.accountInfo.accountId!=null){
+      this.slideOneForm.get('accountNumber').patchValue(this.accountInfo.accountId);
+    }else{
+      this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
+    }
+    console.log("user::", this.users);
     this.selectedCountryCode = filteredResponseSavingAccount.countryCode.toLowerCase();
     this.slideOneForm.controls.transactionCurrency.patchValue(filteredResponseSavingAccount.countryCode);
     this.slideOneForm.controls.accountBranch.patchValue(filteredResponseSavingAccount.custAccount[0].accountBranch);

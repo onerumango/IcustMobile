@@ -28,6 +28,7 @@ export class OtpPage implements OnInit {
   otpResponse: any
   PhoneNumLogin: any;
   customerPhonenum:any;
+  otpToken: number;
   constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
     private toastCtrl: ToastController) {
 
@@ -46,13 +47,16 @@ export class OtpPage implements OnInit {
     this.api.getOtpToken.subscribe(otp =>{
       console.log("Subject otp",otp);
        if(otp.length === 6){
-         let otpToken = +otp;
-         this.otpForm.get('otp').patchValue(otpToken);
+         this.otpToken = otp;
+
+         console.log("this is otpToken", this.otpToken);
+         this.otpForm.get('otp').patchValue(this.otpToken);
          this.openToast1("OTP auto populated successfully!");
        }
     })
   }
   numberOnly(event): boolean {
+    console.log("event",event )
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
@@ -96,10 +100,12 @@ export class OtpPage implements OnInit {
    // throw new Error('Method not implemented.');
   //}
   validateOtp(otpValue) {
-    console.log("Phonenumber for OTP", otpValue, otpValue.otp);
+    console.log("Phonenumber for OTP", otpValue, otpValue.otp,this.otpToken);
+  
+    
     this.verifyOtpModel.sourceKey = 'mobile';
     this.verifyOtpModel.sourceValue = this.PhoneNumLogin;
-    this.verifyOtpModel.otp = otpValue.otp;
+    this.verifyOtpModel.otp = this.otpToken;
     this.verifyOtpModel.type = '';
     console.log("model", this.verifyOtpModel);
     this.api.verifyOtp(this.verifyOtpModel).subscribe(otpResp => {

@@ -9,7 +9,7 @@
     <div *ngIf="displayInfo">
       <p>{{message}}</p>
     </div>
-    <div class="event" [ngStyle]="{'overflow-y': notToShowAll2 ? 'hidden' : 'scroll'}">
+    <div class="event">
       <ion-list style="padding-top: 3px; width: 90%; margin-left: 10px;">
         <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn" (click)="onClick(trans)">
           <img class="imgStyle" alt="..."

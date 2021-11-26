@@ -22,6 +22,7 @@ export class AccountPage implements OnInit {
   address: any;
   kycVerificationForm: FormGroup;
   communicationAdress: string;
+  holderName: string;
 
   constructor(public popoverCtrl: PopoverController,public toastCtrl: ToastController,
     public router:Router,
@@ -84,11 +85,16 @@ export class AccountPage implements OnInit {
   assignAddress(address,form) {
     console.log(form);
    this.communicationAdress=address.address1+", "+address.address2+", "+address.city+", "+address.zipCode+" ,"+address.country;
-   console.log(this.communicationAdress)
+ if(form.middleName!=null){
+  this.holderName=form.firstName+" "+form.middleName+" "+form.lastName;
+ }
+ else{
+  this.holderName=form.firstName+" "+form.lastName;
+ }
    this.option.address=this.communicationAdress;
    this.kycVerificationForm.get('primaryEmailAdress').setValue(form.primaryEmailAdress);
    this.kycVerificationForm.get('phoneNumber').setValue(form.phoneNumber);
-   this.kycVerificationForm.get('firstName').setValue(form.firstName);
+   this.kycVerificationForm.get('firstName').setValue(this.holderName);
    this.kycVerificationForm.get('panNumber').setValue(form.panNumber);
    this.kycVerificationForm.get('communicationAddress').setValue({
     addressType: "communication",

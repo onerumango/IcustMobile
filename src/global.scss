@@ -26,39 +26,21 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-// ion-searchbar ion-icon {
-//     right: 16px !important;
-//     left: auto !important;
-//   }
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
+}
 
-  @font-face {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: normal;
-    src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
-    src: url('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf');
-  }  
-//   .my-alert {
-//     --background: rgb(179, 179, 223);
-//     --background-selected: rgb(179, 179, 223);
-// }
-// .action-sheet-group {
-//   background: #e5e5e5;
-// }
+:root {
+  --ion-font-family: 'Montserrat';
+}
 
-/* Works - pass "my-custom-class" in cssClass to increase specificity */
-// .my-custom-class .action-sheet-group {
-//   background: #e5e5e5;
-// }
-// .my-custom-class {
-//   --background: #e5e5e5;
-// }
-
-
-
-my-custom-class buttons{
+my-custom-class buttons {
   --color: black;
 }
+
 .action-sheet-button.sc-ion-action-sheet-ios {
   padding-left: unset;
   padding-right: unset;
@@ -72,12 +54,18 @@ my-custom-class buttons{
   font-weight: bold;
   font-family: 'Montserrat' !important;
 }
+
 .searchbar-input {
   border-radius: 10px !important;
   box-shadow: none !important;
   color: #000 !important;
 }
-ion-searchbar{
+
+ion-searchbar {
   --color: #000;
   --placeholder-color: #000;
+}
+
+.swiper-pagination {
+  position: unset !important;
 }

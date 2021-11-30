@@ -22,151 +22,46 @@
    
 <ion-content>
 
-  <div>
+
+
     <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide  *ngFor="let info of loanArray; index as i;" (click)="getAccountNumber(info)">
+      <ion-slide  *ngFor="let card of cards; index as i;" (click)="getAccountNumber(info)">
         <div class="slider1">
-          <img src="assets\images\BL2.png" class="bankLogo" >
-  
-          <ion-text class="accType">Loan Account</ion-text>
-          <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
-        
-          <!-- <ion-label  style="width: 48pt;height: 32pt; margin-left: -20%;font-size: small;margin-bottom: 20%;">Account Balance</ion-label> -->
-          <!-- <th>Account Id</th>
+          <ion-grid>
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <img src="assets\images\BL2.png" class="bankLogo">
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
-          <p >{{info.accountId}}</p>
-
-          <p  style="font-size: small;">{{info.amount}}</p> -->
-          
-          <!-- <table style="margin: auto;">
-            <th style="margin: auto;
-            font-size: small;
-            padding-left: 30px;
-            color: white;font-weight: 500;">Saving Account</th>
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Id</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr  *ngFor="let info of savingArray; index as i;">
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
-           </tr>
-          </table> -->
-
-
-          <table class="accTable">
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Number</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr>
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">  {{currLoan}} {{info.amount | number: '2.'}}</th>
-           </tr>
-          </table>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="ion-align-self-end" size="6">
+            <p class="acc-type capitalize">{{ card.accountType + ' Account' }}</p>
+            </ion-col>
+            <ion-col class="ion-align-self-center" size="6">
+              <p class="acc-balance leading-3 capitalize">Account Balance</p>
+              </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-end">
+            <ion-col class="ion-align-self-end">
+              <p class="balance leading-3">{{ card.accountCurrency | currencySymbol  }} {{  card.amount | number: '2.'}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
         </div>
         
       </ion-slide>
-  
-      <ion-slide style="position: initial;" *ngFor="let info of savingArray; index as i;" (click)="getAccountNumber(info)">
-        <div class="slider2">
-          <img src="assets\images\BL2.png" class="bankLogo" >
-  
-          <ion-text class="accType">Savings Account</ion-text>
-          <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
-        
-          <!-- <ion-label  style="width: 48pt;height: 32pt; margin-left: -20%;font-size: small;margin-bottom: 20%;">Account Balance</ion-label> -->
-          <!-- <th>Account Id</th>
-
-          <p >{{info.accountId}}</p>
-
-          <p  style="font-size: small;">{{info.amount}}</p> -->
-          
-          <!-- <table style="margin: auto;">
-            <th style="margin: auto;
-            font-size: small;
-            padding-left: 30px;
-            color: white;font-weight: 500;">Saving Account</th>
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Id</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr  *ngFor="let info of savingArray; index as i;">
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
-           </tr>
-          </table> -->
-
-
-          <table class="accTable">
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Number</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr>
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{curr}} {{info.amount | number: '2.'}}</th>
-           </tr>
-          </table>
-
-          </div>
-        
-        
-      </ion-slide>
-  
-      <ion-slide *ngFor="let info of currentArray; index as i;" (click)="getAccountNumber(info)">
-        <div class="slider3" >
-          <img src="assets\images\BL2.png" class="bankLogo" >
-  
-          <ion-text class="accType">Current Account</ion-text>
-          <ion-icon name="settings-outline" class="settingicon"></ion-icon> 
-        
-          <!-- <ion-label  style="width: 48pt;height: 32pt; margin-left: -20%;font-size: small;margin-bottom: 20%;">Account Balance</ion-label> -->
-          <!-- <th>Account Id</th>
-
-          <p >{{info.accountId}}</p>
-
-          <p  style="font-size: small;">{{info.amount}}</p> -->
-          
-          <!-- <table style="margin: auto;">
-            <th style="margin: auto;
-            font-size: small;
-            padding-left: 30px;
-            color: white;font-weight: 500;">Saving Account</th>
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Id</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr  *ngFor="let info of savingArray; index as i;">
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{info.amount}}</th>
-           </tr>
-          </table> -->
-
-
-          <table class="accTable">
-            <tr>
-              <th style="font-size: 12px;
-              font-weight: 500;;">Account Number</th>
-           <th style="font-size: 12px;
-           padding: 10px;font-weight: 500;">Account Balance</th> </tr>
-           <tr>
-        <th style="font-size: 12px;font-weight: 500;">{{info.accountId}}</th>
-        <th style="font-size: 12px;font-weight: 500;">{{currCurrent}} {{info.amount | number: '2.'}}</th>
-           </tr>
-          </table>
-        </div>
-      </ion-slide>
-  
-      
-  
     </ion-slides>
-  </div>
+ 
+  
+
+  
+
   <div class="textCard mt-20">
     <ion-text style="font-size:x-large;">All Transaction</ion-text>
   </div>

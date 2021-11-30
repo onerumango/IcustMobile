@@ -1,6 +1,17 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Transaction</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>My Transaction</ion-title>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="accountInfo.accountType != undefined">
+    <div class="toolbar-bg">
+      <h5 class="capitalize secondary-text">{{ accountInfo?.accountType + ' Account' }}</h5>
+      <p class="capitalize secondary-text">{{ accountInfo?.accountId }}</p>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -12,17 +23,19 @@
     <div class="event">
       <ion-list style="padding-top: 3px; width: 90%; margin-left: 10px;">
         <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn" (click)="onClick(trans)">
-          <img class="imgStyle" alt="..."
-            [src]="trans.profileImage=='not_available'? defaultImage : trans.profileImage">
-          <div id="wrapper">
-            <b class="cusNameClass">
+          <ion-thumbnail slot="start">
+            <img [src]="trans.profileImage=='not_available'? defaultImage : trans.profileImage">
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
               {{trans.customerName}} 
-            </b>
-            <p class="cusHistoryContent"> 
-              {{trans.operation}} | 
-              {{trans.trnAmount | currency:trans.transactionCurrency:'symbol':'1.0-1'}} 
+            </h3>
+            <p class="text-xs"> 
+             
+              Ref No.:{{ trans.transactionId }} - {{trans.operation}} 
+              <ion-label [color]="trans.operation == 'Cash Withdrawal' ? 'danger' : 'success'" class="text-xs text-right">{{trans.trnAmount | currency:trans.transactionCurrency:'symbol':'1.0-1'}} </ion-label>
             </p>
-          </div>
+          </ion-label>
         </ion-item>
       </ion-list>
     </div>

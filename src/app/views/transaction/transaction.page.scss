@@ -1,3 +1,11 @@
+.toolbar-bg{
+    margin-top: 0px;
+    background: rgba(31, 107, 255, 0.2) !important;
+    width: auto;
+    height: 60px;
+    padding: 1px;
+}
+
 .transactionCard {
     height: 525px;
     width: 100%;
@@ -7,6 +15,15 @@
     margin-right:auto;
     height:auto; 
     width:75%;
+}
+.text-right{
+    text-align: end;
+}
+.secondary-text{
+    
+    line-height: 0.5rem;
+    text-align: center;
+    color: #1f6bff!important;
 }
 .event {
     flex-flow: row wrap;

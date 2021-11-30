@@ -11,7 +11,7 @@
           <img class="img" [src]="image" alt="profile">
         </div>
       </ion-avatar>
-      <ion-label style="font-size: xx-large;">Hi {{firstName}}</ion-label>
+      <ion-label style="font-size: xx-large;" class="font-black">Hi {{firstName}}</ion-label>
     </ion-item>
   </ion-toolbar>
   <ion-toolbar>
@@ -25,7 +25,7 @@
 
 
     <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide  *ngFor="let card of cards; index as i;" (click)="getAccountNumber(info)">
+      <ion-slide  *ngFor="let card of cards; index as i;" (click)="getAccountNumber(card)">
         <div class="slider1">
           <ion-grid>
           <ion-row>

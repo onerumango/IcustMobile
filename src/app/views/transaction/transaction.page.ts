@@ -2,6 +2,10 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AlertController } from '@ionic/angular';
+import { Location } from "@angular/common";
+import { DataService } from 'src/app/services/data.service';
+import { LoadingService } from 'src/app/services/loading.service';
+
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.page.html',
@@ -15,19 +19,28 @@ export class TransactionPage implements OnInit {
   displayInfo: boolean = false;
   message: string;
   data: any;
+ accountInfo:any;
 
   constructor(private router:Router, private alertController: AlertController,
-    private apiService: ApiService, private cdr: ChangeDetectorRef) { }
+    private loadingService:LoadingService,
+    private apiService: ApiService, private cdr: ChangeDetectorRef,private location: Location, private shareDataService: DataService) { }
 
   ngOnInit() {
     this.getDashboardRecords();
+
+    this.shareDataService.getAccountInfo.subscribe(data=>{
+      console.log("Data",data);
+      this.accountInfo = data;
+    })
   }
 
   getDashboardRecords() {
+    this.loadingService.present();
     this.loggedInCust = sessionStorage.getItem('customer_id');
     console.log("Logged In Customer -- ", this.loggedInCust);
     this.apiService.getDashboardDataNew(this.loggedInCust)
       .subscribe(data => {
+        this.loadingService.dismiss();
         console.log("data:::", data);
         if(data.length > 0) {
           this.transactionDataArr = data;
@@ -41,6 +54,8 @@ export class TransactionPage implements OnInit {
           this.message = "There are no transactions to display";
           console.log(this.displayInfo, this.message);
         }
+      },(err:any) =>{
+        this.loadingService.dismiss();
       });
   }
 
@@ -103,5 +118,9 @@ export class TransactionPage implements OnInit {
     await alert.present();
     let result = await alert.onDidDismiss();
     console.log(result);
+  }
+
+  goBack(){
+    this.location.back();
   }
 }

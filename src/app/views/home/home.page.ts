@@ -53,6 +53,7 @@ export class HomePage implements OnInit {
      console.log('backend resp in cash withdrawal', resp);
      this.formData=resp;
      this.cards = resp.custAccount;
+     this.dataService.shareAccountInfo(this.cards[0]);
      this.getProfilePicture(resp.customerId);
      this.cdr.markForCheck();
 	  //  this.currLoan = getCurrencySymbol(this.loan[0].accountCurrency, "narrow");
@@ -115,6 +116,8 @@ export class HomePage implements OnInit {
  getAccountNumber(info){
   this.dataService.shareAccountInfo(info);
   console.log(this.selectedAccountNumber);
+
+  this.router.navigate(['/tabs/transaction']);
  }
 
   logOut() {

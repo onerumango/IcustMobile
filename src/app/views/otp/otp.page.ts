@@ -76,6 +76,7 @@ export class OtpPage implements OnInit {
       this.otpResponse = otpResp
     
       /* Added validation for un-registered mobile nummber is entered */
+      console.log(this.otpResponse)
       if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
         this.cdk.detectChanges();
         
@@ -85,8 +86,11 @@ export class OtpPage implements OnInit {
         console.log('in else')
         this.openToast1('OTP has been sent again');
         this.router.navigateByUrl('/otp');
-        
-
+        if(otpResp && otpResp.otpVal && otpResp.otpVal.token)
+        {
+        this.otpForm.get('otp').patchValue(otpResp.otpVal.token);
+        this.openToast1("OTP auto populated successfully!");
+        }
       }
     },error=>{
       console.log('error :: ',error);

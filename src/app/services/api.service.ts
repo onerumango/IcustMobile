@@ -51,7 +51,7 @@ export class ApiService {
     return this.http.post<any>(`${API_URL}/cash-withdrawal-service`, data).pipe(catchError(this.errorHandler));
   }
   cashDepositSave(data: object) {
-    console.log("cashDepositSave----------",data)
+    console.log("cashDepositSave----------", data)
     return this.http.post<any>(`${API_URL}/cash-deposit/api`, data).pipe(catchError(this.errorHandler));
   }
   chequeWithdrawalSave(data: object) {
@@ -62,7 +62,7 @@ export class ApiService {
     return this.http.post<any>(`${API_URL}/cheque-deposit/api`, data).pipe(catchError(this.errorHandler));
   }
 
-  getBranchByCity(city:string){
+  getBranchByCity(city: string) {
     return this.http.get<any>(`${API_URL}/branch/fetchbranch/${city}`).pipe(catchError(this.errorHandler));
   }
 
@@ -90,16 +90,20 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/customerdata/getPhoneNo/${phoneNumber}`)
   }
 
-  getCurrencyValues(){
+  getCurrencyValues() {
     return this.http.get(`${API_URL}/currency`).pipe(catchError(this.errorHandler));
   }
-  gettingAvailableSlots(selectedDate)
-  { console.log(selectedDate);
+  gettingAvailableSlots(selectedDate) {
+    console.log(selectedDate);
     return this.http.get<any>(`${API_URL}/rest/data/customer/availableslots?scheduledDate=${selectedDate}`).pipe(catchError(this.errorHandler));
   }
 
   getDashboardDataNew(customerId: any) {
     return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`).pipe(catchError(this.errorHandler));
+  }
+
+  getTransactionByAccountId(accountId: any) {
+    return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchTransaction?accountNumber=${accountId}`).pipe(catchError(this.errorHandler));
   }
 
   getByTransactionId(transId: number) {

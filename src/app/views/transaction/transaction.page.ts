@@ -26,26 +26,26 @@ export class TransactionPage implements OnInit {
     private apiService: ApiService, private cdr: ChangeDetectorRef,private location: Location, private shareDataService: DataService) { }
 
   ngOnInit() {
-    this.getDashboardRecords();
+   
 
     this.shareDataService.getAccountInfo.subscribe(data=>{
       console.log("Data",data);
       this.accountInfo = data;
-    })
+    });
+
+    this.getTransactionByAccountId();
   }
 
-  getDashboardRecords() {
+  getTransactionByAccountId() {
     this.loadingService.present();
     this.loggedInCust = sessionStorage.getItem('customer_id');
     console.log("Logged In Customer -- ", this.loggedInCust);
-    this.apiService.getDashboardDataNew(this.loggedInCust)
+    this.apiService.getTransactionByAccountId(this.accountInfo.accountId)
       .subscribe(data => {
         this.loadingService.dismiss();
         console.log("data:::", data);
         if(data.length > 0) {
           this.transactionDataArr = data;
-          this.cdr.detectChanges();
-          this.cdr.markForCheck();
         }
         else {
           console.log("Inside else");
@@ -54,6 +54,7 @@ export class TransactionPage implements OnInit {
           this.message = "There are no transactions to display";
           console.log(this.displayInfo, this.message);
         }
+        this.cdr.markForCheck();
       },(err:any) =>{
         this.loadingService.dismiss();
       });
@@ -61,7 +62,7 @@ export class TransactionPage implements OnInit {
 
   onClick(event) {
     console.log("Event = ",event);
-    this.apiService.getByTransactionId(event.transId).subscribe(response =>{
+    this.apiService.getByTransactionId(event.transactionId).subscribe(response =>{
       console.log("response -- "+response);
       this.data = JSON.parse(JSON.stringify(response));
       console.log("response -- "+this.data);

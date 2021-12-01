@@ -56,18 +56,20 @@ export class TransactionPage implements OnInit {
         }
         this.cdr.markForCheck();
       },(err:any) =>{
-        this.loadingService.dismiss();
+        
       });
   }
 
   onClick(event) {
     console.log("Event = ",event);
+    this.loadingService.present();
     this.apiService.getByTransactionId(event.transactionId).subscribe(response =>{
       console.log("response -- "+response);
       this.data = JSON.parse(JSON.stringify(response));
       console.log("response -- "+this.data);
     });
     setTimeout(() => {
+      this.loadingService.dismiss();
       this.dialog(this.data);
     }, 3000);
   }

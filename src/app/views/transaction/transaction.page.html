@@ -3,13 +3,18 @@
     <ion-title>Transaction</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<div class="spin" *ngIf="showSpinn">
+  <ion-spinner name="bubbles"></ion-spinner>
+</div>
+<!-- <ion-spinner name="circles" class="spinner"  *ngIf="showSpinn"></ion-spinner> -->
 <ion-content>
   <div class="transactionCard">
     <div *ngIf="displayInfo">
       <p>{{message}}</p>
     </div>
+  
     <div class="event" [ngStyle]="{'overflow-y': notToShowAll2 ? 'hidden' : 'scroll'}">
+     
       <ion-list style="padding-top: 3px; width: 90%; margin-left: 10px;">
         <ion-item *ngFor="let trans of transactionDataArr;trackBy: trackByFn" (click)="onClick(trans)">
           <img class="imgStyle" alt="..."
@@ -23,7 +28,9 @@
               {{trans.trnAmount | currency:trans.transactionCurrency:'symbol':'1.0-1'}} 
             </p>
           </div>
+      
         </ion-item>
+        
       </ion-list>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.page.html',
@@ -15,13 +15,35 @@ export class TransactionPage implements OnInit {
   displayInfo: boolean = false;
   message: string;
   data: any;
+  showSpinn: boolean;
+  isLoading = false;
 
   constructor(private router:Router, private alertController: AlertController,
-    private apiService: ApiService, private cdr: ChangeDetectorRef) { }
+    private apiService: ApiService, private cdr: ChangeDetectorRef,public loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getDashboardRecords();
+ 
   }
+  async present() {
+    this.isLoading = true;
+    return await this.loadingController.create({
+      // duration: 5000,
+    }).then(a => {
+      a.present().then(() => {
+        console.log('presented');
+        if (!this.isLoading) {
+          a.dismiss().then(() => console.log('abort presenting'));
+        }
+      });
+    });
+  }
+
+  async dismiss() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  }
+
 
   getDashboardRecords() {
     this.loggedInCust = sessionStorage.getItem('customer_id');
@@ -42,16 +64,16 @@ export class TransactionPage implements OnInit {
           console.log(this.displayInfo, this.message);
         }
       });
-  }
+  } 
 
   onClick(event) {
     console.log("Event = ",event);
+    this.present();
     this.apiService.getByTransactionId(event.transId).subscribe(response =>{
-      console.log("response -- "+response);
       this.data = JSON.parse(JSON.stringify(response));
-      console.log("response -- "+this.data);
     });
     setTimeout(() => {
+      this.dismiss();
       this.dialog(this.data);
     }, 3000);
   }

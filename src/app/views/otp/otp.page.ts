@@ -130,6 +130,11 @@ export class OtpPage implements OnInit {
       //this.toastr.error('');
     })
   }
+  goBack()
+  {
+    console.log("go back button")
+    this.router.navigateByUrl('/login');
+  }
 
   goToCashWithdrawal(otpForm) {
     // console.log(loginForm.value.otp);

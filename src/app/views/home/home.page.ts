@@ -2,6 +2,8 @@ import { getCurrencySymbol } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { Button } from 'selenium-webdriver';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -36,7 +38,7 @@ export class HomePage implements OnInit {
   currCurrent: string;
   selectedAccountNumber: any;
   cards:any = [];
-  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef, private dataService: DataService) { }
+  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef, private dataService: DataService, private alert: AlertController) { }
 
   ngOnInit() {
 
@@ -125,6 +127,29 @@ export class HomePage implements OnInit {
     this.router.navigate(["/login"]);
     localStorage.removeItem('PhoneNumLogin');
     sessionStorage.removeItem('customer_id');
+  }
+
+  openAlret(){
+    this.showAlret();
+  }
+
+  async showAlret(){
+    let alret= await this.alert.create({
+      subHeader: "Do you wants to Signout",
+      buttons: [
+        {
+            text: "Yes",
+            handler: ()=>{
+              this.logOut();
+            }
+        },
+        {
+          text: "No"
+
+        }
+      ],
+    });
+    await alret.present();
   }
 
 

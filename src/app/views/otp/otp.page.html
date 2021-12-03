@@ -37,6 +37,13 @@
       <!-- (click)="goToCashWithdrawal(loginForm.value)" ;goToCashWithdrawal(otpForm.value)-->
     </div>
     
+    <div class="inputCardButton1">
+      <!-- <ion-button expand="block" shape="round" (click) ="getOtp(loginForm.value)"
+      >Continue</ion-button> -->
+      <ion-button expand="block" shape="round" (click) ="goBack() "
+      >Go Back</ion-button>
+      <!-- (click)="goToCashWithdrawal(loginForm.value)" ;goToCashWithdrawal(otpForm.value)-->
+    </div>
     <div class="ion-padding-top">
       <p style="padding-left: 20%;display: inline;">Didn't Received your OTP? </p>
       <p (click) ="getOtp()"   style="display: inline; font-weight: bolder; cursor: pointer;">Resend</p>

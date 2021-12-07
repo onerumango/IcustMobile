@@ -157,584 +157,584 @@ export class TimeSlotsComponent implements OnInit {
   callingTimeslots() {
     this.TimeSolts = [
       {
-        "time": "9:00",
+        "time": "9:00 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:05",
+        "time": "9:05 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:10",
+        "time": "9:10 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:15",
+        "time": "9:15 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:20",
+        "time": "9:20 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:25",
+        "time": "9:25 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:30",
+        "time": "9:30 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:35",
+        "time": "9:35 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:40",
+        "time": "9:40 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:45",
+        "time": "9:45 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:50",
+        "time": "9:50 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "9:55",
+        "time": "9:55 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:00",
+        "time": "10:00 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:05",
+        "time": "10:05 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:10",
+        "time": "10:10 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:15",
+        "time": "10:15 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:20",
+        "time": "10:20 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:25",
+        "time": "10:25 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
 
       {
-        "time": "10:30",
+        "time": "10:30 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:35",
+        "time": "10:35 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:40",
+        "time": "10:40 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:45",
+        "time": "10:45 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:50",
+        "time": "10:50 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "10:55",
+        "time": "10:55 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:00",
+        "time": "11:00 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:05",
+        "time": "11:05 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:10",
+        "time": "11:10 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:15",
+        "time": "11:15 AM",
         "available": true,
         "selected": false,
         "booked": false
       }, {
-        "time": "11:20",
+        "time": "11:20 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:25",
+        "time": "11:25 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:30",
+        "time": "11:30 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:35",
+        "time": "11:35 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:40",
+        "time": "11:40 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:45",
+        "time": "11:45 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:50",
+        "time": "11:50 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "11:55",
+        "time": "11:55 AM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:00",
+        "time": "12:00 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:05",
+        "time": "12:05 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:10",
+        "time": "12:10 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:15",
+        "time": "12:15 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:20",
+        "time": "12:20 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:25",
+        "time": "12:25 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:30",
+        "time": "12:30 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:35",
+        "time": "12:35 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:40",
+        "time": "12:40 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:45",
+        "time": "12:45 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:50",
+        "time": "12:50 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "12:55",
+        "time": "12:55 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:00",
+        "time": "13:00 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:05",
+        "time": "13:05 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:10",
+        "time": "13:10 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:15",
+        "time": "13:15 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:20",
+        "time": "13:20 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:25",
+        "time": "13:25 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       
       {
-        "time": "13:30",
+        "time": "13:30 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:35",
+        "time": "13:35 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:40",
+        "time": "13:40 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:45",
+        "time": "13:45 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:50",
+        "time": "13:50 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "13:55",
+        "time": "13:55 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:00",
+        "time": "14:00 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:05",
+        "time": "14:05 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:10",
+        "time": "14:10 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:15",
+        "time": "14:15 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:20",
+        "time": "14:20 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:25",
+        "time": "14:25 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:30",
+        "time": "14:30 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:35",
+        "time": "14:35 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:40",
+        "time": "14:40 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:45",
+        "time": "14:45 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:50",
+        "time": "14:50 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "14:55",
+        "time": "14:55 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:00",
+        "time": "15:00 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:05",
+        "time": "15:05 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:10",
+        "time": "15:10 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:15",
+        "time": "15:15 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:20",
+        "time": "15:20 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:25",
+        "time": "15:25 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:30",
+        "time": "15:30 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:35",
+        "time": "15:35 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:40",
+        "time": "15:40 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:45",
+        "time": "15:45 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:50",
+        "time": "15:50 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "15:55",
+        "time": "15:55 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:00",
+        "time": "16:00 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:05",
+        "time": "16:05 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:10",
+        "time": "16:10 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:15",
+        "time": "16:15 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:20",
+        "time": "16:20 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:25",
+        "time": "16:25 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:30",
+        "time": "16:30 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:35",
+        "time": "16:35 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:40",
+        "time": "16:40 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:45",
+        "time": "16:45 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:50",
+        "time": "16:50 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "16:55",
+        "time": "16:55 PM",
         "available": true,
         "selected": false,
         "booked": false
       },
       {
-        "time": "17:00",
+        "time": "17:00 PM",
         "available": true,
         "selected": false,
         "booked": false

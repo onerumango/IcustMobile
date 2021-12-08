@@ -1,14 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ApiService } from 'src/app/services/api.service';
-import { __assign } from 'tslib';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonserviceService } from 'src/app/services/commonservice.service';
-
-
 
 @Component({
   selector: 'app-profile',
@@ -16,19 +13,22 @@ import { CommonserviceService } from 'src/app/services/commonservice.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  @ViewChild('file') fileInput:ElementRef;
   flag: boolean;
   currentImage: any;
   clickedImage: string;
   phoneNumber: string;
-  fullName:any;
+  fullName: any;
   email: any;
   profileData: any;
   image: Object;
   formData: any;
-  constructor(private api: ApiService,public platform:Platform,
-    public actionSheetController: ActionSheetController,private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef,
-    private camera: Camera,private router:Router,private photoService: PhotoService,
-    private commonService:CommonserviceService) { }
+  selectedFile: any;
+  constructor(private api: ApiService, public platform: Platform,
+    public actionSheetController: ActionSheetController, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef,
+    private camera: Camera, private router: Router, private photoService: PhotoService,
+    private commonService: CommonserviceService) { }
+
   options: CameraOptions = {
     quality: 30,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -36,104 +36,101 @@ export class ProfilePage implements OnInit {
     mediaType: this.camera.MediaType.PICTURE
   }
   ngOnInit() {
-    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
-    console.log("phoneNumber",this.phoneNumber)
- 
+    this.phoneNumber = localStorage.getItem('PhoneNumLogin');
+    console.log("phoneNumber", this.phoneNumber)
+
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-     console.log('backend resp in home', resp);
-     this.formData=resp;
-     console.log('form :: ',this.formData)
-     this.commonService.sendProfileInfo(resp);
-     this.assign(resp.firstName,resp.middleName,resp.lastName,resp.primaryEmailAdress);
-     this.getProfilePicture(resp.customerId);
+      console.log('backend resp in home', resp);
+      this.formData = resp;
+      console.log('form :: ', this.formData)
+      this.commonService.sendProfileInfo(resp);
+      this.assign(resp.firstName, resp.middleName, resp.lastName, resp.primaryEmailAdress);
+      this.getProfilePicture(resp.customerId);
     })
-  
+
   }
-  assign(firstName: any, middleName: any, lastName: any,email) {
-    if(middleName == null){
-      this.fullName=firstName+' '+lastName;
+
+  assign(firstName: any, middleName: any, lastName: any, email) {
+    if (middleName == null) {
+      this.fullName = firstName + ' ' + lastName;
     }
-   else{
-   this.fullName=firstName+' '+middleName+' '+lastName;
-   console.log("full name",this.fullName)
-   }
-   this.email=email;
+    else {
+      this.fullName = firstName + ' ' + middleName + ' ' + lastName;
+      console.log("full name", this.fullName)
+    }
+    this.email = email;
   }
-  settings()
-  {
+  settings() {
     this.router.navigate(['change-password']);
   }
-  account()
-  {
+  account() {
     this.router.navigate(['account']);
   }
-  menu()
-  {
-    this.flag=true;
- 
-      //  document.body.style.backgroundColor = "yellow";
-      //  document.getElementById("pix").style.mask="yellow"
-      // document.getElementById("form").style.backgroundColor="yellow"
-      // document.getElementById("name").style.backgroundColor="yellow"
-    }
-    getProfilePicture(customerId) {
-      const contentType = 'image/png';
-      this.api.getProfileDetails(customerId)
-        .subscribe((data: any) => {
-          this.cdr.markForCheck();
-          this.profileData = data;
-          console.log(" profile Image",this.profileData.profileImage.fileUrl);
-          if (data.profileImage && data.profileImage.fileUrl != null) {
-           // let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileName;
-            let objectURL =  data.profileImage.fileUrl;
-            this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          }else{
-            this.image=null;
-          }
-          this.cdr.markForCheck();
-        }, (error: any) => {
-          console.log(error);
-        });
-    }
+  menu() {
+    this.flag = true;
 
-    getRandomColor(idx) {
-      var col0 = '#0d856b';
-      var col1 = '#d66f1b';
-      var col2 = '#9f52e7';
-      var col3 = '#e9318d';
-      var col4 = '#1175a3';
-      var col5 = '#e93131';
-      var col6 = '#2316d3';
-      var col7 = '#f557f5';
-      var col8 = '#d6c31b';
-      var col9 = '#40d61b';
-  
-      if ((idx % 10) == 0) return col0;
-      if ((idx % 10) == 1) return col1;
-      if ((idx % 10) == 2) return col2;
-      if ((idx % 10) == 3) return col3;
-      if ((idx % 10) == 4) return col4;
-      if ((idx % 10) == 5) return col5;
-      if ((idx % 10) == 6) return col6;
-      if ((idx % 10) == 7) return col7;
-      if ((idx % 10) == 8) return col8;
-      if ((idx % 10) == 9) return col9;
-      return '#d86315';
-      // var randomColor = Math.floor(Math.random()*16777215).toString(16);
-      // return '#' + randomColor.slice(-6);
-      // var randomColor = Math.floor(0x1000000 * Math.random()).toString(16);
-      // return '#' + ('000000' + randomColor).slice(-6);
-    }
-  
-  cancel()
-  {
-    this.flag=false;
+    //  document.body.style.backgroundColor = "yellow";
+    //  document.getElementById("pix").style.mask="yellow"
+    // document.getElementById("form").style.backgroundColor="yellow"
+    // document.getElementById("name").style.backgroundColor="yellow"
+  }
+  getProfilePicture(customerId) {
+    const contentType = 'image/png';
+    this.api.getProfileDetails(customerId)
+      .subscribe((data: any) => {
+        this.cdr.markForCheck();
+        this.profileData = data;
+        console.log(" profile Image", this.profileData.profileImage.fileUrl);
+        if (data.profileImage && data.profileImage.fileUrl != null) {
+          // let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileName;
+          let objectURL = data.profileImage.fileUrl;
+          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        } else {
+          this.image = null;
+        }
+        this.cdr.markForCheck();
+      }, (error: any) => {
+        console.log(error);
+      });
+  }
+
+  getRandomColor(idx) {
+    var col0 = '#0d856b';
+    var col1 = '#d66f1b';
+    var col2 = '#9f52e7';
+    var col3 = '#e9318d';
+    var col4 = '#1175a3';
+    var col5 = '#e93131';
+    var col6 = '#2316d3';
+    var col7 = '#f557f5';
+    var col8 = '#d6c31b';
+    var col9 = '#40d61b';
+
+    if ((idx % 10) == 0) return col0;
+    if ((idx % 10) == 1) return col1;
+    if ((idx % 10) == 2) return col2;
+    if ((idx % 10) == 3) return col3;
+    if ((idx % 10) == 4) return col4;
+    if ((idx % 10) == 5) return col5;
+    if ((idx % 10) == 6) return col6;
+    if ((idx % 10) == 7) return col7;
+    if ((idx % 10) == 8) return col8;
+    if ((idx % 10) == 9) return col9;
+    return '#d86315';
+    // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    // return '#' + randomColor.slice(-6);
+    // var randomColor = Math.floor(0x1000000 * Math.random()).toString(16);
+    // return '#' + ('000000' + randomColor).slice(-6);
+  }
+
+  cancel() {
+    this.flag = false;
 
   }
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
   }
- 
+
 
   async openActionSheet() {
     const actionSheet = await this.actionSheetController.create({
@@ -141,9 +138,9 @@ export class ProfilePage implements OnInit {
       // subHeader: 'Subtitle',
       animated: false,
       backdropDismiss: false,
-      cssClass:'my-custom-class',
+      cssClass: 'my-custom-class',
       mode: 'ios',
-      buttons: [ {
+      buttons: [{
         text: 'Take Photo',
         // icon: 'share',
         handler: () => {
@@ -154,12 +151,12 @@ export class ProfilePage implements OnInit {
         text: 'Upload photo',
         // icon: 'arrow-dropright-circle',
         handler: () => {
-          this.takePhoto(0);
-          console.log('Play clicked');
+          // this.takePhoto(0);
+          this.fileInput.nativeElement.click();
         }
       }, {
         text: 'Remove',
-      
+
         role: 'destructive',
         // icon: 'trash',
         handler: () => {
@@ -176,12 +173,27 @@ export class ProfilePage implements OnInit {
     });
     await actionSheet.present();
   }
-  goToHelp(){
+  goToHelp() {
     this.router.navigate(['help']);
   }
-  goToFaq(){
+  goToFaq() {
     this.router.navigate(['faq']);
   }
+
+  fileSelected(e){
+    this.selectedFile = e.target.files[0];
+    console.log("this.selectedFile",this.selectedFile);
+  }
+
+//   @HostListener('click', ['$event']) onClick(event:any) {
+//     if(event.target.nodeName == "INPUT"){
+      
+//       console.log("Selected File",event.target.files[0]);
+//     }
+   
+//  }
+
+
   // takePicture() {
   //   this.camera.getPicture(this.options).then((imageData) => {
   //     // imageData is either a base64 encoded string or a file URI
@@ -210,14 +222,14 @@ export class ProfilePage implements OnInit {
       console.log("Camera issue:" + err);
     });
   }
-  takePhoto(sourceType:number) {
+  takePhoto(sourceType: number) {
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
-      sourceType:sourceType,
+      sourceType: sourceType,
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -228,7 +240,4 @@ export class ProfilePage implements OnInit {
   }
 }
 
-function assign(firstName: any, middleName: any, lastName: any) {
-  throw new Error('Function not implemented.');
-}
 

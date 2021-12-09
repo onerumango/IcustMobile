@@ -2,11 +2,11 @@
 <div class="header-container">
   <div class="pix" id="pix"></div>
       <ion-avatar >
-        <div *ngIf="image==null" >
+        <div *ngIf="image == null" >
           <h1 class="img" [style.background]="getRandomColor(i+3)" style="text-align: center; font-size: 50px; padding-top: 30px;">
             {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName | uppercase | slice:0:1}}</h1>
         </div>
-        <div *ngIf="image!=null">
+        <div *ngIf="image != null">
           <img class="img" [src]="image" alt="" >
         </div>
       </ion-avatar>
@@ -21,11 +21,13 @@
   <span class="text">{{fullName}}</span>
   <span class="text1">{{email}}</span>
 </div>
+
+<ion-progress-bar [value]="progress" *ngIf="showLoader"></ion-progress-bar>
 <ion-content>
 
   
  
-  <form id="form">
+  <form id="form" style="margin-top: 20px; margin-bottom: 50px;">
    
     <div class="inputCard">
       <div class="box" readonly>
@@ -98,6 +100,19 @@
         <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="goToFaq()">
       </div>
 
+
+    </div>
+
+    <div class="inputCard">
+      <div class="box" readonly>
+        <img class="icon logout-icon" src="assets\icon\logout.png" alt="Ionic logo">
+        <div class="name">
+          <div style="width: fit-content;margin-left: 10pt;">
+            <div>Logout</div>
+          </div>
+        </div>
+        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="logoutApp()">
+      </div>
 
     </div>
  

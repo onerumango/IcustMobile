@@ -11,6 +11,9 @@ export class DataService {
   private sendAccountInfo = new BehaviorSubject({});
   getAccountInfo = this.sendAccountInfo.asObservable();
 
+  private sendAvatarUrl = new BehaviorSubject(null);
+  getAvatarUrl = this.sendAvatarUrl.asObservable();
+
   constructor() { }
 
   shareTransactionId(params: object) {
@@ -21,5 +24,8 @@ export class DataService {
     this.sendAccountInfo.next(params)
   }
 
+  shareAvatarUrl(avatarInfo){
+    this.sendAvatarUrl.next(avatarInfo);
+  }
 
 }

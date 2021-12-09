@@ -1,11 +1,14 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonserviceService } from 'src/app/services/commonservice.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { DataService } from 'src/app/services/data.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,13 +24,20 @@ export class ProfilePage implements OnInit {
   fullName: any;
   email: any;
   profileData: any;
-  image: Object;
+  image: any;
   formData: any;
-  selectedFile: any;
+  selectedFile:File;
+  progress: number;
+  customerId:any;
+  showLoader:boolean;
+
   constructor(private api: ApiService, public platform: Platform,
     public actionSheetController: ActionSheetController, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef,
     private camera: Camera, private router: Router, private photoService: PhotoService,
-    private commonService: CommonserviceService) { }
+    private commonService: CommonserviceService,
+    private dataService:DataService,
+    private alert: AlertController,
+    private toastService:ToastService) { }
 
   options: CameraOptions = {
     quality: 30,
@@ -44,9 +54,17 @@ export class ProfilePage implements OnInit {
       this.formData = resp;
       console.log('form :: ', this.formData)
       this.commonService.sendProfileInfo(resp);
+      this.customerId = resp.customerId;
       this.assign(resp.firstName, resp.middleName, resp.lastName, resp.primaryEmailAdress);
       this.getProfilePicture(resp.customerId);
     })
+
+    this.dataService.getAvatarUrl.subscribe(data =>{
+      if(data != null){
+        this.image = data;
+        this.cdr.markForCheck();
+      }
+    });
 
   }
 
@@ -75,15 +93,11 @@ export class ProfilePage implements OnInit {
     // document.getElementById("name").style.backgroundColor="yellow"
   }
   getProfilePicture(customerId) {
-    const contentType = 'image/png';
     this.api.getProfileDetails(customerId)
       .subscribe((data: any) => {
-        this.cdr.markForCheck();
         this.profileData = data;
-        console.log(" profile Image", this.profileData.profileImage.fileUrl);
-        if (data.profileImage && data.profileImage.fileUrl != null) {
-          // let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileName;
-          let objectURL = data.profileImage.fileUrl;
+        if (data.profileImage != null) {
+          let objectURL = data.profileImage;
           this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         } else {
           this.image = null;
@@ -180,31 +194,46 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['faq']);
   }
 
-  fileSelected(e){
-    this.selectedFile = e.target.files[0];
-    console.log("this.selectedFile",this.selectedFile);
+  fileSelected(event){
+    const file = event.target.files ? event.target.files[0] : '';
+    this.selectedFile = file;
+    this.uploadFile(file);
   }
 
-//   @HostListener('click', ['$event']) onClick(event:any) {
-//     if(event.target.nodeName == "INPUT"){
-      
-//       console.log("Selected File",event.target.files[0]);
-//     }
-   
-//  }
+uploadFile(file:File){
+  this.showLoader = true;
+
+  const formData: FormData = new FormData();
+  let payload:any = {
+    "documentName":"Profile",
+    "documentType":1,
+    "fileType":file.type,
+    "fileName":file.name,
+    "customerId":this.customerId
+  };
+  formData.append('file', file);
+  formData.append('data', JSON.stringify(payload));
+
+  this.api.uploadProfilePicture(formData)
+  .subscribe((event:any) =>{
+    if (event.type === HttpEventType.UploadProgress) {
+      this.progress = Math.round(100 * event.loaded / event.total);
+    } else if (event instanceof HttpResponse) {
+      let avatarUrl = event.body.fileUrl;
+      this.showLoader = false;
+      localStorage.setItem('avatarUrl', avatarUrl);
+      this.dataService.shareAvatarUrl(avatarUrl);
+      this.toastService.showToast("File Uploaded Successfully!");
+    }
+    this.cdr.markForCheck();
+  }, (err:any) => {
+    this.progress = 0;
+    this.showLoader = false;
+    this.selectedFile = null;
+  })
+}
 
 
-  // takePicture() {
-  //   this.camera.getPicture(this.options).then((imageData) => {
-  //     // imageData is either a base64 encoded string or a file URI
-  //     // If it's base64 (DATA_URL):
-  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
-  //     this.clickedImage = base64Image;
-  //   }, (err) => {
-  //     console.log(err);
-  //     // Handle error
-  //   });
-  // }
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -222,6 +251,8 @@ export class ProfilePage implements OnInit {
       console.log("Camera issue:" + err);
     });
   }
+
+
   takePhoto(sourceType: number) {
     const options: CameraOptions = {
       quality: 50,
@@ -238,6 +269,33 @@ export class ProfilePage implements OnInit {
       // Handle error
     });
   }
+
+
+  async logoutApp(){
+    let alret= await this.alert.create({
+      subHeader: "Do you wants to Signout",
+      buttons: [
+        {
+            text: "Yes",
+            handler: ()=>{
+              this.logOut();
+            }
+        },
+        {
+          text: "No"
+        }
+      ],
+    });
+    await alret.present();
+  }
+
+  
+  logOut() {
+    this.router.navigate(["/login"]);
+    localStorage.clear();
+    sessionStorage.clear();
+  }
+
 }
 
 

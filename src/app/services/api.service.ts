@@ -109,6 +109,13 @@ export class ApiService {
   getByTransactionId(transId: number) {
     return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchByTransId/${transId}`).pipe(catchError(this.errorHandler));
   }
+
+  uploadProfilePicture(data){
+    return this.http.post(`${API_URL}/rest/upload/uploadDoc`, data, {
+      reportProgress:true,
+      observe:"events"
+    });
+  }
 }
 
 

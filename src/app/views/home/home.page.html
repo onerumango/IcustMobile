@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-item lines="none">
-      <ion-avatar  slot="end" >
+      <ion-avatar slot="end" (click)="goToProfile()">
         <div *ngIf="image==null" >
           <h1 class="img" [style.background]="getRandomColor(i+3)" 
                style="text-align: center; font-size: 16px; padding-top: 10px;">
@@ -10,10 +10,6 @@
         <div *ngIf="image!=null">
           <img class="img" [src]="image" alt="profile">
         </div>
-      </ion-avatar>
-      <ion-avatar  slot="end" (click)="openAlret()">
-          <ion-icon class="logout" [style.background]="getRandomColor(i+3)"
-          name="power-outline"></ion-icon>
       </ion-avatar>
 
       <ion-label style="font-size: xx-large;" class="font-black">Hi {{firstName}}</ion-label>

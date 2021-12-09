@@ -1,9 +1,7 @@
-import { getCurrencySymbol } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Button } from 'selenium-webdriver';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -29,7 +27,7 @@ export class HomePage implements OnInit {
   savingAccount: any;
   current: any;
   saving: any;
-  image: Object;
+  image: any;
   profileData: any;
   formData: any;
   loan: any;
@@ -38,7 +36,8 @@ export class HomePage implements OnInit {
   currCurrent: string;
   selectedAccountNumber: any;
   cards:any = [];
-  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,private cdr:ChangeDetectorRef, private dataService: DataService, private alert: AlertController) { }
+  constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,
+    private cdr:ChangeDetectorRef, private dataService: DataService) { }
 
   ngOnInit() {
 
@@ -47,6 +46,14 @@ export class HomePage implements OnInit {
      var customerDetails= JSON.parse(localStorage.getItem('customer_details'));
      this.accountType=customerDetails.accountType;
      this.loadCustomerDetails();
+
+     this.dataService.getAvatarUrl.subscribe(data =>{
+      if(data != null){
+        this.image = data;
+        this.cdr.markForCheck();
+        console.log(this.image);
+      }
+    });
   }
 
 
@@ -72,12 +79,11 @@ export class HomePage implements OnInit {
         this.cdr.markForCheck();
         this.profileData = data;
         console.log(" profile Image",this.profileData.profileImage.fileUrl);
-        if (data.profileImage && data.profileImage.fileUrl != null) {
-         // let objectURL = 'data:image/jpeg;base64,' + data.profileImage.fileName;
-          let objectURL =  data.profileImage.fileUrl;
+        if (data.profileImage != null) {
+          let objectURL =  data.profileImage;
           this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         }else{
-          this.image=null;
+          this.image = null;
         }
         this.cdr.markForCheck();
       }, (error: any) => {
@@ -117,41 +123,14 @@ export class HomePage implements OnInit {
 
  getAccountNumber(info){
   this.dataService.shareAccountInfo(info);
-  console.log(this.selectedAccountNumber);
-
   this.router.navigate(['/tabs/transaction']);
  }
 
-  logOut() {
-    console.log("this is logout");
-    this.router.navigate(["/login"]);
-    localStorage.removeItem('PhoneNumLogin');
-    sessionStorage.removeItem('customer_id');
-  }
+ goToProfile(){
+  this.router.navigate(['/tabs/profile']);
+ }
 
-  openAlret(){
-    this.showAlret();
-  }
-
-  async showAlret(){
-    let alret= await this.alert.create({
-      subHeader: "Do you wants to Signout",
-      buttons: [
-        {
-            text: "Yes",
-            handler: ()=>{
-              this.logOut();
-            }
-        },
-        {
-          text: "No"
-
-        }
-      ],
-    });
-    await alret.present();
-  }
-
+ 
 
     getRandomColor(idx) {
     var col0 = '#0d856b';

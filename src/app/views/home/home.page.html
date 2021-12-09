@@ -2,14 +2,14 @@
   <ion-toolbar>
     <ion-item lines="none">
       <ion-avatar slot="end" (click)="goToProfile()">
-        <div *ngIf="image==null" >
+        <ng-container *ngIf="image == null || image == undefined; else showAvatar">
           <h1 class="img" [style.background]="getRandomColor(i+3)" 
                style="text-align: center; font-size: 16px; padding-top: 10px;">
             {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName | uppercase | slice:0:1}}</h1>
-        </div>
-        <div *ngIf="image!=null">
+        </ng-container>
+        <ng-template #showAvatar>
           <img class="img" [src]="image" alt="profile">
-        </div>
+        </ng-template>
       </ion-avatar>
 
       <ion-label style="font-size: xx-large;" class="font-black">Hi {{firstName}}</ion-label>

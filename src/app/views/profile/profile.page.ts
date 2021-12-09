@@ -98,7 +98,7 @@ export class ProfilePage implements OnInit {
         this.profileData = data;
         if (data.profileImage != null) {
           let objectURL = data.profileImage;
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          this.image = data.profileImage != "not_available" ? this.sanitizer.bypassSecurityTrustUrl(objectURL) : undefined;;
         } else {
           this.image = null;
         }
@@ -291,9 +291,11 @@ uploadFile(file:File){
 
   
   logOut() {
-    this.router.navigate(["/login"]);
     localStorage.clear();
     sessionStorage.clear();
+    this.router.navigate(["/login"]).then(_ =>{
+      window.location.reload();
+    });
   }
 
 }

@@ -81,7 +81,7 @@ export class HomePage implements OnInit {
         console.log(" profile Image",this.profileData.profileImage.fileUrl);
         if (data.profileImage != null) {
           let objectURL =  data.profileImage;
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          this.image = data.profileImage != "not_available" ? this.sanitizer.bypassSecurityTrustUrl(objectURL) : undefined;
         }else{
           this.image = null;
         }

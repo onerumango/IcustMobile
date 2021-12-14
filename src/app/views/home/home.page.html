@@ -43,6 +43,8 @@
           <ion-row>
             <ion-col class="ion-align-self-end" size="4">
             <p class="acc-type capitalize" >{{ card.accountType + ' Account' }}</p>
+             <p class="acc-type capitalize">{{ card.accountId }}</p>
+
             </ion-col>
             <ion-col class="ion-align-self-center" size="8">
               <p class="acc-balance leading-3 capitalize">Account Balance</p>
@@ -50,7 +52,7 @@
           </ion-row>
           <ion-row class="ion-align-items-end">
             <ion-col class="ion-align-self-end">
-              <p class="balance leading-3">{{ card.accountCurrency | currencySymbol  }} {{  card.amount | number: '2.'}}</p>
+              <p class="balance leading-3">{{ card.accountCurrency | currencySymbol  }} {{  card.amount | number: '1.'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -273,7 +273,7 @@ uploadFile(file:File){
 
   async logoutApp(){
     let alret= await this.alert.create({
-      subHeader: "Do you wants to Signout",
+      subHeader: "Do you want to Sign Out",
       buttons: [
         {
             text: "Yes",

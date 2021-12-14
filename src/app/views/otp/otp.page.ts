@@ -105,11 +105,11 @@ export class OtpPage implements OnInit {
   //}
   validateOtp(otpValue) {
     console.log("Phonenumber for OTP", otpValue, otpValue.otp,this.otpToken);
-  
+  console.log(otpValue.otp);
     
     this.verifyOtpModel.sourceKey = 'mobile';
     this.verifyOtpModel.sourceValue = this.PhoneNumLogin;
-    this.verifyOtpModel.otp = this.otpToken;
+    this.verifyOtpModel.otp = otpValue.otp;
     this.verifyOtpModel.type = '';
     console.log("model", this.verifyOtpModel);
     this.api.verifyOtp(this.verifyOtpModel).subscribe(otpResp => {

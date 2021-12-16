@@ -131,7 +131,7 @@ export class LoginPage implements OnInit {
   }
   async openToast() {
     const toast = await this.toastCtrl.create({
-      message: 'Please enter the registered Phone Number',
+      message: 'Please enter the registered Mobile Number',
       duration: 5000
     });
     toast.present();

@@ -93,7 +93,7 @@ export class TransactionPage implements OnInit {
         {
           name: 'Account Type',
           type: 'text',
-          value: 'Account Type: '+data.accountType,
+          value: 'Account Type: '+this.accountInfo.accountType ,
           disabled: true
         },
         {

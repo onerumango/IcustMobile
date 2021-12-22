@@ -1,0 +1,40 @@
+<ion-header collapse="condense" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModel()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-searchbar placeholder="Search..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list-header>
+    <ion-label>Popular Service</ion-label>
+  </ion-list-header>
+  <div class="container">
+    <div class="scroll" scrollX="true">
+      <ion-row>
+        <ion-item lines="none">
+          <ion-chip *ngFor="let item of items | searchFilter:filterTerm" color="secondary" (click)="openToast(item.title)">
+            <ion-icon color="primary" name="trending-up-outline"></ion-icon>
+            <ion-label>{{ item.title }}</ion-label>
+          </ion-chip>
+        </ion-item>
+      </ion-row>
+    </div>
+</div>
+<ion-list>
+  <ion-list-header lines="inset">
+    <ion-label>Setting Service</ion-label>
+  </ion-list-header>
+  <ion-item *ngFor="let item of trendingRecords | searchFilter:filterTerm" (click)="openToast(item.name)">
+    <ion-label color="primary">
+      <h1>{{ item.name }}</h1>
+    </ion-label>
+    <ion-icon name="trending-up-outline"></ion-icon>
+  </ion-item>
+</ion-list>
+
+</ion-content>

@@ -6,6 +6,8 @@ import { BranchComponent } from './branch/branch.component';
 import { AvatarPhotoComponent } from './avatar-photo/avatar-photo.component';
 import { MapComponent } from './map/map.component';
 import { TimeSlotsComponent } from './time-slots/time-slots.component';
+import { SearchComponent } from './search/search.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { TimeSlotsComponent } from './time-slots/time-slots.component';
     BranchComponent,
     AvatarPhotoComponent,
     TimeSlotsComponent,
-    MapComponent
+    MapComponent,
+    SearchComponent
   ],
   exports: [
   ],
@@ -21,13 +24,15 @@ import { TimeSlotsComponent } from './time-slots/time-slots.component';
     CommonModule,
     IonicModule,
     FormsModule,
+    PipesModule,
     ReactiveFormsModule,
   ],
   entryComponents: [
     BranchComponent,
     AvatarPhotoComponent,
     MapComponent,
-    TimeSlotsComponent
+    TimeSlotsComponent,
+    SearchComponent
   ]
 })
 export class ComponentsModule { }

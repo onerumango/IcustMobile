@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { SearchComponent } from 'src/app/components/search/search.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -37,7 +38,8 @@ export class HomePage implements OnInit {
   selectedAccountNumber: any;
   cards:any = [];
   constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,
-    private cdr:ChangeDetectorRef, private dataService: DataService) { }
+    private cdr:ChangeDetectorRef, private dataService: DataService, 
+    public modalController: ModalController) { }
 
   ngOnInit() {
 
@@ -92,7 +94,12 @@ export class HomePage implements OnInit {
   }
 
   
-
+ async searchModal() {
+    const modal = await this.modalController.create({
+      component: SearchComponent,
+    });
+    return await modal.present();
+  }
 
 
   goToCashWithdrawal(){

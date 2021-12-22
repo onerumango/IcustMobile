@@ -197,10 +197,21 @@ export class ProfilePage implements OnInit {
   fileSelected(event){
     const file = event.target.files ? event.target.files[0] : '';
     this.selectedFile = file;
+   
+    let size = event.target.files[0].size;
+    this.toastService.showToast(`profile picture will take time to load since the upload file size is ${this.formatBytes(size, 2)}`);
     this.uploadFile(file);
   }
-
+  formatBytes(bytes, decimals) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
 uploadFile(file:File){
+  
   this.showLoader = true;
 
   const formData: FormData = new FormData();

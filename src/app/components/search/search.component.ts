@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -8,58 +9,37 @@ import { ModalController, ToastController } from '@ionic/angular';
 })
 export class SearchComponent implements OnInit {
   filterTerm: string;
-  items: any = [
-    {
-      id: 1,
-      title: "Cash Withdrawal",
-      state:""
-    },{
-      id: 2,
-      title: "Cash Deposit",
-      state:""
-    }, {
-      id: 3,
-      title: "Cheque Deposit",
-      state:""
-    }, {
-      id: 4,
-      title: "Cheque Withdrawal",
-      state:""
-    }, {
-      id: 5,
-      title: "Forex Transaction",
-      state:""
-    },{
-      id: 6,
-      title: "Bill Payment",
-      state:""
-    }
-  ];
+  items: any = [];
 
-  trendingRecords = [{
-    "id": 1,
-    "name": "Account Settings",
-  },
-  {
-    "id": 2,
-    "name": "Notification",
-  },
-  {
-    "id": 3,
-    "name": "Help",
-  },
-  {
-    "id": 4,
-    "name": "Loan Payment",
-    "email": "Julianne.OConner@kory.org"
-  },
-  {
-    "id": 5,
-    "name": "Recharge",
+  trendingRecords = [ {
+    id: 1,
+    name: "Cash Withdrawal",
+    state:"/cashwithdrawal"
+  },{
+    id: 2,
+    name: "Cash Deposit",
+    state:"/cashdeposit"
+  }, {
+    id: 3,
+    name: "Cheque Deposit",
+    state:"/chequedeposit"
+  }, {
+    id: 4,
+    name: "Cheque Withdrawal",
+    state:"/chequewithdrawal"
+  }, {
+    id: 5,
+    name: "Forex Transaction",
+    state:"/forex-transaction"
+  },{
+    id: 6,
+    name: "Loan Payment",
+    state:"/loan-payment"
   }
 ]
   constructor(private modalController: ModalController,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    private router:Router) { }
 
   ngOnInit() { }
 
@@ -68,11 +48,9 @@ export class SearchComponent implements OnInit {
     await this.modalController.dismiss(close);
   }
 
-  async openToast(name) {
-    const toast = await this.toastController.create({
-      message: `${name} clicked`,
-      duration: 2000
+  openPage(item) {
+    this.router.navigate([`${item.state}`]).then(_=>{
+      this.closeModel();
     });
-    toast.present();
   }
 }

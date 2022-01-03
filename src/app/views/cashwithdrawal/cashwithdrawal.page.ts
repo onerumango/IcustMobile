@@ -136,6 +136,7 @@ export class CashwithdrawalPage implements OnInit {
       //   this.slideOneForm.get('transactionBranch').patchValue("");
       //   this.nearestBrn = true;
       // }
+      this.brnflg=val;
       if (this.brnflg == false && val == false) {
         console.log("2nd if");
         this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);

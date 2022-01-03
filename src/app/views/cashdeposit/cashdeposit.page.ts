@@ -151,10 +151,12 @@ export class CashdepositPage implements OnInit {
 
 
   onChanges(){
+    
     this.depositForm.get('branchFlag').valueChanges.subscribe(val => {
       console.log("branch flag? val", val);
       console.log("branch flag?", this.brnflg);
       localStorage.setItem("BranchFlag", val);
+      this.brnflg=val;
       // if (val == false) {
       //   console.log("1st if");
       //   this.slideOneForm.get('transactionBranch').patchValue("");
@@ -209,7 +211,7 @@ export class CashdepositPage implements OnInit {
       // }
 
       // new code added for transaction amount comma separator
-      // debugger
+      // 
       //  console.log(this.slideOneForm)
       //  console.log(event.value);
       //const pattern = /[0-9.,]/;
@@ -217,9 +219,9 @@ export class CashdepositPage implements OnInit {
       value = this.depositForm.value.transactionAmount;
 
       //let inputChar = String.fromCharCode(event.charCode);
-      // debugger;
+      // ;
       this.transAmount = value;
-      // debugger
+      // 
       const pattern = value;
       let lastCharIsPoint = false;
       if (pattern.charAt(pattern.length - 1) === '.') {
@@ -376,7 +378,7 @@ export class CashdepositPage implements OnInit {
       // console.log(accbal);
       // this.slideOneForm.controls.transactionCurrency.patchValue(accbal.accountCurrency);
       // this.selectCurrencyCode(accbal.accountCurrency);
-      //debugger;
+      //;
       // console.log(accbal.transactionAmount);
       if (accbal.transactionAmount != null || accbal.transactionAmount != undefined) {
         this.numberOnlyValidation(accbal.transactionAmount);
@@ -492,7 +494,7 @@ export class CashdepositPage implements OnInit {
   //     console.log('backend accbal', accbal.amount);
   //     this.currentBalance = accbal.amount;
   //     console.log(this.depositForm.controls)
-  //     //debugger;
+  //     //;
   //     console.log(accbal.transactionAmount);
 
   //     this.depositForm.controls.accountBalance.patchValue(accbal.amount);

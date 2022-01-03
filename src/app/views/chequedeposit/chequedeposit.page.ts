@@ -114,6 +114,7 @@ export class ChequedepositPage implements OnInit {
       console.log("branch flag? val", val);
       console.log("branch flag?", this.brnflg);
       localStorage.setItem("BranchFlag", val);
+      this.brnflg=val;
       // if (val == false) {
       //   console.log("1st if");
       //   this.slideOneForm.get('transactionBranch').patchValue("");

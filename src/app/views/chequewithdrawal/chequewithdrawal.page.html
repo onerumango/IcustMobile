@@ -161,7 +161,7 @@
            <ion-icon *ngIf="slideOneForm.get('branchFlag').value == false" name="navigate-circle-outline" color="primary" slot="end"></ion-icon>
           </ion-item>
         </ion-card>
-          <ion-note style="color: red; margin-left: 22px;top: 13px;" *ngIf="f.transactionBranch.errors?.required"> 
+          <ion-note style="color: red; margin-left: 22px;top: 13px;" *ngIf="f.transactionBranch.errors?.required && f.transactionBranch.touched"> 
             <small>Transaction Branch Required</small>
           </ion-note>
        </div>

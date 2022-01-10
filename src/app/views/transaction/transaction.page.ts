@@ -5,6 +5,10 @@ import { AlertController } from '@ionic/angular';
 import { Location } from "@angular/common";
 import { DataService } from 'src/app/services/data.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { ModalController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { TransactionPopupPage } from '../transaction-popup/transaction-popup.page';
+
 
 @Component({
   selector: 'app-transaction',
@@ -20,9 +24,10 @@ export class TransactionPage implements OnInit {
   message: string;
   data: any;
  accountInfo:any;
+  modelData: any;
 
-  constructor(private router:Router, private alertController: AlertController,
-    private loadingService:LoadingService,
+  constructor(private router:Router, private alertController: AlertController,public navCtrl: NavController,
+    private loadingService:LoadingService, public modalCtrl: ModalController,
     private apiService: ApiService, private cdr: ChangeDetectorRef,private location: Location, private shareDataService: DataService) { }
 
   ngOnInit() {
@@ -60,70 +65,102 @@ export class TransactionPage implements OnInit {
       });
   }
 
-  onClick(event) {
-    console.log("Event = ",event);
-    this.loadingService.present();
-    this.apiService.getByTransactionId(event.transactionId).subscribe(response =>{
-      console.log("response -- "+response);
-      this.data = JSON.parse(JSON.stringify(response));
-      console.log("response -- "+this.data);
-    });
-    setTimeout(() => {
-      this.loadingService.dismiss();
-      this.dialog(this.data);
-    }, 3000);
-  }
-
-  async dialog(data) {
-    const alert = await this.alertController.create({
-      header: data.trnType,
-      inputs: [
-        {
-          name: 'Transaction ID',
-          type: 'text',
-          value: 'Transaction ID: '+data.transactionId,
-          disabled: true
-        },
-        {
-          name: 'Account Number',
-          type: 'text',
-          value: 'Account Number: '+data.accountNumber,
-          disabled: true
-        },
-        {
-          name: 'Account Type',
-          type: 'text',
-          value: 'Account Type: '+this.accountInfo.accountType ,
-          disabled: true
-        },
-        {
-          name: 'Account Currency',
-          type: 'text',
-          value: 'Account Currency: '+data.transactionCurrency,
-          disabled: true
-        },
-        {
-          name: 'Transaction Amount',
-          type: 'text',
-          value: 'Transaction Amount: '+data.transactionAmount,
-          disabled: true
-        },
-        {
-          name: 'Balance',
-          type: 'text',
-          value: 'Balance: '+data.accountBalance,
-          disabled: true
-        },
-      ],
-      buttons: ['OK']
-    });
-
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result);
-  }
 
   goBack(){
     this.location.back();
   }
-}
+
+
+  async onClick(event) {
+    console.log("Inside onClick",event.transactionId);
+    // this.loadingService.present();
+    // this.apiService.getByTransactionId(event.transactionId).subscribe(response =>{
+    //   console.log("response -- "+response);
+    //   this.data = JSON.parse(JSON.stringify(response));
+    //   console.log("response -- "+this.data);
+    // });
+    
+    // let modal = await this.modalCtrl.create({component: TransactionPopupPage,
+    //   componentProps: { 
+    //     foo: 'hello',
+    //     bar: 'world'
+    // )},
+    let modal = await this.modalCtrl.create({
+      component: TransactionPopupPage,
+      componentProps: { 
+         value: event.transactionId
+      }
+    });
+
+    modal.onDidDismiss()
+    .then((data) => {
+      const foo = data['data'];
+  });
+    return await modal.present();
+  }
+      
+   
+    // return await modal.present();
+    // modal.present();
+    // console.log("Event = ",event);
+    // this.loadingService.present();
+    // this.apiService.getByTransactionId(event.transactionId).subscribe(response =>{
+    //   console.log("response -- "+response);
+    //   this.data = JSON.parse(JSON.stringify(response));
+    //   console.log("response -- "+this.data);
+    // });
+    // setTimeout(() => {
+    //   this.loadingService.dismiss();
+    //   this.dialog(this.data);
+    // }, 3000);
+    // async dialog(data) {
+    //   const alert = await this.alertController.create({
+        // header: data.trnType,
+  //       cssClass: 'alertColor',
+  //       inputs: [
+  
+  //         {
+  //           name: 'Transaction ID',
+  //           type: 'text',
+  //           value: 'Transaction ID: '+data.transactionId,
+  //           disabled: true
+  //         },
+  //         {
+  //           name: 'Account Number',
+  //           type: 'text',
+  //           value: 'Account Number: '+data.accountNumber,
+  //           disabled: true
+  //         },
+  //         {
+  //           name: 'Account Type',
+  //           type: 'text',
+  //           value: 'Account Type: '+this.accountInfo.accountType ,
+  //           disabled: true
+  //         },
+  //         {
+  //           name: 'Account Currency',
+  //           type: 'text',
+  //           value: 'Account Currency: '+data.transactionCurrency,
+  //           disabled: true
+  //         },
+  //         {
+  //           name: 'Transaction Amount',
+  //           type: 'text',
+  //           value: 'Transaction Amount: '+data.transactionAmount,
+  //           disabled: true
+  //         },
+  //         {
+  //           name: 'Balance',
+  //           type: 'text',
+  //           value: 'Balance: '+data.accountBalance,
+  //           disabled: true
+  //         },
+  //       ],
+  //       buttons: ['OK']
+  //     });
+  
+  //     await alert.present();
+  //     let result = await alert.onDidDismiss();
+  //     console.log(result);
+  //   }
+ }

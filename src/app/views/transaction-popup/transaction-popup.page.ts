@@ -50,6 +50,7 @@ getData(){
   this.shareDataService.getAccountInfo.subscribe(data=>{
     console.log("Data",data);
     this.accountInfo = data;
+    console.log("working fine sucessfull")
   });
 
 

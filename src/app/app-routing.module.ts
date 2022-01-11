@@ -47,10 +47,10 @@ export const rootRouterConfig: Routes = [
     path: 'tabs',
     loadChildren: () => import('./views/tabs/tabs.module').then( m => m.TabsPageModule)
   },
-  // {
-  //   path: 'transaction',
-  //   loadChildren: () => import('./views/transaction/transaction.module').then( m => m.TransactionPageModule)
-  // },
+  {
+    path: 'transaction-popup',
+    loadChildren: () => import('./views/transaction-popup/transaction-popup.module').then( m => m.TransactionPopupPageModule)
+  },
   // {
   //   path: 'profile',
   //   loadChildren: () => import('./views/profile/profile.module').then( m => m.ProfilePageModule)

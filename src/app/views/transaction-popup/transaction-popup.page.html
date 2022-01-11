@@ -1,0 +1,57 @@
+<ion-content>
+  <div class="rect">
+    <ion-header class="head">
+
+      <ion-toolbar class="new-background-color" style="--border-width: 0;">
+        <ion-icon name="close" class="close" slot="end" (click)="next()"></ion-icon>
+        <div class="text" style="margin-left:35px;">{{data.trnType}}</div>
+        
+      </ion-toolbar>
+
+    </ion-header>
+
+    <div class="innerRect">
+      <span class="circle"></span>
+      <div class="inputCard">
+
+        <ion-label style="opacity: 51%;">Transaction Id</ion-label>
+        <ion-label class="display">{{data.transactionId}}</ion-label>
+
+        <ion-label style="opacity: 51%;">Account Number</ion-label>
+        <ion-label class="display">{{data.accountNumber}}</ion-label>
+
+        <ion-label style="opacity: 51%;">Account Type</ion-label>
+        <ion-label class="display">{{accountInfo.accountType}}</ion-label>
+
+        <ion-label style="opacity: 51%;">Account Currency</ion-label>
+        <ion-label class="display">{{data.transactionCurrency}}</ion-label>
+
+        <ion-label style="opacity: 51%;">Transaction Amount</ion-label>
+        <ion-label class="display">{{data.transactionAmount}}</ion-label>
+        
+        <ion-label style="opacity: 51%;">Transaction Branch</ion-label>
+        <ion-label class="display">{{data.transactionBranch}}</ion-label>
+        
+        <ion-label style="opacity: 51%;">Transaction Date</ion-label>
+        <ion-label class="display">{{data.transactionDate}}</ion-label>
+        
+        <ion-label style="opacity: 51%;">Time Slot</ion-label>
+        <ion-label class="display">{{data.transactionTime}}</ion-label>
+        
+      </div>
+      
+      <!-- <img [src]="imageToShow"> -->
+      <img [src]="image">
+      
+      <ion-label class="inputCard" style="display:block;opacity: 70%;font-size: 16pt;" (click)="addToWallet()">Add to
+        wallet</ion-label>
+
+    </div>
+
+    <div class="inputCard">
+
+    </div>
+  </div>
+
+
+</ion-content>

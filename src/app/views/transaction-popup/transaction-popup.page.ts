@@ -29,6 +29,7 @@ export class TransactionPopupPage implements OnInit {
   phoneNumber: string;
   accountInfo: {};
   image: any;
+  trans: any;
   // sanitizer: any;
 
   constructor(public navCtrl: NavController,private api: ApiService,  private modalCtrl: ModalController,private sanitizer: DomSanitizer, private shareDataService: DataService, private apiService: ApiService,  private router: Router, private toastService: ToastService,) { }
@@ -56,13 +57,13 @@ getData(){
 
   this.apiService.getByTransactionId(this.value).subscribe(response =>{
 
-    this.data = JSON.stringify(response);
-    console.log("response -- "+this.data);
-    console.log(JSON.parse(this.data));
-    this.data = JSON.parse(this.data);
-    console.log(this.data.qrCodeImage);
+    this.trans = JSON.stringify(response);
+    // console.log("response -- "+this.data);
+    // console.log(JSON.parse(this.trans));
+    this.trans = JSON.parse(this.trans);
+    console.log('trans', this.trans);
 
-    let objectURL = 'data:image/jpeg;base64,' + this.data.qrCodeImage
+    let objectURL = 'data:image/jpeg;base64,' + this.trans.qrCodeImage
         this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         console.log(this.image);
   });

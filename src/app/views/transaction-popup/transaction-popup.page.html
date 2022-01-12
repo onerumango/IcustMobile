@@ -4,7 +4,7 @@
 
       <ion-toolbar class="new-background-color" style="--border-width: 0;">
         <ion-icon name="close" class="close" slot="end" (click)="next()"></ion-icon>
-        <div class="text" style="margin-left:35px;">{{data.trnType}}</div>
+         <div class="text" style="margin-left:35px;">{{trans?.trnType}}</div> 
         
       </ion-toolbar>
 
@@ -15,28 +15,28 @@
       <div class="inputCard">
 
         <ion-label style="opacity: 51%;">Transaction Id</ion-label>
-        <ion-label class="display">{{data.transactionId}}</ion-label>
+        <ion-label class="display">{{trans?.transactionId}}</ion-label>
 
         <ion-label style="opacity: 51%;">Account Number</ion-label>
-        <ion-label class="display">{{data.accountNumber}}</ion-label>
+        <ion-label class="display">{{trans?.accountNumber}}</ion-label>
 
         <ion-label style="opacity: 51%;">Account Type</ion-label>
         <ion-label class="display">{{accountInfo.accountType}}</ion-label>
 
         <ion-label style="opacity: 51%;">Account Currency</ion-label>
-        <ion-label class="display">{{data.transactionCurrency}}</ion-label>
+        <ion-label class="display">{{trans?.transactionCurrency}}</ion-label>
 
         <ion-label style="opacity: 51%;">Transaction Amount</ion-label>
-        <ion-label class="display">{{data.transactionAmount}}</ion-label>
+        <ion-label class="display">{{trans?.transactionAmount}}</ion-label>
         
         <ion-label style="opacity: 51%;">Transaction Branch</ion-label>
-        <ion-label class="display">{{data.transactionBranch}}</ion-label>
+        <ion-label class="display">{{trans?.transactionBranch}}</ion-label>
         
         <ion-label style="opacity: 51%;">Transaction Date</ion-label>
-        <ion-label class="display">{{data.transactionDate}}</ion-label>
+        <ion-label class="display">{{trans?.transactionDate}}</ion-label>
         
         <ion-label style="opacity: 51%;">Time Slot</ion-label>
-        <ion-label class="display">{{data.transactionTime}}</ion-label>
+        <ion-label class="display">{{trans?.transactionTime}}</ion-label>
         
       </div>
       

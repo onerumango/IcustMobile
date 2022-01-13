@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 import { TransactionPageRoutingModule } from './transaction-routing.module';
 

@@ -92,10 +92,10 @@ export class TransactionPage implements OnInit {
       }
     });
 
-    modal.onDidDismiss()
-    .then((data) => {
-      const foo = data['data'];
-  });
+  //   modal.onDidDismiss()
+  //   .then((data) => {
+  //     const foo = data['data'];
+  // });
     return await modal.present();
   }
       

@@ -196,15 +196,15 @@ export class ChequedepositPage implements OnInit {
     console.log(this.transAmt);
     this.transAmt = this.transAmt.replace(/,/g, '');
     console.log(this.transAmt);
-    // if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
-    //   console.log("Bigger");
-    //   this.openToast1();
+    if(parseFloat(this.currentBalance) < parseFloat(this.transAmt)){
+      console.log("Bigger");
+      this.openToast1();
 
-    // }
+    }
     //   // this.slideOneForm.controls['transactionAmount'].setValidators();
-    //   else{
-    //     return;
-    //   }
+      else{
+        return;
+      }
   }
   async openToast1() {
     const toast = await this.toastCtrl.create({

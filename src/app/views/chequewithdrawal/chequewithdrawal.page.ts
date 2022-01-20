@@ -109,7 +109,8 @@ export class ChequewithdrawalPage implements OnInit {
       recordStatus: ['', [Validators.required]],
       authStatus: ['', [Validators.required]],
       version: ['', [Validators.required]],
-      remarks: ['', [Validators.required]]
+      remarks: ['', [Validators.required]],
+      chequeNumber:['',[Validators.required,Validators.maxLength(12)]],
     })
     console.log(this.slideOneForm.value);
     this.getCountrynameValues();

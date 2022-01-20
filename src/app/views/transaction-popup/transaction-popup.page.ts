@@ -97,7 +97,7 @@ generateQRCode(token){
 
  async next() {
     console.log("before");
-    this.router.navigate(['tabs']);
+    this.router.navigate(['/tabs/transaction']);
   
       await this.modalCtrl.dismiss();
     console.log("after",this.router); 

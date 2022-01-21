@@ -201,7 +201,8 @@ export class CashdepositPage implements OnInit {
     this.transAmt = event.target.value;
     console.log(event.target.value);
     this.IntValue = Math.floor(this.depositForm.value.transactionAmount).toString().length;
-    if (this.IntValue > 3) {
+    // if (this.IntValue > 3) {
+      if (this.IntValue > 1) {
       //old changes
       // const pattern = /[0-9.,]/;
       // let inputChar = String.fromCharCode(event.charCode);

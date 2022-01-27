@@ -162,6 +162,13 @@ export class ChequedepositPage implements OnInit {
         this.loading.dismiss();
       })
   }
+  keyPress(event: any) {
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+    }
+   }
 
   numberOnlyValidation(event: any) {
     this.transAmt = event.target.value;

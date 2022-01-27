@@ -67,8 +67,10 @@
      
       <div class="inputCard1">
         <ion-label>Cheque Number*</ion-label>
-        <ion-input class="box" formcontrolName="chequeNumber"
-        type="number" maxLength="12"></ion-input>
+        <!--<ion-input class="box" formcontrolName="chequeNumber" 
+        type="number" maxLength="12"></ion-input>-->
+        <ion-input class="box" formcontrolName="chequeNumber" (keypress)=_keyPress($event)
+        type="tel" maxLength="12"></ion-input>
       </div>
 
       <!-- <div class="inputCard1">

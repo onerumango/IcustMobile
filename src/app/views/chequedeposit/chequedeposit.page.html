@@ -60,7 +60,8 @@
      
       <div class="inputCard1">
         <ion-label>Cheque Number*</ion-label>
-        <ion-input class="box" type="number" maxLength="12"></ion-input>
+       <!-- <ion-input class="box" type="number" maxlength="12"></ion-input>-->
+        <ion-input class="box" type="tel"  (keypress)=keyPress($event) maxlength="12"></ion-input>
       </div>
       <!--<div class="inputCard1">
           <ion-label position="stacked" >Account Branch*</ion-label>

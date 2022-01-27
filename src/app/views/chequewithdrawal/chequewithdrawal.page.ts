@@ -519,6 +519,13 @@ export class ChequewithdrawalPage implements OnInit {
     this.currentBalance = currentBalance;
 
   }
+  _keyPress(event: any) {
+    const pattern = /[0-9]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+    }
+   }
   async presentModal() {
     const modal = await this.modalController.create({
       component: BranchComponent,

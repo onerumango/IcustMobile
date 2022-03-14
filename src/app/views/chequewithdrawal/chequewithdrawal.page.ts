@@ -162,7 +162,9 @@ export class ChequewithdrawalPage implements OnInit {
       this.loading.dismiss();
       console.log('backend resp in home', resp);
       this.customerDetails = resp;
-      this.savingAccountFun(resp);
+      if(this.customerDetails.accountInfo.status == 'APPROVED'){
+        this.savingAccountFun(resp);
+        }
     }, (err: any) => {
       this.loading.dismiss();
     })

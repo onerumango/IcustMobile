@@ -25,8 +25,8 @@
 
 
 
-    <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide  *ngFor="let card of cards; index as i;" (click)="getAccountNumber(card)">
+    <ion-slides pager="true" [options]="slideOpts" [hidden]="cards.status !=='APPROVED'">
+      <ion-slide  *ngFor="let card of cards; index as i;" (click)="getAccountNumber(card)" >
         <div class="slider1">
           <ion-grid>
           <ion-row>
@@ -73,7 +73,7 @@
   <ion-grid class="mt-20">
     <ion-row>
       <ion-col size="4">
-        <ion-card class="transactionCards" (click)="goToCashWithdrawal()">
+        <ion-card class="transactionCards" [disabled]="cards.status !=='APPROVED'" (click)="goToCashWithdrawal()">
           <div>
             <img class="grid-icon" src="assets\icon\cashw.PNG"  alt="Ionic logo">
             <p class="card-title" >Cash Withdrawal</p>
@@ -82,7 +82,7 @@
         </ion-card>
       </ion-col>
       <ion-col size="4">
-        <ion-card class="transactionCards" (click)="goToCashDeposit()">
+        <ion-card class="transactionCards"  (click)="goToCashDeposit()">
             <img class="grid-icon" src="assets\icon\cashdeposit.PNG" alt="Ionic logo">
             <p class="card-title">Cash Deposit</p>
          </ion-card>
@@ -96,7 +96,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="4">
-        <ion-card class="transactionCards" (click)="goToChequeWithdrawal()">
+        <ion-card  class="transactionCards" [disabled]="cards.status !=='APPROVED'" (click)="goToChequeWithdrawal()">
           <div>
             <img class="grid-icon" src="assets\icon\cashw.PNG"  alt="Ionic logo">
             <p class="card-title" >Cheque Withdrawal</p>

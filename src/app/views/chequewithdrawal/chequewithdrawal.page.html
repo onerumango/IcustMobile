@@ -8,9 +8,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf=flag>
-  <div>
-    <form [formGroup]="slideOneForm">
+<ion-content *ngIf=flag >
+  <div >
+    <form [formGroup]="slideOneForm" [disabled]="customerDetails.custAccount.status !== 'APPROVED'" >
       
       <div class="inputCard1">
         <ion-label>Account Number*</ion-label>

@@ -10,7 +10,7 @@
 
 <ion-content *ngIf="flag">
   <div>
-    <form [formGroup]="slideOneForm">
+    <form [formGroup]="slideOneForm" [disabled]="customerDetails.custAccount.status !== 'APPROVED'">
       <div class="inputCard1">
         <ion-label>Account Number*</ion-label>
         <!-- <ion-input class="box"></ion-input> -->
@@ -25,6 +25,7 @@
             >{{user.accountId}}</ion-select-option
           >
         </ion-select>
+        
       </div>
 
       <div class="inputCard1">

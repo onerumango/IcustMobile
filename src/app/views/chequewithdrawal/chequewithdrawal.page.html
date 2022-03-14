@@ -56,11 +56,18 @@
 
       <div class="inputCard1">
           <ion-label position="stacked">Transaction Amount*</ion-label>
-          <ion-input class="box" #myRef [(ngModel)]= "transAmount"  formControlName="transactionAmount" 
-          type="text" min="1" (keyup)="numberOnlyValidation($event)"></ion-input>
-          <!-- <div class="transactionAmounterrormsg" *ngIf=" currentBalance < slideOneForm.controls['transactionAmount'].value">
+          <ion-input 
+            class="box" 
+            #myRef [(ngModel)]= "transAmount"  
+            formControlName="transactionAmount" 
+            type="text" 
+            min="1" 
+            (keyup)="numberOnlyValidation($event)"
+          >
+          </ion-input>
+          <div class="transactionAmounterrormsg" *ngIf=" transAmt > currentBalance">
             Transaction  Amount cannot be greater than Account Balance    
-               </div> -->
+          </div>
                  
 
       </div>
@@ -81,7 +88,7 @@
   <div class="ion-padding-top">
   <div>
     <ion-button  expand="block" shape="round"(click)="goToNextPage()"
-    [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  currentBalance < slideOneForm.controls['transactionAmount'].value" style="width: 95%;">Next</ion-button>
+    [disabled]="validateDisablebutton('disable1') ||!transAmount  || submitted ||  transAmt > currentBalance" style="width: 95%;">Next</ion-button>
   </div>
   <div>
     <ion-button expand="block" shape="round" fill="clear" style="color: black;"

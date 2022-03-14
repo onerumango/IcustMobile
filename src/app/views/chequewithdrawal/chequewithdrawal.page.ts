@@ -189,7 +189,7 @@ export class ChequewithdrawalPage implements OnInit {
     this.transAmt = event.target.value;
     console.log(event.target.value);
     this.IntValue = Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
-    if (this.IntValue > 3) {
+    if (this.IntValue > 1) {
 
       let value: string;
       value = this.slideOneForm.value.transactionAmount;

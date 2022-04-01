@@ -171,9 +171,10 @@ export class CashwithdrawalPage implements OnInit {
         this.loading.dismiss();
         console.log('backend resp in home', resp);
         this.customerDetails = resp;
-        if(this.customerDetails.accountInfo.status == 'APPROVED'){
         this.savingAccountFun(resp);
-        }
+        // if(this.customerDetails.accountInfo.status == 'APPROVED'){
+        // this.savingAccountFun(resp);
+        // }
       }, (err: any) => {
         this.loading.dismiss();
       })

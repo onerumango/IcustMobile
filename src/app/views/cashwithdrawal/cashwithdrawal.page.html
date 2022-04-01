@@ -10,7 +10,8 @@
 
 <ion-content *ngIf="flag">
   <div>
-    <form [formGroup]="slideOneForm" [disabled]="customerDetails.custAccount.status !== 'APPROVED'">
+    <!-- <form [formGroup]="slideOneForm" [disabled]="customerDetails.custAccount.status !== 'APPROVED'"> -->
+      <form [formGroup]="slideOneForm">
       <div class="inputCard1">
         <ion-label>Account Number*</ion-label>
         <!-- <ion-input class="box"></ion-input> -->

@@ -70,19 +70,23 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     if(this.oTpModel.source_value != ''){
       this.api.getOtp(this.oTpModel).subscribe(otpResp => {
-        console.log("Response Success", otpResp);
-        this.otpResponse = otpResp;
-        console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
-        this.api.sendOtp(this.otpResponse['otpVal'].token);
-        /* Added validation for un-registered mobile nummber is entered */
-        if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
-          this.cdk.detectChanges();   
-          this.userResp = true;
-          this.openToast();
+        if (otpResp.icust.custStatus !="APPROVED" || otpResp.icust.custAccount[0].status !="APPROVED") {
+          this.openToast1();
         } else {
-          // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
-          console.log('in else')
-          this.router.navigateByUrl('/otp');
+          console.log("Response Success", otpResp);
+          this.otpResponse = otpResp;
+          console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
+          this.api.sendOtp(this.otpResponse['otpVal'].token);
+          /* Added validation for un-registered mobile nummber is entered */
+          if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
+            this.cdk.detectChanges();   
+            this.userResp = true;
+            this.openToast();
+          } else {
+            // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+            console.log('in else')
+            this.router.navigateByUrl('/otp');
+          }
         }
       })
 
@@ -113,6 +117,14 @@ export class LoginPage implements OnInit {
     else {
       this.router.navigateByUrl('/sessions/login');
     }
+  }
+
+  async openToast1() {
+    const toast = await this.toastCtrl.create({
+      message: 'Customer Id or Account Status is not approved',
+      duration: 2000
+    });
+    toast.present();
   }
 
   goToCashWithdrawal(loginForm) {

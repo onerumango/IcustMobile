@@ -8,6 +8,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { ModalController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { TransactionPopupPage } from '../transaction-popup/transaction-popup.page';
+import { filter } from 'rxjs/operators';
+
 
 
 @Component({
@@ -23,15 +25,23 @@ export class TransactionPage implements OnInit {
   displayInfo: boolean = false;
   message: string;
   data: any;
- accountInfo:any;
+  accountInfo:any;
   modelData: any;
+  phoneNumber: string;
+  customerDetails: any;
+  users: any[] = [];
+  accountNumber: any;
+  accountId: any;
+  custAccountData: any;
+  custAccount:any[];
 
   constructor(private router:Router, private alertController: AlertController,public navCtrl: NavController,
     private loadingService:LoadingService, public modalCtrl: ModalController,
     private apiService: ApiService, private cdr: ChangeDetectorRef,private location: Location, private shareDataService: DataService) { }
 
   ngOnInit() {
-   
+    this.phoneNumber = localStorage.getItem('PhoneNumLogin');
+    console.log("phoneNumber", this.phoneNumber);
 
     this.shareDataService.getAccountInfo.subscribe(data=>{
       console.log("Data",data);
@@ -39,6 +49,7 @@ export class TransactionPage implements OnInit {
     });
 
     this.getTransactionByAccountId();
+    this.loadData();
   }
 
   getTransactionByAccountId() {
@@ -49,6 +60,7 @@ export class TransactionPage implements OnInit {
       .subscribe(data => {
         this.loadingService.dismiss();
         console.log("data:::", data);
+        console.log("accountId:",this.accountInfo.accountId)
         if(data.length > 0) {
           this.transactionDataArr = data;
         }
@@ -65,6 +77,60 @@ export class TransactionPage implements OnInit {
       });
   }
 
+  loadData() {
+    //this.loadingService.present();
+    this.apiService.custpomerDetails(this.phoneNumber)
+      .subscribe((resp) => {
+        this.loadingService.dismiss();
+        console.log('backend resp in home', resp);
+        this.customerDetails = resp;
+        console.log("phonenumber resp:",resp);
+        
+         this.accountNumber=resp.custAccount.accountId;
+         this.custAccountData = resp.custAccount;
+        if(resp.custAccount.accountId > 1){
+          this.accountNumber=resp.custAccount.accountId;
+          if(this.accountInfo.accountId!=null){
+          resp.custAccount.accountId = this.accountInfo.accountId;
+          console.log("AccountID:",this.accountInfo.accountId)
+          }
+          console.log("AccountID:",this.accountInfo.accountId)
+         
+        }
+     
+      
+  
+     
+        this.savingAccountFun(resp);
+        // if(this.customerDetails.accountInfo.status == 'APPROVED'){
+        // this.savingAccountFun(resp);
+        // }
+      }, (err: any) => {
+        this.loadingService.dismiss();
+      })
+  }
+
+  savingAccountFun(filteredResponseSavingAccount) {
+
+    console.log(filteredResponseSavingAccount);
+    this.users = filteredResponseSavingAccount.custAccount;
+    console.log("filteredResponseSavingAccount:",filteredResponseSavingAccount.custAccount)
+    console.log("filteredResponseSavingAccountID:",filteredResponseSavingAccount.custAccount.accountId)
+
+    // if(this.accountInfo.accountId!=null){
+    //  // this.accountNumber.patchValue(this.accountInfo.accountId);  custAccount[0].accountId
+    //   // this.accountId.patchValue(this.accountInfo.accountId);
+  
+    //   this.accountNumber.get('accountNumber').patchValue(this.accountInfo.accountId);
+    // }else{
+    //  // this.accountNumber.patchValue(this.users[0].accountId);
+    //   this.accountNumber.get('accountNumber').patchValue(this.users[0].accountId);
+    // }
+    console.log("user::", this.users);
+    this.cdr.markForCheck();
+  }
+
+  
 
   goBack(){
     this.location.back();

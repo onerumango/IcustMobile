@@ -111,11 +111,6 @@ export class TransactionPage implements OnInit {
 
     console.log(filteredResponseSavingAccount);
     this.users = filteredResponseSavingAccount.custAccount;
-    console.log("filteredResponseSavingAccount:",filteredResponseSavingAccount.custAccount)
-    console.log("filteredResponseSavingAccountID:",filteredResponseSavingAccount.custAccount.accountId)
-
-  
-   
     this.cdr.markForCheck();
   }
 

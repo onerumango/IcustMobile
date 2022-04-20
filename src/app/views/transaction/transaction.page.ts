@@ -92,10 +92,7 @@ export class TransactionPage implements OnInit {
           this.accountNumber=resp.custAccount.accountId;
           if(this.accountInfo.accountId!=null){
           resp.custAccount.accountId = this.accountInfo.accountId;
-          console.log("AccountID:",this.accountInfo.accountId)
-          }
-          console.log("AccountID:",this.accountInfo.accountId)
-         
+          }   
         }
      
       
@@ -117,16 +114,8 @@ export class TransactionPage implements OnInit {
     console.log("filteredResponseSavingAccount:",filteredResponseSavingAccount.custAccount)
     console.log("filteredResponseSavingAccountID:",filteredResponseSavingAccount.custAccount.accountId)
 
-    // if(this.accountInfo.accountId!=null){
-    //  // this.accountNumber.patchValue(this.accountInfo.accountId);  custAccount[0].accountId
-    //   // this.accountId.patchValue(this.accountInfo.accountId);
   
-    //   this.accountNumber.get('accountNumber').patchValue(this.accountInfo.accountId);
-    // }else{
-    //  // this.accountNumber.patchValue(this.users[0].accountId);
-    //   this.accountNumber.get('accountNumber').patchValue(this.users[0].accountId);
-    // }
-    console.log("user::", this.users);
+   
     this.cdr.markForCheck();
   }
 

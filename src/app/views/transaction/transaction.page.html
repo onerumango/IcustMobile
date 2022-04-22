@@ -9,8 +9,27 @@
   </ion-toolbar>
   <ion-toolbar *ngIf="accountInfo.accountType != undefined">
     <div class="toolbar-bg">
-      <h5 class="capitalize secondary-text">{{ accountInfo?.accountType + ' Account' }}</h5>
-      <p class="capitalize secondary-text">{{ accountInfo?.accountId }}</p>
+      <!-- <h5 class="capitalize secondary-text">{{ accountInfo?.accountType + ' Account' }}</h5>
+      <p class="capitalize secondary-text">{{ accountInfo?.accountId }}</p> -->
+     
+      <ion-content  class="toolbar-bg">
+        <ion-list *ngIf="phoneNumber">
+          <ion-list-header>
+          
+            <ion-item >
+            <ion-label class="capitalize secondary-text">{{ accountInfo?.accountType + ' Account' }}</ion-label>
+          </ion-item>
+          </ion-list-header>
+     
+           <ion-select>
+            <ion-select-option *ngFor="let user of users" [value]="user.accountId">{{user.accountId}}</ion-select-option>
+          </ion-select> 
+   
+        </ion-list>
+      </ion-content>
+
+
+     
     </div>
   </ion-toolbar>
 </ion-header>

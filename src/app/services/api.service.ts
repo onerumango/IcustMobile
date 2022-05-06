@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppConstants } from 'src/config/app.constant';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ShowMessageService } from './showMessage/show-message.service';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -102,18 +102,45 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`).pipe(catchError(this.errorHandler));
   }
 
-  getTransactionByAccountId(accountId: any) {
-    return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchTransaction?accountNumber=${accountId}`).pipe(catchError(this.errorHandler));
+  getTransactionByAccountId(accountId: any, page, formattedFromDate, formattedToDate) {
+    var params;
+    if ((accountId != null || accountId != '' || accountId.length != 0) && page == 0) {
+      console.log('only accountId')
+      if (formattedFromDate != null && formattedToDate != null) {
+        params = new HttpParams()
+          .append('accountNumber', accountId)
+          .append('fromDate', formattedFromDate)
+          .append('toDate', formattedToDate);
+      } else {
+        params = new HttpParams()
+          .append('accountNumber', accountId);
+      }
+    } else {
+      console.log('accountId and page')
+
+      if (formattedFromDate != null && formattedToDate != null) {
+        params = new HttpParams()
+          .append('accountNumber', accountId)
+          .append('page', page)
+          .append('fromDate', formattedFromDate)
+          .append('toDate', formattedToDate);
+      } else {
+        params = new HttpParams()
+          .append('accountNumber', accountId)
+          .append('page', page);
+      }
+    }
+    return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchTransaction?${params}`).pipe(catchError(this.errorHandler));
   }
 
   getByTransactionId(transId: number) {
     return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchByTransId/${transId}`).pipe(catchError(this.errorHandler));
   }
 
-  uploadProfilePicture(data){
+  uploadProfilePicture(data) {
     return this.http.post(`${API_URL}/rest/upload/uploadDoc`, data, {
-      reportProgress:true,
-      observe:"events"
+      reportProgress: true,
+      observe: "events"
     });
   }
 }

@@ -64,6 +64,7 @@ export class HomePage implements OnInit {
      console.log('backend resp in cash withdrawal', resp);
      this.formData=resp;
      this.cards = resp.custAccount;
+     localStorage.setItem('loginRespAccountId',this.cards[0].accountId);
      this.dataService.shareAccountInfo(this.cards[0]);
      this.getProfilePicture(resp.customerId);
      this.cdr.markForCheck();

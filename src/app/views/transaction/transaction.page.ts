@@ -45,12 +45,15 @@ export class TransactionPage implements OnInit {
   trxnArrayList: any[] = [];
   formattedFromDate: string;
   formattedToDate: string;
+  loginRespAccountId: any;
 
   constructor(private router: Router, private alertController: AlertController, public navCtrl: NavController,
     private loadingService: LoadingService, public modalCtrl: ModalController,
     private apiService: ApiService, private cdr: ChangeDetectorRef, private location: Location, private shareDataService: DataService) { }
 
   ngOnInit() {
+    this.loginRespAccountId=localStorage.getItem('loginRespAccountId');
+    console.log("loginRespAccountId", this.loginRespAccountId);
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     console.log("phoneNumber", this.phoneNumber);
 
@@ -72,7 +75,7 @@ export class TransactionPage implements OnInit {
     this.loggedInCust = sessionStorage.getItem('customer_id');
     this.page = page
     // console.log("Logged In Customer -- ", this.loggedInCust);
-    this.apiService.getTransactionByAccountId(this.accountNumber, this.page, formattedFromDate, formattedToDate)
+    this.apiService.getTransactionByAccountId(this.loginRespAccountId, this.page, formattedFromDate, formattedToDate)
       .subscribe(data => {
         this.loadingService.dismiss();
         if (data != null || data != undefined) {

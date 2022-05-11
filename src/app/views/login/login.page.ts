@@ -57,6 +57,7 @@ export class LoginPage implements OnInit {
 }
 
   getOtp(phone) {
+    
     console.log("Phonenumber for OTP", phone.phoneNo)
     this.customerPhonenum = phone.phoneNo;
     console.log(this.customerPhonenum)
@@ -70,12 +71,15 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     if(this.oTpModel.source_value != ''){
       this.api.getOtp(this.oTpModel).subscribe(otpResp => {
+        console.log(otpResp)
+        
         if (otpResp.icust.custStatus !="APPROVED" || otpResp.icust.custAccount[0].status !="APPROVED") {
           this.openToast1();
         } else {
           console.log("Response Success", otpResp);
           this.otpResponse = otpResp;
           console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
+          this.router.navigateByUrl('/otp');
           this.api.sendOtp(this.otpResponse['otpVal'].token);
           /* Added validation for un-registered mobile nummber is entered */
           if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
@@ -88,6 +92,7 @@ export class LoginPage implements OnInit {
             this.router.navigateByUrl('/otp');
           }
         }
+        
       })
 
     }

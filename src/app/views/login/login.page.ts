@@ -79,7 +79,6 @@ export class LoginPage implements OnInit {
           console.log("Response Success", otpResp);
           this.otpResponse = otpResp;
           console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
-          this.router.navigateByUrl('/otp');
           this.api.sendOtp(this.otpResponse['otpVal'].token);
           /* Added validation for un-registered mobile nummber is entered */
           if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
@@ -87,7 +86,6 @@ export class LoginPage implements OnInit {
             this.userResp = true;
             this.openToast();
           } else {
-            // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
             console.log('in else')
             this.router.navigateByUrl('/otp');
           }

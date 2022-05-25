@@ -1,3 +1,4 @@
+import { TrxnPdfDocDownloadService } from './../../services/trxn-pdf-doc-download.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -39,26 +40,30 @@ export class TransactionPage implements OnInit {
 
   fromDate: any;
   toDate: any;
+  totalElements:any;
 
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   trxnArrayList: any[] = [];
+  transactionDataArrDownLoad:any[]=[];
   formattedFromDate: string;
   formattedToDate: string;
   loginRespAccountId: any;
+  customerInfo:any;
 
   constructor(private router: Router, private alertController: AlertController, public navCtrl: NavController,
     private loadingService: LoadingService, public modalCtrl: ModalController,
-    private apiService: ApiService, private cdr: ChangeDetectorRef, private location: Location, private shareDataService: DataService) { }
+    private apiService: ApiService, private cdr: ChangeDetectorRef,
+     private location: Location, private shareDataService: DataService,
+     private pdfService:TrxnPdfDocDownloadService) { }
 
   ngOnInit() {
     this.loginRespAccountId=localStorage.getItem('loginRespAccountId');
-    console.log("loginRespAccountId", this.loginRespAccountId);
+    // console.log("loginRespAccountId", this.loginRespAccountId);
     this.phoneNumber = localStorage.getItem('PhoneNumLogin');
-    console.log("phoneNumber", this.phoneNumber);
 
     this.shareDataService.getAccountInfo.subscribe(data => {
-      console.log("accountInfo :: ", data);
+      // console.log("accountInfo :: ", data);
       this.accountInfo = data;
       if (this.accountInfo != null && this.accountInfo != undefined) {
         this.accountNumber = this.accountInfo.accountId;
@@ -66,36 +71,45 @@ export class TransactionPage implements OnInit {
     });
     this.loadData();
 
-    this.getTransactionByAccountId('onload', 0, '', null, null);
+    this.getTransactionByAccountId('onload', 0, '', null, null,20);
    
   }
 
-  getTransactionByAccountId(dataLoad, page, event, formattedFromDate, formattedToDate) {
+  getTransactionByAccountId(dataLoad, page, event, formattedFromDate, formattedToDate,size) {
     this.loadingService.present();
     this.loggedInCust = sessionStorage.getItem('customer_id');
     this.page = page
     // console.log("Logged In Customer -- ", this.loggedInCust);
-    this.apiService.getTransactionByAccountId(this.loginRespAccountId, this.page, formattedFromDate, formattedToDate)
+    this.apiService.getTransactionByAccountId(this.loginRespAccountId, this.page, formattedFromDate, formattedToDate,size)
       .subscribe(data => {
         this.loadingService.dismiss();
         if (data != null || data != undefined) {
+          this.displayInfo = false;
           console.log("data:::", data);
-          if (formattedFromDate != null) {
+          if (formattedFromDate != null && dataLoad != 'download') {
             if (this.page == 0) {
               // console.log('from date not null :: ',formattedFromDate);
               this.transactionDataArr = [];
               this.trxnArrayList = [];
             }
           }
+          if(dataLoad != 'download'){
           this.transactionDataArr = data;
+        }
+        if(dataLoad === 'download'){
+          this.loadAllTransactionData(data.content);
+        }
+          this.totalElements=data.totalElements;
           this.pushArray(this.trxnArrayList, this.transactionDataArr.content)
           if (dataLoad === 'scroll') {
             event.target.disabled = false;
           }
         }
         else {
-          this.displayInfo = true;
-          this.message = "There are no transactions to display";
+          if(this.trxnArrayList.length ==0 ){
+            this.displayInfo = true;
+            this.message = "There are no transactions to display";
+          }
         }
         this.cdr.markForCheck();
       }, (err: any) => {
@@ -125,19 +139,19 @@ export class TransactionPage implements OnInit {
     if (this.transactionDataArr.content.length === 20) {
       // console.log('Done');
       event.target.disabled = true;
-      this.getTransactionByAccountId('scroll', this.page, event, null, null);
+      this.getTransactionByAccountId('scroll', this.page, event, null, null,20);
     }
   }
   changed(event) {
     const formattedFromDate = format(parseISO(this.fromDate), "yyyy-MM-dd'T'HH:mm:ss");
     this.formattedFromDate = formattedFromDate;
-    console.log('fromDate :: ',this.formattedFromDate);
+    // console.log('fromDate :: ',this.formattedFromDate);
     const formattedToDate = format(parseISO(this.toDate), "yyyy-MM-dd'T'HH:mm:ss");
     this.formattedToDate = formattedToDate;
-        console.log('toDate :: ',this.formattedToDate);
-    console.log('event :: ',event.target.value, this.accountNumber, this.accountInfo);
+        // console.log('toDate :: ',this.formattedToDate);
+    // console.log('event :: ',event.target.value, this.accountNumber, this.accountInfo);
     if (event.target.value) {
-      this.getTransactionByAccountId("dateBase", 0, '', this.formattedFromDate, this.formattedToDate)
+      this.getTransactionByAccountId("dateBase", 0, '', this.formattedFromDate, this.formattedToDate,20)
     }
   }
 
@@ -149,9 +163,9 @@ export class TransactionPage implements OnInit {
     this.apiService.custpomerDetails(this.phoneNumber)
       .subscribe((resp) => {
         this.loadingService.dismiss();
-        console.log('backend resp in home', resp);
+        // console.log('backend resp in home', resp);
         this.customerDetails = resp;
-        console.log("phonenumber resp:", resp);
+        // console.log("phonenumber resp:", resp);
 
         this.accountNumber = resp.custAccount.accountId;
         this.custAccountData = resp.custAccount;
@@ -176,7 +190,7 @@ export class TransactionPage implements OnInit {
 
   savingAccountFun(filteredResponseSavingAccount) {
 
-    console.log(filteredResponseSavingAccount);
+    // console.log(filteredResponseSavingAccount);
     this.users = filteredResponseSavingAccount.custAccount;
     this.cdr.markForCheck();
   }
@@ -280,5 +294,18 @@ export class TransactionPage implements OnInit {
   //     let result = await alert.onDidDismiss();
   //     console.log(result);
   //   }
+
+  downloadPdf(trxnArrayList,fromDate,toDate){
+    console.log("inside download pdf",trxnArrayList,fromDate,toDate)
+    if(fromDate == undefined || fromDate == null){
+      this.getTransactionByAccountId('download', 0, '', null, null,this.totalElements);
+    }else{
+      this.getTransactionByAccountId('download', 0, '', this.formattedFromDate, this.formattedToDate,this.totalElements);
+    }
+  }
+
+  loadAllTransactionData(data){
+    this.pdfService.createPdf(data,this.customerDetails);
+  }
 
 }

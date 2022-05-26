@@ -44,15 +44,31 @@
     [(ngModel)]="date" ngDefaultControl (input)="date = $event.target.value" ></ion-input>
   </ion-item> -->
 
-   <ion-item>
-     <ion-label>From date</ion-label>
-     <ion-datetime presentation="fromDate" [(ngModel)]="fromDate" ></ion-datetime>
-   </ion-item>
+  <ion-row>
+    <ion-col width-25>
+      <ion-item>
+        <ion-label>From date</ion-label>
+        <ion-datetime presentation="fromDate" [(ngModel)]="fromDate" ></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col width-25>
+      <ion-item>
+        <ion-label>To date</ion-label>
+        <ion-datetime presentation="toDate" [(ngModel)]="toDate" (ionChange)="changed($event)"></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <!-- <ion-col> -->
+      <ion-item style="margin-top:5px; color:red;">
+        <ion-button (click)="downloadPdf(trxnArrayList,fromDate,toDate)" color="light" fill="outline">
+          <ion-icon name="arrow-down-outline" color="dark"></ion-icon>
+        </ion-button>
+      </ion-item>
+    <!-- </ion-col> -->
+</ion-row>
 
-   <ion-item>
-     <ion-label>To date</ion-label>
-     <ion-datetime presentation="toDate" [(ngModel)]="toDate" (ionChange)="changed($event)"></ion-datetime>
-   </ion-item>
+ 
+
+  
 
 
 

@@ -102,7 +102,7 @@ export class ApiService {
     return this.http.get<any>(`${API_URL}/teller-service/api/mobile/${customerId}`).pipe(catchError(this.errorHandler));
   }
 
-  getTransactionByAccountId(accountId: any, page, formattedFromDate, formattedToDate) {
+  getTransactionByAccountId(accountId: any, page, formattedFromDate, formattedToDate,size) {
     var params;
     if ((accountId != null || accountId != '' || accountId.length != 0) && page == 0) {
       console.log('only accountId')
@@ -112,8 +112,14 @@ export class ApiService {
           .append('fromDate', formattedFromDate)
           .append('toDate', formattedToDate);
       } else {
-        params = new HttpParams()
-          .append('accountNumber', accountId);
+          if(size >20){
+            params = new HttpParams()
+            .append('accountNumber', accountId)
+            .append('size', size);
+          }else{
+            params = new HttpParams()
+            .append('accountNumber', accountId);
+          }
       }
     } else {
       console.log('accountId and page')
@@ -125,9 +131,16 @@ export class ApiService {
           .append('fromDate', formattedFromDate)
           .append('toDate', formattedToDate);
       } else {
-        params = new HttpParams()
-          .append('accountNumber', accountId)
-          .append('page', page);
+          if(size >20){
+            params = new HttpParams()
+            .append('accountNumber', accountId)
+            .append('page', page)
+            .append('size', size);
+          }else{
+            params = new HttpParams()
+            .append('accountNumber', accountId)
+            .append('page', page);
+          }
       }
     }
     return this.http.get<any>(`${API_URL}/cash-deposit/api/fetchTransaction?${params}`).pipe(catchError(this.errorHandler));

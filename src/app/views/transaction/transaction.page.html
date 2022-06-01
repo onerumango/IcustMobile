@@ -48,7 +48,7 @@
     <ion-col width-25>
       <ion-item>
         <ion-label>From date</ion-label>
-        <ion-datetime presentation="fromDate" [(ngModel)]="fromDate" ></ion-datetime>
+        <ion-datetime presentation="fromDate" [(ngModel)]="fromDate" (ionChange)="checkFromDate($event)"></ion-datetime>
       </ion-item>
     </ion-col>
     <ion-col width-25>

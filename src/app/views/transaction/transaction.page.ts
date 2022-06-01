@@ -41,7 +41,7 @@ export class TransactionPage implements OnInit {
   fromDate: any;
   toDate: any;
   totalElements:any;
-
+  currentDate: Date = new Date();
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   trxnArrayList: any[] = [];
@@ -153,6 +153,12 @@ export class TransactionPage implements OnInit {
     if (event.target.value) {
       this.getTransactionByAccountId("dateBase", 0, '', this.formattedFromDate, this.formattedToDate,20)
     }
+  }
+
+  checkFromDate(event){
+    console.log('value :: ',event.target.value ,this.fromDate )
+    var currDate =format(this.currentDate, "yyyy-MM-dd'T'HH:mm:ss");
+    console.log('formatted:: ',currDate);
   }
 
   toggleInfiniteScroll() {

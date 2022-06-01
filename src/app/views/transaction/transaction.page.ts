@@ -13,7 +13,6 @@ import { filter } from 'rxjs/operators';
 import { format, getDate, getMonth, getYear, parseISO } from 'date-fns';
 
 
-
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.page.html',
@@ -42,6 +41,7 @@ export class TransactionPage implements OnInit {
   toDate: any;
   totalElements:any;
   currentDate: Date = new Date();
+  currentDate2: String  = new Date().toISOString();
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   trxnArrayList: any[] = [];
@@ -50,6 +50,8 @@ export class TransactionPage implements OnInit {
   formattedToDate: string;
   loginRespAccountId: any;
   customerInfo:any;
+  priviousDate:any;
+  fromDateVal:any;
 
   constructor(private router: Router, private alertController: AlertController, public navCtrl: NavController,
     private loadingService: LoadingService, public modalCtrl: ModalController,
@@ -72,7 +74,8 @@ export class TransactionPage implements OnInit {
     this.loadData();
 
     this.getTransactionByAccountId('onload', 0, '', null, null,20);
-   
+    this.priviousDate=this.getYesterdayDate();
+    this.priviousDate=this.priviousDate.toISOString();
   }
 
   getTransactionByAccountId(dataLoad, page, event, formattedFromDate, formattedToDate,size) {
@@ -148,18 +151,63 @@ export class TransactionPage implements OnInit {
     // console.log('fromDate :: ',this.formattedFromDate);
     const formattedToDate = format(parseISO(this.toDate), "yyyy-MM-dd'T'HH:mm:ss");
     this.formattedToDate = formattedToDate;
-        // console.log('toDate :: ',this.formattedToDate);
-    // console.log('event :: ',event.target.value, this.accountNumber, this.accountInfo);
+    const formatFromDate = format(parseISO(this.fromDate), "yyyy-MM-dd");
+    const formatToDate = format(parseISO(this.toDate), "yyyy-MM-dd");
+    var currDate =format(this.currentDate, "yyyy-MM-dd");
+    if(formatToDate<formatFromDate){
+      // this.fromDate=null;
+      this.toDate=null;
+      this.openAlert('To date should be greater than from date!')
+      return;
+    }
+    if(formatToDate>currDate){
+      this.toDate=null;
+      this.openAlert('Future dates not allowed!')
+      return;
+    }
     if (event.target.value) {
       this.getTransactionByAccountId("dateBase", 0, '', this.formattedFromDate, this.formattedToDate,20)
     }
   }
 
   checkFromDate(event){
-    console.log('value :: ',event.target.value ,this.fromDate )
-    var currDate =format(this.currentDate, "yyyy-MM-dd'T'HH:mm:ss");
-    console.log('formatted:: ',currDate);
+    var currDate =format(this.currentDate, "yyyy-MM-dd");
+    const formattedFromDate = format(parseISO(this.fromDate), "yyyy-MM-dd");
+    console.log('formatted:: ',currDate,formattedFromDate);
+    this.fromDateVal=parseISO(this.fromDate).toISOString();
+    this.toDate='';
+    if(formattedFromDate>currDate){
+      this.openAlert('Future dates not allowed!')
+      this.fromDate=null;
+      this.toDate=null;
+    }
   }
+  public async openAlert(message) {
+    const alert = await this.alertController.create({
+      header: "Alert",
+      message: `${message}`,
+      backdropDismiss: false,
+      cssClass: "example-alert",
+      buttons: [
+        {
+          text: "Ok"
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  reset(){
+    this.trxnArrayList=[];
+    this.fromDate=null;
+    this.toDate=null;
+    this.getTransactionByAccountId('onload', 0, '', null, null,20);
+  }
+  getYesterdayDate() {
+    return new Date(new Date().getTime() - 24*60*60*1000);
+  }
+  
+ 
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;

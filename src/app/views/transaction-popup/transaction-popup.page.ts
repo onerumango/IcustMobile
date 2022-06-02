@@ -35,7 +35,7 @@ export class TransactionPopupPage implements OnInit {
   constructor(public navCtrl: NavController,private api: ApiService,  private modalCtrl: ModalController,private sanitizer: DomSanitizer, private shareDataService: DataService, private apiService: ApiService,  private router: Router, private toastService: ToastService,) { }
 
   ngOnInit() {
-    console.log("Dialog Box opened");
+    console.log("Dialog Box opened:: ",this.tokenObjects);
     console.log(this.value);
     
     setTimeout(() => {

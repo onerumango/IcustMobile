@@ -61,7 +61,7 @@ export class HomePage implements OnInit {
 
   loadCustomerDetails(){
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
-     console.log('backend resp in cash withdrawal', resp);
+     console.log('backend resp in cash withdrawal', resp,this.cards[0]);
      this.formData=resp;
      this.cards = resp.custAccount;
      localStorage.setItem('loginRespAccountId',this.cards[0].accountId);

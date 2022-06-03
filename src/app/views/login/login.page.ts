@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
     console.log(this.customerPhonenum)
     localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     if(this.customerPhonenum == '')
-    this.openToast();
+    this.openToast('Please enter the registered Mobile Number');
    // localStorage.setItem("PhoneNumLogin", this.customerPhonenum);
     this.oTpModel.source = 'customer';
     this.oTpModel.source_key = 'mobile';
@@ -70,25 +70,30 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     if(this.oTpModel.source_value != ''){
       this.api.getOtp(this.oTpModel).subscribe(otpResp => {
-        console.log('custStatus :: ',otpResp.icust.custStatus)
-        if (!otpResp.icust.custStatus.toString().includes('APPROVED')) {
-          this.openToast1();
-        } else {
-          console.log("Response Success", otpResp);
-          this.otpResponse = otpResp;
-          console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
-          this.api.sendOtp(this.otpResponse['otpVal'].token);
-          /* Added validation for un-registered mobile nummber is entered */
-          if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
-            this.cdk.detectChanges();   
-            this.userResp = true;
-            this.openToast();
+        console.log('custStatus :: ',otpResp)
+        if(Object.keys(otpResp).length === 0){
+          this.openToast('No data found for Phone No. :'+phone.phoneNo);
+        }else{
+          if (!otpResp.icust.custStatus.toString().includes('APPROVED')) {
+            this.openToast('Customer Id or Account Status is not approved');
           } else {
-            // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
-            console.log('in else')
-            this.router.navigateByUrl('/otp');
+            console.log("Response Success", otpResp);
+            this.otpResponse = otpResp;
+            console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
+            this.api.sendOtp(this.otpResponse['otpVal'].token);
+            /* Added validation for un-registered mobile nummber is entered */
+            if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
+              this.cdk.detectChanges();   
+              this.userResp = true;
+              this.openToast('Please enter the registered Mobile Number');
+            } else {
+              // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
+              console.log('in else')
+              this.router.navigateByUrl('/otp');
+            }
           }
         }
+      
       })
 
     }
@@ -120,14 +125,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async openToast1() {
-    const toast = await this.toastCtrl.create({
-      message: 'Customer Id or Account Status is not approved',
-      duration: 2000
-    });
-    toast.present();
-  }
-
   goToCashWithdrawal(loginForm) {
 
     // console.log(loginForm.value.otp);
@@ -142,9 +139,9 @@ export class LoginPage implements OnInit {
     });
     // this.router.navigate(['tabs']);
   }
-  async openToast() {
+  async openToast(message) {
     const toast = await this.toastCtrl.create({
-      message: 'Please enter the registered Mobile Number',
+      message: `${message}`,
       duration: 5000
     });
     toast.present();

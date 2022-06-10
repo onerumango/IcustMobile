@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ChangePasswordPage implements OnInit {
   changePasswordForm: FormGroup;
+  currShowPassword:boolean=false;
+  newShowPassword:boolean=false;
+  reEnterShowPassword:boolean=false;
   constructor(private fb: FormBuilder,private router:Router) { }
 
   ngOnInit() {
@@ -19,6 +22,18 @@ export class ChangePasswordPage implements OnInit {
     
     })
      console.log(this.changePasswordForm.value);
+  }
+  public onPasswordToggle(showType): void {
+    if(showType === 'current'){
+      this.currShowPassword = !this.currShowPassword;
+    }
+    if(showType === 'new'){
+      this.newShowPassword = !this.newShowPassword;
+    }
+    if(showType === 'reenter'){
+      this.reEnterShowPassword = !this.reEnterShowPassword;
+    }
+    
   }
 save(){
   console.log(this.changePasswordForm.value);

@@ -70,28 +70,37 @@ export class LoginPage implements OnInit {
     console.log("model", this.oTpModel);
     if(this.oTpModel.source_value != ''){
       this.api.getOtp(this.oTpModel).subscribe(otpResp => {
-        console.log('custStatus :: ',otpResp)
+        console.log('response :: ',otpResp);
         if(Object.keys(otpResp).length === 0){
           this.openToast('No data found for Phone No. :'+phone.phoneNo);
         }else{
-          if (!otpResp.icust.custStatus.toString().includes('APPROVED')) {
+          var custStatus='';
+          if (otpResp.hasOwnProperty("icust")) {
+            if(otpResp.icust.custStatus.toString().includes('APPROVED')){
+              custStatus=otpResp.icust.custStatus;
+            }
+          }
+          if(otpResp.hasOwnProperty("otpVal") ){
+            if(otpResp.otpVal.status.toString().includes('APPROVED')){
+              custStatus=otpResp.otpVal.status;
+            }
+          }
+          if (!custStatus.toString().includes('APPROVED')) {
             this.openToast('Customer Id or Account Status is not approved');
           } else {
             console.log("Response Success", otpResp);
             this.otpResponse = otpResp;
-            console.log("Response otpResp['otpVal'].token", otpResp['otpVal'].token);
-            this.api.sendOtp(this.otpResponse['otpVal'].token);
             /* Added validation for un-registered mobile nummber is entered */
             if (this.otpResponse.otpVal.userId === "New Customer" || (this.otpResponse.otpVal.userId ==='' && this.otpResponse.otpVal.userId ===null)) {
               this.cdk.detectChanges();   
               this.userResp = true;
               this.openToast('Please enter the registered Mobile Number');
             } else {
-              // this.otpResponse.otpVal.userId !='' && this.otpResponse.otpVal.userId!=null && 
-              console.log('in else')
+              this.api.sendOtp(this.otpResponse['otpVal'].token);
               this.router.navigateByUrl('/otp');
             }
           }
+
         }
       
       })

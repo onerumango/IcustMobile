@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DataService } from 'src/app/services/data.service';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,9 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class HomePage implements OnInit {
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400,
-    slidesPerView: 1.5,
+    slidesPerView: 1,
     spaceBetween: 20,
     centeredSlides: true
 };
@@ -36,7 +37,7 @@ export class HomePage implements OnInit {
   currLoan: string;
   currCurrent: string;
   selectedAccountNumber: any;
-  cards:any = [];
+  cards:any[] = [];
   constructor(private router:Router, private api: ApiService,  private sanitizer: DomSanitizer,
     private cdr:ChangeDetectorRef, private dataService: DataService, 
     public modalController: ModalController) { }
@@ -58,12 +59,21 @@ export class HomePage implements OnInit {
     });
   }
 
+  @ViewChild('slider', { static: true }) private slider: IonSlides;
+
+
+  public async ionSlideDidChange(): Promise<void> {
+    const index = await this.slider.getActiveIndex();
+    console.log('in slide :: ',index);
+  }
+
 
   loadCustomerDetails(){
     this.api.custpomerDetails(this.phoneNumber).subscribe((resp) => {
      console.log('backend resp in cash withdrawal', resp,this.cards[0]);
      this.formData=resp;
      this.cards = resp.custAccount;
+
      localStorage.setItem('loginRespAccountId',this.cards[0].accountId);
 
      this.dataService.shareAccountInfo(this.cards[0]);

@@ -351,6 +351,7 @@ export class TransactionPage implements OnInit {
 
   downloadPdf(trxnArrayList,fromDate,toDate){
     console.log("inside download pdf",trxnArrayList,fromDate,toDate)
+
     if(fromDate == undefined || fromDate == null){
       this.getTransactionByAccountId('download', 0, '', null, null,this.totalElements);
     }else{
@@ -359,7 +360,8 @@ export class TransactionPage implements OnInit {
   }
 
   loadAllTransactionData(data){
-    this.pdfService.createPdf(data,this.customerDetails);
+    var currDate =format(this.currentDate, "dd-MM-yyyy HH:mm:ss");
+    this.pdfService.createPdf(data,this.customerDetails,currDate);
   }
 
 }

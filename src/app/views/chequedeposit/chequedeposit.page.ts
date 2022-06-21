@@ -40,6 +40,7 @@ export class ChequedepositPage implements OnInit {
   trnBrn = null;
   accBranch: string;
   accountInfo: any;
+  tokenCount: any;
 
   constructor(private router: Router, private fb: FormBuilder, private api: ApiService, public toastCtrl: ToastController,
     private modalController: ModalController,
@@ -146,6 +147,10 @@ export class ChequedepositPage implements OnInit {
     this.shareDataService.getAccountInfo.subscribe(data=>{
       this.accountInfo=data;
       console.log(data);
+      this.api.getNumberOfCrowd(this.accountInfo.accountBranch)
+      .subscribe((data1: any) => {
+       this.tokenCount=data1.tokenCount
+      })
     })
 
   }

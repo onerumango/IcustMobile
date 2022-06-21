@@ -18,6 +18,7 @@ export class BranchComponent implements OnInit {
 
   map: google.maps.Map;
   branchData: any = [];
+  crowds: any = [];
 
   relatedMap: { [key: string]: any };
   typesMap = {};
@@ -40,20 +41,42 @@ export class BranchComponent implements OnInit {
     this.accBranch = localStorage.getItem('AccBranch');
     console.log(this.branchFlag);
   }
+  getCrowds(){
+  
+  }
 
   getBankBranches() {
     this.apiService.getBranchByCity("Bangalore")
       .subscribe((data: any) => {
         
         this.branchData = data;
+        console.log( this.branchData);
+        for(let i=0;i<=this.branchData.length-1;i++){
+          this.apiService.getNumberOfCrowd(this.branchData[i].branchName)
+          .subscribe((data: any) => {
+            console.log("data",data);
+            console.log(this.branchData[i].branchName)
+            this.branchData[i].tokenCount=data.tokenCount
+            console.log(this.branchData);
+           this.crowds=data;
+    console.log(this.crowds)
+    
+          },
+          (err: any) => {
+console.log("error coming alert")
+this.branchData[i].tokenCount=0;
+          })
+         }
+
         if(this.branchFlag == 'false'){
           console.log("ifff");
       
          data.forEach((element,index)=>{
           if(data[index].branchName==this.accBranch) data.splice(index,1);
        });
-       
-          console.log( this.branchData);
+      console.log(this.branchData);
+      
+         
 
         }
       });

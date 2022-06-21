@@ -46,6 +46,7 @@ export class CashwithdrawalPage implements OnInit {
   brnflg: any;
   accBranch: string;
   displayRadio: boolean;
+  tokenCount: any;
   constructor(
     private router: Router,
     private modalController: ModalController,
@@ -161,6 +162,10 @@ export class CashwithdrawalPage implements OnInit {
     this.shareDataService.getAccountInfo.subscribe(data=>{
       this.accountInfo=data;
       console.log(data);
+      this.api.getNumberOfCrowd(this.accountInfo.accountBranch)
+      .subscribe((data1: any) => {
+       this.tokenCount=data1.tokenCount
+      })
     })
   }
 

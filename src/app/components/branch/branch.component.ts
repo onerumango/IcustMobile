@@ -18,7 +18,6 @@ export class BranchComponent implements OnInit {
 
   map: google.maps.Map;
   branchData: any = [];
-  crowds: any = [];
 
   relatedMap: { [key: string]: any };
   typesMap = {};
@@ -54,12 +53,9 @@ export class BranchComponent implements OnInit {
         for(let i=0;i<=this.branchData.length-1;i++){
           this.apiService.getNumberOfCrowd(this.branchData[i].branchName)
           .subscribe((data: any) => {
-            console.log("data",data);
             console.log(this.branchData[i].branchName)
             this.branchData[i].tokenCount=data.tokenCount
             console.log(this.branchData);
-           this.crowds=data;
-    console.log(this.crowds)
     
           },
           (err: any) => {

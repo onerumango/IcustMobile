@@ -38,6 +38,7 @@ export class ChequewithdrawalPage implements OnInit {
   nearestBrn: boolean;
   accBranch: string;
   accountInfo: any;
+  tokenCount: any;
 
 
   constructor(private router: Router,
@@ -152,6 +153,10 @@ export class ChequewithdrawalPage implements OnInit {
     this.shareDataService.getAccountInfo.subscribe(data=>{
       this.accountInfo=data;
       console.log(data);
+      this.api.getNumberOfCrowd(this.accountInfo.accountBranch)
+      .subscribe((data1: any) => {
+       this.tokenCount=data1.tokenCount
+      })
     })
 
   }

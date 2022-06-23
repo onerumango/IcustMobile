@@ -156,6 +156,9 @@ export class ApiService {
       observe: "events"
     });
   }
+  getNumberOfCrowd(tokenBranch: any) {
+    return this.http.get<any>(`${API_URL}/token/api/fetchTokenCountByBranch?tokenBranch=${tokenBranch}`).pipe(catchError(this.errorHandler));
+  }
 }
 
 

@@ -39,6 +39,7 @@ export class CashdepositPage implements OnInit {
   IntValue: number;
   nearestBrn: boolean;
   accountInfo:any;
+  tokenCount: any;
   constructor(
     public toastCtrl: ToastController,
     private router: Router,
@@ -131,6 +132,11 @@ export class CashdepositPage implements OnInit {
     this.shareDataService.getAccountInfo.subscribe(data=>{
       this.accountInfo=data;
       console.log(data);
+      console.log(this.accountInfo);
+      this.api.getNumberOfCrowd(this.accountInfo.accountBranch)
+      .subscribe((data1: any) => {
+       this.tokenCount=data1.tokenCount
+      })
     })
 
    

@@ -40,9 +40,6 @@ export class BranchComponent implements OnInit {
     this.accBranch = localStorage.getItem('AccBranch');
     console.log(this.branchFlag);
   }
-  getCrowds(){
-  
-  }
 
   getBankBranches() {
     this.apiService.getBranchByCity("Bangalore")

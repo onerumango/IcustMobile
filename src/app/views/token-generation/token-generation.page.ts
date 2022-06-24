@@ -44,13 +44,13 @@ export class TokenGenerationPage implements OnInit {
 
   ngOnInit() {
     console.log("token generation");
-    this.phoneNumber= localStorage.getItem('PhoneNumLogin');
+    this.phoneNumber = localStorage.getItem('PhoneNumLogin');
     this.api.getIndex().subscribe(resp => {
       console.log(resp.index)
-    this.assignProductCode(resp.index);
-      })
-  
-  
+      this.assignProductCode(resp.index);
+    })
+
+
     setTimeout(() => {
       this.generateQRCode(this.tokenObjects);
     }, 100);
@@ -59,13 +59,13 @@ export class TokenGenerationPage implements OnInit {
 
     localStorage.getItem('TransactionTime');
     console.log(localStorage.getItem('TransactionTime'));
-    this.transAmount=localStorage.getItem('TransactionAmount');
-    this.transDate= localStorage.getItem('TransactionDate');
-    this.transTime= localStorage.getItem('TransactionTime');
-    this.branch=localStorage.getItem('TransactionBranch');
-    
+    this.transAmount = localStorage.getItem('TransactionAmount');
+    this.transDate = localStorage.getItem('TransactionDate');
+    this.transTime = localStorage.getItem('TransactionTime');
+    this.branch = localStorage.getItem('TransactionBranch');
 
-    console.log( this.transAmount)
+
+    console.log(this.transAmount)
     console.log(this.tokenObjects);
     this.generateQRCode(this.tokenObjects);
   }
@@ -76,29 +76,29 @@ export class TokenGenerationPage implements OnInit {
     this.router.navigate(['tabs']);
   }
 
-generateQRCode(token){
-  console.log("Token",token);
-  
-  this.shareDataService.getTransactionId.subscribe(transId => {
-    console.log("transId::",transId)
-    if (transId != null) {
-      this.tokenObjects.transactionId = transId;
-    }
-  })
+  generateQRCode(token) {
+    console.log("Token", token);
 
-  this.tokenObjects.accountId=localStorage.getItem('AccountNumber');
-  this.tokenObjects.transactionDate= moment(new Date(localStorage.getItem('TransactionDate'))).format("DD-MM-YYYY");
-  this.tokenObjects.transactionDate=localStorage.getItem('TransactionDate');
-// this.tokenObjects.timeSlot=moment(new Date(localStorage.getItem('TransactionTime'))).format("MM/DD/YYYY hh:mm:ss a");
- 
-  this.tokenObjects.timeSlot=localStorage.getItem('TransactionTime');
-  this.tokenObjects.productCode=this.productCode;
-  this.tokenObjects.phoneNumber=this.phoneNumber;
-  console.log("tokenObjects",this.tokenObjects);
+    this.shareDataService.getTransactionId.subscribe(transId => {
+      console.log("transId::", transId)
+      if (transId != null) {
+        this.tokenObjects.transactionId = transId;
+      }
+    })
 
-  this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
-    console.log("Token Response", tokenResp);
-    this.createImageFromBlob(tokenResp);
+    this.tokenObjects.accountId = localStorage.getItem('AccountNumber');
+    this.tokenObjects.transactionDate = moment(new Date(localStorage.getItem('TransactionDate'))).format("DD-MM-YYYY");
+    this.tokenObjects.transactionDate = localStorage.getItem('TransactionDate');
+    // this.tokenObjects.timeSlot=moment(new Date(localStorage.getItem('TransactionTime'))).format("MM/DD/YYYY hh:mm:ss a");
+
+    this.tokenObjects.timeSlot = localStorage.getItem('TransactionTime');
+    this.tokenObjects.productCode = this.productCode;
+    this.tokenObjects.phoneNumber = this.phoneNumber;
+    console.log("tokenObjects", this.tokenObjects);
+
+    this.api.generateQRCode(this.tokenObjects).subscribe(tokenResp => {
+      console.log("Token Response", tokenResp);
+      this.createImageFromBlob(tokenResp);
     },
       err => {
         console.log("err : ", err);
@@ -119,7 +119,18 @@ generateQRCode(token){
   }
 
   addToWallet() {
-    this.toastService.showToast("Added Successfully!");
-    this.router.navigate(['tabs']);
+    let payload = {
+      transactionId: this.tokenObjects.transactionId,
+      addToWallet: true
+    };
+
+    this.api.updateAddToWallet(payload).subscribe(res => {
+      this.toastService.showToast("Added Successfully");
+      this.router.navigate(['tabs']);
+    }, (err: any) => {
+      console.error(err);
+    })
   }
+
+
 }

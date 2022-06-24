@@ -16,7 +16,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  @ViewChild('file') fileInput:ElementRef;
+  @ViewChild('file') fileInput: ElementRef;
   flag: boolean;
   currentImage: any;
   clickedImage: string;
@@ -26,18 +26,18 @@ export class ProfilePage implements OnInit {
   profileData: any;
   image: any;
   formData: any;
-  selectedFile:File;
+  selectedFile: File;
   progress: number;
-  customerId:any;
-  showLoader:boolean;
+  customerId: any;
+  showLoader: boolean;
 
   constructor(private api: ApiService, public platform: Platform,
     public actionSheetController: ActionSheetController, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef,
     private camera: Camera, private router: Router, private photoService: PhotoService,
     private commonService: CommonserviceService,
-    private dataService:DataService,
+    private dataService: DataService,
     private alert: AlertController,
-    private toastService:ToastService) { }
+    private toastService: ToastService) { }
 
   options: CameraOptions = {
     quality: 30,
@@ -59,8 +59,8 @@ export class ProfilePage implements OnInit {
       this.getProfilePicture(resp.customerId);
     })
 
-    this.dataService.getAvatarUrl.subscribe(data =>{
-      if(data != null){
+    this.dataService.getAvatarUrl.subscribe(data => {
+      if (data != null) {
         this.image = data;
         this.cdr.markForCheck();
       }
@@ -194,10 +194,14 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['faq']);
   }
 
-  fileSelected(event){
+  goToWallet() {
+    this.router.navigate(['/wallet']);
+  }
+
+  fileSelected(event) {
     const file = event.target.files ? event.target.files[0] : '';
     this.selectedFile = file;
-   
+
     let size = event.target.files[0].size;
     this.toastService.showToast(`profile picture will take time to load since the upload file size is ${this.formatBytes(size, 2)}`);
     this.uploadFile(file);
@@ -210,39 +214,39 @@ export class ProfilePage implements OnInit {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
-uploadFile(file:File){
-  
-  this.showLoader = true;
+  uploadFile(file: File) {
 
-  const formData: FormData = new FormData();
-  let payload:any = {
-    "documentName":"Profile",
-    "documentType":1,
-    "fileType":file.type,
-    "fileName":file.name,
-    "customerId":this.customerId
-  };
-  formData.append('file', file);
-  formData.append('data', JSON.stringify(payload));
+    this.showLoader = true;
 
-  this.api.uploadProfilePicture(formData)
-  .subscribe((event:any) =>{
-    if (event.type === HttpEventType.UploadProgress) {
-      this.progress = Math.round(100 * event.loaded / event.total);
-    } else if (event instanceof HttpResponse) {
-      let avatarUrl = event.body.fileUrl;
-      this.showLoader = false;
-      localStorage.setItem('avatarUrl', avatarUrl);
-      this.dataService.shareAvatarUrl(avatarUrl);
-      this.toastService.showToast("File Uploaded Successfully!");
-    }
-    this.cdr.markForCheck();
-  }, (err:any) => {
-    this.progress = 0;
-    this.showLoader = false;
-    this.selectedFile = null;
-  })
-}
+    const formData: FormData = new FormData();
+    let payload: any = {
+      "documentName": "Profile",
+      "documentType": 1,
+      "fileType": file.type,
+      "fileName": file.name,
+      "customerId": this.customerId
+    };
+    formData.append('file', file);
+    formData.append('data', JSON.stringify(payload));
+
+    this.api.uploadProfilePicture(formData)
+      .subscribe((event: any) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          let avatarUrl = event.body.fileUrl;
+          this.showLoader = false;
+          localStorage.setItem('avatarUrl', avatarUrl);
+          this.dataService.shareAvatarUrl(avatarUrl);
+          this.toastService.showToast("File Uploaded Successfully!");
+        }
+        this.cdr.markForCheck();
+      }, (err: any) => {
+        this.progress = 0;
+        this.showLoader = false;
+        this.selectedFile = null;
+      })
+  }
 
 
   takePicture() {
@@ -282,15 +286,15 @@ uploadFile(file:File){
   }
 
 
-  async logoutApp(){
-    let alret= await this.alert.create({
+  async logoutApp() {
+    let alret = await this.alert.create({
       subHeader: "Do you want to Sign Out",
       buttons: [
         {
-            text: "Yes",
-            handler: ()=>{
-              this.logOut();
-            }
+          text: "Yes",
+          handler: () => {
+            this.logOut();
+          }
         },
         {
           text: "No"
@@ -300,11 +304,11 @@ uploadFile(file:File){
     await alret.present();
   }
 
-  
+
   logOut() {
     localStorage.clear();
     sessionStorage.clear();
-    this.router.navigate(["/login"]).then(_ =>{
+    this.router.navigate(["/login"]).then(_ => {
       window.location.reload();
     });
   }

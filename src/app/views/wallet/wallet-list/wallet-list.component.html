@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>My Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="toolbar-bg">
+  <ion-list>
+    <ion-item button *ngFor="let item of walletList; let i = index">
+      <ion-thumbnail slot="start">
+        <img
+          src="assets/icon/ticket-vector-icon-26.jpg"
+        />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item?.trnType }}</h2>
+        <p>
+          {{ item.transactionCurrency }} {{ item?.transactionAmount }} @
+          {{ item?.transactionBranch }}
+        </p>
+        <p>{{ item?.transactionDate }} {{ item?.transactionTime }}</p>
+      </ion-label>
+      <ion-button fill="outline" slot="end" (click)="openTicketModal(item)">View</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <p *ngIf="walletList.length == 0" style="margin-top: 50%; text-align: center;" lines="none">
+    No Saved Wallet
+  </p>
+</ion-content>

@@ -1,3 +1,5 @@
+
+
 <ion-content>
   <div class="rect">
     <ion-header class="head">
@@ -6,7 +8,7 @@
           name="close"
           class="close"
           slot="end"
-          (click)="next()"
+          (click)="close()"
         ></ion-icon>
         <div class="text" style="margin-left: 35px">Appointment Summary</div>
 
@@ -17,7 +19,7 @@
       <span class="circle"></span>
       <div class="inputCard">
         <ion-label style="opacity: 51%">Transaction Amount</ion-label>
-        <ion-label class="display">{{transAmount}}</ion-label>
+        <ion-label class="display">{{ data?.transactionAmount }}</ion-label>
         <!-- <ion-input class="box" placeholder="Enter Current Password"></ion-input> -->
 
         <!-- </div>
@@ -26,27 +28,26 @@
   
         <div class="inputCard"> -->
         <ion-label style="opacity: 51%">Transaction Branch</ion-label>
-        <ion-label class="display">{{branch}}</ion-label>
+        <ion-label class="display">{{ data?.transactionBranch }}</ion-label>
         <!-- <ion-input class="box" placeholder="Enter Current Password"></ion-input> -->
 
         <ion-label style="opacity: 51%">Transaction Date</ion-label>
-        <ion-label class="display">{{transDate}}</ion-label>
+        <ion-label class="display">{{ data?.transactionDate }}</ion-label>
         <!-- <ion-input class="box" placeholder="Enter Current Password"></ion-input> -->
 
         <ion-label style="opacity: 51%">Time Slot</ion-label>
-        <ion-label class="display">{{transTime}}</ion-label>
+        <ion-label class="display">{{ data?.transactionTime }}</ion-label>
         <!-- <ion-input class="box" placeholder="Enter Current Password"></ion-input> -->
       </div>
       <!-- <img src="data:image/png;base64,{{blobUrl}}">  -->
       <img [src]="imageToShow" />
       <!-- <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
 
-      <ion-label
+      <!-- <ion-label
         class="inputCard"
         style="display: block; opacity: 70%; font-size: 16pt"
         (click)="addToWallet()"
-        >Add to wallet</ion-label
-      >
+        >Add to wallet</ion-label> -->
     </div>
 
     <div class="inputCard"></div>

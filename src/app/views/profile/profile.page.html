@@ -1,18 +1,27 @@
-
 <div class="header-container">
   <div class="pix" id="pix"></div>
-      <ion-avatar>
-        <ng-container *ngIf="image == null || image == undefined; else showAvatar">
-          <h1 class="img" [style.background]="getRandomColor(i+3)" style="text-align: center; font-size: 50px; padding-top: 30px;">
-            {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName | uppercase | slice:0:1}}</h1>
-        </ng-container>
-        <ng-template #showAvatar>
-          <img class="img" [src]="image" alt="" >
-        </ng-template>
-      </ion-avatar>
-  <img class="img1" id="action-sheets-home-page" src="assets\icon\camera.PNG" alt="Ionic logo" (click)="openActionSheet()">
- 
-
+  <ion-avatar>
+    <ng-container *ngIf="image == null || image == undefined; else showAvatar">
+      <h1
+        class="img"
+        [style.background]="getRandomColor(i+3)"
+        style="text-align: center; font-size: 50px; padding-top: 30px"
+      >
+        {{formData?.firstName | uppercase | slice:0:1}}{{formData?.lastName |
+        uppercase | slice:0:1}}
+      </h1>
+    </ng-container>
+    <ng-template #showAvatar>
+      <img class="img" [src]="image" alt="" />
+    </ng-template>
+  </ion-avatar>
+  <img
+    class="img1"
+    id="action-sheets-home-page"
+    src="assets\icon\camera.PNG"
+    alt="Ionic logo"
+    (click)="openActionSheet()"
+  />
 </div>
 
 <div id="name">
@@ -22,100 +31,184 @@
 
 <ion-progress-bar [value]="progress" *ngIf="showLoader"></ion-progress-bar>
 <ion-content>
-
-  
- 
-  <form id="form" style="margin-top: 20px; margin-bottom: 50px;">
-   
+  <form id="form" style="margin-top: 20px; margin-bottom: 50px">
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon" src="assets\icon\settings.PNG" alt="Ionic logo">
+        <img class="icon" src="assets\icon\settings.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Account Settings</div>
-            <div style="font-size: 9pt;font-family: 'Montserrat' !important;font-weight:100;opacity: 50%;">Update and
-              modify your profile.</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Update and modify your profile.
+            </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo"  (click)="account()">
-       
+        <img
+          class="button"
+          src="assets\icon\click.PNG"
+          alt="Ionic logo"
+          (click)="account()"
+        />
       </div>
-
-
     </div>
 
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon" src="assets\icon\security.PNG" alt="Ionic logo">
+        <img class="icon" src="assets\icon\security.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Security Center</div>
-            <div style="font-size: 9pt;font-family: 'Montserrat' !important;font-weight:100;opacity: 50%;">Change Your Password</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Change Your Password
+            </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="settings()">
+        <img
+          class="button"
+          src="assets\icon\click.PNG"
+          alt="Ionic logo"
+          (click)="settings()"
+        />
       </div>
-
-
     </div>
+
+    <div class="inputCard" (click)="goToWallet()">
+      <div class="box" readonly>
+        <img class="icon" src="assets\icon\wallet.png" alt="Ionic logo" />
+        <div class="name">
+          <div style="width: fit-content; margin-left: 10pt">
+            <div>Wallet</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Quick access for your saved token/ticket
+            </div>
+          </div>
+        </div>
+        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" />
+      </div>
+    </div>
+
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon" src="assets\icon\notification.PNG" alt="Ionic logo">
+        <img class="icon" src="assets\icon\notification.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Notifications</div>
-            <div style="font-size: 9pt;font-family: 'Montserrat' !important;font-weight:100;opacity: 50%;">Change Your notification settings.</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Change Your notification settings.
+            </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo">
+        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" />
       </div>
-
-
     </div>
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon" src="assets\icon\help.PNG" alt="Ionic logo">
+        <img class="icon" src="assets\icon\help.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Help</div>
-            <div style="font-size: 9pt;font-family: 'Montserrat' !important;font-weight:100;opacity: 50%;">Need more help</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Need more help
+            </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="goToHelp()">
+        <img
+          class="button"
+          src="assets\icon\click.PNG"
+          alt="Ionic logo"
+          (click)="goToHelp()"
+        />
       </div>
-
-
     </div>
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon" src="assets\icon\faq.PNG" alt="Ionic logo">
+        <img class="icon" src="assets\icon\faq.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Faq</div>
-            <div style="font-size: 9pt;font-family: 'Montserrat' !important;font-weight:100;opacity: 50%;">Ask your questions.</div>
+            <div
+              style="
+                font-size: 9pt;
+                font-family: 'Montserrat' !important;
+                font-weight: 100;
+                opacity: 50%;
+              "
+            >
+              Ask your questions.
+            </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="goToFaq()">
+        <img
+          class="button"
+          src="assets\icon\click.PNG"
+          alt="Ionic logo"
+          (click)="goToFaq()"
+        />
       </div>
-
-
     </div>
 
     <div class="inputCard">
       <div class="box" readonly>
-        <img class="icon logout-icon" src="assets\icon\logout.png" alt="Ionic logo">
+        <img
+          class="icon logout-icon"
+          src="assets\icon\logout.png"
+          alt="Ionic logo"
+        />
         <div class="name">
-          <div style="width: fit-content;margin-left: 10pt;">
+          <div style="width: fit-content; margin-left: 10pt">
             <div>Logout</div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="logoutApp()">
+        <img
+          class="button"
+          src="assets\icon\click.PNG"
+          alt="Ionic logo"
+          (click)="logoutApp()"
+        />
       </div>
-
     </div>
- 
   </form>
-  
-  <input type="file" accept="image/*" #file style="display: none;" (change)="fileSelected($event)">
-</ion-content>
 
+  <input
+    type="file"
+    accept="image/*"
+    #file
+    style="display: none"
+    (change)="fileSelected($event)"
+  />
+</ion-content>

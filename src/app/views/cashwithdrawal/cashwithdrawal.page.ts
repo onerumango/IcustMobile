@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController, ToastController, IonDatetime } from '@ionic/angular';
 import { format } from 'date-fns';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
 import * as moment from 'moment';
 import { getCurrencySymbol } from '@angular/common';
 import { DataService } from "src/app/services/data.service";
@@ -54,6 +55,7 @@ export class CashwithdrawalPage implements OnInit {
     public loading: LoadingService,
     public datepipe: DatePipe,
     private api: ApiService,
+    private toastService:ToastService,
     public toastCtrl: ToastController,
     private shareDataService: DataService,
     private cdr: ChangeDetectorRef,
@@ -78,7 +80,7 @@ export class CashwithdrawalPage implements OnInit {
   curr: string;
   customerDetails: any;
   selectAbleColor: string = "secondary";
-  trnBrn = null ;
+  trnBrn = null;
   accountInfo: any;
 
   ngOnInit() {
@@ -137,35 +139,35 @@ export class CashwithdrawalPage implements OnInit {
       //   this.slideOneForm.get('transactionBranch').patchValue("");
       //   this.nearestBrn = true;
       // }
-      this.brnflg=val;
+      this.brnflg = val;
       if (this.brnflg == false && val == false) {
         console.log("2nd if");
         this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
         this.nearestBrn = true;
-      } 
-     
+      }
+
       else {
         console.log("else");
         this.nearestBrn = false;
         // this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
-        this.accBranch=localStorage.getItem("AccBranch");
+        this.accBranch = localStorage.getItem("AccBranch");
         console.log(this.accBranch);
         this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
         // this.slideOneForm.get('transactionBranch').patchValue(this.customerDetails.custAccount[0].accountBranch);
       }
-       if (this.brnflg == true && val == false) {
+      if (this.brnflg == true && val == false) {
         this.slideOneForm.controls.transactionBranch.patchValue(this.accBranch);
         this.nearestBrn = true;
-      } 
+      }
 
     })
-    this.shareDataService.getAccountInfo.subscribe(data=>{
-      this.accountInfo=data;
+    this.shareDataService.getAccountInfo.subscribe(data => {
+      this.accountInfo = data;
       console.log(data);
       this.api.getNumberOfCrowd(this.accountInfo.accountBranch)
-      .subscribe((data1: any) => {
-       this.tokenCount=data1.tokenCount
-      })
+        .subscribe((data1: any) => {
+          this.tokenCount = data1.tokenCount
+        })
     })
   }
 
@@ -205,7 +207,7 @@ export class CashwithdrawalPage implements OnInit {
     console.log(event.target.value);
     this.IntValue = Math.floor(this.slideOneForm.value.transactionAmount).toString().length;
     // if (this.IntValue > 3) {
-      if (this.IntValue > 1) {
+    if (this.IntValue > 1) {
 
       let value: string;
       value = this.slideOneForm.value.transactionAmount;
@@ -432,51 +434,51 @@ export class CashwithdrawalPage implements OnInit {
         this.numberOnlyValidation(accbal.transactionAmount);
       }
       // console.log('backend accbal', accbal.lastTransactions);
-      if(accbal.lastTransactions!=null){
-        if(accbal.lastTransactions.length <=2 ){
+      if (accbal.lastTransactions != null) {
+        if (accbal.lastTransactions.length <= 2) {
           this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-          }
-          else{
-           
-            var brnCnt = 0;
-            var brnOldCnt = 0 ;
-            console.log("Else",accbal.lastTransactions);
-            for(var i=0;i<accbal.lastTransactions.length;i++){
-              if(accbal.lastTransactions[i].transactionBranch != null){
-                for(var n=0;n<accbal.lastTransactions.length;n++){
-                  if(accbal.lastTransactions[n].transactionBranch != null){
-                    if(accbal.lastTransactions[i].transactionBranch===accbal.lastTransactions[n].transactionBranch){
-                      brnCnt = brnCnt + 1 ;
-                    }
+        }
+        else {
+
+          var brnCnt = 0;
+          var brnOldCnt = 0;
+          console.log("Else", accbal.lastTransactions);
+          for (var i = 0; i < accbal.lastTransactions.length; i++) {
+            if (accbal.lastTransactions[i].transactionBranch != null) {
+              for (var n = 0; n < accbal.lastTransactions.length; n++) {
+                if (accbal.lastTransactions[n].transactionBranch != null) {
+                  if (accbal.lastTransactions[i].transactionBranch === accbal.lastTransactions[n].transactionBranch) {
+                    brnCnt = brnCnt + 1;
                   }
                 }
               }
-              if(brnOldCnt < brnCnt && brnCnt >= 2){
-                this.trnBrn = accbal.lastTransactions[i].transactionBranch ;
-                brnOldCnt = brnCnt ;
-                console.log("yhjghguuyjgh");
-              }
-              brnCnt = 0;
             }
-            if (this.trnBrn != null && this.trnBrn!==accbal.accountBranch){
-              console.log(this.trnBrn);
-              this.slideOneForm.controls.branchFlag.patchValue(false);
-              this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
-              console.log(localStorage.getItem("BranchFlag"));
-              this.brnflg=localStorage.getItem("BranchFlag");
-              
-              this.brnflg=false;
-              this.nearestBrn = true;
-            } else {
-              this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
-              this.nearestBrn = false;
-              this.brnflg=true;
-              console.log(this.nearestBrn);
-          
+            if (brnOldCnt < brnCnt && brnCnt >= 2) {
+              this.trnBrn = accbal.lastTransactions[i].transactionBranch;
+              brnOldCnt = brnCnt;
+              console.log("yhjghguuyjgh");
             }
+            brnCnt = 0;
           }
+          if (this.trnBrn != null && this.trnBrn !== accbal.accountBranch) {
+            console.log(this.trnBrn);
+            this.slideOneForm.controls.branchFlag.patchValue(false);
+            this.slideOneForm.controls.transactionBranch.patchValue(this.trnBrn);
+            console.log(localStorage.getItem("BranchFlag"));
+            this.brnflg = localStorage.getItem("BranchFlag");
+
+            this.brnflg = false;
+            this.nearestBrn = true;
+          } else {
+            this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
+            this.nearestBrn = false;
+            this.brnflg = true;
+            console.log(this.nearestBrn);
+
+          }
+        }
       }
-      else{
+      else {
         this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
         this.nearestBrn = false;
       }
@@ -484,7 +486,7 @@ export class CashwithdrawalPage implements OnInit {
       //   if (accbal.lastTransactions.length <= 2) {
       //     this.slideOneForm.controls.transactionBranch.patchValue(accbal.accountBranch);
       //   }
-       
+
       //   else {
       //     var trnBrn = null;
       //     var brnCnt = 0;
@@ -508,7 +510,7 @@ export class CashwithdrawalPage implements OnInit {
       //         trnBrn = accbal.lastTransactions[i].transactionBranch;
       //         brnOldCnt = brnCnt;
       //       }
-          
+
       //       brnCnt = 0;
       //     }
       //     if (trnBrn != null) {
@@ -544,9 +546,9 @@ export class CashwithdrawalPage implements OnInit {
     this.users = filteredResponseSavingAccount.custAccount;
     this.curr = getCurrencySymbol(filteredResponseSavingAccount.custAccount[0].accountCurrency, "narrow");
     this.currentBalance = this.users[0].amount;
-    if(this.accountInfo.accountId!=null){
+    if (this.accountInfo.accountId != null) {
       this.slideOneForm.get('accountNumber').patchValue(this.accountInfo.accountId);
-    }else{
+    } else {
       this.slideOneForm.get('accountNumber').patchValue(this.users[0].accountId);
     }
     console.log("user::", this.users);
@@ -615,6 +617,8 @@ export class CashwithdrawalPage implements OnInit {
       })
     })
   }
+
+
 
 
 }

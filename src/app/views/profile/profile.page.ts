@@ -84,6 +84,9 @@ export class ProfilePage implements OnInit {
   account() {
     this.router.navigate(['account']);
   }
+  notification() {
+    this.router.navigate(['notification']);
+  }
   menu() {
     this.flag = true;
 

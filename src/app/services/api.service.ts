@@ -168,6 +168,27 @@ export class ApiService {
   getNumberOfCrowd(tokenBranch: any) {
     return this.http.get<any>(`${API_URL}/token/api/fetchTokenCountByBranch?tokenBranch=${tokenBranch}`).pipe(catchError(this.errorHandler));
   }
+  private firstTimeLogin = new BehaviorSubject<any>({
+    firstTimeLogin: '',
+  })
+  setFirstTimeLogin(firstTimeLogin: any) {
+    this.Index.next(firstTimeLogin);
+  }
+
+  getFirstTimeLogin() {
+    return this.firstTimeLogin.asObservable();
+  }
+
+  validatePassword(phoneNumber:any,password: any) {
+  var  params = new HttpParams()
+    .append('phoneNumber', phoneNumber)
+    .append('password', password);
+    return this.http.get<any>(`${API_URL}/customerdata/validateCutomerPassword?${params}`).pipe(catchError(this.errorHandler));
+  }
+
+  updateCustomerPassword(model: any) {
+    return this.http.put<any>(`${API_URL}/customerdata/updateCustomerPassword`, model);
+  }
 }
 
 

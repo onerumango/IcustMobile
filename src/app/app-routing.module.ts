@@ -104,5 +104,8 @@ export const rootRouterConfig: Routes = [
     path: 'otp',
     loadChildren: () => import('./views/otp/otp.module').then(m => m.OtpPageModule)
   },
-
+  {
+    path: 'notification',
+    loadChildren: () => import('./views/notification/notification.module').then(m => m.NotificationPageModule)
+  }
 ];

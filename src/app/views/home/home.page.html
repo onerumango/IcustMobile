@@ -23,11 +23,11 @@
 <ion-app style="padding-top:100px;">
 	<ion-content>
     <ion-slides #slider pager="true" [options]="slideOpts" (ionSlideDidChange)='ionSlideDidChange()'>
-      <ion-slide  *ngFor="let card of cards; index as i;"  (click)="getAccountNumber(card)">
+      <ion-slide  *ngFor="let card of cards; index as i;" >
      
         <div fxLayout="row" >
 
-          <div >
+          <div  (click)="getAccountNumber(card)">
             <div class="slider1">
               <ion-grid>
               <ion-row>

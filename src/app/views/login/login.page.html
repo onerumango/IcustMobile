@@ -39,10 +39,16 @@
       >Login</ion-button> -->
       <!-- (click)="goToCashWithdrawal(loginForm.value)" -->
     </div>
+
+    <!-- <ion-item-divider style="border-bottom: 5px solid #1F618D;">
+      <ion-label>
+        or scan finger
+      </ion-label>
+    </ion-item-divider> -->
     
     <div class="ion-padding-top">
-      <!-- <p style="padding-left: 20%;display: inline;">Didn't Received your OTP?</p> -->
-      <!-- <p (click) ="getOtp(loginForm.value)"   style="display: inline; font-weight: bolder; cursor: pointer;">Resend</p> -->
+      <ion-icon name="finger-print" class="fingerPrint" 
+      (click)="openDialog()"></ion-icon>
     </div>
   </div>
     </form> <div class="top-left-quarter-circle"></div>

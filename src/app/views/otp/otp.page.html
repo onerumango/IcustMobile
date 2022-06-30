@@ -23,12 +23,20 @@
        <ion-label position="floating">Phone number</ion-label>
         <ion-input class="box" formControlName="phoneNo"></ion-input>
     </div> -->
-    
-    <div class="inputCard">
-      <ion-label position="floating">OTP</ion-label>
-       <ion-input class="box" formControlName="otp" (keypress)="numberOnly($event)" numbersOnly minLength = "6"  maxLength = "6"></ion-input>
-    </div>
-    
+    <ion-list>
+      <ion-item >
+          <ion-label style="font-size: 26px;color:#1F618D;font-weight: 600;" position="stacked">Password</ion-label>
+           <ion-input class="box" placeholder="Enter Password" [type]="showPassword ? 'text' : 'password'" formControlName="password" (ngModelChange)="userPasswordUpdate.next($event)"></ion-input>
+           <ion-icon  class="suffix-icon" (click)="onPasswordToggle('new')" ion-button clear small item-end [name]="showPassword ? 'eye' : 'eye-off'"></ion-icon> 
+      </ion-item>
+      <ion-item >
+          <ion-label style="font-size: 26px;color:#1F618D;font-weight: 600;" position="stacked">OTP</ion-label>
+           <ion-input class="box" [type]="showOtp ? 'text' : 'password'" placeholder="Enter Otp" formControlName="otp" (keypress)="numberOnly($event)" numbersOnly minLength = "6"  maxLength = "6"></ion-input>
+           <ion-icon  class="suffix-icon" (click)="onPasswordToggle('otp')" ion-button clear small item-end [name]="showOtp ? 'eye' : 'eye-off'"></ion-icon> 
+          </ion-item>
+          
+    </ion-list>
+
     <div class="inputCardButton">
       <!-- <ion-button expand="block" shape="round" (click) ="getOtp(loginForm.value)"
       >Continue</ion-button> -->

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { otpModel } from '../login/login.page';
-
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ToastController } from '@ionic/angular';
 export class verifyotpModel {
@@ -29,31 +30,46 @@ export class OtpPage implements OnInit {
   PhoneNumLogin: any;
   customerPhonenum:any;
   otpToken: number;
+  showPassword:boolean=false;
+  showOtp:boolean=false;
+  userPasswordUpdate = new Subject<string>();
   constructor(private cdk: ChangeDetectorRef,private router: Router, private fb: FormBuilder, private api: ApiService ,private toastr:ToastrService,
     private toastCtrl: ToastController) {
-
+      this.userPasswordUpdate
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((value) => {
+        console.log('----', value);
+        this.validatePassword(value);
+      });
   }
 
   ngOnInit() {
-
+    this.customerPhonenum=localStorage.getItem('customerPhonenum');
     this.otpForm = this.fb.group({
        phoneNo:['', [Validators.required]],
-        otp: ['', [Validators.required]]
+        otp: ['', [Validators.required]],
+        password: ['', [Validators.required]]
 
     })
     this.PhoneNumLogin = localStorage.getItem('PhoneNumLogin');
     console.log(localStorage.getItem('PhoneNumLogin'));
 
-    this.api.getOtpToken.subscribe(otp =>{
-      console.log("Subject otp",otp);
-       if(otp.length === 6){
-         this.otpToken = otp;
+    // this.api.getOtpToken.subscribe(otp =>{
+    //   console.log("Subject otp",otp);
 
-         console.log("this is otpToken", this.otpToken);
-         this.otpForm.get('otp').patchValue(this.otpToken);
-         this.openToast1("OTP auto populated successfully!");
-       }
-    })
+    // })
+  }
+  public onPasswordToggle(showType): void {
+    if(showType === 'new'){
+      this.showPassword = !this.showPassword;
+    }
+
+    if(showType === 'otp'){
+      this.showOtp =!this.showOtp;
+    }
+
+
+    
   }
   numberOnly(event): boolean {
     console.log("event",event )
@@ -64,6 +80,7 @@ export class OtpPage implements OnInit {
     return true;
 
   }
+
   getOtp() {
 
     
@@ -74,6 +91,7 @@ export class OtpPage implements OnInit {
     this.api.getOtp(this.oTpModel).subscribe(otpResp => {
       console.log("Response Success", otpResp)
       this.otpResponse = otpResp
+      localStorage.setItem('firstTimeLogin','N')
     
       /* Added validation for un-registered mobile nummber is entered */
       console.log(this.otpResponse)
@@ -103,6 +121,38 @@ export class OtpPage implements OnInit {
  // customerPhonenum(arg0: string, customerPhonenum: any) {
    // throw new Error('Method not implemented.');
   //}
+  validatePassword(password){
+    console.log('password ==> ',password);
+    this.api.validatePassword(this.customerPhonenum,password)
+    .subscribe(data=>{
+      console.log("data",data);
+      if(data.hasOwnProperty("content") ){
+        if(data.content.toString().includes('Wrong Password')){
+          this.openToast1('Wrong Password');
+              this.otpToken = null;
+              console.log("this is otpToken", this.otpToken);
+              this.otpForm.get('otp').patchValue(this.otpToken);
+        }else{
+          localStorage.setItem('firstTimeLogin','N')
+         this.api.getOtpToken.subscribe(otp=>{
+          console.log('otp:: ',otp ,this.otpToken)
+          if(otp != null && otp != undefined ){
+            if(otp.length === 6){
+              this.otpToken = otp;
+              console.log("this is otpToken", this.otpToken);
+              this.otpForm.get('otp').patchValue(this.otpToken);
+              this.openToast1("OTP auto populated successfully!");
+            }
+          }else{
+
+          }
+         })
+        }
+      }
+    },error=>{
+
+    })
+  }
   validateOtp(otpValue) {
     console.log("Phonenumber for OTP", otpValue, otpValue.otp,this.otpToken);
   console.log(otpValue.otp);

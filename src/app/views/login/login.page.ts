@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
+import { FingerPrintCaptureService } from 'src/app/services/finger-print-capture.service';
 export class otpModel {
   source_key: any;
   source_value: any;
@@ -32,7 +33,7 @@ export class LoginPage implements OnInit {
   customerPhonenum: any;
   userResp: boolean = false;
   constructor(private router: Router, private cdk: ChangeDetectorRef,
-    private fb: FormBuilder, private api: ApiService, public toastCtrl: ToastController) {
+    private fb: FormBuilder, private api: ApiService, private fpCaptureService:FingerPrintCaptureService, public toastCtrl: ToastController) {
 
   }
 
@@ -96,8 +97,19 @@ export class LoginPage implements OnInit {
               this.userResp = true;
               this.openToast('Please enter the registered Mobile Number');
             } else {
-              this.api.sendOtp(this.otpResponse['otpVal'].token);
-              this.router.navigateByUrl('/otp');
+              console.log('first time login :: ',this.otpResponse.icust.firstTimeLogin)
+              if(this.otpResponse.icust.firstTimeLogin === 'Y'){
+                localStorage.setItem('firstTimeLogin',this.otpResponse.icust.firstTimeLogin);
+                localStorage.setItem('customerPhonenum',this.customerPhonenum);
+                this.router.navigate(['change-password']);
+                this.api.sendOtp(this.otpResponse['otpVal'].token);
+               
+              }else{
+                localStorage.setItem('firstTimeLogin','N')
+                localStorage.setItem('customerPhonenum',this.customerPhonenum);
+                this.api.sendOtp(this.otpResponse['otpVal'].token);
+                this.router.navigateByUrl('/otp');
+              }
             }
           }
 
@@ -154,6 +166,80 @@ export class LoginPage implements OnInit {
       duration: 5000
     });
     toast.present();
+  }
+
+  openDialog(){
+    console.log("capture finger print")
+    this.captureFingerPrintHttps();
+  }
+
+   /* @method : to capture the the finger print */
+   captureFingerPrintHttps() {
+    console.log("in component");
+    this.fpCaptureService.CallingSGIFPCapture()
+      .subscribe(capturedData => {
+        console.log('capturedData:: ', capturedData);
+        if (capturedData.ErrorCode == 0) {
+          this.openToast(`Finding ,is registed customer`)
+          this.getFpDataForMatchOnPageLoad(capturedData.TemplateBase64);
+        } else {
+          this.getError(capturedData.ErrorCode);
+        }
+      }, error => {
+        this.openToast(`${error}`);
+      })
+
+  }
+
+  getFpDataForMatchOnPageLoad(templateBase64) {
+    console.log('TemplateBase64 :: ', templateBase64);
+    this.fpCaptureService.getCustInfoByFp(0, 100, 4)
+      .subscribe(resp => {
+        console.log('resp:: ', resp);
+        // this.totalItems=resp.totalItems;
+        // this.totalPages=resp.totalPages;
+        if ((resp.totalPages - 1) == 0) {
+          Object.keys(resp.data).forEach(key => {
+            this.matchFpFromUi(templateBase64, resp.data[key])
+          });
+        } else {
+          for (let i = 0; i < resp.totalPages; i++) {
+            if (i == 0) {
+              Object.keys(resp.data).forEach(key => {
+                this.matchFpFromUi(templateBase64, resp.data[key])
+              });
+            } else {
+              // to-da: need to implement logic when more data is present
+              console.log("in fg cap else")
+            }
+          }
+        }
+
+      });
+  }
+
+  matchFpFromUi(template1, data) {
+    this.fpCaptureService.CallingSGIFPMatch(template1, data.fpTemplateBase64)
+      .subscribe(fpResp => {
+        console.log('fpResp : ', fpResp);
+        if (fpResp.MatchingScore >= 100) {
+          let custId = data.customerId;
+          console.log("res",data);
+          // this.jwtService.setUserAndToken(data,true);
+          // this.router.navigateByUrl('/others/dashboard');
+          localStorage.setItem('customerId', custId);
+          // this.cdr.markForCheck();
+          // this.cdr.detectChanges();
+          this.openToast(`User found : ${data.customerId}`)
+          return;
+        }
+      })
+  }
+
+  /* @method : to get error code of finger print device */
+  getError(errorCode) {
+    let error = this.fpCaptureService.errorCodeService(errorCode);
+    console.log('error code', error)
   }
 
 

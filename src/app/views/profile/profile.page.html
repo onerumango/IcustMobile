@@ -36,16 +36,9 @@
       <div class="box" readonly>
         <img class="icon" src="assets\icon\settings.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Account Settings</div>
-            <div
-              style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
-              "
-            >
+            <div class="subTitleDiv" >
               Update and modify your profile.
             </div>
           </div>
@@ -63,16 +56,10 @@
       <div class="box" readonly>
         <img class="icon" src="assets\icon\security.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Security Center</div>
             <div
-              style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
-              "
-            >
+            class="subTitleDiv" >
               Change Your Password
             </div>
           </div>
@@ -90,16 +77,9 @@
       <div class="box" readonly>
         <img class="icon" src="assets\icon\wallet.png" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Wallet</div>
-            <div
-              style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
-              "
-            >
+            <div class="subTitleDiv" >
               Quick access for your saved token/ticket
             </div>
           </div>
@@ -112,35 +92,26 @@
       <div class="box" readonly>
         <img class="icon" src="assets\icon\notification.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div style="mainHeadDiv ;color:#1F618D;font-weight: 600;">
             <div>Notifications</div>
             <div
-              style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
-              "
-            >
+            class="subTitleDiv" >
               Change Your notification settings.
             </div>
           </div>
         </div>
-        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" />
+        <img class="button" src="assets\icon\click.PNG" alt="Ionic logo" (click)="notification()" />
       </div>
     </div>
     <div class="inputCard">
       <div class="box" readonly>
         <img class="icon" src="assets\icon\help.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Help</div>
             <div
               style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
+               subTitleDiv
               "
             >
               Need more help
@@ -159,16 +130,10 @@
       <div class="box" readonly>
         <img class="icon" src="assets\icon\faq.PNG" alt="Ionic logo" />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Faq</div>
             <div
-              style="
-                font-size: 9pt;
-                font-family: 'Montserrat' !important;
-                font-weight: 100;
-                opacity: 50%;
-              "
-            >
+              class="subTitleDiv">
               Ask your questions.
             </div>
           </div>
@@ -190,7 +155,7 @@
           alt="Ionic logo"
         />
         <div class="name">
-          <div style="width: fit-content; margin-left: 10pt">
+          <div class="mainHeadDiv">
             <div>Logout</div>
           </div>
         </div>

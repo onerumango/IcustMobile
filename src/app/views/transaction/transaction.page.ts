@@ -98,12 +98,15 @@ export class TransactionPage implements OnInit {
           }
           if(dataLoad != 'download'){
           this.transactionDataArr = data;
-        }
-        if(dataLoad === 'download'){
-          this.loadAllTransactionData(data.content);
-        }
           this.totalElements=data.totalElements;
           this.pushArray(this.trxnArrayList, this.transactionDataArr.content)
+        }
+        if(dataLoad === 'download'){
+          // this.transactionDataArr = [];
+          // this.trxnArrayList = [];
+          this.loadAllTransactionData(data.content);
+        }
+          
           if (dataLoad === 'scroll') {
             event.target.disabled = false;
           }
